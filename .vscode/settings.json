@@ -1,13 +1,13 @@
 {
   "files.exclude": {
-    ".git": true,
+    ".git": true
   },
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "README.md": "LICENSE,.gitignore",
+    "README.md": "LICENSE,.gitignore"
   },
   //
   "deno.lint": true,
