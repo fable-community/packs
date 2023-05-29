@@ -1,0 +1,31 @@
+{
+  "lint": {
+    "rules": {
+      "tags": ["recommended"],
+      "include": [
+        "prefer-ascii",
+        "camelcase",
+        "eqeqeq",
+        "no-const-assign",
+        "no-eval",
+        "no-non-null-assertion",
+        "no-throw-literal",
+        "no-sparse-arrays"
+      ]
+    }
+  },
+  "lock": false,
+  "tasks": {
+    "start": "deno run -A --watch=static/,routes/ dev.ts"
+  },
+  "importMap": "./import_map.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  },
+  "fmt": {
+    "useTabs": false,
+    "singleQuote": true,
+    "indentWidth": 2
+  }
+}
