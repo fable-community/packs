@@ -2,6 +2,8 @@ import { Head } from '$fresh/runtime.ts';
 
 import { AppProps } from '$fresh/src/server/types.ts';
 
+import colors from '../theme.ts';
+
 export default function App({ Component }: AppProps) {
   return (
     <html>
@@ -9,7 +11,6 @@ export default function App({ Component }: AppProps) {
         <title>Pack Editor</title>
         <link rel='icon' type='image/x-icon' href='/favicon.ico' />
         <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link rel='preconnect' href='https://kit.fontawesome.com' />
         <link
           rel='preconnect'
           crossOrigin='anonymous'
@@ -19,11 +20,10 @@ export default function App({ Component }: AppProps) {
           rel='stylesheet'
           href='https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap'
         />
-        <script
-          src='https://kit.fontawesome.com/8b397282b0.js'
-          crossOrigin='anonymous'
-        >
-        </script>
+        <link
+          rel='stylesheet'
+          href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
+        />
       </Head>
       <body
         style={{
@@ -31,6 +31,9 @@ export default function App({ Component }: AppProps) {
           display: 'flex',
           minWidth: '100vw',
           minHeight: '100vh',
+          backgroundColor: colors.background,
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <Component />

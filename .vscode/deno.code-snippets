@@ -12,5 +12,27 @@
       "  $0",
       "});"
     ]
+  },
+  "deno test step": {
+    "scope": "javascript,typescript",
+    "prefix": "step",
+    "body": [
+      "await test.step('${1:test}', () => {",
+      "  $0",
+      "});"
+    ]
+  },
+  "deno test step try finally": {
+    "scope": "javascript,typescript",
+    "prefix": "step try finally",
+    "body": [
+      "await test.step('${1:test}', () => {",
+      "  $0",
+      "",
+      "  try {",
+      "  } finally {",
+      "  }",
+      "});"
+    ]
   }
 }

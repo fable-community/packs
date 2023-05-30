@@ -1,6 +1,6 @@
 # Pack Editor
 
-A portal app to create and manage fable community packs
+A portal app to create, manage and publish community packs
 
 <https://pack-editor.deno.dev>
 
@@ -14,7 +14,7 @@ cd pack-editor
 deno task start
 ```
 
-_> **Note** if you get an error try running `deno cache --reload main.ts`_
+_> If you get an error try running `deno cache --reload main.ts`_
 
 ###### Required Environment Variables:
 

@@ -1,15 +1,85 @@
 import { renderToString } from 'preact-render-to-string';
 
 import { assertSnapshot } from '$std/testing/snapshot.ts';
-import { assert } from '$std/testing/asserts.ts';
 
-// import Counter from '../islands/Counter.tsx';
+import Index from '../routes/index.tsx';
 
-Deno.test('<Counter/>', (test) => {
-  // await assertSnapshot(
-  //   test,
-  //   renderToString(<Counter start={3} />),
-  // );
+import { stub } from '$std/testing/mock.ts';
 
-  assert(true);
+Deno.test('<Index/>', async (test) => {
+  const mathStub = stub(
+    Math,
+    'random',
+    () => 0,
+  );
+
+  try {
+    const url = new URL('http://localhost:8080');
+
+    await assertSnapshot(
+      test,
+      renderToString(<Index params={{}} route={''} url={url} data={{}} />),
+    );
+  } finally {
+    mathStub.restore();
+  }
+});
+
+Deno.test('<Index/> (Logged In)', async (test) => {
+  const mathStub = stub(
+    Math,
+    'random',
+    () => 0,
+  );
+
+  try {
+    const url = new URL('http://localhost:8080');
+
+    await assertSnapshot(
+      test,
+      renderToString(
+        <Index
+          params={{}}
+          route={''}
+          url={url}
+          data={{
+            id: 'user_id',
+            avatar: 'avatar_hash',
+            username: 'user_username',
+          }}
+        />,
+      ),
+    );
+  } finally {
+    mathStub.restore();
+  }
+});
+
+Deno.test('<Index/> (Logged In) (No Avatar)', async (test) => {
+  const mathStub = stub(
+    Math,
+    'random',
+    () => 0,
+  );
+
+  try {
+    const url = new URL('http://localhost:8080');
+
+    await assertSnapshot(
+      test,
+      renderToString(
+        <Index
+          params={{}}
+          route={''}
+          url={url}
+          data={{
+            id: 'user_id',
+            username: 'user_username',
+          }}
+        />,
+      ),
+    );
+  } finally {
+    mathStub.restore();
+  }
 });

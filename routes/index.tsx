@@ -1,14 +1,14 @@
+import { Head } from '$fresh/runtime.ts';
+
 import { Handlers, PageProps } from '$fresh/server.ts';
 
 import { getCookies } from '$std/http/cookie.ts';
 
-import DiscordSignIn from '../components/DiscordSignIn.tsx';
+import { createStyle } from 'flcss';
 
-interface Data {
-  id?: string;
-  username?: string;
-  avatar?: string;
-}
+import Login from '../components/Login.tsx';
+
+import Dashboard, { User } from '../components/Dashboard.tsx';
 
 interface Cookies {
   accessToken?: string;
@@ -29,7 +29,7 @@ export const handler: Handlers = {
         },
       });
 
-      const data = await response.json() as Data;
+      const data = await response.json() as User;
 
       return ctx.render(data);
     }
@@ -38,27 +38,24 @@ export const handler: Handlers = {
   },
 };
 
-export default function ({ data }: PageProps<Data>) {
-  if (data.id) {
-    return (
-      <>
-        <img width={32} src='/icon.png' />
-        <p>{data.username}</p>
-        <img
-          width={32}
-          height={32}
-          src={`https://cdn.discordapp.com/${
-            data.avatar
-              ? `avatars/${data.id}/${data.avatar}.png`
-              : 'embed/avatars/0.png'
-          }`}
-        />
-        <form method='post' action='/api/logout'>
-          <button type='submit'>Logout</button>
-        </form>
-      </>
-    );
-  }
+export default function (props: PageProps<User>) {
+  const styles = createStyle({
+    logo: {
+      position: 'fixed',
+      width: '38px',
+      height: 'auto',
+      top: '1em',
+      left: '1em',
+    },
+  });
 
-  return <DiscordSignIn />;
+  return (
+    <>
+      <Head>
+        <style>{styles.bundle}</style>
+      </Head>
+      <img src='/icon.png' class={styles.names.logo} />
+      {props.data.id ? <Dashboard {...props} /> : <Login />}
+    </>
+  );
 }
