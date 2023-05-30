@@ -2,6 +2,8 @@ import { Handlers, PageProps } from '$fresh/server.ts';
 
 import { getCookies } from '$std/http/cookie.ts';
 
+import DiscordSignIn from '../components/DiscordSignIn.tsx';
+
 interface Data {
   id?: string;
   username?: string;
@@ -19,7 +21,7 @@ export const handler: Handlers = {
 
     // TODO support refreshing the access token
     if (cookies.accessToken) {
-      const response = await fetch('https://discord.com/api/v10/users/@me', {
+      const response = await fetch('https://discord.com/api/users/@me', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
@@ -37,9 +39,10 @@ export const handler: Handlers = {
 };
 
 export default function ({ data }: PageProps<Data>) {
-  if (data.username) {
+  if (data.id) {
     return (
       <>
+        <img width={32} src='/icon.png' />
         <p>{data.username}</p>
         <img
           width={32}
@@ -55,13 +58,7 @@ export default function ({ data }: PageProps<Data>) {
         </form>
       </>
     );
-  } else {
-    return (
-      <>
-        <form method='post' action='/api/login'>
-          <button type='submit'>DiscordSignIn</button>
-        </form>
-      </>
-    );
   }
+
+  return <DiscordSignIn />;
 }

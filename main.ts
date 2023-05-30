@@ -21,10 +21,7 @@ const manifest: Manifest = {
   config,
   baseUrl: import.meta.url,
   islands: {
-    // Islands enable client-side interactivity in Fresh
-    // Islands are isolated Preact components that are rendered on the client
-    // This is different from all other components that are rendered on the server
-    // './islands/Counter.tsx': Counter,
+    // Islands enable client-side interactivity
   },
   routes: {
     // pages

@@ -27,14 +27,10 @@
   },
   "secrets": {
     "CLIENT_ID": {
-      "description": "Your discord app's oauth client id"
+      "description": "A discord oauth client id"
     },
     "CLIENT_SECRET": {
-      "description": "A discord app's oauth client secret"
-    },
-    "FAUNA_SECRET": {
-      "description": "A fauna database auth key",
-      "documentationUrl": "https://github.com/ker0olos/fable/wiki/FaunaDB"
+      "description": "A discord oauth client secret"
     }
   }
 }

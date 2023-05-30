@@ -8,8 +8,8 @@ interface DiscordToken {
   access_token: string;
   expires_in: number;
   refresh_token: string;
-  scope: string;
   token_type: string;
+  scope: string;
 }
 
 export const handler: Handlers = {
@@ -41,8 +41,8 @@ export const handler: Handlers = {
 
       const response = await fetch('https://discord.com/api/oauth2/token', {
         body,
-        method: 'POST',
         headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        method: 'POST',
       });
 
       const token = await response.json() as DiscordToken;

@@ -1,6 +1,6 @@
-# Fable Pack Editor
+# Pack Editor
 
-The easiest way to create and edit fable community packs
+A portal app to create and manage fable community packs
 
 <https://pack-editor.deno.dev>
 
@@ -14,4 +14,9 @@ cd pack-editor
 deno task start
 ```
 
-> **Note** if you get an error try running `deno cache --reload main.ts`
+_> **Note** if you get an error try running `deno cache --reload main.ts`_
+
+###### Required Environment Variables:
+
+- CLIENT_ID: a discord oauth client id
+- CLIENT_SECRET: a discord oauth client secret
