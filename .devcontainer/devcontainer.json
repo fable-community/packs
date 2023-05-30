@@ -3,12 +3,38 @@
   "features": {
     "ghcr.io/devcontainers-contrib/features/deno:1": {}
   },
+  "waitFor": "onCreateCommand",
+  "postCreateCommand": {
+    "deps": "deno cache --reload main.ts"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
-        "denoland.vscode-deno",
-        "sastan.twind-intellisense"
+        "denoland.vscode-deno"
       ]
+    },
+    "codespaces": {
+      "openFiles": [
+        "main.ts",
+        "routes/index.tsx"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "8080": {
+      "label": "http"
+    }
+  },
+  "secrets": {
+    "CLIENT_ID": {
+      "description": "Your discord app's oauth client id"
+    },
+    "CLIENT_SECRET": {
+      "description": "A discord app's oauth client secret"
+    },
+    "FAUNA_SECRET": {
+      "description": "A fauna database auth key",
+      "documentationUrl": "https://github.com/ker0olos/fable/wiki/FaunaDB"
     }
   }
 }

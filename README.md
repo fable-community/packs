@@ -1,12 +1,17 @@
-# fresh project
+# Fable Pack Editor
 
-### Usage
+The easiest way to create and edit fable community packs
 
-Start the project:
+<https://pack-editor.deno.dev>
+
+### Contribute
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/fable-community/pack-editor?quickstart=1)
 
 ```
-deno cache --reload main.ts
+git clone https://github.com/fable-community/pack-editor
+cd pack-editor
 deno task start
 ```
 
-This will watch the project directory and restart as necessary.
+> **Note** if you get an error try running `deno cache --reload main.ts`

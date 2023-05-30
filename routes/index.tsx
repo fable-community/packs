@@ -1,25 +1,67 @@
-import { Head } from '$fresh/runtime.ts';
+import { Handlers, PageProps } from '$fresh/server.ts';
 
-import Counter from '../islands/Counter.tsx';
+import { getCookies } from '$std/http/cookie.ts';
 
-export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>Fresh App</title>
-      </Head>
-      <div class='p-4 mx-auto max-w-screen-md'>
+interface Data {
+  id?: string;
+  username?: string;
+  avatar?: string;
+}
+
+interface Cookies {
+  accessToken?: string;
+  refreshToken?: string;
+}
+
+export const handler: Handlers = {
+  async GET(req, ctx) {
+    const cookies = getCookies(req.headers) as Cookies;
+
+    // TODO support refreshing the access token
+    if (cookies.accessToken) {
+      const response = await fetch('https://discord.com/api/v10/users/@me', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'authorization': `Bearer ${cookies.accessToken}`,
+        },
+      });
+
+      const data = await response.json() as Data;
+
+      return ctx.render(data);
+    }
+
+    return ctx.render({});
+  },
+};
+
+export default function ({ data }: PageProps<Data>) {
+  if (data.username) {
+    return (
+      <>
+        <p>{data.username}</p>
         <img
-          src='/logo.svg'
-          class='w-32 h-32'
-          alt='the fresh logo: a sliced lemon dripping with juice'
+          width={32}
+          height={32}
+          src={`https://cdn.discordapp.com/${
+            data.avatar
+              ? `avatars/${data.id}/${data.avatar}.png`
+              : 'embed/avatars/0.png'
+          }`}
         />
-        <p class='my-6'>
-          Welcome to `fresh`. Try updating this message in the
-          ./routes/index.tsx file, and refresh.
-        </p>
-        <Counter start={3} />
-      </div>
-    </>
-  );
+        <form method='post' action='/api/logout'>
+          <button type='submit'>Logout</button>
+        </form>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <form method='post' action='/api/login'>
+          <button type='submit'>DiscordSignIn</button>
+        </form>
+      </>
+    );
+  }
 }
