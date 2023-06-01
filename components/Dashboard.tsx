@@ -4,14 +4,20 @@ import { createStyle } from 'flcss';
 
 import Avatar from './Avatar.tsx';
 
-import type { User } from '$fable/src/discord.ts';
-
 import type { Schema } from '$fable/src/types.ts';
 
 import colors from '../theme.ts';
 
 import LinkIcon from 'icons/link.tsx';
 import PlusIcon from 'icons/plus.tsx';
+
+type User = {
+  id: string;
+  username: string;
+  // deno-lint-ignore camelcase
+  display_name?: string;
+  avatar?: string;
+};
 
 export default ({ user, packs }: { user: User; packs: Schema.Pack[] }) => {
   const styles = createStyle({

@@ -25,29 +25,34 @@ export default () => {
       top: '2em',
     },
     button: {
-      display: 'flex',
+      display: 'grid',
+      gridTemplateColumns: '1fr',
+      gridAutoFlow: 'column',
       alignItems: 'center',
+      gap: '0.5em',
+
+      color: 'inherit',
       cursor: 'pointer',
       backgroundColor: colors.discord,
-      border: '0',
-      padding: '0.75em 1em',
       fontFamily: 'inherit',
-      color: 'inherit',
       fontSize: 'inherit',
       fontWeight: '600',
-      overflow: 'hidden',
-      borderRadius: '100vw',
+
+      border: '0',
       minWidth: '160px',
+      padding: '0.75em 1em',
+
       ':hover': {
         borderRadius: '2px',
         boxShadow: 'inset 0px 0px 0px 2px white',
       },
-    },
-    icon: {
-      width: '16px',
-      height: 'auto',
-      margin: '0 0.5em',
-      stroke: 'none',
+
+      '> svg': {
+        marginTop: '2px',
+        stroke: 'none',
+        width: '16px',
+        height: 'auto',
+      },
     },
   });
 
@@ -61,7 +66,7 @@ export default () => {
           <img src='/icon.png' class={styles.names.logo} />
           <button class={styles.names.button} type='submit'>
             Login with Discord
-            <DiscordIcon class={`${styles.names.icon}`} />
+            <DiscordIcon />
           </button>
         </div>
       </form>

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ker0olos/fable/main/json/schema.json",
+  "id": "utawarerumono",
+  "title": "Utawarerumono Pack",
+  "description": "Contains characters from Utawarerumono: Mask of Deception",
+  "author": "Fable Community",
+  "image": "https://media.tenor.com/n9YTIWj9H-gAAAAC/utawarerumono-kuon.gif",
+  "url": "https://github.com/fable-community/fable-pack-utawarerumono",
+  "media": {
+    "conflicts": ["anilist:21218"],
+    "new": [{
+      "id": "mask-of-deception",
+      "popularity": 113000,
+      "title": {
+        "english": "Utawarerumono: Mask of Deception",
+        "romaji": "Utawarerumono: Itsuwari no Kamen",
+        "native": "うたわれるもの 偽りの仮面",
+        "alternative": ["Utawarerumono: The False Faces"]
+      },
+      "description": "The only thing I can remember is coming to in the middle of an unfamiliar snowscape. Where that was or how I got there, I don't know. I couldn't even remember my own name. The memories just wouldn't come.\n\nI only had a moment, left at a loss, to ponder what to do — but fate seemed intent on furthering my misery as a giant, insect-like monster burst from the snow and ice to attack me.\n\nNaturally, I ran like hell. The creature cornered me anyway.\n\nThat's when SHE appeared, as if from nowhere — the beautiful, mysterious girl who saved my life.\n\nShe told me her name was Kuon. A beautiful, mysterious girl...\n\n...with a tail and ears like a beast's\n\n(Source: Atlus)",
+      "type": "ANIME",
+      "images": [{
+        "url": "https://s2.vndb.org/cv/68/45668.jpg"
+      }]
+    }]
+  },
+  "characters": {
+    "conflicts": ["anilist:126823"],
+    "new": [{
+      "id": "kuon",
+      "gender": "Female",
+      "name": {
+        "english": "Kuon",
+        "romaji": "Kuon",
+        "native": "クオン",
+        "alternative": ["kuon", "Ku (Uta)"]
+      },
+      "description": "An apothecary that left her hometown with ears and tail like an animal's. She's lively and intelligent, while somehow aloof.\n\nSeparated from her homeland, she encounters Haku while traveling along leisurely.\n\nShe gets excited when it comes to bathing and often ends her sentences with \"-かな～\" or, in English, \"I think\".",
+      "media": [{
+        "mediaId": "mask-of-deception",
+        "role": "MAIN"
+      }],
+      "images": [{
+        "url": "https://i.imgur.com/ClaapHd.png"
+      }]
+    }]
+  }
+}

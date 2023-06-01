@@ -3,7 +3,10 @@ import { Head } from '$fresh/runtime.ts';
 import { createStyle } from 'flcss';
 
 import Dialog from './Dialog.tsx';
+
 import colors from '../theme.ts';
+
+import LogoutIcon from 'icons/logout.tsx';
 
 export default ({ id, avatar }: { id?: string; avatar?: string }) => {
   const styles = createStyle({
@@ -17,15 +20,30 @@ export default ({ id, avatar }: { id?: string; avatar?: string }) => {
       borderRadius: '100%',
     },
     button: {
+      display: 'grid',
+      gridTemplateColumns: '1fr',
+      gridAutoFlow: 'column',
+      alignItems: 'center',
+      gap: '0.5em',
+
       cursor: 'pointer',
       backgroundColor: colors.grey,
+      fontFamily: 'inherit',
+      fontSize: 'inherit',
       fontWeight: 600,
-      padding: '1em',
+
       border: '0',
       minWidth: '160px',
+      padding: '0.75em 1em',
+
       ':hover': {
         borderRadius: '2px',
         boxShadow: 'inset 0px 0px 0px 2px white',
+      },
+
+      '> svg': {
+        width: '21px',
+        height: 'auto',
       },
     },
   });
@@ -45,7 +63,10 @@ export default ({ id, avatar }: { id?: string; avatar?: string }) => {
 
       <Dialog name={'logout'}>
         <form method='post' action='/api/logout'>
-          <button class={styles.names.button} type='submit'>Log Out</button>
+          <button class={styles.names.button} type='submit'>
+            Log Out
+            <LogoutIcon />
+          </button>
         </form>
       </Dialog>
     </>

@@ -12,6 +12,8 @@ import type { User } from '$fable/src/discord.ts';
 
 import type { Schema } from '$fable/src/types.ts';
 
+import mock from '../tests/mock.json' assert { type: 'json' };
+
 interface Cookies {
   accessToken?: string;
   refreshToken?: string;
@@ -52,11 +54,8 @@ export const handler: Handlers = {
       // data.packs = (await response.json() as { data: Pack[] }).data;
 
       // TODO REMOVE DEBUG CODE
-      const response = await fetch(
-        `https://github.com/fable-community/fable-pack-utawarerumono/raw/main/manifest.json`,
-      );
       // deno-lint-ignore no-explicit-any
-      data.packs = [{ manifest: await response.json() } as any];
+      data.packs = [{ manifest: mock } as any];
     }
 
     return ctx.render(data);
