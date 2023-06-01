@@ -10,6 +10,9 @@ import type { Schema } from '$fable/src/types.ts';
 
 import colors from '../theme.ts';
 
+import LinkIcon from 'icons/link.tsx';
+import PlusIcon from 'icons/plus.tsx';
+
 export default ({ user, packs }: { user: User; packs: Schema.Pack[] }) => {
   const styles = createStyle({
     wrapper: {
@@ -56,7 +59,10 @@ export default ({ user, packs }: { user: User; packs: Schema.Pack[] }) => {
       backgroundColor: 'transparent',
       color: colors.grey,
       border: `4px dashed ${colors.grey}`,
-      fontSize: '42px',
+      '> svg': {
+        width: '42px',
+        height: 'auto',
+      },
       ':hover': {
         transform: 'translateY(-8px)',
       },
@@ -71,28 +77,28 @@ export default ({ user, packs }: { user: User; packs: Schema.Pack[] }) => {
 
       <Avatar id={user?.id} avatar={user?.avatar} />
 
-      <div className={styles.names.wrapper}>
+      <div class={styles.names.wrapper}>
         {packs.map((pack) => (
-          <a className={styles.names.card} href={pack.manifest.id}>
+          <a class={styles.names.card} href={pack.manifest.id}>
             {pack.manifest.image
               ? (
                 <img
                   src={pack.manifest.image}
-                  className={styles.names.cardImage}
+                  class={styles.names.cardImage}
                 />
               )
               : undefined}
-            <div className={styles.names.cardTitle}>
+            <div class={styles.names.cardTitle}>
               {pack.manifest.title ?? pack.manifest.id}
             </div>
           </a>
         ))}
 
-        <a className={styles.names.cardPlaceholder} href={'/import'}>
-          <i class='bx bx-link'></i>
+        <a class={styles.names.cardPlaceholder} href={'/import'}>
+          <LinkIcon />
         </a>
-        <a className={styles.names.cardPlaceholder} href={'/new'}>
-          <i class='bx bxs-folder-plus'></i>
+        <a class={styles.names.cardPlaceholder} href={'/new'}>
+          <PlusIcon />
         </a>
       </div>
     </>

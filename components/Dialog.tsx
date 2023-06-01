@@ -33,12 +33,12 @@ export default (
       <div
         data-dialog-cb={name}
         data-dialog-cancel={name}
-        className={styles.names.wrapper}
+        class={styles.names.wrapper}
       />
 
       <div
         data-dialog-cb={name}
-        className={styles.names.container}
+        class={styles.names.container}
       >
         {children}
       </div>

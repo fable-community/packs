@@ -20,10 +20,7 @@ export default ({ Component }: AppProps) => {
           rel='stylesheet'
           href='https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap'
         />
-        <link
-          rel='stylesheet'
-          href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
-        />
+
         {/* hint to browsers that the app is using a dark theme */}
         <style>{':root { color-scheme: dark; }'}</style>
         {/* binds code to handle displaying and hiding dialogs */}

@@ -4,6 +4,8 @@ import { createStyle } from 'flcss';
 
 import colors from '../theme.ts';
 
+import DiscordIcon from 'icons/brand-discord-filled.tsx';
+
 export default () => {
   const styles = createStyle({
     container: {
@@ -42,9 +44,10 @@ export default () => {
       },
     },
     icon: {
-      color: 'inherit',
-      margin: '2px 0.5em 0',
-      fontSize: '16px',
+      width: '16px',
+      height: 'auto',
+      margin: '0 0.5em',
+      stroke: 'none',
     },
   });
 
@@ -54,11 +57,11 @@ export default () => {
         <style>{styles.bundle}</style>
       </Head>
       <form method='post' action='/api/login'>
-        <div className={styles.names.container}>
+        <div class={styles.names.container}>
           <img src='/icon.png' class={styles.names.logo} />
-          <button className={styles.names.button} type='submit'>
+          <button class={styles.names.button} type='submit'>
             Login with Discord
-            <i class={`bx bxl-discord-alt ${styles.names.icon}`} />
+            <DiscordIcon class={`${styles.names.icon}`} />
           </button>
         </div>
       </form>
