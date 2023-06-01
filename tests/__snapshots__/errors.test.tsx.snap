@@ -1,0 +1,5 @@
+export const snapshot = {};
+
+snapshot[`/404 1`] = `'<h1 style="letter-spacing:1em;">404</h1>'`;
+
+snapshot[`/500 1`] = `'<h1 style="letter-spacing:1em;">OOPS</h1>'`;

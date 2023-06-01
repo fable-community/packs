@@ -32,6 +32,8 @@ export const handler: Handlers = {
 
     const endpoint = Deno.env.get('API_ENDPOINT');
 
+    const pathname = new URL(req.url).pathname.substring(1);
+
     if (cookies.accessToken) {
       const response = await fetch('https://discord.com/api/users/@me', {
         method: 'GET',
@@ -56,6 +58,12 @@ export const handler: Handlers = {
       // TODO REMOVE DEBUG CODE
       // deno-lint-ignore no-explicit-any
       data.packs = [{ manifest: mock } as any];
+    }
+
+    if (
+      pathname && !data.packs?.some(({ manifest }) => manifest.id === pathname)
+    ) {
+      return ctx.renderNotFound();
     }
 
     return ctx.render(data);

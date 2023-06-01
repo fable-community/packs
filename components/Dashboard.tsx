@@ -100,10 +100,10 @@ export default ({ user, packs }: { user: User; packs: Schema.Pack[] }) => {
           </a>
         ))}
 
-        <a class={styles.names.cardPlaceholder} href={'/import'}>
+        <a class={styles.names.cardPlaceholder} href={`?import`}>
           <LinkIcon />
         </a>
-        <a class={styles.names.cardPlaceholder} href={'/new'}>
+        <a class={styles.names.cardPlaceholder} href={`?new`}>
           <PlusIcon />
         </a>
       </div>

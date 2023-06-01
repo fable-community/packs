@@ -6,29 +6,42 @@
 
 import '$std/dotenv/load.ts';
 
-import { Manifest, start } from '$fresh/server.ts';
-
-import config from './deno.json' assert { type: 'json' };
+import { type Manifest, start } from '$fresh/server.ts';
 
 import * as app from './routes/_app.tsx';
-import * as index from './routes/index.tsx';
+import * as dashboard from './routes/dashboard.tsx';
 import * as callback from './routes/callback.tsx';
+
+import * as _404 from './routes/_404.tsx';
+import * as _500 from './routes/_500.tsx';
 
 import * as login from './routes/api/login.ts';
 import * as logout from './routes/api/logout.ts';
 
+import config from './deno.json' assert { type: 'json' };
+
 const manifest: Manifest = {
   config,
   baseUrl: import.meta.url,
-  islands: {
-    // Islands enable client-side interactivity
-  },
+  // islands enable client-side interactivity
+  islands: {},
   routes: {
-    // pages
+    // main template
     './routes/_app.tsx': app,
-    './routes/index.tsx': index,
+    //
+    // pages
+    //
     './routes/callback.tsx': callback,
+    './routes/index.tsx': dashboard,
+    './routes/[id].tsx': dashboard,
+    //
+    // errors
+    //
+    './routes/_404.tsx': _404,
+    './routes/_500.tsx': _500,
+    //
     // api
+    //
     './routes/api/login.ts': login,
     './routes/api/logout.ts': logout,
   },
