@@ -1,16 +1,16 @@
-# Pack Editor
+### Fable
 
 A portal app to create, manage and publish community packs
 
-<https://pack-editor.deno.dev>
+<https://packs.deno.dev>
 
 ### Contribute
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/fable-community/pack-editor)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/fable-community/packs)
 
 ```
-git clone https://github.com/fable-community/pack-editor
-cd pack-editor
+git clone https://github.com/fable-community/packs
+cd packs
 deno task start
 ```
 

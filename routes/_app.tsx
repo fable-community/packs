@@ -8,7 +8,7 @@ export default function App({ Component }: AppProps) {
   return (
     <html>
       <Head>
-        <title>Pack Editor</title>
+        <title>Community Packs</title>
         <link rel='icon' type='image/x-icon' href='/favicon.ico' />
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link
