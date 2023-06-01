@@ -4,7 +4,7 @@ import { AppProps } from '$fresh/src/server/types.ts';
 
 import colors from '../theme.ts';
 
-export default function App({ Component }: AppProps) {
+export default ({ Component }: AppProps) => {
   return (
     <html>
       <Head>
@@ -26,6 +26,8 @@ export default function App({ Component }: AppProps) {
         />
         {/* hint to browsers that the app is using a dark theme */}
         <style>{':root { color-scheme: dark; }'}</style>
+        {/* binds code to handle displaying and hiding dialogs */}
+        <script type='text/javascript' src='/dialogs.js' />
       </Head>
       <body
         style={{
@@ -42,10 +44,11 @@ export default function App({ Component }: AppProps) {
           alignItems: 'center',
           justifyContent: 'center',
           overflow: 'hidden auto',
+          userSelect: 'none',
         }}
       >
         <Component />
       </body>
     </html>
   );
-}
+};

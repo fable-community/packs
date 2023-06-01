@@ -55,6 +55,7 @@ export const handler: Handlers = {
       const response = await fetch(
         `https://github.com/fable-community/fable-pack-utawarerumono/raw/main/manifest.json`,
       );
+      // deno-lint-ignore no-explicit-any
       data.packs = [{ manifest: await response.json() } as any];
     }
 
@@ -62,8 +63,8 @@ export const handler: Handlers = {
   },
 };
 
-export default function ({ data }: PageProps<Data>) {
+export default ({ data }: PageProps<Data>) => {
   return data.user
     ? <Dashboard user={data.user} packs={data.packs ?? []} />
     : <Login />;
-}
+};

@@ -4,7 +4,7 @@ import { createStyle } from 'flcss';
 
 import colors from '../theme.ts';
 
-export default function () {
+export default () => {
   const styles = createStyle({
     container: {
       display: 'flex',
@@ -64,4 +64,4 @@ export default function () {
       </form>
     </>
   );
-}
+};

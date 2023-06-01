@@ -10,9 +10,7 @@ import type { Schema } from '$fable/src/types.ts';
 
 import colors from '../theme.ts';
 
-export default function (
-  { user, packs }: { user: User; packs: Schema.Pack[] },
-) {
+export default ({ user, packs }: { user: User; packs: Schema.Pack[] }) => {
   const styles = createStyle({
     wrapper: {
       display: 'flex',
@@ -99,4 +97,4 @@ export default function (
       </div>
     </>
   );
-}
+};
