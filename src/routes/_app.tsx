@@ -9,6 +9,7 @@ export default ({ Component }: AppProps) => {
     <html>
       <Head>
         <title>Community Packs</title>
+        <link rel='manifest' href='/manifest.json' />
         <link rel='icon' type='image/x-icon' href='/favicon.ico' />
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link
