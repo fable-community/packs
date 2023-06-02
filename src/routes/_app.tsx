@@ -2,7 +2,7 @@ import { Head } from '$fresh/runtime.ts';
 
 import { AppProps } from '$fresh/src/server/types.ts';
 
-import colors from '../theme.ts';
+import colors from '../utils/theme.ts';
 
 export default ({ Component }: AppProps) => {
   return (

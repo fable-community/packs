@@ -8,15 +8,15 @@ import '$std/dotenv/load.ts';
 
 import { type Manifest, start } from '$fresh/server.ts';
 
-import * as app from './routes/_app.tsx';
-import * as dashboard from './routes/dashboard.tsx';
-import * as callback from './routes/callback.tsx';
+import * as app from './src/routes/_app.tsx';
+import * as index from './src/routes/index.tsx';
+import * as callback from './src/routes/callback.tsx';
 
-import * as _404 from './routes/_404.tsx';
-import * as _500 from './routes/_500.tsx';
+import * as _404 from './src/routes/_404.tsx';
+import * as _500 from './src/routes/_500.tsx';
 
-import * as login from './routes/api/login.ts';
-import * as logout from './routes/api/logout.ts';
+import * as login from './src/api/login.ts';
+import * as logout from './src/api/logout.ts';
 
 import config from './deno.json' assert { type: 'json' };
 
@@ -32,8 +32,8 @@ const manifest: Manifest = {
     // pages
     //
     './routes/callback.tsx': callback,
-    './routes/index.tsx': dashboard,
-    './routes/[id].tsx': dashboard,
+    './routes/index.tsx': index,
+    './routes/[id].tsx': index,
     //
     // errors
     //

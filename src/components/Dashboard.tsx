@@ -4,12 +4,14 @@ import { createStyle } from 'flcss';
 
 import Avatar from './Avatar.tsx';
 
-import type { Schema } from '$fable/src/types.ts';
-
-import colors from '../theme.ts';
+import colors from '../utils/theme.ts';
 
 import LinkIcon from 'icons/link.tsx';
 import PlusIcon from 'icons/plus.tsx';
+
+import type { Schema } from 'fable/src/types.ts';
+
+import type { PageProps } from '$fresh/server.ts';
 
 type User = {
   id: string;
@@ -19,7 +21,19 @@ type User = {
   avatar?: string;
 };
 
-export default ({ user, packs }: { user: User; packs: Schema.Pack[] }) => {
+export interface DashboardData {
+  user?: User;
+  packs?: Schema.Pack[];
+}
+
+export default ({ data, url, params }: PageProps<DashboardData>) => {
+  const { searchParams } = url;
+
+  // deno-lint-ignore no-non-null-assertion
+  const user = data.user!;
+
+  const packs = data.packs ?? [];
+
   const styles = createStyle({
     wrapper: {
       display: 'flex',

@@ -4,7 +4,7 @@ import { assertSnapshot } from '$std/testing/snapshot.ts';
 
 import { stub } from '$std/testing/mock.ts';
 
-import Login from '../components/Login.tsx';
+import Login from '../src/components/Login.tsx';
 
 Deno.test('<Login/>', async (test) => {
   const mathStub = stub(

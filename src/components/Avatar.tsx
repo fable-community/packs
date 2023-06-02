@@ -2,27 +2,22 @@ import { Head } from '$fresh/runtime.ts';
 
 import { createStyle } from 'flcss';
 
-import colors from '../theme.ts';
+import colors from '../utils/theme.ts';
 
-import DiscordIcon from 'icons/brand-discord-filled.tsx';
+import Dialog from './Dialog.tsx';
 
-export default () => {
+import LogoutIcon from 'icons/logout.tsx';
+
+export default ({ id, avatar }: { id?: string; avatar?: string }) => {
   const styles = createStyle({
-    container: {
-      display: 'flex',
-      position: 'relative',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: colors.embed,
-      borderRadius: '10px',
-      padding: '0 5em',
-      height: '60vh',
-    },
     logo: {
-      position: 'absolute',
+      cursor: 'pointer',
+      position: 'fixed',
       width: '32px',
-      height: 'auto',
+      height: '32px',
       top: '2em',
+      right: '2em',
+      borderRadius: '100%',
     },
     button: {
       display: 'grid',
@@ -31,12 +26,11 @@ export default () => {
       alignItems: 'center',
       gap: '0.5em',
 
-      color: 'inherit',
       cursor: 'pointer',
-      backgroundColor: colors.discord,
+      backgroundColor: colors.grey,
       fontFamily: 'inherit',
       fontSize: 'inherit',
-      fontWeight: '600',
+      fontWeight: 600,
 
       border: '0',
       minWidth: '160px',
@@ -48,9 +42,7 @@ export default () => {
       },
 
       '> svg': {
-        marginTop: '2px',
-        stroke: 'none',
-        width: '16px',
+        width: '21px',
         height: 'auto',
       },
     },
@@ -61,15 +53,22 @@ export default () => {
       <Head>
         <style>{styles.bundle}</style>
       </Head>
-      <form method='post' action='/api/login'>
-        <div class={styles.names.container}>
-          <img src='/icon.png' class={styles.names.logo} />
+      <img
+        data-dialog={'logout'}
+        class={styles.names.logo}
+        src={`https://cdn.discordapp.com/${
+          id && avatar ? `avatars/${id}/${avatar}.png` : 'embed/avatars/0.png'
+        }`}
+      />
+
+      <Dialog name={'logout'}>
+        <form method='post' action='/api/logout'>
           <button class={styles.names.button} type='submit'>
-            Login with Discord
-            <DiscordIcon />
+            Log Out
+            <LogoutIcon />
           </button>
-        </div>
-      </form>
+        </form>
+      </Dialog>
     </>
   );
 };

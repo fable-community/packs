@@ -6,7 +6,7 @@ import { assertSnapshot } from '$std/testing/snapshot.ts';
 
 import { stub } from '$std/testing/mock.ts';
 
-import Dashboard from '../components/Dashboard.tsx';
+import Dashboard from '../src/components/Dashboard.tsx';
 
 import mock from './mock.json' assert { type: 'json' };
 

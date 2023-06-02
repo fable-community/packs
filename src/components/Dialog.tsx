@@ -4,7 +4,7 @@ import { ComponentChildren } from 'preact';
 
 import { createStyle } from 'flcss';
 
-import colors from '../theme.ts';
+import colors from '../utils/theme.ts';
 
 export default (
   { children, name }: { children: ComponentChildren; name: string },

@@ -10,22 +10,23 @@
         "no-eval",
         "no-non-null-assertion",
         "no-throw-literal",
-        "no-sparse-arrays"
+        "no-sparse-arrays",
+        "no-external-import"
       ]
     }
-  },
-  "lock": false,
-  "tasks": {
-    "start": "deno run -A --watch=static/,routes/ main.ts"
-  },
-  "importMap": "./import_map.json",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact"
   },
   "fmt": {
     "useTabs": false,
     "singleQuote": true,
     "indentWidth": 2
+  },
+  "lock": false,
+  "importMap": "./import_map.json",
+  "tasks": {
+    "start": "deno run -A --watch=static/,routes/ main.ts"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
   }
 }

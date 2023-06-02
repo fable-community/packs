@@ -16,7 +16,8 @@
     "codespaces": {
       "openFiles": [
         "main.ts",
-        "routes/index.tsx"
+        "src/routes/index.tsx",
+        "src/components/Dashboard.tsx"
       ]
     }
   },

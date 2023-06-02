@@ -2,7 +2,7 @@ import { Handlers } from '$fresh/server.ts';
 
 import { setCookie } from '$std/http/cookie.ts';
 
-import nanoid from '../../utils/nanoid.ts';
+import nanoid from '../utils/nanoid.ts';
 
 export const handler: Handlers = {
   POST(req) {
