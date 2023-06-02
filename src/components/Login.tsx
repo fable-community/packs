@@ -6,6 +6,8 @@ import colors from '../utils/theme.ts';
 
 import DiscordIcon from 'icons/brand-discord-filled.tsx';
 
+import strings from '../../i18n/en-US.json' assert { type: 'json' };
+
 export default () => {
   const styles = createStyle({
     container: {
@@ -65,7 +67,7 @@ export default () => {
         <div class={styles.names.container}>
           <img src='/icon.png' class={styles.names.logo} />
           <button class={styles.names.button} type='submit'>
-            Login with Discord
+            {strings.loginWithDiscord}
             <DiscordIcon />
           </button>
         </div>

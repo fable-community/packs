@@ -1,21 +1,16 @@
-// deno-lint-ignore-file no-explicit-any
-
 import { renderToString } from 'preact-render-to-string';
 
 import { assertSnapshot } from '$std/testing/snapshot.ts';
 
 import { stub } from '$std/testing/mock.ts';
 
+import Card from '../src/components/Card.tsx';
 import Dashboard from '../src/components/Dashboard.tsx';
 
 import mock from './mock.json' assert { type: 'json' };
 
-Deno.test('<Login/>', async (test) => {
-  const mathStub = stub(
-    Math,
-    'random',
-    () => 0,
-  );
+Deno.test('<Dashboard/>', async (test) => {
+  const mathStub = stub(Math, 'random', () => 0);
 
   try {
     await assertSnapshot(
@@ -31,12 +26,24 @@ Deno.test('<Login/>', async (test) => {
               avatar: 'avatar_hash',
               username: 'username',
             },
-            packs: [
-              { manifest: mock } as any,
-            ],
+            packs: {},
           }}
         />,
       ),
+    );
+  } finally {
+    mathStub.restore();
+  }
+});
+
+Deno.test('<Card/>', async (test) => {
+  const mathStub = stub(Math, 'random', () => 0);
+
+  try {
+    await assertSnapshot(
+      test,
+      // deno-lint-ignore no-explicit-any
+      renderToString(<Card pack={{ manifest: mock } as any} />),
     );
   } finally {
     mathStub.restore();

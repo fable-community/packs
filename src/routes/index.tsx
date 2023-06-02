@@ -4,7 +4,11 @@ import { getCookies } from '$std/http/cookie.ts';
 
 import Login from '../components/Login.tsx';
 
-import Dashboard, { type DashboardData } from '../components/Dashboard.tsx';
+import Dashboard, {
+  type DashboardData,
+  type Schema,
+  type User,
+} from '../components/Dashboard.tsx';
 
 // TODO REMOVE DEBUG CODE
 import mock from '../../tests/mock.json' assert { type: 'json' };
@@ -16,9 +20,9 @@ interface Cookies {
 
 export const handler: Handlers = {
   async GET(req, ctx) {
-    const data: DashboardData = {};
+    const packId = ctx.params.id;
 
-    const selectedPackId = ctx.params.id;
+    const data = { packs: {} } as DashboardData;
 
     const cookies = getCookies(req.headers) as Cookies;
 
@@ -33,7 +37,7 @@ export const handler: Handlers = {
         },
       });
 
-      data.user = await response.json() as DashboardData['user'];
+      data.user = await response.json() as User;
     } else if (cookies.refreshToken) {
       // TODO support refreshing the access token
     }
@@ -43,18 +47,16 @@ export const handler: Handlers = {
       //   method: 'GET',
       // });
 
-      // data.packs = (await response.json() as { data: DashboardData['packs'] }).data;
+      // const packs = (await response.json() as { data: Schema.Pack[] }).data;
+      const packs = [{ manifest: mock }] as unknown as Schema.Pack[]; // TODO REMOVE DEBUG CODE
 
-      // TODO REMOVE DEBUG CODE
-      // deno-lint-ignore no-explicit-any
-      data.packs = [{ manifest: mock } as any];
+      data.packs = packs.reduce((accumulator, pack) => {
+        return { ...accumulator, [pack.manifest.id]: pack };
+      }, {});
     }
 
-    if (
-      // if the selected pack is not found in the user's packs
-      selectedPackId &&
-      !data.packs?.some(({ manifest }) => manifest.id === selectedPackId)
-    ) {
+    // if the selected pack is not found in the user's packs
+    if (packId && !(packId in data.packs)) {
       return ctx.renderNotFound();
     }
 

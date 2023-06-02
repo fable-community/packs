@@ -6,7 +6,9 @@ import colors from '../utils/theme.ts';
 
 import Dialog from './Dialog.tsx';
 
-import LogoutIcon from 'icons/logout.tsx';
+import IconLogout from 'icons/logout.tsx';
+
+import strings from '../../i18n/en-US.json' assert { type: 'json' };
 
 export default ({ id, avatar }: { id?: string; avatar?: string }) => {
   const styles = createStyle({
@@ -64,8 +66,8 @@ export default ({ id, avatar }: { id?: string; avatar?: string }) => {
       <Dialog name={'logout'}>
         <form method='post' action='/api/logout'>
           <button class={styles.names.button} type='submit'>
-            Log Out
-            <LogoutIcon />
+            {strings.logout}
+            <IconLogout />
           </button>
         </form>
       </Dialog>

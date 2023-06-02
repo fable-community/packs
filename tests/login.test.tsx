@@ -7,11 +7,7 @@ import { stub } from '$std/testing/mock.ts';
 import Login from '../src/components/Login.tsx';
 
 Deno.test('<Login/>', async (test) => {
-  const mathStub = stub(
-    Math,
-    'random',
-    () => 0,
-  );
+  const mathStub = stub(Math, 'random', () => 0);
 
   try {
     await assertSnapshot(

@@ -17,8 +17,20 @@ window.onload = () => {
   dialogsCancels.forEach((ele) =>
     ele.onmousedown = () => {
       const name = ele.getAttribute('data-dialog-cancel');
+
       document.querySelectorAll(`[data-dialog-cb="${name}"]`).forEach((ele) => {
-        ele.style.visibility = 'hidden';
+        const action = ele.getAttribute('data-dialog-cb-action');
+
+        switch (action) {
+          case 'back':
+            window.open('/', '_self');
+            break;
+          case 'hide':
+            ele.style.visibility = 'hidden';
+            break;
+          default:
+            break;
+        }
       });
     }
   );
@@ -26,8 +38,21 @@ window.onload = () => {
   // pressing `esc` will cancel all dialogs
   onkeydown = (e) => {
     if (e.key === 'Escape') {
+      e.preventDefault();
+
       document.querySelectorAll('[data-dialog-cb]').forEach((ele) => {
-        ele.style.visibility = 'hidden';
+        const action = ele.getAttribute('data-dialog-cb-action');
+
+        switch (action) {
+          case 'back':
+            window.open('/', '_self');
+            break;
+          case 'hide':
+            ele.style.visibility = 'hidden';
+            break;
+          default:
+            break;
+        }
       });
     }
   };
