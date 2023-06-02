@@ -22,14 +22,19 @@ Deno.test('<Login/>', async (test) => {
       test,
       renderToString(
         <Dashboard
-          user={{
-            id: 'id',
-            avatar: 'avatar_hash',
-            username: 'username',
+          route='/'
+          url={new URL('http://localhost:8080')}
+          params={{}}
+          data={{
+            user: {
+              id: 'id',
+              avatar: 'avatar_hash',
+              username: 'username',
+            },
+            packs: [
+              { manifest: mock } as any,
+            ],
           }}
-          packs={[
-            { manifest: mock } as any,
-          ]}
         />,
       ),
     );
