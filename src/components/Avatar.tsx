@@ -21,6 +21,10 @@ export default ({ id, avatar }: { id?: string; avatar?: string }) => {
       right: '2em',
       borderRadius: '100%',
     },
+    container: {
+      top: 'calc(2em - 3px)',
+      right: 'calc(3.5em + 32px)',
+    },
     button: {
       display: 'grid',
       gridTemplateColumns: '1fr',
@@ -28,18 +32,11 @@ export default ({ id, avatar }: { id?: string; avatar?: string }) => {
       alignItems: 'center',
       gap: '0.5em',
 
-      cursor: 'pointer',
-      backgroundColor: colors.grey,
-      fontFamily: 'inherit',
-      fontSize: 'inherit',
-      fontWeight: 600,
-
-      border: '0',
       minWidth: '160px',
       padding: '0.75em 1em',
+      backgroundColor: colors.red,
 
       ':hover': {
-        borderRadius: '2px',
         boxShadow: 'inset 0px 0px 0px 2px white',
       },
 
@@ -63,7 +60,7 @@ export default ({ id, avatar }: { id?: string; avatar?: string }) => {
         }`}
       />
 
-      <Dialog name={'logout'}>
+      <Dialog name={'logout'} class={styles.names.container}>
         <form method='post' action='/api/logout'>
           <button class={styles.names.button} type='submit'>
             {strings.logout}

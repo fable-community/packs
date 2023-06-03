@@ -45,18 +45,22 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
   const styles = createStyle({
     wrapper: {
       display: 'flex',
+      flexWrap: 'wrap',
       justifyContent: 'center',
       width: '100%',
       padding: '0 10vw',
-      gap: '3em',
-      flexWrap: 'wrap',
       margin: '5vh 0',
+      gap: '3em',
     },
     placeholder: {
       display: 'flex',
-      cursor: 'pointer',
       alignItems: 'center',
       justifyContent: 'center',
+
+      // TODO
+      opacity: '0.3',
+      pointerEvents: 'none',
+      //
 
       width: '128px',
       minHeight: '32px',

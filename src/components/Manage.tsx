@@ -27,50 +27,32 @@ export default (props: { pack?: Schema.Pack }) => {
     container: {
       display: 'grid',
       alignItems: 'center',
-      gridTemplateColumns: 'min-content 1fr min-content',
-      gridTemplateRows: 'min-content 1fr',
-      padding: '2em',
-
-      '> input': {
-        color: '#ffffff',
-        background: 'transparent',
-
-        fontFamily: 'Noto Sans, sans-serif',
-        fontWeight: 600,
-        fontSize: '1.2em',
-
-        lineHeight: 1.5,
-        margin: '0 2em',
-
-        border: '0',
-        ':focus': {
-          outline: '0',
-        },
-      },
+      gridTemplateColumns: '48px 1fr 32px',
+      gridTemplateRows: '48px auto',
+      padding: '1.5em',
+      gap: '2em',
     },
     image: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-
-      width: '48px',
-      height: '48px',
+      boxSizing: 'border-box',
 
       borderRadius: '100%',
+      height: '100%',
+      width: '100%',
+
       border: `2px solid ${colors.grey}`,
 
       '> svg': {
         width: '28px',
-        height: '28px',
+        height: 'auto',
         cursor: 'pointer',
         color: colors.grey,
       },
     },
-    input: {
-      //
-    },
     close: {
-      width: '32px',
+      width: '100%',
       height: 'auto',
       cursor: 'pointer',
     },
@@ -88,7 +70,11 @@ export default (props: { pack?: Schema.Pack }) => {
         class={styles.names.wrapper}
         action={'back'}
       >
-        <form class={styles.names.container}>
+        <form
+          method='post'
+          action={'/api/publish'}
+          class={styles.names.container}
+        >
           <div
             class={styles.names.image}
             style={{
@@ -104,7 +90,6 @@ export default (props: { pack?: Schema.Pack }) => {
             type='text'
             placeholder={strings.packTitle}
             value={pack.title ?? pack.id}
-            class={styles.names.input}
           />
 
           <IconClose data-dialog-cancel={'manage'} class={styles.names.close} />

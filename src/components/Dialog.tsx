@@ -19,6 +19,7 @@ export default (
 
   const styles = createStyle({
     wrapper: {
+      zIndex: 2,
       position: 'absolute',
       visibility: visible ? 'visible' : 'hidden',
       background: colors.embed,
@@ -29,8 +30,10 @@ export default (
       opacity: 0.8,
     },
     container: {
+      zIndex: 3,
       position: 'absolute',
       visibility: visible ? 'visible' : 'hidden',
+      overflow: 'hidden auto',
     },
   });
 

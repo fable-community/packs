@@ -9,14 +9,11 @@ import type { Schema } from './Dashboard.tsx';
 export default ({ pack }: { pack: Schema.Pack }) => {
   const styles = createStyle({
     card: {
-      cursor: 'pointer',
-
       width: '128px',
       minHeight: '32px',
 
       color: 'inherit',
       backgroundColor: colors.embed,
-      textDecoration: 'none',
 
       borderRadius: '8px',
       padding: '24px 16px',
@@ -24,7 +21,7 @@ export default ({ pack }: { pack: Schema.Pack }) => {
       transition: 'background-color .125s, box-shadow .125s, transform .125s',
 
       ':hover': {
-        backgroundColor: 'rgb(35, 36, 40)',
+        backgroundColor: colors.embedHighlight,
         transform: 'translateY(-8px)',
         boxShadow: '0 8px 16px rgba(0,0,0,.2)',
       },
