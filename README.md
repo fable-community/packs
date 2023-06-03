@@ -8,12 +8,10 @@ A portal app to create, manage and publish community packs
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/fable-community/packs)
 <a href="https://fresh.deno.dev">
-<img width="197" height="33" src="https://fresh.deno.dev/fresh-badge-dark.svg" alt="Made with Fresh" />
+<img width="175" height="33" src="https://fresh.deno.dev/fresh-badge-dark.svg" alt="Made with Fresh" />
 </a>
 
 ```
-git clone https://github.com/fable-community/packs
-cd packs
 deno task start
 ```
 

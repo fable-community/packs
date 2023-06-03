@@ -121,7 +121,9 @@ export default (props: { pack?: Schema.Pack }) => {
           <input type={'hidden'} name={'pack'} value={JSON.stringify(pack)} />
 
           <div class={styles.names.image}>
-            <IconImage />
+            {!pack.image
+              ? <IconImage data-image-ph={'pack_image'} />
+              : undefined}
             <img src={pack.image ?? ''} data-image-cb={'pack_image'} />
             <label for={'pack_image'} />
             <input
