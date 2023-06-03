@@ -39,6 +39,7 @@ export default (props: { pack?: Schema.Pack }) => {
       justifyContent: 'center',
       boxSizing: 'border-box',
 
+      cursor: 'pointer',
       borderRadius: '100%',
       height: '100%',
       width: '100%',
@@ -48,7 +49,6 @@ export default (props: { pack?: Schema.Pack }) => {
       '> svg': {
         width: '28px',
         height: 'auto',
-        cursor: 'pointer',
         color: colors.grey,
       },
     },

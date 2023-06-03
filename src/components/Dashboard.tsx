@@ -57,11 +57,6 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
       alignItems: 'center',
       justifyContent: 'center',
 
-      // TODO
-      opacity: '0.3',
-      pointerEvents: 'none',
-      //
-
       width: '128px',
       minHeight: '32px',
       borderRadius: '8px',
@@ -77,8 +72,21 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
       ':hover': {
         transform: 'translateY(-8px)',
       },
+
+      '[disabled]': {
+        opacity: '0.3',
+        pointerEvents: 'none',
+      },
     },
   });
+
+  if (packId) {
+    return <Manage pack={data.packs[packId]} />;
+  }
+
+  if (hasNew) {
+    return <Manage pack={undefined} />;
+  }
 
   return (
     <>
@@ -95,11 +103,9 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
           <IconPlus />
         </a>
 
-        <a class={styles.names.placeholder} href={`?import`}>
+        <a disabled class={styles.names.placeholder} href={`?import`}>
           <IconLink />
         </a>
-
-        {packId ? <Manage pack={data.packs[packId]} /> : undefined}
       </div>
     </>
   );
