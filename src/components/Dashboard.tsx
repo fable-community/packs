@@ -72,11 +72,6 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
       ':hover': {
         transform: 'translateY(-8px)',
       },
-
-      '[disabled]': {
-        opacity: '0.3',
-        pointerEvents: 'none',
-      },
     },
   });
 

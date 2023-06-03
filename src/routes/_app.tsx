@@ -26,6 +26,11 @@ export default ({ Component }: AppProps) => {
       overflow: 'hidden auto',
       userSelect: 'none',
 
+      ' [disabled]': {
+        opacity: '0.3',
+        pointerEvents: 'none',
+      },
+
       ' button': {
         border: '0',
         fontWeight: 600,
@@ -33,12 +38,9 @@ export default ({ Component }: AppProps) => {
         fontFamily: 'inherit',
         fontSize: 'inherit',
         padding: '0.75em 1em',
+        cursor: 'pointer',
 
-        ':not([disabled])': {
-          cursor: 'pointer',
-        },
-
-        ':not([disabled]):hover': {
+        ':hover': {
           borderRadius: '2px',
           boxShadow: 'inset 0px 0px 0px 2px white',
         },
@@ -90,7 +92,10 @@ export default ({ Component }: AppProps) => {
         />
 
         {/* binds code to handle displaying and hiding dialogs */}
-        <script async src='/dialogs.js' />
+        <script async src='/_dialogs.js' />
+
+        {/* binds code to handle previewing input images */}
+        <script async src='/_images.js' />
 
         {/* hint to browsers that the app is using a dark theme */}
         <style>{':root { color-scheme: dark; }'}</style>

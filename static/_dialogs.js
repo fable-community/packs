@@ -1,4 +1,4 @@
-window.onload = () => {
+addEventListener('load', () => {
   const dialogs = document.querySelectorAll('[data-dialog]');
 
   // handle buttons that want to show a dialog
@@ -56,4 +56,4 @@ window.onload = () => {
       });
     }
   };
-};
+});

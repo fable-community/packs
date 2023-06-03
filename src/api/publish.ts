@@ -7,6 +7,7 @@ import { getCookies } from '$std/http/cookie.ts';
 interface Data {
   pack: string;
   pack_title: string;
+  pack_image?: File;
 }
 
 interface Cookies {
@@ -15,38 +16,34 @@ interface Cookies {
 
 export const handler: Handlers = {
   async POST(req) {
-    const headers = new Headers();
+    try {
+      const headers = new Headers();
 
-    const body = await req.text();
+      const cookies = getCookies(req.headers) as Cookies;
 
-    const cookies = getCookies(req.headers) as Cookies;
+      const _endpoint = Deno.env.get('API_ENDPOINT');
 
-    // const endpoint = Deno.env.get('API_ENDPOINT');
+      if (!cookies.accessToken) {
+        throw new Error('Access token not defined');
+      }
 
-    if (!cookies.accessToken) {
-      return Response.error();
+      const formData = await req.formData();
+
+      for (const [key, value] of formData.entries()) {
+        console.log(`${key}, ${value}`);
+      }
+
+      headers.set('location', `/`);
+
+      return new Response(null, {
+        status: 303, // see other redirect
+        headers,
+      });
+    } catch (err) {
+      return new Response(err?.message, {
+        status: 403,
+        statusText: 'Forbidden',
+      });
     }
-
-    const data = body.split('&')
-      .map((entry) => {
-        const [key, value] = entry.split('=');
-
-        return [
-          decodeURIComponent(key).replace(/\+/g, ' '),
-          decodeURIComponent(value).replace(/\+/g, ' '),
-        ];
-      })
-      .reduce((accumulator, [key, value]) => {
-        return { ...accumulator, [key]: value };
-      }, {}) as Data;
-
-    console.log(data);
-
-    headers.set('location', `/`);
-
-    return new Response(null, {
-      status: 303, // see other redirect
-      headers,
-    });
   },
 };
