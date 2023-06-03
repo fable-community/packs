@@ -10,6 +10,9 @@ import strings from '../../i18n/en-US.json' assert { type: 'json' };
 
 export default () => {
   const styles = createStyle({
+    wrapper: {
+      margin: '0 auto',
+    },
     container: {
       display: 'flex',
       position: 'relative',
@@ -33,21 +36,7 @@ export default () => {
       alignItems: 'center',
       gap: '0.5em',
 
-      color: 'inherit',
-      cursor: 'pointer',
       backgroundColor: colors.discord,
-      fontFamily: 'inherit',
-      fontSize: 'inherit',
-      fontWeight: '600',
-
-      border: '0',
-      minWidth: '160px',
-      padding: '0.75em 1em',
-
-      ':hover': {
-        borderRadius: '2px',
-        boxShadow: 'inset 0px 0px 0px 2px white',
-      },
 
       '> svg': {
         marginTop: '2px',
@@ -63,7 +52,7 @@ export default () => {
       <Head>
         <style>{styles.bundle}</style>
       </Head>
-      <form method='post' action='/api/login'>
+      <form class={styles.names.wrapper} method='post' action='/api/login'>
         <div class={styles.names.container}>
           <img src='/icon.png' class={styles.names.logo} />
           <button class={styles.names.button} type='submit'>

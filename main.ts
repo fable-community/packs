@@ -17,6 +17,7 @@ import * as _500 from './src/routes/_500.tsx';
 
 import * as login from './src/api/login.ts';
 import * as logout from './src/api/logout.ts';
+import * as publish from './src/api/publish.ts';
 
 import config from './deno.json' assert { type: 'json' };
 
@@ -44,6 +45,7 @@ const manifest: Manifest = {
     //
     './routes/api/login.ts': login,
     './routes/api/logout.ts': logout,
+    './routes/api/publish.ts': publish,
   },
 };
 

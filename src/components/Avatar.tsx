@@ -32,13 +32,7 @@ export default ({ id, avatar }: { id?: string; avatar?: string }) => {
       alignItems: 'center',
       gap: '0.5em',
 
-      minWidth: '160px',
-      padding: '0.75em 1em',
       backgroundColor: colors.red,
-
-      ':hover': {
-        boxShadow: 'inset 0px 0px 0px 2px white',
-      },
 
       '> svg': {
         width: '21px',

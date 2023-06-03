@@ -13,24 +13,34 @@ export default ({ Component }: AppProps) => {
       display: 'flex',
       minWidth: '100vw',
       minHeight: '100vh',
-      backgroundColor: colors.background,
+
       color: colors.foreground,
-      fontFamily: 'Noto Sans, sans-serif',
+      backgroundColor: colors.background,
+
       fontWeight: '400',
+      fontFamily: '"Noto Sans", sans-serif',
       fontSize: 'calc(12px + 0.1vw + 0.1vh)',
       lineHeight: '1.5',
+
       alignItems: 'center',
       overflow: 'hidden auto',
       userSelect: 'none',
 
       ' button': {
-        cursor: 'pointer',
+        border: '0',
+        fontWeight: 600,
+        minWidth: '160px',
         fontFamily: 'inherit',
         fontSize: 'inherit',
-        fontWeight: 600,
-        border: '0',
-        ':hover': {
+        padding: '0.75em 1em',
+
+        ':not([disabled])': {
+          cursor: 'pointer',
+        },
+
+        ':not([disabled]):hover': {
           borderRadius: '2px',
+          boxShadow: 'inset 0px 0px 0px 2px white',
         },
       },
 
@@ -59,11 +69,14 @@ export default ({ Component }: AppProps) => {
   });
 
   return (
-    <html>
+    <>
       <Head>
-        <style>{styles.bundle}</style>
         <title>Community Packs</title>
         <link rel='manifest' href='/manifest.json' />
+        <meta
+          name='description'
+          content='A portal app to create, manage and publish Fable Community Packs'
+        />
         <link rel='icon' type='image/x-icon' href='/favicon.ico' />
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link
@@ -76,15 +89,17 @@ export default ({ Component }: AppProps) => {
           href='https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap'
         />
 
+        {/* binds code to handle displaying and hiding dialogs */}
+        <script async src='/dialogs.js' />
+
         {/* hint to browsers that the app is using a dark theme */}
         <style>{':root { color-scheme: dark; }'}</style>
 
-        {/* binds code to handle displaying and hiding dialogs */}
-        <script type='text/javascript' src='/dialogs.js' />
+        <style>{styles.bundle}</style>
       </Head>
       <body class={styles.names.body}>
         <Component />
       </body>
-    </html>
+    </>
   );
 };

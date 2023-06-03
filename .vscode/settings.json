@@ -25,5 +25,9 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  //
+  "[plaintext]": {
+    "editor.wordWrap": "wordWrapColumn"
   }
 }

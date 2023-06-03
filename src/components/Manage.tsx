@@ -29,6 +29,7 @@ export default (props: { pack?: Schema.Pack }) => {
       alignItems: 'center',
       gridTemplateColumns: '48px 1fr 32px',
       gridTemplateRows: '48px auto',
+      gridTemplateAreas: '". . ." "b b b"',
       padding: '1.5em',
       gap: '2em',
     },
@@ -56,6 +57,18 @@ export default (props: { pack?: Schema.Pack }) => {
       height: 'auto',
       cursor: 'pointer',
     },
+    button: {
+      position: 'fixed',
+      backgroundColor: colors.discord,
+      bottom: '0',
+      right: '0',
+      margin: '1.5em 3em',
+    },
+    body: {
+      gridArea: 'b',
+      background: colors.red,
+      height: '1000px',
+    },
   });
 
   return (
@@ -75,6 +88,8 @@ export default (props: { pack?: Schema.Pack }) => {
           action={'/api/publish'}
           class={styles.names.container}
         >
+          <input type='hidden' name='pack' value={JSON.stringify(pack)} />
+
           <div
             class={styles.names.image}
             style={{
@@ -88,11 +103,22 @@ export default (props: { pack?: Schema.Pack }) => {
 
           <input
             type='text'
+            name='pack_title'
             placeholder={strings.packTitle}
             value={pack.title ?? pack.id}
           />
 
           <IconClose data-dialog-cancel={'manage'} class={styles.names.close} />
+
+          {
+            /* <button class={styles.names.button} type='submit'>
+            {strings.publish}
+          </button> */
+          }
+
+          <div class={styles.names.body}>
+            {/*  */}
+          </div>
         </form>
       </Dialog>
     </>
