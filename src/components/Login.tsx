@@ -52,10 +52,10 @@ export default () => {
       <Head>
         <style>{styles.bundle}</style>
       </Head>
-      <form class={styles.names.wrapper} method='post' action='/api/login'>
+      <form class={styles.names.wrapper} method={'post'} action={'/api/login'}>
         <div class={styles.names.container}>
-          <img src='/icon.png' class={styles.names.logo} />
-          <button class={styles.names.button} type='submit'>
+          <img src={'/icon.png'} class={styles.names.logo} />
+          <button class={styles.names.button} type={'submit'}>
             {strings.loginWithDiscord}
             <DiscordIcon />
           </button>

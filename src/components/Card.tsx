@@ -18,12 +18,11 @@ export default ({ pack }: { pack: Schema.Pack }) => {
       borderRadius: '8px',
       padding: '24px 16px',
 
-      transition: 'background-color .125s, box-shadow .125s, transform .125s',
+      transition: 'background-color .125s, transform .125s',
 
       ':hover': {
         backgroundColor: colors.embedHighlight,
         transform: 'translateY(-8px)',
-        boxShadow: '0 8px 16px rgba(0,0,0,.2)',
       },
     },
     image: {

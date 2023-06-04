@@ -17,7 +17,7 @@ Deno.test('<Dashboard/>', async (test) => {
       test,
       renderToString(
         <Dashboard
-          route='/'
+          route={'/'}
           url={new URL('http://localhost:8080')}
           params={{}}
           data={{

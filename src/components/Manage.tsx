@@ -3,6 +3,7 @@ import { Head } from '$fresh/runtime.ts';
 import { createStyle } from 'flcss';
 
 import Dialog from './Dialog.tsx';
+import Maintainers from './Maintainers.tsx';
 
 import colors from '../utils/theme.ts';
 
@@ -13,14 +14,11 @@ import type { Schema } from './Dashboard.tsx';
 
 import strings from '../../i18n/en-US.json' assert { type: 'json' };
 
-const imagesTypes = [
-  'image/png',
-  'image/jpeg',
-  'image/webp',
-];
+const imagesTypes = ['image/png', 'image/jpeg', 'image/webp'];
 
-export default (props: { pack?: Schema.Pack }) => {
-  const pack: Partial<Schema.Pack['manifest']> = props.pack?.manifest ?? {};
+export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
+  const data: Partial<Schema.Pack> = props.pack ?? {};
+  const pack: Partial<Schema.Pack['manifest']> = data.manifest ?? {};
 
   const styles = createStyle({
     wrapper: {
@@ -34,12 +32,58 @@ export default (props: { pack?: Schema.Pack }) => {
       display: 'grid',
       alignItems: 'center',
       gridTemplateColumns: '48px 1fr 32px',
-      gridTemplateRows: '48px auto',
+      gridTemplateRows: '48px 1fr',
       gridTemplateAreas: '". . ." "_ _ _"',
-      padding: '1.5em',
+      margin: '1.5em',
+      width: 'calc(100% - 3em)',
+      minHeight: 'calc(100% - 3em)',
       gap: '2em',
     },
-    image: {
+    threeBoxes: {
+      gridArea: '_',
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      gap: '3em',
+
+      '> div': {
+        padding: '1em',
+        border: `2px solid ${colors.grey}`,
+        boxSizing: 'border-box',
+        borderRadius: '12px',
+        overflow: 'hidden auto',
+        width: '100%',
+      },
+
+      '@media only screen and (max-width: 730px)': {
+        '> div': {
+          minHeight: '50vh',
+        },
+      },
+
+      '@media only screen and (min-width: 730px)': {
+        display: 'grid',
+        gridTemplateRows: 'repeat(2, 1fr)',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateAreas: '". ." "_ _"',
+        '> :nth-child(3)': { gridArea: '_' },
+        '> div': {
+          maxWidth: '400px',
+          justifySelf: 'center',
+        },
+      },
+    },
+    publish: {
+      position: 'fixed',
+      backgroundColor: colors.discord,
+      margin: '1.5em 3em',
+      bottom: '0',
+      right: '0',
+    },
+  });
+
+  const header = createStyle({
+    packImage: {
       display: 'flex',
       position: 'relative',
       alignItems: 'center',
@@ -53,9 +97,7 @@ export default (props: { pack?: Schema.Pack }) => {
 
       border: `2px solid ${colors.grey}`,
 
-      '> input': {
-        width: '0',
-      },
+      '> input': { width: '0' },
 
       '> img': {
         position: 'absolute',
@@ -80,29 +122,18 @@ export default (props: { pack?: Schema.Pack }) => {
         color: colors.grey,
       },
     },
+
     close: {
       width: '100%',
       height: 'auto',
       cursor: 'pointer',
-    },
-    button: {
-      position: 'fixed',
-      backgroundColor: colors.discord,
-      bottom: '0',
-      right: '0',
-      margin: '1.5em 3em',
-    },
-    body: {
-      gridArea: '_',
-      background: colors.red,
-      height: '100px',
     },
   });
 
   return (
     <>
       <Head>
-        <style>{styles.bundle}</style>
+        <style>{styles.bundle + header.bundle}</style>
       </Head>
 
       <Dialog
@@ -120,7 +151,7 @@ export default (props: { pack?: Schema.Pack }) => {
           {/* used as a hack to send the existing pack json to the server with the post request */}
           <input type={'hidden'} name={'pack'} value={JSON.stringify(pack)} />
 
-          <div class={styles.names.image}>
+          <div class={header.names.packImage}>
             {!pack.image
               ? <IconImage data-image-ph={'pack_image'} />
               : undefined}
@@ -142,17 +173,21 @@ export default (props: { pack?: Schema.Pack }) => {
             value={pack.title ?? pack.id}
           />
 
-          <IconClose data-dialog-cancel={'manage'} class={styles.names.close} />
+          <IconClose data-dialog-cancel={'manage'} class={header.names.close} />
 
-          {
-            // <button class={styles.names.button} type='submit'>
-            //   {strings.publish}
-            // </button>
-          }
-
-          <div class={styles.names.body}>
-            {/*  */}
+          <div class={styles.names.threeBoxes}>
+            <div></div>
+            <div></div>
+            <Maintainers
+              list={props.new
+                ? [props.user]
+                : [data.owner, ...pack.maintainers ?? []]}
+            />
           </div>
+
+          <button disabled class={styles.names.publish} type={'submit'}>
+            {props.new ? strings.publish : strings.save}
+          </button>
         </form>
       </Dialog>
     </>

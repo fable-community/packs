@@ -76,11 +76,11 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
   });
 
   if (packId) {
-    return <Manage pack={data.packs[packId]} />;
+    return <Manage pack={data.packs[packId]} user={user?.id} />;
   }
 
   if (hasNew) {
-    return <Manage pack={undefined} />;
+    return <Manage new user={user?.id} />;
   }
 
   return (

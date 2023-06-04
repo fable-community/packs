@@ -19,7 +19,7 @@ export default ({ Component }: AppProps) => {
 
       fontWeight: '400',
       fontFamily: '"Noto Sans", sans-serif',
-      fontSize: 'calc(12px + 0.1vw + 0.1vh)',
+      fontSize: 'calc(12px + 0.1vw)',
       lineHeight: '1.5',
 
       alignItems: 'center',

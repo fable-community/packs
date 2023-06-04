@@ -48,10 +48,14 @@ export const handler: Handlers = {
       // });
 
       // const packs = (await response.json() as { data: Schema.Pack[] }).data;
-      const packs = [{ manifest: mock }] as unknown as Schema.Pack[]; // TODO REMOVE DEBUG CODE
+      // TODO REMOVE DEBUG CODE
+      const packs = [{
+        manifest: { ...mock, maintainers: ['185033133521895424'] },
+        owner: '228674702414053386',
+      }] as unknown as Schema.Pack[];
 
-      data.packs = packs.reduce((accumulator, pack) => {
-        return { ...accumulator, [pack.manifest.id]: pack };
+      data.packs = packs.reduce((acc, pack) => {
+        return { ...acc, [pack.manifest.id]: pack };
       }, {});
     }
 

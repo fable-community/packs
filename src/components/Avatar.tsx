@@ -55,8 +55,8 @@ export default ({ id, avatar }: { id?: string; avatar?: string }) => {
       />
 
       <Dialog name={'logout'} class={styles.names.container}>
-        <form method='post' action='/api/logout'>
-          <button class={styles.names.button} type='submit'>
+        <form method={'post'} action={'/api/logout'}>
+          <button class={styles.names.button} type={'submit'}>
             {strings.logout}
             <IconLogout />
           </button>
