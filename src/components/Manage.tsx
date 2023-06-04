@@ -2,8 +2,9 @@ import { Head } from '$fresh/runtime.ts';
 
 import { createStyle } from 'flcss';
 
-import Dialog from './Dialog.tsx';
+import Media from './Media.tsx';
 import Maintainers from './Maintainers.tsx';
+import Dialog from './Dialog.tsx';
 
 import colors from '../utils/theme.ts';
 
@@ -36,7 +37,7 @@ export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
       gridTemplateAreas: '". . ." "_ _ _"',
       margin: '1.5em',
       width: 'calc(100% - 3em)',
-      minHeight: 'calc(100% - 3em)',
+      height: 'calc(100% - 3em)',
       gap: '2em',
     },
     threeBoxes: {
@@ -44,7 +45,6 @@ export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
-      gap: '3em',
 
       '> div': {
         padding: '1em',
@@ -52,24 +52,21 @@ export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
         boxSizing: 'border-box',
         borderRadius: '12px',
         overflow: 'hidden auto',
-        width: '100%',
+        margin: '1.5em',
       },
 
-      '@media only screen and (max-width: 730px)': {
-        '> div': {
-          minHeight: '50vh',
-        },
-      },
-
-      '@media only screen and (min-width: 730px)': {
-        display: 'grid',
-        gridTemplateRows: 'repeat(2, 1fr)',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gridTemplateAreas: '". ." "_ _"',
-        '> :nth-child(3)': { gridArea: '_' },
+      '@media (min-width: 850px)': {
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        overflow: 'hidden',
         '> div': {
           maxWidth: '400px',
-          justifySelf: 'center',
+          width: 'calc(50% - 3em)',
+          height: 'calc(50% - 3em)',
+        },
+        '> i': {
+          flexBasis: '100%',
         },
       },
     },
@@ -176,8 +173,9 @@ export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
           <IconClose data-dialog-cancel={'manage'} class={header.names.close} />
 
           <div class={styles.names.threeBoxes}>
-            <div></div>
-            <div></div>
+            <Media pack={pack} show={'characters'} />
+            <Media pack={pack} show={'media'} />
+            <i />
             <Maintainers
               list={props.new
                 ? [props.user]
