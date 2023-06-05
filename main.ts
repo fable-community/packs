@@ -12,6 +12,10 @@ import * as app from './src/routes/_app.tsx';
 import * as index from './src/routes/index.tsx';
 import * as callback from './src/routes/callback.tsx';
 
+import * as Media from './src/components/Media.tsx';
+import * as Maintainers from './src/components/Maintainers.tsx';
+import * as ImageInput from './src/components/ImageInput.tsx';
+
 import * as _404 from './src/routes/_404.tsx';
 import * as _500 from './src/routes/_500.tsx';
 
@@ -25,7 +29,11 @@ const manifest: Manifest = {
   config,
   baseUrl: import.meta.url,
   // islands enable client-side interactivity
-  islands: {},
+  islands: {
+    './src/components/Media.tsx': Media,
+    './src/components/Maintainers.tsx': Maintainers,
+    './src/components/ImageInput.tsx': ImageInput,
+  },
   routes: {
     // main template
     './routes/_app.tsx': app,

@@ -2,8 +2,10 @@ import { Head } from '$fresh/runtime.ts';
 
 import { createStyle } from 'flcss';
 
-import Media from './Media.tsx';
-import Maintainers from './Maintainers.tsx';
+import { Static as Media } from './Media.tsx';
+import { Static as Maintainers } from './Maintainers.tsx';
+import { Static as ImageInput } from './ImageInput.tsx';
+
 import Dialog from './Dialog.tsx';
 
 import colors from '../utils/theme.ts';
@@ -148,20 +150,11 @@ export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
           {/* used as a hack to send the existing pack json to the server with the post request */}
           <input type={'hidden'} name={'pack'} value={JSON.stringify(pack)} />
 
-          <div class={header.names.packImage}>
-            {!pack.image
-              ? <IconImage data-image-ph={'pack_image'} />
-              : undefined}
-            <img src={pack.image ?? ''} data-image-cb={'pack_image'} />
-            <label for={'pack_image'} />
-            <input
-              type={'file'}
-              id={'pack_image'}
-              name={'pack_image'}
-              data-image={'pack_image'}
-              accept={[...imagesTypes, 'image/gif'].join(',')}
-            />
-          </div>
+          <ImageInput
+            name={'pack_image'}
+            default={pack.image}
+            accept={[...imagesTypes, 'image/gif']}
+          />
 
           <input
             type={'text'}

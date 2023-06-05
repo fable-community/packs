@@ -10,7 +10,7 @@ import IconPlus from 'icons/plus.tsx';
 
 import type { Schema } from './Dashboard.tsx';
 
-export default (
+export const Static = (
   { show, pack }: {
     show: 'media' | 'characters';
     pack: Partial<Schema.Pack['manifest']>;
@@ -35,18 +35,19 @@ export default (
       '> img': {
         backgroundColor: colors.grey,
       },
-    },
-    button: {
-      display: 'flex',
-      cursor: 'pointer',
-      alignItems: 'center',
-      justifyContent: 'center',
-      boxSizing: 'border-box',
-      border: `2px solid ${colors.grey}`,
 
-      '> svg': {
-        width: '32px',
-        height: '32px',
+      '> div': {
+        display: 'flex',
+        cursor: 'pointer',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxSizing: 'border-box',
+        border: `2px solid ${colors.grey}`,
+
+        '> svg': {
+          width: '32px',
+          height: '32px',
+        },
       },
     },
   });
@@ -57,13 +58,30 @@ export default (
         <style>{styles.bundle}</style>
       </Head>
       <div class={styles.names.container}>
-        {pack[show]?.new?.map((t) => <img src={t.images?.[0].url} />)}
-        {
-          <div disabled class={styles.names.button}>
-            <IconPlus />
-          </div>
-        }
+        {<Island show={show} pack={pack} />}
       </div>
     </>
   );
 };
+
+export const Island = (
+  { show, pack }: Parameters<typeof Static>['0'],
+) => {
+  return (
+    <>
+      {pack[show]?.new?.map((t) => (
+        <img
+          src={t.images?.[0].url}
+          onClick={() => console.log('test')}
+        />
+      ))}
+      {
+        <div disabled>
+          <IconPlus />
+        </div>
+      }
+    </>
+  );
+};
+
+export default Island;

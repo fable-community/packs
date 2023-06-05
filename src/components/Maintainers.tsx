@@ -8,7 +8,7 @@ import colors from '../utils/theme.ts';
 
 import IconPlus from 'icons/plus.tsx';
 
-export default ({ list }: { list: (string | undefined)[] }) => {
+export const Static = ({ list }: { list: (string | undefined)[] }) => {
   const styles = createStyle({
     container: {
       display: 'grid',
@@ -27,18 +27,19 @@ export default ({ list }: { list: (string | undefined)[] }) => {
       '> img': {
         backgroundColor: colors.grey,
       },
-    },
-    button: {
-      display: 'flex',
-      cursor: 'pointer',
-      alignItems: 'center',
-      justifyContent: 'center',
-      boxSizing: 'border-box',
-      border: `2px solid ${colors.grey}`,
 
-      '> svg': {
-        width: '18px',
-        height: '18px',
+      '> div': {
+        display: 'flex',
+        cursor: 'pointer',
+        alignItems: 'center',
+        justifyContent: 'center',
+        boxSizing: 'border-box',
+        border: `2px solid ${colors.grey}`,
+
+        '> svg': {
+          width: '18px',
+          height: '18px',
+        },
       },
     },
   });
@@ -49,17 +50,30 @@ export default ({ list }: { list: (string | undefined)[] }) => {
         <style>{styles.bundle}</style>
       </Head>
       <div class={styles.names.container}>
-        {list
-          .filter(Boolean)
-          .map((id) => (
-            <img
-              src={`https://discord-avatar.deno.dev/?id=${id}`}
-            />
-          ))}
-        <div disabled class={styles.names.button}>
-          <IconPlus />
-        </div>
+        <Island list={list} />
       </div>
     </>
   );
 };
+
+export const Island = ({ list }: Parameters<typeof Static>['0']) => {
+  return (
+    <>
+      {list
+        .filter(Boolean)
+        .map((id) => (
+          <img
+            // onClick={() => console.log('test')}
+            src={`https://discord-avatar.deno.dev/?id=${id}`}
+          />
+        ))}
+      {
+        <div disabled>
+          <IconPlus />
+        </div>
+      }
+    </>
+  );
+};
+
+export default Island;
