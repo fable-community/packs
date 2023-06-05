@@ -3,7 +3,12 @@ import { useRef } from 'preact/hooks';
 import IconImage from 'icons/photo-plus.tsx';
 
 export default (
-  props: { name: string; accept: string[]; default?: string },
+  props: {
+    name: string;
+    accept: string[];
+    default?: string;
+    onChange?: (value: Blob) => void;
+  },
 ) => {
   const ref = useRef<HTMLImageElement>(null);
   const placeholderRef = useRef<HTMLDivElement>(null);
@@ -27,15 +32,19 @@ export default (
         onChange={(ev) => {
           // deno-lint-ignore ban-ts-comment
           // @ts-ignore
-          const blob = URL.createObjectURL(ev.target.files[0]);
+          const blob: Blob = ev.target.files[0];
+
+          const urlObj = URL.createObjectURL(blob);
 
           // deno-lint-ignore no-non-null-assertion
-          ref.current!.src = blob;
+          ref.current!.src = urlObj;
           // deno-lint-ignore no-non-null-assertion
           ref.current!.onload = () => {
-            URL.revokeObjectURL(blob);
+            URL.revokeObjectURL(urlObj);
             placeholderRef.current?.remove();
           };
+
+          props.onChange?.(blob);
         }}
       />
     </div>

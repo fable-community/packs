@@ -12,9 +12,7 @@ import * as app from './src/routes/_app.tsx';
 import * as index from './src/routes/index.tsx';
 import * as callback from './src/routes/callback.tsx';
 
-import * as Media from './src/components/Media.tsx';
-import * as Maintainers from './src/components/Maintainers.tsx';
-import * as ImageInput from './src/components/ImageInput.tsx';
+import * as Manage from './src/components/Manage.tsx';
 
 import * as _404 from './src/routes/_404.tsx';
 import * as _500 from './src/routes/_500.tsx';
@@ -28,29 +26,21 @@ import config from './deno.json' assert { type: 'json' };
 const manifest: Manifest = {
   config,
   baseUrl: import.meta.url,
-  // islands enable client-side interactivity
   islands: {
-    './src/components/Media.tsx': Media,
-    './src/components/Maintainers.tsx': Maintainers,
-    './src/components/ImageInput.tsx': ImageInput,
+    // islands enable client-side interactivity
+    './src/components/Manage.tsx': Manage,
   },
   routes: {
     // main template
     './routes/_app.tsx': app,
-    //
     // pages
-    //
     './routes/callback.tsx': callback,
     './routes/index.tsx': index,
     './routes/[id].tsx': index,
-    //
     // errors
-    //
     './routes/_404.tsx': _404,
     './routes/_500.tsx': _500,
-    //
     // api
-    //
     './routes/api/login.ts': login,
     './routes/api/logout.ts': logout,
     './routes/api/publish.ts': publish,

@@ -1,4 +1,7 @@
+import { useSignal } from '@preact/signals';
+
 import Media from './Media.tsx';
+
 import Maintainers from './Maintainers.tsx';
 
 import ImageInput from './ImageInput.tsx';
@@ -7,7 +10,7 @@ import Dialog from './Dialog.tsx';
 
 import IconClose from 'icons/x.tsx';
 
-import type { Schema } from './Dashboard.tsx';
+import { Schema } from './Dashboard.tsx';
 
 import strings from '../../i18n/en-US.ts';
 
@@ -17,6 +20,14 @@ export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
   const data: Partial<Schema.Pack> = props.pack ?? {};
   const pack: Partial<Schema.Pack['manifest']> = data.manifest ?? {};
 
+  const packTitle = useSignal(pack.title ?? pack.id);
+  const packImage = useSignal<Blob | undefined>(undefined);
+
+  const onClick = () => {
+    console.log(packTitle.value);
+    console.log(packImage.value);
+  };
+
   return (
     <>
       <Dialog
@@ -25,26 +36,24 @@ export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
         name={'manage'}
         class={'manage-wrapper'}
       >
-        <form
-          method={'post'}
-          action={'/api/publish'}
-          encType={'multipart/form-data'}
-          class={'manage-container'}
-        >
-          {/* used as a hack to send the existing pack json to the server with the post request */}
-          <input type={'hidden'} name={'pack'} value={JSON.stringify(pack)} />
-
+        <div class={'manage-container'}>
           <ImageInput
             name={'pack_image'}
             default={pack.image}
             accept={[...imagesTypes, 'image/gif']}
+            onChange={(value) => packImage.value = value}
           />
 
           <input
             type={'text'}
             name={'pack_title'}
             placeholder={strings.packTitle}
-            value={pack.title ?? pack.id}
+            value={packTitle}
+            onInput={(
+              event,
+              // deno-lint-ignore ban-ts-comment
+              // @ts-ignore
+            ) => (packTitle.value = event.target.value)}
           />
 
           <IconClose data-dialog-cancel={'manage'} class={'manage-close'} />
@@ -60,10 +69,10 @@ export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
             />
           </div>
 
-          <button disabled class={'manage-publish'} type={'submit'}>
+          <button class={'manage-publish'} disabled onClick={onClick}>
             {props.new ? strings.publish : strings.save}
           </button>
-        </form>
+        </div>
       </Dialog>
     </>
   );

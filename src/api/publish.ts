@@ -1,17 +1,17 @@
-// deno-lint-ignore-file camelcase
-
-import { Handlers } from '$fresh/server.ts';
-
 import { getCookies } from '$std/http/cookie.ts';
 
-interface Data {
-  pack: string;
-  pack_title: string;
-  pack_image?: File;
-}
+import type { Handlers } from '$fresh/server.ts';
+
+import type { Schema } from '../components/Dashboard.tsx';
 
 interface Cookies {
   accessToken?: string;
+}
+
+export interface Data {
+  pack: Schema.Pack;
+  packTitle: string;
+  packImage?: File;
 }
 
 export const handler: Handlers = {
@@ -27,11 +27,7 @@ export const handler: Handlers = {
         throw new Error('Access token not defined');
       }
 
-      const formData = await req.formData();
-
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}, ${value}`);
-      }
+      const _data = await req.json() as Data; // TODO
 
       headers.set('location', `/`);
 
