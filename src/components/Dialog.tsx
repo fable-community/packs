@@ -1,62 +1,33 @@
-import { Head } from '$fresh/runtime.ts';
-
-import { ComponentChildren } from 'preact';
-
-import { createStyle } from 'flcss';
-
-import colors from '../utils/theme.ts';
+import { ComponentChildren, JSX } from 'preact';
 
 export default (
   props: {
     name: string;
     children?: ComponentChildren;
-    class?: string;
     visible?: boolean;
     action?: 'hide' | 'back';
-  },
+  } & JSX.HTMLAttributes<HTMLElement>,
 ) => {
   const { children, name, action, visible } = props;
 
-  const styles = createStyle({
-    wrapper: {
-      zIndex: 2,
-      position: 'absolute',
-      visibility: visible ? 'visible' : 'hidden',
-      background: colors.embed,
-      top: '0',
-      left: '0',
-      width: '100%',
-      height: '100%',
-      opacity: 0.8,
-    },
-    container: {
-      zIndex: 3,
-      position: 'absolute',
-      visibility: visible ? 'visible' : 'hidden',
-      overflow: 'hidden auto',
-    },
-  });
-
   return (
     <>
-      <Head>
-        <style>{styles.bundle}</style>
-      </Head>
-
-      <div
+      <i
         data-dialog-cb={name}
         data-dialog-cb-action={action ?? 'hide'}
         data-dialog-cancel={name}
-        class={styles.names.wrapper}
+        class={`dialog-holder`}
+        style={{ visibility: visible ? 'visible' : 'hidden' }}
       />
 
-      <div
+      <i
         data-dialog-cb={name}
         data-dialog-cb-action={action ?? 'hide'}
-        class={`${styles.names.container} ${props.class}`}
+        class={`dialog-wrapper ${props.class}`}
+        style={{ visibility: visible ? 'visible' : 'hidden' }}
       >
         {children}
-      </div>
+      </i>
     </>
   );
 };

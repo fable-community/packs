@@ -1,64 +1,12 @@
 import '#filter-boolean';
 
-import { Head } from '$fresh/runtime.ts';
-
-import { createStyle } from 'flcss';
-
-import colors from '../utils/theme.ts';
+import Dialog from './Dialog.tsx';
 
 import IconPlus from 'icons/plus.tsx';
 
-export const Static = ({ list }: { list: (string | undefined)[] }) => {
-  const styles = createStyle({
-    container: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, 32px)',
-      gridTemplateRows: 'repeat(auto-fill, 32px)',
-      justifyContent: 'center',
-      gap: '1em',
-
-      '> *': {
-        width: '100%',
-        height: '100%',
-        borderRadius: '100%',
-        color: colors.grey,
-      },
-
-      '> img': {
-        backgroundColor: colors.grey,
-      },
-
-      '> div': {
-        display: 'flex',
-        cursor: 'pointer',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxSizing: 'border-box',
-        border: `2px solid ${colors.grey}`,
-
-        '> svg': {
-          width: '18px',
-          height: '18px',
-        },
-      },
-    },
-  });
-
+export default ({ list }: { list: (string | undefined)[] }) => {
   return (
-    <>
-      <Head>
-        <style>{styles.bundle}</style>
-      </Head>
-      <div class={styles.names.container}>
-        <Island list={list} />
-      </div>
-    </>
-  );
-};
-
-export const Island = ({ list }: Parameters<typeof Static>['0']) => {
-  return (
-    <>
+    <div class={'maintainers'}>
       {list
         .filter(Boolean)
         .map((id) => (
@@ -68,12 +16,14 @@ export const Island = ({ list }: Parameters<typeof Static>['0']) => {
           />
         ))}
       {
-        <div disabled>
+        <div data-dialog={'maintainers'} disabled>
           <IconPlus />
         </div>
       }
-    </>
+
+      <Dialog name={'maintainers'} class={'box-dialog'}>
+        <div />
+      </Dialog>
+    </div>
   );
 };
-
-export default Island;

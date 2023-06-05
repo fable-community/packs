@@ -1,0 +1,68 @@
+.manage-wrapper {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: --var(embedHighlight);
+}
+
+.manage-container {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 48px 1fr 32px;
+  grid-template-rows: 48px 1fr;
+  grid-template-areas: ". . ." "_ _ _";
+  margin: 1.5em;
+  width: calc(100% - 3em);
+  height: calc(100% - 3em);
+  gap: 2em;
+}
+
+.manage-boxes {
+  grid-area: _;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+@media (min-width: 850px) {
+  .manage-boxes {
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .manage-boxes > div {
+    max-width: 400px;
+    width: calc(50% - 3em);
+    height: calc(50% - 3em);
+  }
+
+  .manage-boxes > i {
+    flex-basis: 100%;
+  }
+}
+
+.manage-boxes > div {
+  padding: 1em;
+  border: 2px solid var(--grey);
+  box-sizing: border-box;
+  border-radius: 12px;
+  overflow: hidden auto;
+  margin: 1.5em;
+}
+
+.manage-close {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+.manage-publish {
+  position: fixed;
+  background-color: var(--discord);
+  margin: 1.5em 3em;
+  bottom: 0;
+  right: 0;
+}

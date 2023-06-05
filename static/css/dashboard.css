@@ -1,0 +1,62 @@
+.dashboard-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  padding: 0 10vw;
+  margin: 5vh 0;
+  gap: 3em;
+}
+
+.dashboard-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 128px;
+  min-height: 32px;
+  border-radius: 8px;
+  border: 4px dashed var(--grey);
+  padding: 24px 16px;
+}
+
+.dashboard-action-button > svg {
+  width: 42px;
+  height: auto;
+  color: var(--grey);
+}
+
+.dashboard-action-button:hover {
+  transform: translateY(-8px);
+}
+
+.dashboard-card {
+  width: 128px;
+  min-height: 32px;
+
+  color: inherit;
+  background-color: var(--embed);
+
+  border-radius: 8px;
+  padding: 24px 16px;
+
+  transition: background-color 0.125s, transform 0.125s;
+}
+
+.dashboard-card:hover {
+  background-color: var(--embedHighlight);
+  transform: translateY(-8px);
+}
+
+.dashboard-card > img {
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.dashboard-card > div {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

@@ -4,7 +4,6 @@
     "$fresh/": "https://deno.land/x/fresh@1.1.6/",
     "$std/": "https://deno.land/std@0.189.0/",
     "fable/": "https://raw.githubusercontent.com/ker0olos/fable/main/",
-    "flcss": "https://raw.githubusercontent.com/fable-community/flcss/v1.0.3/mod.ts",
     "icons/": "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.0.3",
     "preact": "https://esm.sh/preact@10.15.1",

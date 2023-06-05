@@ -1,0 +1,76 @@
+:root {
+  color-scheme: dark;
+
+  --grey: #4f4f4f;
+  --foreground: #ffffff;
+  --background: #313338;
+  --grey: #4f4f4f;
+  --embed: #2b2d31;
+  --embedHighlight: #232428;
+  --red: #b52424;
+  --discord: #5865f2;
+  --fable: #feb500;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 100vw;
+  min-height: 100vh;
+
+  color: var(--foreground);
+  background-color: var(--background);
+
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+  font-size: calc(12px + 0.1vw);
+  line-height: 1.5;
+
+  align-items: center;
+  overflow: hidden auto;
+  user-select: none;
+}
+
+[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+button {
+  border: 0;
+  font-weight: 600;
+  min-width: 160px;
+  font-style: normal;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.75em 1em;
+  cursor: pointer;
+}
+
+button:hover {
+  border-radius: 2px;
+  box-shadow: inset 0px 0px 0px 2px var(--foreground);
+}
+
+a {
+  cursor: pointer;
+  font-style: normal;
+  text-decoration: none;
+}
+
+input {
+  font-style: normal;
+  color: var(--foreground);
+  background: transparent;
+  border: 0;
+  font-weight: 600;
+  font-family: inherit;
+  font-size: 1.2em;
+  line-height: inherit;
+  min-width: 0;
+  padding: 0;
+}
+
+input:focus {
+  outline: 0;
+}

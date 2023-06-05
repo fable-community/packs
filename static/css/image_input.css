@@ -1,0 +1,44 @@
+.image-input {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  overflow: hidden;
+  border-radius: 100%;
+  height: 100%;
+  width: 100%;
+
+  border: 2px solid var(--grey)
+}
+
+.image-input > input { width: 0  }
+
+.image-input > img {
+  position: absolute;
+  object-fit: cover;
+  object-position: center;
+  text-indent: -100vh;
+  height: 100%;
+  width: 100%;
+}
+
+.image-input > label {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.image-input > i {
+  position: absolute;
+  color: grey;
+  width: 28px;
+  height: 28px;
+}
+
+.image-input > i > svg {
+  width: 100%;
+  height: 100%;
+}
