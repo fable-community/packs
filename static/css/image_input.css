@@ -9,7 +9,7 @@
 }
 
 .image-input > input {
-  width: 0;
+  visibility: hidden;
 }
 
 .image-input > img {
@@ -30,7 +30,7 @@
 
 .image-input > i {
   position: absolute;
-  color: grey;
+  color: var(--grey);
   width: 28px;
   height: 28px;
 }

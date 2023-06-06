@@ -11,7 +11,7 @@ import Dashboard, {
 } from '../components/Dashboard.tsx';
 
 // TODO REMOVE DEBUG CODE
-import mock from '../../tests/mock.json' assert { type: 'json' };
+import mock from '../../mock.json' assert { type: 'json' };
 
 interface Cookies {
   accessToken?: string;
