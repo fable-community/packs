@@ -1,6 +1,8 @@
-import { useSignal } from '@preact/signals';
+import { useMemo } from 'preact/hooks';
 
-import Media from './Media.tsx';
+import { computed, useSignal } from '@preact/signals';
+
+import Media, { Editable } from './Media.tsx';
 
 import Maintainers from './Maintainers.tsx';
 
@@ -14,54 +16,105 @@ import { Schema } from './Dashboard.tsx';
 
 import strings from '../../i18n/en-US.ts';
 
-const imagesTypes = ['image/png', 'image/jpeg', 'image/webp'];
-
-export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
+export default (props: {
+  user: string;
+  dryRun?: boolean;
+  pack?: Schema.Pack;
+  new?: boolean;
+}) => {
   const data: Partial<Schema.Pack> = props.pack ?? {};
   const pack: Partial<Schema.Pack['manifest']> = data.manifest ?? {};
 
-  const packTitle = useSignal(pack.title ?? pack.id);
-  const packImage = useSignal<Blob | undefined>(undefined);
+  const packTitle = useSignal<string | undefined>(pack.title);
+  const packImage = useSignal<string | undefined>(undefined);
+
+  const [readonly, signal] = useMemo(() => {
+    const media: Record<string, Editable> = {};
+    const characters: Record<string, Editable> = {};
+
+    (pack.media?.new ?? []).map((_mdia) =>
+      media[_mdia.id] = {
+        id: _mdia.id,
+        title: _mdia.title.english,
+        description: _mdia.description,
+        image: _mdia.images?.[0].url,
+      }
+    );
+
+    (pack.characters?.new ?? []).map((char) =>
+      characters[char.id] = {
+        id: char.id,
+        title: char.name.english,
+        description: char.description,
+        image: char.images?.[0].url,
+      }
+    );
+
+    const data = { media, characters };
+
+    return [
+      data,
+      computed(() => {
+        return { ...data };
+      }),
+    ];
+  }, [pack]);
 
   const onClick = () => {
-    console.log(packTitle.value);
-    console.log(packImage.value);
+    if (props.dryRun) {
+      console.warn('opt out of publishing (dry run is set to "1")');
+      console.log(packTitle.value);
+      console.log(packImage.value);
+      console.log(signal.peek().media);
+      console.log(signal.peek().characters);
+      return;
+    }
   };
 
   return (
     <>
       <Dialog
         visible={true}
-        action={'back'}
         name={'manage'}
         class={'manage-wrapper'}
+        action={'back'}
       >
+        {/* this component require client-side javascript */}
+        <noscript>{strings.noScript}</noscript>
+
         <div class={'manage-container'}>
           <ImageInput
-            name={'pack_image'}
             default={pack.image}
-            accept={[...imagesTypes, 'image/gif']}
-            onChange={(value) => packImage.value = value}
+            accept={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
+            onChange={(url) => packImage.value = url}
           />
 
           <input
             type={'text'}
-            name={'pack_title'}
-            placeholder={strings.packTitle}
             value={packTitle}
+            placeholder={strings.packTitle}
             onInput={(
-              event,
-              // deno-lint-ignore ban-ts-comment
-              // @ts-ignore
-            ) => (packTitle.value = event.target.value)}
+              ev,
+            ) => (packTitle.value = (ev.target as HTMLInputElement).value)}
           />
 
           <IconClose data-dialog-cancel={'manage'} class={'manage-close'} />
 
           <div class={'manage-boxes'}>
-            <Media pack={pack} show={'characters'} />
-            <Media pack={pack} show={'media'} />
+            <Media
+              name={'characters'}
+              readonly={readonly}
+              media={signal.value}
+            />
+
+            <Media
+              name={'media'}
+              readonly={readonly}
+              media={signal.value}
+            />
+
             <i />
+
             <Maintainers
               list={props.new
                 ? [props.user]
@@ -69,7 +122,11 @@ export default (props: { user: string; pack?: Schema.Pack; new?: boolean }) => {
             />
           </div>
 
-          <button class={'manage-publish'} disabled onClick={onClick}>
+          <button
+            disabled={!props.dryRun}
+            class={'manage-publish'}
+            onClick={onClick}
+          >
             {props.new ? strings.publish : strings.save}
           </button>
         </div>

@@ -12,6 +12,15 @@
   --fable: #feb500;
 }
 
+noscript {
+  width: 100%;
+  color: black;
+  background: yellow;
+  position: absolute;
+  padding: 2em;
+  z-index: 3;
+}
+
 body {
   margin: 0;
   display: flex;

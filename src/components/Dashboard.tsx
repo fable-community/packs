@@ -36,14 +36,21 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
   const user = data.user!;
 
   const hasNew = searchParams.has('new');
-  const hasImport = searchParams.get('import');
+  // const hasImport = searchParams.get('import');
 
-  if (packId) {
-    return <Manage pack={data.packs[packId]} user={user?.id} />;
-  }
+  if (packId || hasNew) {
+    // <Manage> is a island that doesn't have access to the deno runtime
+    // this is why we query the variable here instead of directly there
+    const dryRun = Deno.env.get('DRY_RUN') === '1';
 
-  if (hasNew) {
-    return <Manage new user={user?.id} />;
+    return (
+      <Manage
+        new={hasNew}
+        dryRun={dryRun}
+        pack={packId ? data.packs[packId] : undefined}
+        user={user?.id}
+      />
+    );
   }
 
   return (
@@ -51,7 +58,9 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
       <Avatar id={user?.id} avatar={user?.avatar} />
 
       <div class={'dashboard-wrapper'}>
-        {Object.values(data.packs).map((pack) => <Card pack={pack} />)}
+        {Object.values(data.packs).map((pack) => (
+          <Card key={pack.manifest.id} pack={pack} />
+        ))}
 
         <a class={'dashboard-action-button'} href={`?new`}>
           <IconPlus />

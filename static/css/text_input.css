@@ -1,0 +1,9 @@
+.text-input input {
+  border: 0;
+  background: black;
+}
+
+.text-input textarea {
+  border: 0;
+  background: black;
+}

@@ -45,8 +45,11 @@
 }
 
 .box-dialog > div {
+  overflow: auto;
   background-color: var(--embedHighlight);
   border-radius: 10px;
+  margin: 2em;
   padding: 0 5em;
   height: 60vh;
+  width: 50vw;
 }

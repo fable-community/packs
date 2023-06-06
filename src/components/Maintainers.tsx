@@ -11,6 +11,7 @@ export default ({ list }: { list: (string | undefined)[] }) => {
         .filter(Boolean)
         .map((id) => (
           <img
+            key={id}
             // onClick={() => console.log('test')}
             src={`https://discord-avatar.deno.dev/?id=${id}`}
           />

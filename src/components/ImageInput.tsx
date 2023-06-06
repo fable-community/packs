@@ -4,14 +4,15 @@ import IconImage from 'icons/photo-plus.tsx';
 
 export default (
   props: {
-    name: string;
     accept: string[];
     default?: string;
-    onChange?: (value: Blob) => void;
+    onChange?: (url: string) => void;
   },
 ) => {
   const ref = useRef<HTMLImageElement>(null);
   const placeholderRef = useRef<HTMLDivElement>(null);
+
+  const name = Math.random().toString();
 
   return (
     <div class={'image-input'}>
@@ -23,28 +24,28 @@ export default (
         )
         : undefined}
       <img ref={ref} src={props.default ?? ''} />
-      <label for={props.name} />
+      <label for={name} />
       <input
         type={'file'}
-        id={props.name}
-        name={props.name}
+        id={name}
+        name={name}
         accept={props.accept.join(',')}
         onChange={(ev) => {
-          // deno-lint-ignore ban-ts-comment
-          // @ts-ignore
-          const blob: Blob = ev.target.files[0];
+          // deno-lint-ignore no-non-null-assertion
+          const blob: Blob = (ev.target as HTMLInputElement).files![0];
 
-          const urlObj = URL.createObjectURL(blob);
+          const url = URL.createObjectURL(blob);
 
           // deno-lint-ignore no-non-null-assertion
-          ref.current!.src = urlObj;
+          ref.current!.src = url;
+
           // deno-lint-ignore no-non-null-assertion
           ref.current!.onload = () => {
-            URL.revokeObjectURL(urlObj);
+            // URL.revokeObjectURL(url);
             placeholderRef.current?.remove();
           };
 
-          props.onChange?.(blob);
+          props.onChange?.(url);
         }}
       />
     </div>
