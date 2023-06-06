@@ -10,7 +10,7 @@ export function hideDialog(name) {
 
     switch (action) {
       case 'back':
-        window.open('/', '_self');
+        open('/', '_self');
         break;
       case 'hide':
         ele.style.visibility = 'hidden';
@@ -55,7 +55,7 @@ addEventListener('load', () => {
 
   //       switch (action) {
   //         case 'back':
-  //           window.open('/', '_self');
+  //           open('/', '_self');
   //           break;
   //         case 'hide':
   //           ele.style.visibility = 'hidden';
@@ -66,4 +66,11 @@ addEventListener('load', () => {
   //     });
   //   }
   // };
+
+  // addEventListener('beforeunload', (e) => {
+  //   if (location.pathname !== '/') {
+  //     e.preventDefault();
+  //     return (e.returnValue = '');
+  //   }
+  // });
 });

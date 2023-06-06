@@ -10,13 +10,12 @@ import Dashboard, {
   type User,
 } from '../components/Dashboard.tsx';
 
-// TODO REMOVE DEBUG CODE
-import mock from '../../mock.json' assert { type: 'json' };
-
 interface Cookies {
   accessToken?: string;
   refreshToken?: string;
 }
+
+export const production = !!Deno.env.get('DENO_DEPLOYMENT_ID');
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -43,20 +42,30 @@ export const handler: Handlers = {
     }
 
     if (data.user && endpoint) {
-      // const response = await fetch(`${endpoint}/${data.user.id}`, {
-      //   method: 'GET',
-      // });
+      if (production) {
+        const response = await fetch(`${endpoint}/${data.user.id}`, {
+          method: 'GET',
+        });
 
-      // const packs = (await response.json() as { data: Schema.Pack[] }).data;
-      // TODO REMOVE DEBUG CODE
-      const packs = [{
-        manifest: { ...mock, maintainers: ['185033133521895424'] },
-        owner: '228674702414053386',
-      }] as unknown as Schema.Pack[];
+        const packs = (await response.json() as { data: Schema.Pack[] }).data;
 
-      data.packs = packs.reduce((acc, pack) => {
-        return { ...acc, [pack.manifest.id]: pack };
-      }, {});
+        data.packs = packs.reduce((acc, pack) => {
+          return { ...acc, [pack.manifest.id]: pack };
+        }, {});
+      } else {
+        const { default: mock } = await import('../../mock.json', {
+          assert: { type: 'json' },
+        });
+
+        const packs = [{
+          manifest: { ...mock, maintainers: ['185033133521895424'] },
+          owner: '228674702414053386',
+        }] as unknown as Schema.Pack[];
+
+        data.packs = packs.reduce((acc, pack) => {
+          return { ...acc, [pack.manifest.id]: pack };
+        }, {});
+      }
     }
 
     // if the selected pack is not found in the user's packs
