@@ -83,22 +83,28 @@ export default (props: {
         <noscript>{strings.noScript}</noscript>
 
         <div class={'manage-container'}>
-          <ImageInput
-            default={pack.image}
-            accept={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
-            onChange={(url) => packImage.value = url}
-          />
+          <div class={'manage-header'}>
+            <ImageInput
+              default={pack.image}
+              accept={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
+              onChange={(url) => packImage.value = url}
+            />
 
-          <input
-            type={'text'}
-            value={packTitle}
-            placeholder={strings.packTitle}
-            onInput={(
-              ev,
-            ) => (packTitle.value = (ev.target as HTMLInputElement).value)}
-          />
+            <input
+              type={'text'}
+              value={packTitle}
+              placeholder={strings.packTitle}
+              onInput={(
+                ev,
+              ) => (packTitle.value = (ev.target as HTMLInputElement).value)}
+            />
 
-          <IconClose data-dialog-cancel={'manage'} class={'manage-close'} />
+            <button disabled={!props.dryRun} onClick={onClick}>
+              {props.new ? strings.publish : strings.save}
+            </button>
+
+            <IconClose data-dialog-cancel={'manage'} class={'manage-close'} />
+          </div>
 
           <div class={'manage-boxes'}>
             <Media
@@ -121,14 +127,6 @@ export default (props: {
                 : [data.owner, ...pack.maintainers ?? []]}
             />
           </div>
-
-          <button
-            disabled={!props.dryRun}
-            class={'manage-publish'}
-            onClick={onClick}
-          >
-            {props.new ? strings.publish : strings.save}
-          </button>
         </div>
       </Dialog>
     </>

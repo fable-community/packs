@@ -7,15 +7,53 @@
 }
 
 .manage-container {
-  display: grid;
-  align-items: center;
-  grid-template-columns: 48px 1fr 32px;
-  grid-template-rows: 48px 1fr;
-  grid-template-areas: ". . ." "_ _ _";
+  display: flex;
+  flex-direction: column;
   margin: 1.5em;
   width: calc(100% - 3em);
   height: calc(100% - 3em);
   gap: 2em;
+}
+
+.manage-header {
+  display: flex;
+  width: 100%;
+  height: 48px;
+  gap: 2em;
+}
+
+.manage-header > .image-input {
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+}
+
+.manage-header > input {
+  height: 48px;
+  flex-grow: 1;
+}
+
+.manage-header > button {
+  background-color: var(--discord);
+  height: 90%;
+  margin: auto;
+}
+
+.manage-header > svg {
+  width: 32px;
+  height: 32px;
+  margin: auto;
+  cursor: pointer;
+}
+
+@media (max-width: 850px) {
+  .manage-header > :nth-child(3) {
+    position: fixed;
+    margin: 1.5em 3em;
+    height: inherit;
+    bottom: 0;
+    right: 0;
+  }
 }
 
 .manage-boxes {
@@ -51,18 +89,4 @@
   border-radius: 12px;
   overflow: hidden auto;
   margin: 1.5em;
-}
-
-.manage-close {
-  width: 100%;
-  height: auto;
-  cursor: pointer;
-}
-
-.manage-publish {
-  position: fixed;
-  background-color: var(--discord);
-  margin: 1.5em 3em;
-  bottom: 0;
-  right: 0;
 }

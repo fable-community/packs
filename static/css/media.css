@@ -1,34 +1,52 @@
-.media {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1em;
+.manage-dialog-media {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto 1fr;
+  column-gap: 2em;
 }
 
-.media > *:not(i) {
+.manage-dialog-media > svg {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.manage-dialog-media > .image-input {
+  width: auto;
+  height: 192px;
   object-fit: cover;
   object-position: center;
   aspect-ratio: 90/127;
-  width: auto;
-  height: 90px;
+  grid-area: 1 / 1 / 4 / 2;
 }
 
-.media > img {
-  cursor: pointer;
-  background-color: var(--grey);
-}
-
-.media > div {
+.manage-dialog-media .text-input {
   display: flex;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  color: var(--grey);
-  border: 2px solid var(--grey);
+  flex-direction: column;
+  font-size: 1em;
 }
 
-.media > svg {
-  width: 32px;
-  height: 32px;
+.manage-dialog-media .text-input:not(:nth-child(3)) {
+  margin: 2em 0;
+}
+
+.manage-dialog-media input,
+.manage-dialog-media textarea {
+  font-size: 1.1em;
+  resize: vertical;
+  background-color: var(--embed);
+  padding: 1em;
+  border-radius: 5px;
+}
+
+.manage-dialog-media textarea {
+  min-height: 120px;
+}
+
+.manage-dialog-media label {
+  text-transform: uppercase;
+  font-size: 0.85em;
+  opacity: 0.45;
+  margin: 0.5em 0;
 }

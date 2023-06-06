@@ -1,0 +1,87 @@
+.manage-dialog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+.manage-dialog > div {
+  overflow: auto;
+  background-color: var(--embedHighlight);
+  border-radius: 10px;
+  margin: 2em;
+  padding: 2em;
+  height: 60vh;
+  width: 50vw;
+  max-width: 500px;
+}
+
+/*  */
+
+.media {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.maintainers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 32px);
+  grid-template-rows: repeat(auto-fill, 32px);
+  justify-content: center;
+  gap: 1em;
+}
+
+.media > *:not(i) {
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 90/127;
+  width: auto;
+  height: 90px;
+}
+
+.maintainers > * {
+  width: 100%;
+  height: 100%;
+}
+
+.media > img,
+.maintainers > img {
+  cursor: pointer;
+  background-color: var(--grey);
+}
+
+.maintainers > img {
+  cursor: default;
+  color: var(--grey);
+  border-radius: 100%;
+}
+
+.media > div,
+.maintainers > div {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  color: var(--grey);
+  border: 2px solid var(--grey);
+}
+
+.maintainers > div {
+  border-radius: 100%;
+}
+
+.media > svg {
+  width: 32px;
+  height: 32px;
+}
+
+.maintainers > svg {
+  width: 18px;
+  height: 18px;
+}

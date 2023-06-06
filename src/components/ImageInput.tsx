@@ -2,6 +2,8 @@ import { useRef } from 'preact/hooks';
 
 import IconImage from 'icons/photo-plus.tsx';
 
+import nanoid from '../utils/nanoid.ts';
+
 export default (
   props: {
     accept: string[];
@@ -12,7 +14,7 @@ export default (
   const ref = useRef<HTMLImageElement>(null);
   const placeholderRef = useRef<HTMLDivElement>(null);
 
-  const name = Math.random().toString();
+  const name = nanoid();
 
   return (
     <div class={'image-input'}>

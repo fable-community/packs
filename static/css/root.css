@@ -46,6 +46,10 @@ body {
 }
 
 button {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+
   border: 0;
   font-weight: 600;
   min-width: 160px;
@@ -67,7 +71,12 @@ a {
   text-decoration: none;
 }
 
-input {
+label {
+  font-style: normal;
+}
+
+input,
+textarea {
   font-style: normal;
   color: var(--foreground);
   background: transparent;
@@ -80,6 +89,12 @@ input {
   padding: 0;
 }
 
-input:focus {
+input::placeholder,
+textarea::placeholder {
+  color: var(--grey);
+}
+
+input:focus,
+textarea:focus {
   outline: 0;
 }

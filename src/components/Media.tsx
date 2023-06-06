@@ -84,8 +84,8 @@ export default ({ name, media }: {
 
       {/* dialog */}
 
-      <Dialog name={name} class={'box-dialog'}>
-        <div class={'edit-media'}>
+      <Dialog name={name} class={'manage-dialog'}>
+        <div class={'manage-dialog-media'}>
           <IconClose data-dialog-cancel={name} />
 
           {/* <button onClick={onRevert}>{'Revert'}</button> */}

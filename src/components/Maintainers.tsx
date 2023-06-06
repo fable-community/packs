@@ -22,7 +22,7 @@ export default ({ list }: { list: (string | undefined)[] }) => {
         </div>
       }
 
-      <Dialog name={'maintainers'} class={'box-dialog'}>
+      <Dialog name={'maintainers'} class={'manage-dialog'}>
         <div />
       </Dialog>
     </div>
