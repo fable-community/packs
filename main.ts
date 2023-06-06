@@ -4,7 +4,12 @@
 /// <reference lib="dom.asynciterable" />
 /// <reference lib="deno.ns" />
 
-import '$std/dotenv/load.ts';
+import { load } from '$std/dotenv/mod.ts';
+
+await load({
+  examplePath: null,
+  export: true,
+});
 
 import { type Manifest, start } from '$fresh/server.ts';
 
