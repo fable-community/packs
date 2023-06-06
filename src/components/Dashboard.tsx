@@ -25,6 +25,9 @@ export interface DashboardData {
   packs: Record<string, Schema.Pack>;
 }
 
+export const defaultImage =
+  'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
+
 export { Schema };
 
 export default ({ data, url, params }: PageProps<DashboardData>) => {

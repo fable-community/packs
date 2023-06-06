@@ -15,6 +15,8 @@ import IconClose from 'icons/x.tsx';
 
 import TextInput from './TextInput.tsx';
 
+import { defaultImage } from './Dashboard.tsx';
+
 export interface Editable {
   id: string;
   title?: string;
@@ -47,7 +49,8 @@ export default ({ name, media }: {
           <img
             id={id}
             key={id}
-            src={typeof image === 'string' ? image : ''}
+            src={image ?? defaultImage}
+            style={{ backgroundColor: image ? undefined : 'transparent' }}
             onClick={() => {
               signal.value = media[name][id];
               requestAnimationFrame(() => showDialog(name));
