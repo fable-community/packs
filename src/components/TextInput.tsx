@@ -1,5 +1,7 @@
 import { useRef } from 'preact/hooks';
 
+import type { JSX } from 'preact';
+
 export default (
   props: {
     label?: string;
@@ -7,7 +9,7 @@ export default (
     multiline?: boolean;
     placeholder?: string;
     onInput?: (value: string) => void;
-  },
+  } & JSX.HTMLAttributes<HTMLInputElement>,
 ) => {
   const ref = useRef<HTMLImageElement>(null);
 
@@ -27,6 +29,7 @@ export default (
         )
         : (
           <input
+            {...props}
             type={'text'}
             value={props.value}
             placeholder={props.placeholder}

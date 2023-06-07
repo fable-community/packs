@@ -106,8 +106,10 @@ export default (props: {
             />
 
             <input
+              required
               type={'text'}
               value={packTitle}
+              pattern='.{3,128}'
               placeholder={strings.packTitle}
               onInput={(
                 ev,

@@ -106,7 +106,7 @@ const uploadImage = async ({ file, credentials }: {
     .map((b) => b.toString(16).padStart(2, '0'))
     .join(''); // convert bytes to hex string
 
-  const fileName = nanoid(12);
+  const fileName = nanoid(8);
 
   const _file = await fetch(
     upload.uploadUrl,

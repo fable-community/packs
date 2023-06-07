@@ -80,6 +80,7 @@ textarea {
   font-style: normal;
   color: var(--foreground);
   background: transparent;
+  box-sizing: border-box;
   border: 0;
   font-weight: 600;
   font-family: inherit;
@@ -97,4 +98,20 @@ textarea::placeholder {
 input:focus,
 textarea:focus {
   outline: 0;
+}
+
+input:invalid,
+textarea:invalid {
+  border-bottom: 3px solid var(--red);
+}
+
+input:invalid::placeholder,
+textarea:invalid::placeholder {
+  color: var(--red);
+}
+
+input:invalid ~ button {
+  opacity: 0.3;
+  pointer-events: none;
+  background-color: var(--red);
 }
