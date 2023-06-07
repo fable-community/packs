@@ -17,14 +17,14 @@ export default (
         data-dialog-cb-action={action ?? 'hide'}
         data-dialog-cancel={name}
         class={`dialog-holder`}
-        style={{ visibility: visible ? 'visible' : 'hidden' }}
+        style={{ display: visible ? 'inherit' : 'none' }}
       />
 
       <i
         data-dialog-cb={name}
         data-dialog-cb-action={action ?? 'hide'}
         class={`dialog-wrapper ${props.class}`}
-        style={{ visibility: visible ? 'visible' : 'hidden' }}
+        style={{ display: visible ? 'inherit' : 'none' }}
       >
         {children}
       </i>

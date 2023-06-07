@@ -7,6 +7,8 @@
 import { load } from '$std/dotenv/mod.ts';
 
 await load({
+  allowEmptyValues: true,
+  defaultsPath: '.env.example',
   examplePath: null,
   export: true,
 });

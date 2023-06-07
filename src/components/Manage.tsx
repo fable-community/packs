@@ -2,11 +2,13 @@ import { useMemo } from 'preact/hooks';
 
 import { computed, useSignal } from '@preact/signals';
 
+import { serialize } from 'bson';
+
 import Media, { Editable } from './Media.tsx';
 
 import Maintainers from './Maintainers.tsx';
 
-import ImageInput from './ImageInput.tsx';
+import ImageInput, { type IImageInput } from './ImageInput.tsx';
 
 import Dialog from './Dialog.tsx';
 
@@ -16,39 +18,39 @@ import { Schema } from './Dashboard.tsx';
 
 import strings from '../../i18n/en-US.ts';
 
+import type { Data } from '../api/publish.ts';
+
 export default (props: {
   user: string;
-  dryRun?: boolean;
   pack?: Schema.Pack;
   new?: boolean;
 }) => {
-  const data: Partial<Schema.Pack> = props.pack ?? {};
-  const pack: Partial<Schema.Pack['manifest']> = data.manifest ?? {};
+  const pack: Readonly<Schema.Pack['manifest']> = props.pack?.manifest ??
+    { id: '' };
+
+  const loading = useSignal<boolean>(false);
 
   const packTitle = useSignal<string | undefined>(pack.title);
-  const packImage = useSignal<string | undefined>(undefined);
+  const packImage = useSignal<IImageInput | undefined>(undefined);
 
   const [readonly, signal] = useMemo(() => {
-    const media: Record<string, Editable> = {};
-    const characters: Record<string, Editable> = {};
+    const media: Editable[] = (pack.media?.new ?? []).map((media) => ({
+      id: media.id,
+      title: media.title.english,
+      description: media.description,
+      image: {
+        url: media.images?.[0]?.url,
+      } as IImageInput,
+    }));
 
-    (pack.media?.new ?? []).map((_mdia) =>
-      media[_mdia.id] = {
-        id: _mdia.id,
-        title: _mdia.title.english,
-        description: _mdia.description,
-        image: _mdia.images?.[0].url,
-      }
-    );
-
-    (pack.characters?.new ?? []).map((char) =>
-      characters[char.id] = {
-        id: char.id,
-        title: char.name.english,
-        description: char.description,
-        image: char.images?.[0].url,
-      }
-    );
+    const characters: Editable[] = (pack.characters?.new ?? []).map((char) => ({
+      id: char.id,
+      title: char.name.english,
+      description: char.description,
+      image: {
+        url: char.images?.[0]?.url,
+      } as IImageInput,
+    }));
 
     const data = { media, characters };
 
@@ -60,14 +62,27 @@ export default (props: {
     ];
   }, [pack]);
 
-  const onClick = () => {
-    if (props.dryRun) {
-      console.warn('opt out of publishing (dry run is set to "1")');
-      console.log(packTitle.value);
-      console.log(packImage.value);
-      console.log(signal.peek().media);
-      console.log(signal.peek().characters);
-      return;
+  const onPublish = async () => {
+    const body: Data = {
+      pack,
+      packTitle: packTitle.value,
+      packImage: packImage.value,
+      media: signal.value.media,
+      characters: signal.value.characters,
+    };
+
+    loading.value = true;
+
+    const response = await fetch(`api/publish`, {
+      method: 'POST',
+      body: serialize(body),
+    });
+
+    if (response.status === 200) {
+      open('/?success', '_self');
+    } else {
+      loading.value = false;
+      console.error(await response.json());
     }
   };
 
@@ -87,7 +102,7 @@ export default (props: {
             <ImageInput
               default={pack.image}
               accept={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
-              onChange={(url) => packImage.value = url}
+              onChange={(value) => packImage.value = value}
             />
 
             <input
@@ -99,7 +114,7 @@ export default (props: {
               ) => (packTitle.value = (ev.target as HTMLInputElement).value)}
             />
 
-            <button disabled={!props.dryRun} onClick={onClick}>
+            <button disabled={loading} onClick={onPublish}>
               {props.new ? strings.publish : strings.save}
             </button>
 
@@ -110,13 +125,13 @@ export default (props: {
             <Media
               name={'characters'}
               readonly={readonly}
-              media={signal.value}
+              pack={signal.value}
             />
 
             <Media
               name={'media'}
               readonly={readonly}
-              media={signal.value}
+              pack={signal.value}
             />
 
             <i />
@@ -124,7 +139,7 @@ export default (props: {
             <Maintainers
               list={props.new
                 ? [props.user]
-                : [data.owner, ...pack.maintainers ?? []]}
+                : [props.pack?.owner, ...pack.maintainers ?? []]}
             />
           </div>
         </div>

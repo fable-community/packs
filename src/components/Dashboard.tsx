@@ -42,14 +42,9 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
   // const hasImport = searchParams.get('import');
 
   if (packId || hasNew) {
-    // <Manage> is a island that doesn't have access to the deno runtime
-    // this is why we query the variable here instead of directly there
-    const dryRun = Deno.env.get('DRY_RUN') === '1';
-
     return (
       <Manage
         new={hasNew}
-        dryRun={dryRun}
         pack={packId ? data.packs[packId] : undefined}
         user={user?.id}
       />

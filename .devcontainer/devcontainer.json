@@ -33,10 +33,6 @@
     },
     "CLIENT_SECRET": {
       "description": "A discord oauth client secret"
-    },
-    "API_ENDPOINT": {
-      "description": "An endpoint for fable community packs api",
-      "documentationUrl": "https://github.com/ker0olos/fable"
     }
   }
 }

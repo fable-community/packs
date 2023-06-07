@@ -1,14 +1,26 @@
 import { useRef } from 'preact/hooks';
 
+import { Binary } from 'bson';
+
 import IconImage from 'icons/photo-plus.tsx';
 
 import nanoid from '../utils/nanoid.ts';
+
+export interface IImageInput {
+  file?: {
+    name: string;
+    size: number;
+    type: string;
+    data: Binary;
+  };
+  url: string;
+}
 
 export default (
   props: {
     accept: string[];
     default?: string;
-    onChange?: (url: string) => void;
+    onChange?: (value: IImageInput) => void;
   },
 ) => {
   const ref = useRef<HTMLImageElement>(null);
@@ -34,20 +46,29 @@ export default (
         accept={props.accept.join(',')}
         onChange={(ev) => {
           // deno-lint-ignore no-non-null-assertion
-          const blob: Blob = (ev.target as HTMLInputElement).files![0];
+          const file = (ev.target as HTMLInputElement).files![0];
 
-          const url = URL.createObjectURL(blob);
+          const url = URL.createObjectURL(file);
 
           // deno-lint-ignore no-non-null-assertion
           ref.current!.src = url;
 
           // deno-lint-ignore no-non-null-assertion
           ref.current!.onload = () => {
-            // URL.revokeObjectURL(url);
             placeholderRef.current?.remove();
           };
 
-          props.onChange?.(url);
+          file.arrayBuffer().then((buffer) => {
+            props.onChange?.({
+              file: {
+                name: file.name,
+                size: file.size,
+                type: file.type,
+                data: new Binary(new Uint8Array(buffer)),
+              },
+              url,
+            } as IImageInput);
+          });
         }}
       />
     </div>

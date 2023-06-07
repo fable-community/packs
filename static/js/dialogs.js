@@ -1,6 +1,6 @@
 export function showDialog(name) {
   document.querySelectorAll(`[data-dialog-cb="${name}"]`).forEach((ele) => {
-    ele.style.visibility = 'visible';
+    ele.style.display = 'inherit';
   });
 }
 
@@ -13,7 +13,7 @@ export function hideDialog(name) {
         open('/', '_self');
         break;
       case 'hide':
-        ele.style.visibility = 'hidden';
+        ele.style.display = 'none';
         break;
       default:
         break;
@@ -28,7 +28,6 @@ addEventListener('load', () => {
   dialogs.forEach((ele) => {
     ele.addEventListener('click', () => {
       const name = ele.getAttribute('data-dialog');
-
       showDialog(name);
     });
   });
@@ -40,7 +39,6 @@ addEventListener('load', () => {
   dialogsCancels.forEach((ele) => {
     ele.addEventListener('click', () => {
       const name = ele.getAttribute('data-dialog-cancel');
-
       hideDialog(name);
     });
   });
@@ -68,8 +66,9 @@ addEventListener('load', () => {
   // };
 
   // addEventListener('beforeunload', (e) => {
-  //   if (location.pathname !== '/') {
+  //   if (location.search === '?new') {
   //     e.preventDefault();
+
   //     return (e.returnValue = '');
   //   }
   // });

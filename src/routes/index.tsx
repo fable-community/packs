@@ -38,34 +38,34 @@ export const handler: Handlers = {
 
       data.user = await response.json() as User;
     } else if (cookies.refreshToken) {
-      // TODO support refreshing the access token
+      // TODO support refreshing the access token #2
     }
 
     if (data.user && endpoint) {
-      if (production) {
-        const response = await fetch(`${endpoint}/${data.user.id}`, {
-          method: 'GET',
-        });
+      // if (production) {
+      const response = await fetch(`${endpoint}/${data.user.id}`, {
+        method: 'GET',
+      });
 
-        const packs = (await response.json() as { data: Schema.Pack[] }).data;
+      const packs = (await response.json() as { data: Schema.Pack[] }).data;
 
-        data.packs = packs.reduce((acc, pack) => {
-          return { ...acc, [pack.manifest.id]: pack };
-        }, {});
-      } else {
-        const { default: mock } = await import('../../mock.json', {
-          assert: { type: 'json' },
-        });
+      data.packs = packs.reduce((acc, pack) => {
+        return { ...acc, [pack.manifest.id]: pack };
+      }, {});
+      // } else {
+      //   const { default: mock } = await import('../../mock.json', {
+      //     assert: { type: 'json' },
+      //   });
 
-        const packs = [{
-          manifest: { ...mock, maintainers: ['185033133521895424'] },
-          owner: '228674702414053386',
-        }] as unknown as Schema.Pack[];
+      //   const packs = [{
+      //     owner: data.user.id,
+      //     manifest: { ...mock },
+      //   }] as unknown as Schema.Pack[];
 
-        data.packs = packs.reduce((acc, pack) => {
-          return { ...acc, [pack.manifest.id]: pack };
-        }, {});
-      }
+      //   data.packs = packs.reduce((acc, pack) => {
+      //     return { ...acc, [pack.manifest.id]: pack };
+      //   }, {});
+      // }
     }
 
     // if the selected pack is not found in the user's packs

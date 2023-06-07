@@ -6,9 +6,9 @@ import { useSignal } from '@preact/signals';
 
 import Dialog from './Dialog.tsx';
 
-import { showDialog } from '../../static/js/dialogs.js';
+import { hideDialog, showDialog } from '../../static/js/dialogs.js';
 
-import ImageInput from './ImageInput.tsx';
+import ImageInput, { type IImageInput } from './ImageInput.tsx';
 
 import IconPlus from 'icons/plus.tsx';
 import IconClose from 'icons/x.tsx';
@@ -21,18 +21,18 @@ export interface Editable {
   id: string;
   title?: string;
   description?: string;
-  image?: string;
+  image?: IImageInput;
 }
 
-export default ({ name, media }: {
+export default ({ name, pack }: {
   name: 'media' | 'characters';
   readonly: {
-    media: Readonly<Record<string, Editable>>;
-    characters: Readonly<Record<string, Editable>>;
+    media: Readonly<Editable[]>;
+    characters: Readonly<Editable[]>;
   };
-  media: {
-    media: Record<string, Editable>;
-    characters: Record<string, Editable>;
+  pack: {
+    media: Editable[];
+    characters: Editable[];
   };
 }) => {
   const [, updateState] = useState({});
@@ -40,19 +40,21 @@ export default ({ name, media }: {
   // used to force the entire component to redrew
   const forceUpdate = useCallback(() => updateState({}), []);
 
-  const signal = useSignal<Editable>({ id: '' });
+  const signal = useSignal<Editable>({
+    id: '',
+    title: '',
+  });
 
   return (
     <div class={'media'}>
-      {Object.values(media[name])
-        .map(({ id, image }) => (
+      {Object.values(pack[name])
+        .map(({ image }, i) => (
           <img
-            id={id}
-            key={id}
-            src={image ?? defaultImage}
-            style={{ backgroundColor: image ? undefined : 'transparent' }}
+            key={i}
+            src={image?.url ?? defaultImage}
+            style={{ backgroundColor: image?.url ? undefined : 'transparent' }}
             onClick={() => {
-              signal.value = media[name][id];
+              signal.value = pack[name][i];
               requestAnimationFrame(() => showDialog(name));
             }}
           />
@@ -62,20 +64,25 @@ export default ({ name, media }: {
         <div
           data-dialog={name}
           onClick={() => {
-            const existing = [
-              ...Object.keys(media.media),
-              ...Object.keys(media.characters),
-            ];
+            const existingIds = [
+              ...pack.media,
+              ...pack.characters,
+            ].map(({ id }) => id);
 
             let generatedId = 0;
 
-            while (existing.includes(`${generatedId}`)) {
+            while (existingIds.includes(`${generatedId}`)) {
               generatedId += 1;
             }
 
-            signal.value = media[name][`${generatedId}`] = {
+            const item = {
+              title: '',
               id: `${generatedId}`,
             };
+
+            pack[name].push(item);
+
+            signal.value = item;
           }}
         >
           <IconPlus />
@@ -86,13 +93,15 @@ export default ({ name, media }: {
 
       <Dialog name={name} class={'manage-dialog'}>
         <div class={'manage-dialog-media'}>
-          <IconClose data-dialog-cancel={name} />
-
-          {/* <button onClick={onRevert}>{'Revert'}</button> */}
+          <IconClose
+            onClick={() => {
+              requestAnimationFrame(() => hideDialog(name));
+            }}
+          />
 
           <>
             <ImageInput
-              default={signal.value.image ?? ''}
+              default={signal.value.image?.url ?? ''}
               accept={['image/png', 'image/jpeg', 'image/webp']}
               // force update to redraw the image in the outside container as well
               onChange={(url) => (signal.value.image = url, forceUpdate())}
