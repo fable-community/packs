@@ -13,7 +13,7 @@ export default ({ list }: { list: (string | undefined)[] }) => {
           <img
             key={id}
             // onClick={() => console.log('test')}
-            src={`https://discord-avatar.deno.dev/?id=${id}`}
+            src={`https://avatars.fables.workers.dev/?id=${id}`}
           />
         ))}
       {
