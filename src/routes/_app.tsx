@@ -40,6 +40,12 @@ export default ({ Component }: AppProps) => {
 
         {/* binds code to handle displaying and hiding dialogs */}
         <script async src='/js/dialogs.js' type={'module'} />
+
+        {/* error tracking */}
+        <script
+          crossOrigin='anonymous'
+          src='https://js.sentry-cdn.com/dacb35e205814c16aa731b503abdc9f8.min.js'
+        />
       </Head>
       <Component />
     </>
