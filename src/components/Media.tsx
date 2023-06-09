@@ -109,17 +109,20 @@ export default ({ name, pack }: {
             />
 
             <TextInput
+              required
               label={'name'}
+              pattern='.{1,128}'
               value={signal.value.title}
-              onInput={(value) => signal.value.title = value}
+              onInput={(value) => signal.value.title = value as string}
               key={`${signal.value.id}-title`}
             />
 
             <TextInput
               multiline
               label={'description'}
+              pattern='.{1,2048}'
               value={signal.value.description}
-              onInput={(value) => signal.value.description = value}
+              onInput={(value) => signal.value.description = value as string}
               key={`${signal.value.id}-description`}
             />
           </>

@@ -100,11 +100,6 @@ textarea:focus {
   outline: 0;
 }
 
-input:invalid,
-textarea:invalid {
-  border-bottom: 3px solid var(--red);
-}
-
 input:invalid::placeholder,
 textarea:invalid::placeholder {
   color: var(--red);
