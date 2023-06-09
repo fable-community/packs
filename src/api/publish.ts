@@ -106,7 +106,7 @@ const uploadImage = async ({ file, credentials }: {
     .map((b) => b.toString(16).padStart(2, '0'))
     .join(''); // convert bytes to hex string
 
-  const fileName = nanoid(12);
+  const fileName = nanoid(8);
 
   const _file = await fetch(
     upload.uploadUrl,
@@ -219,7 +219,7 @@ export const handler: Handlers = {
           }
 
           item.title = {
-            english: media.title,
+            english: media.title ?? item.title.english ?? 'Untitled',
           };
 
           if (media.description) {
@@ -269,7 +269,7 @@ export const handler: Handlers = {
           }
 
           item.name = {
-            english: char.title,
+            english: char.title ?? item.name.english ?? 'Unnamed',
           };
 
           if (char.description) {

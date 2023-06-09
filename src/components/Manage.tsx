@@ -11,6 +11,7 @@ import Maintainers from './Maintainers.tsx';
 import ImageInput, { type IImageInput } from './ImageInput.tsx';
 
 import Dialog from './Dialog.tsx';
+import Notice from './Notice.tsx';
 
 import IconClose from 'icons/x.tsx';
 
@@ -29,6 +30,7 @@ export default (props: {
     { id: '' };
 
   const loading = useSignal<boolean>(false);
+  const error = useSignal<string | undefined>(undefined);
 
   const packTitle = useSignal<string | undefined>(pack.title);
   const packImage = useSignal<IImageInput | undefined>(undefined);
@@ -73,21 +75,29 @@ export default (props: {
 
     loading.value = true;
 
-    const response = await fetch(`api/publish`, {
-      method: 'POST',
-      body: serialize(body),
-    });
+    try {
+      const response = await fetch(`api/publish`, {
+        method: 'POST',
+        body: serialize(body),
+      });
 
-    if (response.status === 200) {
-      open('/?success', '_self');
-    } else {
+      if (response.status === 200) {
+        open('/?success', '_self');
+      } else {
+        const t = await response.json();
+        console.error(error.value = t);
+      }
+    } catch (err) {
+      console.error(error.value = err?.message);
+    } finally {
       loading.value = false;
-      console.error(await response.json());
     }
   };
 
   return (
     <>
+      {error.value ? <Notice text={error.value} type={'error'} /> : undefined}
+
       <Dialog
         visible={true}
         name={'manage'}
@@ -106,8 +116,10 @@ export default (props: {
             />
 
             <input
+              required
               type={'text'}
               value={packTitle}
+              pattern='.{3,128}'
               placeholder={strings.packTitle}
               onInput={(
                 ev,
