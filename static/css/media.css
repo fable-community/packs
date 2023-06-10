@@ -35,9 +35,15 @@
 .manage-dialog-media textarea {
   font-size: 1.1em;
   resize: vertical;
-  background-color: var(--embed);
   padding: 1em;
   border-radius: 5px;
+  background-color: var(--embed);
+  border: 2px solid var(--embed);
+}
+
+.manage-dialog-media input:invalid,
+.manage-dialog-media textarea:invalid {
+  border: 2px solid var(--red);
 }
 
 .manage-dialog-media textarea {

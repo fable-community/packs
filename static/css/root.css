@@ -80,7 +80,6 @@ textarea {
   font-style: normal;
   color: var(--foreground);
   background: transparent;
-  box-sizing: border-box;
   border: 0;
   font-weight: 600;
   font-family: inherit;
@@ -98,6 +97,11 @@ textarea::placeholder {
 input:focus,
 textarea:focus {
   outline: 0;
+}
+
+input:invalid,
+textarea:invalid {
+  border-bottom: 2px solid var(--red);
 }
 
 input:invalid::placeholder,

@@ -90,6 +90,7 @@ export default ({ characters }: { characters: Signal<Character[]> }) => {
             />
 
             <TextInput
+              required
               label={'name'}
               pattern='.{1,128}'
               value={signal.value.name.english ?? ''}

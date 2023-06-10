@@ -92,6 +92,7 @@ export default ({ media }: { media: Signal<Media[]> }) => {
             />
 
             <TextInput
+              required
               label={'name'}
               pattern='.{1,128}'
               value={signal.value.title.english ?? ''}
