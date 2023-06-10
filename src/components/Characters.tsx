@@ -19,23 +19,22 @@ import IconClose from 'icons/x.tsx';
 
 import { defaultImage } from './Dashboard.tsx';
 
-import { type Media, MediaType } from '../utils/types.ts';
+import type { Character } from '../utils/types.ts';
 
-export default ({ media }: { media: Signal<Media[]> }) => {
+export default ({ characters }: { characters: Signal<Character[]> }) => {
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
   const forceUpdate = useCallback(() => updateState({}), []);
 
-  const signal = useSignal<Media>({
-    type: MediaType.Anime,
-    title: { english: '' },
+  const signal = useSignal<Character>({
+    name: { english: '' },
     id: '',
   });
 
   return (
     <div class={'media'}>
-      {Object.values(media.value)
+      {Object.values(characters.value)
         .map(({ images }, i) => (
           <img
             key={i}
@@ -44,23 +43,22 @@ export default ({ media }: { media: Signal<Media[]> }) => {
               backgroundColor: images?.[0]?.url ? undefined : 'transparent',
             }}
             onClick={() => {
-              signal.value = media.value[i];
-              requestAnimationFrame(() => showDialog('media'));
+              signal.value = characters.value[i];
+              requestAnimationFrame(() => showDialog('characters'));
             }}
           />
         ))}
 
       {
         <div
-          data-dialog={'media'}
+          data-dialog={'characters'}
           onClick={() => {
-            const item: Media = {
+            const item: Character = {
               id: `${nanoid(4)}`,
-              title: { english: '' },
-              type: MediaType.Anime,
+              name: { english: '' },
             };
 
-            media.value.push(item);
+            characters.value.push(item);
 
             signal.value = item;
           }}
@@ -71,11 +69,11 @@ export default ({ media }: { media: Signal<Media[]> }) => {
 
       {/* dialog */}
 
-      <Dialog name={'media'} class={'manage-dialog'}>
+      <Dialog name={'characters'} class={'manage-dialog'}>
         <div class={'manage-dialog-media'}>
           <IconClose
             onClick={() => {
-              requestAnimationFrame(() => hideDialog('media'));
+              requestAnimationFrame(() => hideDialog('characters'));
             }}
           />
 
@@ -94,8 +92,8 @@ export default ({ media }: { media: Signal<Media[]> }) => {
             <TextInput
               label={'name'}
               pattern='.{1,128}'
-              value={signal.value.title.english ?? ''}
-              onInput={(value) => signal.value.title.english = value as string}
+              value={signal.value.name.english ?? ''}
+              onInput={(value) => signal.value.name.english = value as string}
               key={`${signal.value.id}-title`}
             />
 

@@ -6,7 +6,6 @@
     "$fresh/": "https://deno.land/x/fresh@1.1.6/",
     "$std/": "https://deno.land/std@0.189.0/",
     "bson": "https://raw.githubusercontent.com/lucsoft/web_bson/v0.3.0/mod.js",
-    "fable/": "https://raw.githubusercontent.com/ker0olos/fable/main/",
     "icons/": "https://deno.land/x/tabler_icons_tsx@0.0.3/tsx/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.0.3",
     "preact": "https://esm.sh/preact@10.15.1",

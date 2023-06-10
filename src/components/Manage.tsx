@@ -1,17 +1,15 @@
-import { useMemo } from 'preact/hooks';
-
-import { computed, useSignal } from '@preact/signals';
+import { useSignal } from '@preact/signals';
 
 import { serialize } from 'bson';
-
-import Media, { Editable } from './Media.tsx';
-
-import Maintainers from './Maintainers.tsx';
 
 import ImageInput, { type IImageInput } from './ImageInput.tsx';
 
 import Dialog from './Dialog.tsx';
 import Notice from './Notice.tsx';
+
+import Media from './Media.tsx';
+import Characters from './Characters.tsx';
+import Maintainers from './Maintainers.tsx';
 
 import IconClose from 'icons/x.tsx';
 
@@ -32,45 +30,19 @@ export default (props: {
   const loading = useSignal<boolean>(false);
   const error = useSignal<string | undefined>(undefined);
 
-  const packTitle = useSignal<string | undefined>(pack.title);
-  const packImage = useSignal<IImageInput | undefined>(undefined);
+  const title = useSignal<string | undefined>(pack.title);
+  const image = useSignal<IImageInput | undefined>(undefined);
 
-  const [readonly, signal] = useMemo(() => {
-    const media: Editable[] = (pack.media?.new ?? []).map((media) => ({
-      id: media.id,
-      title: media.title.english,
-      description: media.description,
-      image: {
-        url: media.images?.[0]?.url,
-      } as IImageInput,
-    }));
-
-    const characters: Editable[] = (pack.characters?.new ?? []).map((char) => ({
-      id: char.id,
-      title: char.name.english,
-      description: char.description,
-      image: {
-        url: char.images?.[0]?.url,
-      } as IImageInput,
-    }));
-
-    const data = { media, characters };
-
-    return [
-      data,
-      computed(() => {
-        return { ...data };
-      }),
-    ];
-  }, [pack]);
+  const media = useSignal(pack.media?.new ?? []);
+  const characters = useSignal(pack.characters?.new ?? []);
 
   const onPublish = async () => {
     const body: Data = {
-      pack,
-      packTitle: packTitle.value,
-      packImage: packImage.value,
-      media: signal.value.media,
-      characters: signal.value.characters,
+      old: pack,
+      title: title.value,
+      image: image.value,
+      media: media.value,
+      characters: characters.value,
     };
 
     loading.value = true;
@@ -112,18 +84,18 @@ export default (props: {
             <ImageInput
               default={pack.image}
               accept={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
-              onChange={(value) => packImage.value = value}
+              onChange={(value) => image.value = value}
             />
 
             <input
               required
               type={'text'}
-              value={packTitle}
+              value={title}
               pattern='.{3,128}'
               placeholder={strings.packTitle}
               onInput={(
                 ev,
-              ) => (packTitle.value = (ev.target as HTMLInputElement).value)}
+              ) => (title.value = (ev.target as HTMLInputElement).value)}
             />
 
             <button disabled={loading} onClick={onPublish}>
@@ -134,17 +106,8 @@ export default (props: {
           </div>
 
           <div class={'manage-boxes'}>
-            <Media
-              name={'characters'}
-              readonly={readonly}
-              pack={signal.value}
-            />
-
-            <Media
-              name={'media'}
-              readonly={readonly}
-              pack={signal.value}
-            />
+            <Characters characters={characters} />
+            <Media media={media} />
 
             <i />
 

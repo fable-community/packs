@@ -8,7 +8,7 @@ import Manage from './Manage.tsx';
 import IconLink from 'icons/link.tsx';
 import IconPlus from 'icons/plus.tsx';
 
-import type { Schema } from 'fable/src/types.ts';
+import type { Schema } from '../utils/types.ts';
 
 import type { PageProps } from '$fresh/server.ts';
 
