@@ -23,7 +23,8 @@
 
 /*  */
 
-.media {
+.media,
+.characters {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -38,7 +39,8 @@
   gap: 1em;
 }
 
-.media > *:not(i) {
+.media > *:not(i),
+.characters > *:not(i) {
   object-fit: cover;
   object-position: center;
   aspect-ratio: 90/127;
@@ -52,6 +54,7 @@
 }
 
 .media > img,
+.characters > img,
 .maintainers > img {
   cursor: pointer;
   background-color: var(--grey);
@@ -64,6 +67,7 @@
 }
 
 .media > div,
+.characters > div,
 .maintainers > div {
   display: flex;
   cursor: pointer;
@@ -78,7 +82,8 @@
   border-radius: 100%;
 }
 
-.media > svg {
+.media > svg,
+.characters > svg {
   width: 32px;
   height: 32px;
 }

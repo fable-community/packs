@@ -14,8 +14,8 @@ import TextInput from './TextInput.tsx';
 
 import ImageInput from './ImageInput.tsx';
 
-import IconPlus from 'icons/plus.tsx';
-import IconClose from 'icons/x.tsx';
+import IconPlus from 'icons/folder-plus.tsx';
+import IconApply from 'icons/check.tsx';
 
 import { defaultImage } from './Dashboard.tsx';
 
@@ -73,7 +73,7 @@ export default ({ media }: { media: Signal<Media[]> }) => {
 
       <Dialog name={'media'} class={'manage-dialog'}>
         <div class={'manage-dialog-media'}>
-          <IconClose
+          <IconApply
             onClick={() => {
               requestAnimationFrame(() => hideDialog('media'));
             }}

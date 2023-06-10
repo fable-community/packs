@@ -14,8 +14,8 @@ import TextInput from './TextInput.tsx';
 
 import ImageInput from './ImageInput.tsx';
 
-import IconPlus from 'icons/plus.tsx';
-import IconClose from 'icons/x.tsx';
+import IconPlus from 'icons/user-plus.tsx';
+import IconApply from 'icons/check.tsx';
 
 import { defaultImage } from './Dashboard.tsx';
 
@@ -33,7 +33,7 @@ export default ({ characters }: { characters: Signal<Character[]> }) => {
   });
 
   return (
-    <div class={'media'}>
+    <div class={'characters'}>
       {Object.values(characters.value)
         .map(({ images }, i) => (
           <img
@@ -71,7 +71,7 @@ export default ({ characters }: { characters: Signal<Character[]> }) => {
 
       <Dialog name={'characters'} class={'manage-dialog'}>
         <div class={'manage-dialog-media'}>
-          <IconClose
+          <IconApply
             onClick={() => {
               requestAnimationFrame(() => hideDialog('characters'));
             }}
