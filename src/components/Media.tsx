@@ -14,6 +14,7 @@ import TextInput from './TextInput.tsx';
 
 import ImageInput from './ImageInput.tsx';
 
+import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/folder-plus.tsx';
 import IconApply from 'icons/check.tsx';
 
@@ -73,11 +74,27 @@ export default ({ media }: { media: Signal<Media[]> }) => {
 
       <Dialog name={'media'} class={'manage-dialog'}>
         <div class={'manage-dialog-media'}>
-          <IconApply
-            onClick={() => {
-              requestAnimationFrame(() => hideDialog('media'));
-            }}
-          />
+          <div class={'buttons'}>
+            <IconApply
+              onClick={() => {
+                requestAnimationFrame(() => hideDialog('media'));
+              }}
+            />
+
+            <IconTrash
+              onClick={() => {
+                const i = media.value.findIndex(({ id }) => signal.value.id);
+
+                if (i > -1) {
+                  media.value.splice(i, 1);
+                }
+
+                forceUpdate();
+
+                requestAnimationFrame(() => hideDialog('media'));
+              }}
+            />
+          </div>
 
           <>
             <ImageInput
