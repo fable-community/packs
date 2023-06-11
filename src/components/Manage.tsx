@@ -6,13 +6,15 @@ import ImageInput, { type IImageInput } from './ImageInput.tsx';
 
 import Dialog from './Dialog.tsx';
 
-import { Dismissible } from './Notice.tsx';
+import Notice, { Dismissible } from './Notice.tsx';
 
 import Media from './Media.tsx';
 import Characters from './Characters.tsx';
 import Maintainers from './Maintainers.tsx';
 
 import IconClose from 'icons/x.tsx';
+import IconInfo from 'icons/info-circle.tsx';
+import IconClipboard from 'icons/clipboard-text.tsx';
 
 import { Schema } from './Dashboard.tsx';
 
@@ -86,6 +88,23 @@ export default (props: {
         {/* this component require client-side javascript */}
         <noscript>{strings.noScript}</noscript>
 
+        <Dialog name={'info'} class={'dialog-normal'}>
+          <div>
+            <IconClose data-dialog-cancel={'info'} class={'close'} />
+
+            <div class={'install-info'}>
+              <i>{`/packs install id: ${pack.id}`}</i>
+              <IconClipboard />
+            </div>
+
+            <Notice type={'info'}>
+              {strings.success.youNeed}
+              <strong>{strings.success.manageServer}</strong>
+              {strings.success.permissionToInstall}
+            </Notice>
+          </div>
+        </Dialog>
+
         <div class={'manage-container'}>
           <div class={'manage-header'}>
             <ImageInput
@@ -109,7 +128,11 @@ export default (props: {
               {props.new ? strings.publish : strings.save}
             </button>
 
-            <IconClose data-dialog-cancel={'manage'} class={'manage-close'} />
+            {!props.new
+              ? <IconInfo data-dialog={'info'} class={'info'} />
+              : undefined}
+
+            <IconClose data-dialog-cancel={'manage'} class={'close'} />
           </div>
 
           <div class={'manage-boxes'}>
