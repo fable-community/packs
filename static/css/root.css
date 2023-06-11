@@ -119,3 +119,33 @@ input:invalid ~ button {
   pointer-events: none;
   background-color: var(--red);
 }
+
+[invalid="true"] {
+  border: 2px solid var(--red);
+  box-sizing: border-box;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+[shake="true"] {
+  animation-name: shake;
+  animation-duration: 0.35s;
+  animation-iteration-count: 2;
+  animation-fill-mode: both;
+}

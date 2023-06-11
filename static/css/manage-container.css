@@ -3,7 +3,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: --var(embedHighlight);
 }
 
 .manage-container {
@@ -51,7 +50,7 @@
 }
 
 @media (max-width: 850px) {
-  .manage-header > :nth-child(3) {
+  .manage-header > button {
     position: fixed;
     margin: 1.5em 3em;
     height: inherit;

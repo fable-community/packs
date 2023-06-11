@@ -19,16 +19,24 @@ const Notice = (
   );
 };
 
-export const Dismissible = (props: Parameters<typeof Notice>['0']) => {
+export const Dismissible = (
+  { type, ...props }: Parameters<typeof Notice>['0'],
+) => {
   const ref = useRef<HTMLDivElement>(null);
 
   return (
-    <Notice
+    <div
       {...props}
       ref={ref}
-      class={'notice notice-fixed'}
+      class={'notice notice-dismissible'}
+      data-type={type}
       onClick={(e) => ref.current?.remove()}
-    />
+    >
+      <IconInfo />
+      <div>
+        {props.children}
+      </div>
+    </div>
   );
 };
 

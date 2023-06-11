@@ -59,8 +59,46 @@ export default (props: {
       if (response.status === 200) {
         open(props.new ? `/?success=${await response.text()}` : '/', '_self');
       } else {
-        const err = await response.json();
-        console.error(error.value = err);
+        const err = await response.json() as {
+          errors: {
+            instancePath: string;
+            keyword: string;
+            message: string;
+            params: { limit?: number };
+            schemaPath: string;
+          }[];
+        };
+
+        document.querySelectorAll(`[invalid]`).forEach((ele) =>
+          ele.removeAttribute(`invalid`)
+        );
+
+        document.querySelectorAll(`[shake]`).forEach((ele) =>
+          ele.removeAttribute(`shake`)
+        );
+
+        err.errors.forEach((err) => {
+          const path = err.instancePath
+            .substring(1)
+            .split('/');
+
+          console.error(path);
+
+          if (path[0] === 'media' || path[0] === 'characters') {
+            if (path[1] === 'new') {
+              const i = parseInt(path[2]);
+
+              const child = document.querySelector(`.${path[0]}`)?.children[i];
+
+              requestAnimationFrame(() => {
+                child?.setAttribute('shake', 'true');
+                child?.setAttribute('invalid', 'true');
+                document.querySelector('.manage-wrapper')
+                  ?.setAttribute('shake', 'true');
+              });
+            }
+          }
+        });
       }
     } catch (err) {
       console.error(error.value = err?.message);
