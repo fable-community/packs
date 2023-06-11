@@ -1,28 +1,3 @@
-.manage-dialog {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  pointer-events: none;
-}
-
-.manage-dialog > div {
-  overflow: auto;
-  background-color: var(--embedHighlight);
-  border-radius: 10px;
-  margin: 2em;
-  padding: 2em;
-  height: 60vh;
-  width: 60vw;
-  max-width: 500px;
-  pointer-events: all;
-}
-
-/*  */
-
 .media,
 .characters {
   display: flex;

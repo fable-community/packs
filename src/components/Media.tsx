@@ -72,7 +72,7 @@ export default ({ media }: { media: Signal<Media[]> }) => {
 
       {/* dialog */}
 
-      <Dialog name={'media'} class={'manage-dialog'}>
+      <Dialog name={'media'} class={'dialog-normal'}>
         <div class={'manage-dialog-media'}>
           <div class={'buttons'}>
             <IconApply

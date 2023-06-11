@@ -1,12 +1,15 @@
-import { Head } from '$fresh/runtime.ts';
-
 import Card from './Card.tsx';
 import Avatar from './Avatar.tsx';
 
+import Notice from './Notice.tsx';
+import Dialog from './Dialog.tsx';
 import Manage from './Manage.tsx';
 
 import IconLink from 'icons/link.tsx';
 import IconPlus from 'icons/plus.tsx';
+import IconClipboard from 'icons/clipboard-text.tsx';
+
+import strings from '../../i18n/en-US.ts';
 
 import type { Schema } from '../utils/types.ts';
 
@@ -39,6 +42,7 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
   const user = data.user!;
 
   const hasNew = searchParams.has('new');
+  const hasSuccess = searchParams.get('success');
   // const hasImport = searchParams.get('import');
 
   if (packId || hasNew) {
@@ -68,6 +72,28 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
           <IconLink />
         </a>
       </div>
+
+      {hasSuccess
+        ? (
+          <Dialog name={'success'} class={'dialog-normal'} visible={true}>
+            <div>
+              <p>
+                {strings.success.title}
+              </p>
+              <div class={'install-info'}>
+                <i>{`/packs install id: ${hasSuccess}`}</i>
+                <IconClipboard />
+              </div>
+              <Notice type={'info'}>
+                {strings.success.youNeed}
+                <strong>{strings.success.manageServer}</strong>
+                {strings.success.permissionToInstall}
+              </Notice>
+              <button data-dialog-cancel={'success'}>{strings.okay}</button>
+            </div>
+          </Dialog>
+        )
+        : undefined}
     </>
   );
 };

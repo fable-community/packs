@@ -7,6 +7,7 @@
   --grey: #4f4f4f;
   --embed: #2b2d31;
   --embedHighlight: #232428;
+  --highlight: #1c1c1c;
   --red: #b52424;
   --discord: #5865f2;
   --fable: #feb500;
@@ -63,6 +64,10 @@ button {
 button:hover {
   border-radius: 2px;
   box-shadow: inset 0px 0px 0px 2px var(--foreground);
+}
+
+i {
+  font-style: normal;
 }
 
 a {

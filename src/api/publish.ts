@@ -135,10 +135,8 @@ const uploadImage = async ({ file, credentials }: {
 };
 
 export const handler: Handlers = {
-  async POST(req) {
+  async POST(req): Promise<Response> {
     try {
-      const headers = new Headers();
-
       const cookies = getCookies(req.headers) as Cookies;
 
       const endpoint = Deno.env.get('API_ENDPOINT');
@@ -224,8 +222,6 @@ export const handler: Handlers = {
         }) ?? [],
       );
 
-      //
-
       if (endpoint) {
         const response = await fetch(`${endpoint}/publish`, {
           method: 'POST',
@@ -245,14 +241,11 @@ export const handler: Handlers = {
         if (response.status !== 200) {
           return response;
         }
+
+        return new Response(pack.id);
+      } else {
+        throw new Error('Fable endpoint not defined');
       }
-
-      headers.set('location', `/`);
-
-      return new Response(null, {
-        status: 303, // see other redirect
-        headers,
-      });
     } catch (err) {
       console.error(err);
 

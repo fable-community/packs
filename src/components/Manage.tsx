@@ -5,7 +5,8 @@ import { serialize } from 'bson';
 import ImageInput, { type IImageInput } from './ImageInput.tsx';
 
 import Dialog from './Dialog.tsx';
-import Notice from './Notice.tsx';
+
+import { Dismissible } from './Notice.tsx';
 
 import Media from './Media.tsx';
 import Characters from './Characters.tsx';
@@ -54,10 +55,10 @@ export default (props: {
       });
 
       if (response.status === 200) {
-        open('/?success', '_self');
+        open(props.new ? `/?success=${await response.text()}` : '/', '_self');
       } else {
-        const t = await response.json();
-        console.error(error.value = t);
+        const err = await response.json();
+        console.error(error.value = err);
       }
     } catch (err) {
       console.error(error.value = err?.message);
@@ -68,7 +69,13 @@ export default (props: {
 
   return (
     <>
-      {error.value ? <Notice text={error.value} type={'error'} /> : undefined}
+      {error.value
+        ? (
+          <Dismissible type={'error'}>
+            {error.value}
+          </Dismissible>
+        )
+        : undefined}
 
       <Dialog
         visible={true}

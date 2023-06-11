@@ -2,20 +2,34 @@ import { useRef } from 'preact/hooks';
 
 import IconInfo from 'icons/info-circle.tsx';
 
-export default (
-  { text, type }: { text: string; type: 'warn' | 'error' | 'info' },
-) => {
-  const ref = useRef<HTMLDivElement>(null);
+import type { JSX } from 'preact';
 
+const Notice = (
+  { type, ...props }:
+    & { type: 'warn' | 'error' | 'info' }
+    & JSX.HTMLAttributes<HTMLDivElement>,
+) => {
   return (
-    <div
-      ref={ref}
-      class={'notice'}
-      data-type={type}
-      onClick={(e) => ref.current?.remove()}
-    >
+    <div class={'notice'} data-type={type} {...props}>
       <IconInfo />
-      {text}
+      <div>
+        {props.children}
+      </div>
     </div>
   );
 };
+
+export const Dismissible = (props: Parameters<typeof Notice>['0']) => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  return (
+    <Notice
+      {...props}
+      ref={ref}
+      class={'notice notice-fixed'}
+      onClick={(e) => ref.current?.remove()}
+    />
+  );
+};
+
+export default Notice;

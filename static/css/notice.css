@@ -1,7 +1,4 @@
 .notice {
-  z-index: 99;
-  cursor: pointer;
-  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,13 +6,25 @@
   border-radius: 5px;
   border: 2px solid var(--grey);
   background-color: var(--embedHighlight);
+  margin: 1em 0;
+  padding: 1em;
+  gap: 1em;
+}
+
+.notice-fixed {
+  z-index: 99;
+  cursor: pointer;
+  position: fixed;
   max-width: 50vw;
   min-width: 20vw;
-  padding: 1em;
   margin: 1.3em;
-  gap: 0.5em;
   bottom: 0;
   right: 0;
+}
+
+.notice > svg {
+  min-width: 18px;
+  min-height: 18px;
 }
 
 .notice[data-type="error"] > svg {

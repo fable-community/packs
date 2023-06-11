@@ -61,3 +61,22 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.install-info {
+  display: flex;
+  align-items: center;
+  user-select: all;
+  padding: 1em;
+  border-radius: inherit;
+  background-color: var(--highlight);
+}
+
+.install-info i {
+  flex-grow: 1;
+  font-style: italic;
+}
+
+.install-info svg {
+  width: 18px;
+  height: 18px;
+}

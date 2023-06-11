@@ -70,7 +70,7 @@ export default ({ characters }: { characters: Signal<Character[]> }) => {
 
       {/* dialog */}
 
-      <Dialog name={'characters'} class={'manage-dialog'}>
+      <Dialog name={'characters'} class={'dialog-normal'}>
         <div class={'manage-dialog-media'}>
           <div class={'buttons'}>
             <IconApply
