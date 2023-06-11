@@ -9,16 +9,15 @@ import { deserialize } from 'bson';
 import nanoid from '../utils/nanoid.ts';
 
 import {
-  type DisaggregatedCharacter,
-  type DisaggregatedMedia,
-  MediaType,
-} from 'fable/src/types.ts';
+  type Character,
+  DisaggregatedCharacter,
+  DisaggregatedMedia,
+  type Media,
+} from '../utils/types.ts';
 
 import type { Handlers } from '$fresh/server.ts';
 
 import type { Schema } from '../components/Dashboard.tsx';
-
-import type { Editable } from '../components/Media.tsx';
 
 import type { IImageInput } from '../components/ImageInput.tsx';
 
@@ -38,11 +37,11 @@ interface Upload {
 }
 
 export interface Data {
-  pack: Schema.Pack['manifest'];
-  packTitle?: string;
-  packImage?: IImageInput;
-  characters?: Editable[];
-  media?: Editable[];
+  old: Schema.Pack['manifest'];
+  title?: string;
+  image?: IImageInput;
+  characters?: Character[];
+  media?: Media[];
 }
 
 const idRegex = /[^-_a-z0-9]+/g;
@@ -136,10 +135,8 @@ const uploadImage = async ({ file, credentials }: {
 };
 
 export const handler: Handlers = {
-  async POST(req) {
+  async POST(req): Promise<Response> {
     try {
-      const headers = new Headers();
-
       const cookies = getCookies(req.headers) as Cookies;
 
       const endpoint = Deno.env.get('API_ENDPOINT');
@@ -152,10 +149,10 @@ export const handler: Handlers = {
         new Uint8Array(await req.arrayBuffer()),
       ) as Data;
 
-      const { pack, packTitle, packImage } = data;
+      const { old: pack, title, image } = data;
 
-      if (packTitle) {
-        pack.title = packTitle;
+      if (title) {
+        pack.title = title;
       }
 
       if (!pack.id) {
@@ -164,8 +161,8 @@ export const handler: Handlers = {
           '',
         );
 
-        if (!candidate || candidate.length <= 2) {
-          return new Response('could\'nt create a pack id from pack title', {
+        if (!candidate || candidate.length < 3) {
+          return new Response('cannot create pack id from pack title', {
             status: 400,
           });
         }
@@ -175,125 +172,55 @@ export const handler: Handlers = {
 
       const credentials = await setUpImages();
 
-      if (packImage?.file) {
+      if (image?.file) {
         pack.image = await uploadImage({
           credentials,
-          file: packImage.file,
+          file: image.file,
         });
       }
 
-      //
-
       pack.media ??= {};
-      pack.media.new ??= [];
-      pack.media.conflicts ??= [];
-
       pack.characters ??= {};
-      pack.characters.new ??= [];
-      pack.characters.conflicts ??= [];
 
-      //
-
-      await Promise.all(
+      pack.media!.new = await Promise.all(
         data.media?.map(async (media) => {
-          let item: DisaggregatedMedia;
-
-          if (!media.id || !media.title) {
-            return;
-          }
-
-          const index = pack.media!.new!.findIndex(({ id }) => media.id === id);
-
-          if (Number(index) > -1) {
-            item = pack.media!.new![index];
-          } else {
-            item = {
-              id: media.id,
-              type: MediaType.Anime,
-              title: {
-                english: media.title,
-              },
-            };
-
-            pack.media!.new!.push(item);
-          }
-
-          item.title = {
-            english: media.title ?? item.title.english ?? 'Untitled',
-          };
-
-          if (media.description) {
-            item.description = media.description;
-          }
-
-          if (media.image?.file) {
+          if (media.images?.length && media.images[0].file) {
             const url = await uploadImage({
+              file: media.images[0].file,
               credentials,
-              file: media.image.file,
             });
 
-            if (Number(item.images?.length) > 0) {
-              item.images![0].url = url;
-            } else {
-              item.images = [{
+            return {
+              ...media,
+              images: [{
                 url,
-              }];
-            }
+              }],
+            };
+          } else {
+            return media as DisaggregatedMedia;
           }
         }) ?? [],
       );
 
-      await Promise.all(
+      pack.characters!.new = await Promise.all(
         data.characters?.map(async (char) => {
-          let item: DisaggregatedCharacter;
-
-          if (!char.id) {
-            return;
-          }
-
-          const index = pack.characters!.new!.findIndex(({ id }) =>
-            char.id === id
-          );
-
-          if (Number(index) > -1) {
-            item = pack.characters!.new![index];
-          } else {
-            item = {
-              id: char.id,
-              name: {
-                english: char.title,
-              },
-            };
-
-            pack.characters!.new!.push(item);
-          }
-
-          item.name = {
-            english: char.title ?? item.name.english ?? 'Unnamed',
-          };
-
-          if (char.description) {
-            item.description = char.description;
-          }
-
-          if (char.image?.file) {
+          if (char.images?.length && char.images[0].file) {
             const url = await uploadImage({
+              file: char.images[0].file,
               credentials,
-              file: char.image.file,
             });
 
-            if (Number(item.images?.length) > 0) {
-              item.images![0].url = url;
-            } else {
-              item.images = [{
+            return {
+              ...char,
+              images: [{
                 url,
-              }];
-            }
+              }],
+            };
+          } else {
+            return char as DisaggregatedCharacter;
           }
         }) ?? [],
       );
-
-      //
 
       if (endpoint) {
         const response = await fetch(`${endpoint}/publish`, {
@@ -314,14 +241,11 @@ export const handler: Handlers = {
         if (response.status !== 200) {
           return response;
         }
+
+        return new Response(pack.id);
+      } else {
+        throw new Error('Fable endpoint not defined');
       }
-
-      headers.set('location', `/`);
-
-      return new Response(null, {
-        status: 303, // see other redirect
-        headers,
-      });
     } catch (err) {
       console.error(err);
 

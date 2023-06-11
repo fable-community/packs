@@ -1,19 +1,20 @@
-import { useMemo } from 'preact/hooks';
-
-import { computed, useSignal } from '@preact/signals';
+import { useSignal } from '@preact/signals';
 
 import { serialize } from 'bson';
-
-import Media, { Editable } from './Media.tsx';
-
-import Maintainers from './Maintainers.tsx';
 
 import ImageInput, { type IImageInput } from './ImageInput.tsx';
 
 import Dialog from './Dialog.tsx';
-import Notice from './Notice.tsx';
+
+import Notice, { Dismissible } from './Notice.tsx';
+
+import Media from './Media.tsx';
+import Characters from './Characters.tsx';
+import Maintainers from './Maintainers.tsx';
 
 import IconClose from 'icons/x.tsx';
+import IconInfo from 'icons/info-circle.tsx';
+import IconClipboard from 'icons/clipboard-text.tsx';
 
 import { Schema } from './Dashboard.tsx';
 
@@ -32,45 +33,19 @@ export default (props: {
   const loading = useSignal<boolean>(false);
   const error = useSignal<string | undefined>(undefined);
 
-  const packTitle = useSignal<string | undefined>(pack.title);
-  const packImage = useSignal<IImageInput | undefined>(undefined);
+  const title = useSignal<string | undefined>(pack.title);
+  const image = useSignal<IImageInput | undefined>(undefined);
 
-  const [readonly, signal] = useMemo(() => {
-    const media: Editable[] = (pack.media?.new ?? []).map((media) => ({
-      id: media.id,
-      title: media.title.english,
-      description: media.description,
-      image: {
-        url: media.images?.[0]?.url,
-      } as IImageInput,
-    }));
-
-    const characters: Editable[] = (pack.characters?.new ?? []).map((char) => ({
-      id: char.id,
-      title: char.name.english,
-      description: char.description,
-      image: {
-        url: char.images?.[0]?.url,
-      } as IImageInput,
-    }));
-
-    const data = { media, characters };
-
-    return [
-      data,
-      computed(() => {
-        return { ...data };
-      }),
-    ];
-  }, [pack]);
+  const media = useSignal(pack.media?.new ?? []);
+  const characters = useSignal(pack.characters?.new ?? []);
 
   const onPublish = async () => {
     const body: Data = {
-      pack,
-      packTitle: packTitle.value,
-      packImage: packImage.value,
-      media: signal.value.media,
-      characters: signal.value.characters,
+      old: pack,
+      title: title.value,
+      image: image.value,
+      media: media.value,
+      characters: characters.value,
     };
 
     loading.value = true;
@@ -82,10 +57,48 @@ export default (props: {
       });
 
       if (response.status === 200) {
-        open('/?success', '_self');
+        open(props.new ? `/?success=${await response.text()}` : '/', '_self');
       } else {
-        const t = await response.json();
-        console.error(error.value = t);
+        const err = await response.json() as {
+          errors: {
+            instancePath: string;
+            keyword: string;
+            message: string;
+            params: { limit?: number };
+            schemaPath: string;
+          }[];
+        };
+
+        document.querySelectorAll(`[invalid]`).forEach((ele) =>
+          ele.removeAttribute(`invalid`)
+        );
+
+        document.querySelectorAll(`[shake]`).forEach((ele) =>
+          ele.removeAttribute(`shake`)
+        );
+
+        err.errors.forEach((err) => {
+          const path = err.instancePath
+            .substring(1)
+            .split('/');
+
+          console.error(path);
+
+          if (path[0] === 'media' || path[0] === 'characters') {
+            if (path[1] === 'new') {
+              const i = parseInt(path[2]);
+
+              const child = document.querySelector(`.${path[0]}`)?.children[i];
+
+              requestAnimationFrame(() => {
+                child?.setAttribute('shake', 'true');
+                child?.setAttribute('invalid', 'true');
+                document.querySelector('.manage-wrapper')
+                  ?.setAttribute('shake', 'true');
+              });
+            }
+          }
+        });
       }
     } catch (err) {
       console.error(error.value = err?.message);
@@ -96,7 +109,13 @@ export default (props: {
 
   return (
     <>
-      {error.value ? <Notice text={error.value} type={'error'} /> : undefined}
+      {error.value
+        ? (
+          <Dismissible type={'error'}>
+            {error.value}
+          </Dismissible>
+        )
+        : undefined}
 
       <Dialog
         visible={true}
@@ -107,44 +126,56 @@ export default (props: {
         {/* this component require client-side javascript */}
         <noscript>{strings.noScript}</noscript>
 
+        <Dialog name={'info'} class={'dialog-normal'}>
+          <div>
+            <IconClose data-dialog-cancel={'info'} class={'close'} />
+
+            <div class={'install-info'}>
+              <i>{`/packs install id: ${pack.id}`}</i>
+              <IconClipboard />
+            </div>
+
+            <Notice type={'info'}>
+              {strings.success.youNeed}
+              <strong>{strings.success.manageServer}</strong>
+              {strings.success.permissionToInstall}
+            </Notice>
+          </div>
+        </Dialog>
+
         <div class={'manage-container'}>
           <div class={'manage-header'}>
             <ImageInput
               default={pack.image}
               accept={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
-              onChange={(value) => packImage.value = value}
+              onChange={(value) => image.value = value}
             />
 
             <input
               required
               type={'text'}
-              value={packTitle}
+              value={title}
               pattern='.{3,128}'
               placeholder={strings.packTitle}
               onInput={(
                 ev,
-              ) => (packTitle.value = (ev.target as HTMLInputElement).value)}
+              ) => (title.value = (ev.target as HTMLInputElement).value)}
             />
 
             <button disabled={loading} onClick={onPublish}>
               {props.new ? strings.publish : strings.save}
             </button>
 
-            <IconClose data-dialog-cancel={'manage'} class={'manage-close'} />
+            {!props.new
+              ? <IconInfo data-dialog={'info'} class={'info'} />
+              : undefined}
+
+            <IconClose data-dialog-cancel={'manage'} class={'close'} />
           </div>
 
           <div class={'manage-boxes'}>
-            <Media
-              name={'characters'}
-              readonly={readonly}
-              pack={signal.value}
-            />
-
-            <Media
-              name={'media'}
-              readonly={readonly}
-              pack={signal.value}
-            />
+            <Characters characters={characters} />
+            <Media media={media} />
 
             <i />
 

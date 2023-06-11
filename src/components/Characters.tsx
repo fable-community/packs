@@ -15,28 +15,27 @@ import TextInput from './TextInput.tsx';
 import ImageInput from './ImageInput.tsx';
 
 import IconTrash from 'icons/trash.tsx';
-import IconPlus from 'icons/folder-plus.tsx';
+import IconPlus from 'icons/user-plus.tsx';
 import IconApply from 'icons/check.tsx';
 
 import { defaultImage } from './Dashboard.tsx';
 
-import { type Media, MediaType } from '../utils/types.ts';
+import type { Character } from '../utils/types.ts';
 
-export default ({ media }: { media: Signal<Media[]> }) => {
+export default ({ characters }: { characters: Signal<Character[]> }) => {
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
   const forceUpdate = useCallback(() => updateState({}), []);
 
-  const signal = useSignal<Media>({
-    type: MediaType.Anime,
-    title: { english: '' },
+  const signal = useSignal<Character>({
+    name: { english: '' },
     id: '',
   });
 
   return (
-    <div class={'media'}>
-      {Object.values(media.value)
+    <div class={'characters'}>
+      {Object.values(characters.value)
         .map(({ images }, i) => (
           <img
             key={i}
@@ -45,23 +44,22 @@ export default ({ media }: { media: Signal<Media[]> }) => {
               backgroundColor: images?.[0]?.url ? undefined : 'transparent',
             }}
             onClick={() => {
-              signal.value = media.value[i];
-              requestAnimationFrame(() => showDialog('media'));
+              signal.value = characters.value[i];
+              requestAnimationFrame(() => showDialog('characters'));
             }}
           />
         ))}
 
       {
         <div
-          data-dialog={'media'}
+          data-dialog={'characters'}
           onClick={() => {
-            const item: Media = {
+            const item: Character = {
               id: `${nanoid(4)}`,
-              title: { english: '' },
-              type: MediaType.Anime,
+              name: { english: '' },
             };
 
-            media.value.push(item);
+            characters.value.push(item);
 
             signal.value = item;
           }}
@@ -72,26 +70,28 @@ export default ({ media }: { media: Signal<Media[]> }) => {
 
       {/* dialog */}
 
-      <Dialog name={'media'} class={'dialog-normal'}>
+      <Dialog name={'characters'} class={'dialog-normal'}>
         <div class={'manage-dialog-media'}>
           <div class={'buttons'}>
             <IconApply
               onClick={() => {
-                requestAnimationFrame(() => hideDialog('media'));
+                requestAnimationFrame(() => hideDialog('characters'));
               }}
             />
 
             <IconTrash
               onClick={() => {
-                const i = media.value.findIndex(({ id }) => signal.value.id);
+                const i = characters.value.findIndex(({ id }) =>
+                  signal.value.id
+                );
 
                 if (i > -1) {
-                  media.value.splice(i, 1);
+                  characters.value.splice(i, 1);
                 }
 
                 forceUpdate();
 
-                requestAnimationFrame(() => hideDialog('media'));
+                requestAnimationFrame(() => hideDialog('characters'));
               }}
             />
           </div>
@@ -112,8 +112,8 @@ export default ({ media }: { media: Signal<Media[]> }) => {
               required
               label={'name'}
               pattern='.{1,128}'
-              value={signal.value.title.english ?? ''}
-              onInput={(value) => signal.value.title.english = value as string}
+              value={signal.value.name.english ?? ''}
+              onInput={(value) => signal.value.name.english = value as string}
               key={`${signal.value.id}-title`}
             />
 

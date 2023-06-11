@@ -5,11 +5,22 @@
   column-gap: 2em;
 }
 
-.manage-dialog-media > svg {
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
+.manage-dialog-media > .buttons {
+  display: flex;
+  flex-direction: row-reverse;
   margin-left: auto;
+  gap: 1em;
+}
+
+.manage-dialog-media > .buttons > svg {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.manage-dialog-media > .buttons > svg:nth-child(2) {
+  color: var(--red);
+  scale: 0.8;
 }
 
 .manage-dialog-media > .image-input {
@@ -35,9 +46,15 @@
 .manage-dialog-media textarea {
   font-size: 1.1em;
   resize: vertical;
-  background-color: var(--embed);
   padding: 1em;
   border-radius: 5px;
+  background-color: var(--embed);
+  border: 2px solid var(--embed);
+}
+
+.manage-dialog-media input:invalid,
+.manage-dialog-media textarea:invalid {
+  border: 2px solid var(--red);
 }
 
 .manage-dialog-media textarea {

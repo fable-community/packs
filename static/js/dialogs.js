@@ -43,33 +43,21 @@ addEventListener('load', () => {
     });
   });
 
-  // // pressing `esc` will cancel all dialogs
-  // onkeydown = (e) => {
-  //   if (e.key === 'Escape') {
-  //     e.preventDefault();
+  // press `esc` to close dialogs
+  onkeydown = (e) => {
+    if (e.key === 'Escape') {
+      const elements = [
+        ...document.querySelectorAll('[data-dialog-cb="info"]'),
+        ...document.querySelectorAll('[data-dialog-cb="media"]'),
+        ...document.querySelectorAll('[data-dialog-cb="characters"]'),
+      ];
 
-  //     document.querySelectorAll('[data-dialog-cb]').forEach((ele) => {
-  //       const action = ele.getAttribute('data-dialog-cb-action');
-
-  //       switch (action) {
-  //         case 'back':
-  //           open('/', '_self');
-  //           break;
-  //         case 'hide':
-  //           ele.style.visibility = 'hidden';
-  //           break;
-  //         default:
-  //           break;
-  //       }
-  //     });
-  //   }
-  // };
-
-  // addEventListener('beforeunload', (e) => {
-  //   if (location.search === '?new') {
-  //     e.preventDefault();
-
-  //     return (e.returnValue = '');
-  //   }
-  // });
+      elements.forEach(
+        (ele) => {
+          e.preventDefault();
+          ele.style.display = 'none';
+        },
+      );
+    }
+  };
 });

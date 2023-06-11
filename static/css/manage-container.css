@@ -3,7 +3,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: --var(embedHighlight);
 }
 
 .manage-container {
@@ -19,7 +18,7 @@
   display: flex;
   width: 100%;
   height: 48px;
-  gap: 2em;
+  gap: 1.5em;
 }
 
 .manage-header > .image-input {
@@ -40,14 +39,18 @@
 }
 
 .manage-header > svg {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   margin: auto;
   cursor: pointer;
 }
 
+.manage-header > .info {
+  scale: 0.8;
+}
+
 @media (max-width: 850px) {
-  .manage-header > :nth-child(3) {
+  .manage-header > button {
     position: fixed;
     margin: 1.5em 3em;
     height: inherit;
