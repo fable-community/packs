@@ -80,7 +80,10 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
               <p>
                 {strings.success.title}
               </p>
-              <div class={'install-info'}>
+              <div
+                class={'install-info'}
+                data-clipboard={`/packs install id: ${hasSuccess}`}
+              >
                 <i>{`/packs install id: ${hasSuccess}`}</i>
                 <IconClipboard />
               </div>

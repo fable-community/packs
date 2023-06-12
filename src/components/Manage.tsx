@@ -130,7 +130,10 @@ export default (props: {
           <div>
             <IconClose data-dialog-cancel={'info'} class={'close'} />
 
-            <div class={'install-info'}>
+            <div
+              class={'install-info'}
+              data-clipboard={`/packs install id: ${pack.id}`}
+            >
               <i>{`/packs install id: ${pack.id}`}</i>
               <IconClipboard />
             </div>

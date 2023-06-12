@@ -39,8 +39,8 @@ export default ({ Component }: AppProps) => {
         <link rel='stylesheet' href={'css/maintainers.css'} />
         <link rel='stylesheet' href={'css/media.css'} />
 
-        {/* binds code to handle displaying and hiding dialogs */}
         <script async src='/js/dialogs.js' type={'module'} />
+        <script async src='/js/clipboards.js' type={'module'} />
 
         {/* error tracking */}
         <script
