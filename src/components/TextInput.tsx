@@ -27,8 +27,8 @@ export default (
         )
         : (
           <input
-            {...props}
             type={'text'}
+            {...props}
             value={value}
             onInput={(ev) => {
               onInput?.((ev.target as HTMLInputElement).value);

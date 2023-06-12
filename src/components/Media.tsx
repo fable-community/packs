@@ -118,13 +118,25 @@ export default ({ media }: { media: Signal<Media[]> }) => {
             />
 
             <TextInput
-              multiline
-              label={'description'}
-              pattern='.{1,2048}'
-              value={signal.value.description}
-              onInput={(value) => signal.value.description = value as string}
-              key={`${signal.value.id}-description`}
+              min={0}
+              max={2147483647}
+              type={'number'}
+              label={'popularity'}
+              value={signal.value.popularity ?? 0}
+              onInput={(value) => signal.value.popularity = Number(value ?? 0)}
+              key={`${signal.value.id}-popularity`}
             />
+
+            <div>
+              <TextInput
+                multiline
+                label={'description'}
+                pattern='.{1,2048}'
+                value={signal.value.description}
+                onInput={(value) => signal.value.description = value as string}
+                key={`${signal.value.id}-description`}
+              />
+            </div>
           </>
         </div>
       </Dialog>
