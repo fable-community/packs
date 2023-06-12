@@ -82,7 +82,7 @@ export default ({ characters }: { characters: Signal<Character[]> }) => {
             <IconTrash
               onClick={() => {
                 const i = characters.value.findIndex(({ id }) =>
-                  signal.value.id
+                  signal.value.id === id
                 );
 
                 if (i > -1) {

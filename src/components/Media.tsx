@@ -83,7 +83,9 @@ export default ({ media }: { media: Signal<Media[]> }) => {
 
             <IconTrash
               onClick={() => {
-                const i = media.value.findIndex(({ id }) => signal.value.id);
+                const i = media.value.findIndex(({ id }) =>
+                  signal.value.id === id
+                );
 
                 if (i > -1) {
                   media.value.splice(i, 1);
