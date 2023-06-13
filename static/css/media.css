@@ -101,7 +101,7 @@
 .manage-dialog-media label {
   text-transform: uppercase;
   font-size: 0.85em;
-  opacity: 0.45;
+  color: var(--disabled);
   margin: 0.5em 0;
 }
 
@@ -111,17 +111,25 @@
   padding: 0.25em 0;
 }
 
-.rating > div > div {
-  margin: auto;
-}
-
-.rating svg {
+.rating .button {
   width: 28px;
   height: auto;
-  fill: var(--fable);
+  cursor: pointer;
+}
+
+.rating > div > div:nth-child(2) {
+  display: flex;
+  margin: 0 1em;
+  gap: 0.5em;
+}
+
+.rating .star {
+  width: 28px;
+  height: auto;
+  fill: var(--disabled);
   pointer-events: none;
 }
 
-.rating svg[data-off="true"] {
-  fill: var(--disabled);
+.rating .star[data-on="true"] {
+  fill: var(--fable);
 }

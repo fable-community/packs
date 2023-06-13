@@ -12,6 +12,8 @@ import Notice from './Notice.tsx';
 
 import Dialog from './Dialog.tsx';
 
+import Star from './Star.tsx';
+
 import Select from './Select.tsx';
 import TextInput from './TextInput.tsx';
 import ImageInput from './ImageInput.tsx';
@@ -19,8 +21,12 @@ import ImageInput from './ImageInput.tsx';
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/user-plus.tsx';
 import IconApply from 'icons/check.tsx';
+import IconAdd from 'icons/circle-plus.tsx';
+import IconRemove from 'icons/circle-minus.tsx';
 
 import { defaultImage } from './Dashboard.tsx';
+
+import { getPopularity, getRating } from '../utils/rating.ts';
 
 import strings from '../../i18n/en-US.ts';
 
@@ -40,6 +46,17 @@ export default (
   const signal = useSignal<Character>({
     name: { english: '' },
     id: '',
+  });
+
+  const primaryMedia = signal.value.media?.[0];
+
+  const primaryMediaRef = primaryMedia
+    ? media.value.find(({ id }) => primaryMedia.mediaId === id)
+    : undefined;
+
+  const rating = getRating({
+    popularity: signal.value.popularity ?? primaryMediaRef?.popularity ?? 0,
+    role: !signal.value.popularity ? primaryMedia?.role : undefined,
   });
 
   return (
@@ -144,15 +161,50 @@ export default (
               }}
             />
 
-            {!signal.value.media?.length
-              ? (
-                <Notice type={'warn'}>
-                  {strings.primaryMediaNotice}
-                </Notice>
-              )
-              : undefined}
-
             <div class={'other'}>
+              {!signal.value.media?.length
+                ? (
+                  <Notice type={'warn'}>
+                    {strings.primaryMediaNotice}
+                  </Notice>
+                )
+                : undefined}
+
+              <div class={'rating'}>
+                <label>{strings.rating}</label>
+                <div>
+                  <div>
+                    <Star class={'star'} data-on={true} />
+                    <Star class={'star'} data-on={rating >= 2} />
+                    <Star class={'star'} data-on={rating >= 3} />
+                    <Star class={'star'} data-on={rating >= 4} />
+                    <Star class={'star'} data-on={rating >= 5} />
+                  </div>
+                  <div>
+                    <div
+                      onClick={() => {
+                        const target = Math.min(5, rating + 1);
+                        signal.value.popularity = getPopularity(target);
+                        // required since update the popularity doesn't update the component
+                        forceUpdate();
+                      }}
+                    >
+                      <IconAdd class={'button'} />
+                    </div>
+                    <div
+                      onClick={() => {
+                        const target = Math.max(1, rating - 1);
+                        signal.value.popularity = getPopularity(target);
+                        // required since update the popularity doesn't update the component
+                        forceUpdate();
+                      }}
+                    >
+                      <IconRemove class={'button'} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <TextInput
                 multiline
                 label={strings.description}
