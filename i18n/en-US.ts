@@ -11,6 +11,8 @@ export default {
   type: 'Type',
   format: 'Format',
   popularity: 'Popularity',
+  age: 'Age',
+  gender: 'Gender',
   // popularityHint: 'The amount of followers / game sales',
   description: 'Description',
   rating: 'Rating',

@@ -105,6 +105,15 @@
   margin: 0.5em 0;
 }
 
+.group {
+  display: flex;
+  gap: 1em;
+}
+
+.group > * {
+  flex-grow: 1;
+}
+
 .rating > div {
   display: flex;
   align-items: center;
@@ -115,6 +124,10 @@
   width: 28px;
   height: auto;
   cursor: pointer;
+}
+
+.rating > div > div:nth-child(1) {
+  margin-right: auto;
 }
 
 .rating > div > div:nth-child(2) {

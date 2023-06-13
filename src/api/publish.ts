@@ -232,6 +232,9 @@ export const handler: Handlers = {
         }) ?? [],
       );
 
+      //
+      // console.log(pack);
+
       if (endpoint) {
         const response = await fetch(`${endpoint}/publish`, {
           method: 'POST',

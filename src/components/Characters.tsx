@@ -205,12 +205,29 @@ export default (
                 </div>
               </div>
 
+              <div class={'group'}>
+                <TextInput
+                  label={strings.age}
+                  value={signal.value.age ?? ''}
+                  onInput={(value) => signal.value.age = value || undefined}
+                  key={`${signal.value.id}-age`}
+                />
+
+                <TextInput
+                  label={strings.gender}
+                  value={signal.value.gender ?? ''}
+                  onInput={(value) => signal.value.gender = value || undefined}
+                  key={`${signal.value.id}-gender`}
+                />
+              </div>
+
               <TextInput
                 multiline
                 label={strings.description}
                 pattern='.{1,2048}'
                 value={signal.value.description}
-                onInput={(value) => signal.value.description = value}
+                onInput={(value) =>
+                  signal.value.description = value || undefined}
                 key={`${signal.value.id}-description`}
               />
             </div>
