@@ -30,6 +30,7 @@
 .manage-header > input {
   height: 48px;
   flex-grow: 1;
+  padding: 0;
 }
 
 .manage-header > button {

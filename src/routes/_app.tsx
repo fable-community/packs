@@ -32,7 +32,6 @@ export default ({ Component }: AppProps) => {
         <link rel='stylesheet' href={'css/notice.css'} />
         <link rel='stylesheet' href={'css/dialog.css'} />
         <link rel='stylesheet' href={'css/image_input.css'} />
-        <link rel='stylesheet' href={'css/text_input.css'} />
 
         <link rel='stylesheet' href={'css/manage-container.css'} />
         <link rel='stylesheet' href={'css/manage-inner.css'} />

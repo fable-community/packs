@@ -1,16 +1,18 @@
-import { useRef } from 'preact/hooks';
-
 import type { JSX } from 'preact';
 
-export default (
-  { label, multiline, value, onInput, ...props }: {
-    label?: string;
-    multiline?: boolean;
-    onInput?: (value: string) => void;
-  } & JSX.HTMLAttributes<HTMLInputElement>,
-) => {
-  const ref = useRef<HTMLImageElement>(null);
+import type { Modify } from '../utils/types.ts';
 
+export default (
+  { label, multiline, value, onInput, ...props }: Modify<
+    JSX.HTMLAttributes<HTMLInputElement>,
+    {
+      label?: string;
+      hint?: string;
+      multiline?: boolean;
+      onInput?: (value: string) => void;
+    }
+  >,
+) => {
   return (
     <div class={'text-input'}>
       {label ? <label>{label}</label> : undefined}
@@ -35,6 +37,7 @@ export default (
             }}
           />
         )}
+      {/* {hint ? <label class={'hint'}>{hint}</label> : undefined} */}
     </div>
   );
 };

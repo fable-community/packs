@@ -6,6 +6,14 @@ export default {
   publish: 'Publish',
   save: 'Save',
   okay: 'Okay',
+  name: 'Name',
+  title: 'Title',
+  type: 'Type',
+  format: 'Format',
+  popularity: 'Popularity',
+  // popularityHint: 'The amount of followers / game sales',
+  description: 'Description',
+  rating: 'Rating',
   success: {
     title:
       'You successfully published a new pack. Now you can install it using:',

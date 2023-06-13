@@ -10,17 +10,19 @@ import nanoid from '../utils/nanoid.ts';
 
 import Dialog from './Dialog.tsx';
 
+import Select from './Select.tsx';
 import TextInput from './TextInput.tsx';
-
 import ImageInput from './ImageInput.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/folder-plus.tsx';
 import IconApply from 'icons/check.tsx';
 
+import strings from '../../i18n/en-US.ts';
+
 import { defaultImage } from './Dashboard.tsx';
 
-import { type Media, MediaType } from '../utils/types.ts';
+import { type Media, MediaFormat, MediaType } from '../utils/types.ts';
 
 export default ({ media }: { media: Signal<Media[]> }) => {
   const [, updateState] = useState({});
@@ -56,9 +58,9 @@ export default ({ media }: { media: Signal<Media[]> }) => {
           data-dialog={'media'}
           onClick={() => {
             const item: Media = {
+              type: MediaType.Anime,
               id: `${nanoid(4)}`,
               title: { english: '' },
-              type: MediaType.Anime,
             };
 
             media.value.push(item);
@@ -110,32 +112,49 @@ export default ({ media }: { media: Signal<Media[]> }) => {
               }}
             />
 
+            <Select
+              required
+              list={MediaType}
+              label={strings.type}
+              defaultValue={signal.value.type}
+              onChange={(t: MediaType) => signal.value.type = t}
+            />
+
             <TextInput
               required
-              label={'name'}
+              label={strings.title}
               pattern='.{1,128}'
               value={signal.value.title.english ?? ''}
-              onInput={(value) => signal.value.title.english = value as string}
+              onInput={(value) => signal.value.title.english = value}
               key={`${signal.value.id}-title`}
             />
 
-            <TextInput
-              min={0}
-              max={2147483647}
-              type={'number'}
-              label={'popularity'}
-              value={signal.value.popularity ?? 0}
-              onInput={(value) => signal.value.popularity = Number(value ?? 0)}
-              key={`${signal.value.id}-popularity`}
-            />
+            <div class={'other'}>
+              <Select
+                list={MediaFormat}
+                label={strings.format}
+                defaultValue={signal.value.format}
+                onChange={(f: MediaFormat) =>
+                  signal.value.format = f || undefined}
+              />
 
-            <div>
+              <TextInput
+                min={0}
+                max={2147483647}
+                type={'number'}
+                label={strings.popularity}
+                value={signal.value.popularity ?? 0}
+                onInput={(value) =>
+                  signal.value.popularity = Number(value ?? 0)}
+                key={`${signal.value.id}-popularity`}
+              />
+
               <TextInput
                 multiline
-                label={'description'}
+                label={strings.description}
                 pattern='.{1,2048}'
                 value={signal.value.description}
-                onInput={(value) => signal.value.description = value as string}
+                onInput={(value) => signal.value.description = value}
                 key={`${signal.value.id}-description`}
               />
             </div>
