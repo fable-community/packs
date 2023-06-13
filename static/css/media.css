@@ -1,11 +1,24 @@
 .manage-dialog-media {
   display: grid;
+  overflow: hidden;
+
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto auto 1fr;
-  column-gap: 2em;
+  grid-template-rows: auto auto auto auto 1fr;
+  column-gap: 1.5em;
+  grid-template-areas:
+    "b b"
+    "i ."
+    "i ."
+    "i ."
+    "other other";
+
+  height: 80% !important;
+  width: 80% !important;
+  max-width: 680px !important;
 }
 
 .manage-dialog-media > .buttons {
+  grid-area: b;
   display: flex;
   flex-direction: row-reverse;
   margin-left: auto;
@@ -25,21 +38,45 @@
 
 .manage-dialog-media > .image-input {
   width: auto;
-  height: 192px;
+  height: auto;
+  max-height: 192px;
   object-fit: cover;
   object-position: center;
   aspect-ratio: 90/127;
-  grid-area: 1 / 1 / 4 / 2;
+  grid-area: i;
+  margin: 0 auto;
 }
 
-.manage-dialog-media .text-input {
+@media (max-width: 600px) {
+  .manage-dialog-media {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  .manage-dialog-media > .image-input {
+    min-height: 192px;
+  }
+}
+
+.manage-dialog-media .text-input,
+.manage-dialog-media .select {
   display: flex;
   flex-direction: column;
   font-size: 1em;
 }
 
-.manage-dialog-media .text-input:not(:nth-child(3)) {
-  margin: 2em 0;
+.manage-dialog-media > :nth-child(4) {
+  margin: 1em 0 0 0;
+}
+
+.manage-dialog-media > .other {
+  grid-area: other;
+  margin: 1em 0 0 0;
+}
+
+.manage-dialog-media > .other > :not(:first-child) {
+  margin: 1em 0 0 0;
 }
 
 .manage-dialog-media input,
@@ -64,6 +101,48 @@
 .manage-dialog-media label {
   text-transform: uppercase;
   font-size: 0.85em;
-  opacity: 0.45;
+  color: var(--disabled);
   margin: 0.5em 0;
+}
+
+.group {
+  display: flex;
+  gap: 1em;
+}
+
+.group > * {
+  flex-grow: 1;
+}
+
+.rating > div {
+  display: flex;
+  align-items: center;
+  padding: 0.25em 0;
+}
+
+.rating .button {
+  width: 28px;
+  height: auto;
+  cursor: pointer;
+}
+
+.rating > div > div:nth-child(1) {
+  margin-right: auto;
+}
+
+.rating > div > div:nth-child(2) {
+  display: flex;
+  margin: 0 1em;
+  gap: 0.5em;
+}
+
+.rating .star {
+  width: 28px;
+  height: auto;
+  fill: var(--disabled);
+  pointer-events: none;
+}
+
+.rating .star[data-on="true"] {
+  fill: var(--fable);
 }

@@ -18,9 +18,14 @@ export type Character = Modify<
   { images?: IImageInput[] }
 >;
 
+export { Modify };
+
 export {
+  CharacterRole,
   type DisaggregatedCharacter,
   type DisaggregatedMedia,
+  MediaFormat,
+  MediaRelation,
   MediaType,
   type Schema,
 } from 'https://raw.githubusercontent.com/ker0olos/fable/main/src/types.ts';

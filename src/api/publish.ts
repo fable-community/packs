@@ -10,8 +10,7 @@ import nanoid from '../utils/nanoid.ts';
 
 import {
   type Character,
-  DisaggregatedCharacter,
-  DisaggregatedMedia,
+  type CharacterRole,
   type Media,
 } from '../utils/types.ts';
 
@@ -184,43 +183,57 @@ export const handler: Handlers = {
 
       pack.media!.new = await Promise.all(
         data.media?.map(async (media) => {
-          if (media.images?.length && media.images[0].file) {
-            const url = await uploadImage({
+          const url = media.images?.length && media.images[0].file
+            ? await uploadImage({
               file: media.images[0].file,
               credentials,
-            });
+            })
+            : undefined;
 
-            return {
-              ...media,
-              images: [{
-                url,
-              }],
-            };
-          } else {
-            return media as DisaggregatedMedia;
-          }
+          const characters: {
+            role: CharacterRole;
+            characterId: string;
+          }[] = [];
+
+          // discover and link media to the characters that reference it
+          pack.characters?.new?.forEach((character) => {
+            const find = character.media
+              ?.find(({ mediaId }) => media.id === mediaId);
+
+            if (find) {
+              characters!.push({
+                characterId: character.id,
+                role: find.role,
+              });
+            }
+          });
+
+          return {
+            ...media,
+            characters,
+            images: url ? [{ url }] : media.images,
+          };
         }) ?? [],
       );
 
       pack.characters!.new = await Promise.all(
         data.characters?.map(async (char) => {
-          if (char.images?.length && char.images[0].file) {
-            const url = await uploadImage({
+          const url = char.images?.length && char.images[0].file
+            ? await uploadImage({
               file: char.images[0].file,
               credentials,
-            });
+            })
+            : undefined;
 
-            return {
-              ...char,
-              images: [{
-                url,
-              }],
-            };
-          } else {
-            return char as DisaggregatedCharacter;
-          }
+          return {
+            ...char,
+            images: url ? [{ url }] : char.images,
+          };
         }) ?? [],
       );
+
+      //
+      // console.log(pack);
 
       if (endpoint) {
         const response = await fetch(`${endpoint}/publish`, {

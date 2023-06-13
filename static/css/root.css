@@ -11,6 +11,7 @@
   --red: #b52424;
   --discord: #5865f2;
   --fable: #feb500;
+  --disabled: #b1b0ad;
 }
 
 noscript {
@@ -81,17 +82,23 @@ label {
 }
 
 input,
-textarea {
+textarea,
+select {
   font-style: normal;
   color: var(--foreground);
-  background: transparent;
+  background-color: var(--embed);
   border: 0;
+  border-radius: 5px;
   font-weight: 600;
   font-family: inherit;
   font-size: 1.2em;
   line-height: inherit;
   min-width: 0;
-  padding: 0;
+  padding: 1em;
+}
+
+select {
+  appearance: none;
 }
 
 input::placeholder,
@@ -100,7 +107,8 @@ textarea::placeholder {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   outline: 0;
 }
 
