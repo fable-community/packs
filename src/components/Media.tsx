@@ -22,9 +22,19 @@ import strings from '../../i18n/en-US.ts';
 
 import { defaultImage } from './Dashboard.tsx';
 
-import { type Media, MediaFormat, MediaType } from '../utils/types.ts';
+import {
+  Character,
+  type Media,
+  MediaFormat,
+  MediaType,
+} from '../utils/types.ts';
 
-export default ({ media }: { media: Signal<Media[]> }) => {
+export default (
+  { media }: {
+    characters: Signal<Character[]>;
+    media: Signal<Media[]>;
+  },
+) => {
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
@@ -105,9 +115,9 @@ export default ({ media }: { media: Signal<Media[]> }) => {
               key={`${signal.value.id}-image`}
               default={signal.value.images?.[0]?.url ?? ''}
               accept={['image/png', 'image/jpeg', 'image/webp']}
-              // force update to redraw the image in the outside container as well
               onChange={(image) => {
                 signal.value.images = [image];
+                // required to redraw the image in the outside container as well
                 forceUpdate();
               }}
             />

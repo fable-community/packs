@@ -11,6 +11,10 @@
   gap: 1em;
 }
 
+.notice > div {
+  margin-right: auto;
+}
+
 .notice-dismissible {
   z-index: 99;
   cursor: pointer;

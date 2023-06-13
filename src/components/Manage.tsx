@@ -177,8 +177,8 @@ export default (props: {
           </div>
 
           <div class={'manage-boxes'}>
-            <Characters characters={characters} />
-            <Media media={media} />
+            <Characters characters={characters} media={media} />
+            <Media characters={characters} media={media} />
 
             <i />
 

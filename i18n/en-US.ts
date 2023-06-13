@@ -14,6 +14,8 @@ export default {
   // popularityHint: 'The amount of followers / game sales',
   description: 'Description',
   rating: 'Rating',
+  primaryMedia: 'Primary Media',
+  primaryMediaNotice: 'Character won\'t appear in Gacha',
   success: {
     title:
       'You successfully published a new pack. Now you can install it using:',
