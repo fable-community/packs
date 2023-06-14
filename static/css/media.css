@@ -80,7 +80,8 @@
 }
 
 .manage-dialog-media input,
-.manage-dialog-media textarea {
+.manage-dialog-media textarea,
+.manage-dialog-media select {
   font-size: 1.1em;
   resize: vertical;
   padding: 1em;
@@ -92,6 +93,10 @@
 .manage-dialog-media input:invalid,
 .manage-dialog-media textarea:invalid {
   border: 2px solid var(--red);
+}
+
+.manage-dialog-media select[data-warning="true"] {
+  border: 2px solid var(--fable);
 }
 
 .manage-dialog-media textarea {
