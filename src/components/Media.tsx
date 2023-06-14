@@ -164,6 +164,7 @@ export default (
                 markdown
                 multiline
                 label={strings.description}
+                placeholder={strings.placeholder.mediaDescription}
                 pattern='.{1,2048}'
                 value={signal.value.description}
                 onInput={(value) => signal.value.description = value}

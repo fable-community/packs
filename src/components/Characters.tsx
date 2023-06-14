@@ -208,6 +208,7 @@ export default (
               <div class={'group'}>
                 <TextInput
                   label={strings.age}
+                  placeholder={strings.placeholder.age}
                   value={signal.value.age ?? ''}
                   onInput={(value) => signal.value.age = value || undefined}
                   key={`${signal.value.id}-age`}
@@ -215,6 +216,7 @@ export default (
 
                 <TextInput
                   label={strings.gender}
+                  placeholder={strings.placeholder.gender}
                   value={signal.value.gender ?? ''}
                   onInput={(value) => signal.value.gender = value || undefined}
                   key={`${signal.value.id}-gender`}
@@ -225,6 +227,7 @@ export default (
                 markdown
                 multiline
                 label={strings.description}
+                placeholder={strings.placeholder.charDescription}
                 pattern='.{1,2048}'
                 value={signal.value.description}
                 onInput={(value) =>
