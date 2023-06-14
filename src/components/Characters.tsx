@@ -145,7 +145,7 @@ export default (
 
             <Select
               label={strings.primaryMedia}
-              defaultValue={signal.value.media?.[0].mediaId}
+              defaultValue={signal.value.media?.[0]?.mediaId}
               list={media.value.reduce((acc, media) => {
                 return media.title.english
                   ? { ...acc, [media.title.english]: media.id }
