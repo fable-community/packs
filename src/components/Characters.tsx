@@ -146,6 +146,7 @@ export default (
 
             <Select
               label={strings.primaryMedia}
+              data-warning={!signal.value.media?.length}
               defaultValue={signal.value.media?.[0]?.mediaId}
               list={media.value.reduce((acc, media) => {
                 return media.title.english
