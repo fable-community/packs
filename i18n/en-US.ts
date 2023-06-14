@@ -13,8 +13,19 @@ export default {
   popularity: 'Popularity',
   age: 'Age',
   gender: 'Gender',
+  placeholder: {
+    gender: 'Classified',
+    age: 'Ancient',
+    charDescription:
+      'A young girl with pink hair and blood red eyes, her goal in life is to become a demon queen...',
+    mediaDescription:
+      'A 30-year-old man was hit by a truck one day and reincarnated as a tree...',
+  },
   popularityHint:
     'Should be the number of followers / game sales or any other number that indicates how popular the media is.',
+  links: 'Links',
+  linksNotice:
+    'Only links to YouTube, Twitch, Crunchyroll, Tapas, Webtoon, and Amazon are allowed.',
   description: 'Description',
   rating: 'Rating',
   primaryMedia: 'Primary Media',

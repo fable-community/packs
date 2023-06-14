@@ -117,11 +117,6 @@ textarea:invalid {
   border-bottom: 2px solid var(--red);
 }
 
-input:invalid::placeholder,
-textarea:invalid::placeholder {
-  color: var(--red);
-}
-
 input:invalid ~ button {
   opacity: 0.3;
   pointer-events: none;

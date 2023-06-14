@@ -98,7 +98,7 @@
   min-height: 120px;
 }
 
-.manage-dialog-media .label {
+.manage-dialog-media .label:not(:empty) {
   display: flex;
   align-items: center;
   text-transform: uppercase;
@@ -122,12 +122,20 @@
 
 .group {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 1em;
 }
 
 .group > * {
   flex-grow: 1;
+}
+
+.group > svg {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  flex-grow: unset;
 }
 
 .rating > div {
@@ -160,4 +168,20 @@
 
 .manage-dialog-media .rating .star[data-on="true"] {
   fill: var(--fable);
+}
+
+.manage-dialog-media .links {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.manage-dialog-media .links > button {
+  background: none;
+}
+
+.manage-dialog-media .links > .notice {
+  border: 0;
+  background: var(--embed);
+  margin: 0;
 }

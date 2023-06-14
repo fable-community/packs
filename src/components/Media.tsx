@@ -8,6 +8,8 @@ import { hideDialog, showDialog } from '../../static/js/dialogs.js';
 
 import nanoid from '../utils/nanoid.ts';
 
+import Notice from './Notice.tsx';
+
 import Dialog from './Dialog.tsx';
 
 import Select from './Select.tsx';
@@ -16,6 +18,7 @@ import ImageInput from './ImageInput.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/folder-plus.tsx';
+import IconPlus2 from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
 
 import strings from '../../i18n/en-US.ts';
@@ -132,8 +135,8 @@ export default (
 
             <TextInput
               required
-              label={strings.title}
               pattern='.{1,128}'
+              label={strings.title}
               value={signal.value.title.english ?? ''}
               onInput={(value) => signal.value.title.english = value}
               key={`${signal.value.id}-title`}
@@ -163,12 +166,59 @@ export default (
               <TextInput
                 markdown
                 multiline
-                label={strings.description}
                 pattern='.{1,2048}'
+                label={strings.description}
+                placeholder={strings.placeholder.mediaDescription}
                 value={signal.value.description}
                 onInput={(value) => signal.value.description = value}
                 key={`${signal.value.id}-description`}
               />
+
+              <div class={'links'}>
+                <label class={'label'}>{strings.links}</label>
+                <Notice type={'info'}>{strings.linksNotice}</Notice>
+                {signal.value.externalLinks?.map((link, i) => (
+                  <div class={'group'}>
+                    <TextInput
+                      required
+                      value={link.site}
+                      placeholder={'YouTube'}
+                      onInput={(site) =>
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.externalLinks![i].site = site}
+                      key={`${signal.value.id}-link-${i}-site`}
+                    />
+                    <TextInput
+                      required
+                      value={link.url}
+                      pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|crunchyroll\\.com|tapas\\.io|webtoon\\.com|amazon\\.com)[\\S]*$'}
+                      placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+                      onInput={(url) =>
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.externalLinks![i].url = url}
+                      key={`${signal.value.id}-link-${i}-url`}
+                    />
+                    <IconTrash
+                      onClick={() => {
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.externalLinks!.splice(i, 1);
+                        // required since updating the links doesn't update the component
+                        forceUpdate();
+                      }}
+                    />
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    // deno-lint-ignore no-non-null-assertion
+                    signal.value.externalLinks!.push({ site: '', url: '' });
+                    // required since updating the links doesn't update the component
+                    forceUpdate();
+                  }}
+                >
+                  <IconPlus2 />
+                </button>
+              </div>
             </div>
           </>
         </div>
