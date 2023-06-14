@@ -107,6 +107,7 @@
 
 .group {
   display: flex;
+  flex-wrap: wrap;
   gap: 1em;
 }
 
@@ -132,7 +133,6 @@
 
 .rating > div > div:nth-child(2) {
   display: flex;
-  margin: 0 1em;
   gap: 0.5em;
 }
 

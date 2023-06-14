@@ -27,7 +27,7 @@
 }
 
 .dialog-normal > div {
-  overflow: auto;
+  overflow: hidden auto;
   background-color: var(--embedHighlight);
   border-radius: 10px;
   margin: 2em;
