@@ -20,6 +20,7 @@ import ImageInput from './ImageInput.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/user-plus.tsx';
+import IconPlus2 from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
 import IconAdd from 'icons/circle-plus.tsx';
 import IconRemove from 'icons/circle-minus.tsx';
@@ -136,8 +137,8 @@ export default (
 
             <TextInput
               required
-              label={strings.name}
               pattern='.{1,128}'
+              label={strings.name}
               value={signal.value.name.english ?? ''}
               onInput={(value) => signal.value.name.english = value}
               key={`${signal.value.id}-title`}
@@ -195,7 +196,7 @@ export default (
                       onClick={() => {
                         const target = Math.max(1, rating - 1);
                         signal.value.popularity = getPopularity(target);
-                        // required since update the popularity doesn't update the component
+                        // required since updating the popularity doesn't update the component
                         forceUpdate();
                       }}
                     >
@@ -208,6 +209,7 @@ export default (
               <div class={'group'}>
                 <TextInput
                   label={strings.age}
+                  placeholder={strings.placeholder.age}
                   value={signal.value.age ?? ''}
                   onInput={(value) => signal.value.age = value || undefined}
                   key={`${signal.value.id}-age`}
@@ -215,6 +217,7 @@ export default (
 
                 <TextInput
                   label={strings.gender}
+                  placeholder={strings.placeholder.gender}
                   value={signal.value.gender ?? ''}
                   onInput={(value) => signal.value.gender = value || undefined}
                   key={`${signal.value.id}-gender`}
@@ -224,13 +227,60 @@ export default (
               <TextInput
                 markdown
                 multiline
-                label={strings.description}
                 pattern='.{1,2048}'
+                label={strings.description}
+                placeholder={strings.placeholder.charDescription}
                 value={signal.value.description}
                 onInput={(value) =>
                   signal.value.description = value || undefined}
                 key={`${signal.value.id}-description`}
               />
+
+              <div class={'links'}>
+                <label class={'label'}>{strings.links}</label>
+                <Notice type={'info'}>{strings.linksNotice}</Notice>
+                {signal.value.externalLinks?.map((link, i) => (
+                  <div class={'group'}>
+                    <TextInput
+                      required
+                      value={link.site}
+                      placeholder={'YouTube'}
+                      onInput={(site) =>
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.externalLinks![i].site = site}
+                      key={`${signal.value.id}-link-${i}-site`}
+                    />
+                    <TextInput
+                      required
+                      value={link.url}
+                      pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|crunchyroll\\.com|tapas\\.io|webtoon\\.com|amazon\\.com)[\\S]*$'}
+                      placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+                      onInput={(url) =>
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.externalLinks![i].url = url}
+                      key={`${signal.value.id}-link-${i}-url`}
+                    />
+                    <IconTrash
+                      onClick={() => {
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.externalLinks!.splice(i, 1);
+                        // required since updating the links doesn't update the component
+                        forceUpdate();
+                      }}
+                    />
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    // deno-lint-ignore no-non-null-assertion
+                    signal.value.externalLinks!.push({ site: '', url: '' });
+                    // required since updating the links doesn't update the component
+                    forceUpdate();
+                  }}
+                >
+                  <IconPlus2 />
+                </button>
+              </div>
             </div>
           </>
         </div>

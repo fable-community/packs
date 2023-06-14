@@ -28,6 +28,7 @@
 }
 
 .manage-header > input {
+  border-radius: 0;
   height: 48px;
   flex-grow: 1;
   padding: 0;
