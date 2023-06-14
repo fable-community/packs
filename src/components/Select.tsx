@@ -12,7 +12,7 @@ export default <T,>(
 ) => {
   return (
     <div class={'select'}>
-      {label ? <label>{label}</label> : undefined}
+      {label ? <label class={'label'}>{label}</label> : undefined}
       <select
         onChange={(ev) => {
           onChange?.((ev.target as HTMLSelectElement).value as T);

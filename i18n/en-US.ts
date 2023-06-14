@@ -13,7 +13,8 @@ export default {
   popularity: 'Popularity',
   age: 'Age',
   gender: 'Gender',
-  // popularityHint: 'The amount of followers / game sales',
+  popularityHint:
+    'Should be the number of followers / game sales or any other number that indicates how popular the media is.',
   description: 'Description',
   rating: 'Rating',
   primaryMedia: 'Primary Media',

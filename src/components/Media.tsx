@@ -154,12 +154,14 @@ export default (
                 type={'number'}
                 label={strings.popularity}
                 value={signal.value.popularity ?? 0}
+                hint={strings.popularityHint}
                 onInput={(value) =>
                   signal.value.popularity = Number(value ?? 0)}
                 key={`${signal.value.id}-popularity`}
               />
 
               <TextInput
+                markdown
                 multiline
                 label={strings.description}
                 pattern='.{1,2048}'

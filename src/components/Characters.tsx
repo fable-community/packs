@@ -171,7 +171,7 @@ export default (
                 : undefined}
 
               <div class={'rating'}>
-                <label>{strings.rating}</label>
+                <label class={'label'}>{strings.rating}</label>
                 <div>
                   <div>
                     <Star class={'star'} data-on={true} />
@@ -222,6 +222,7 @@ export default (
               </div>
 
               <TextInput
+                markdown
                 multiline
                 label={strings.description}
                 pattern='.{1,2048}'
