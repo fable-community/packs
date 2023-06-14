@@ -134,29 +134,20 @@ const uploadImage = async ({ file, credentials }: {
 };
 
 export const handler: Handlers = {
-  OPTIONS(): Response {
-    const headers = new Headers({
-      'Allow': 'POST, OPTIONS',
-      'Access-Control-Allow-Origin': Deno.env.get('CORS') ?? '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': '',
-    });
-
-    return new Response(undefined, {
-      status: 200,
-      headers,
-    });
-  },
-
   async POST(req): Promise<Response> {
-    const headers = new Headers({
-      'Access-Control-Allow-Origin': Deno.env.get('CORS') ?? '*',
-    });
-
     try {
+      const url = new URL(req.url);
+
       const cookies = getCookies(req.headers) as Cookies;
 
       const endpoint = Deno.env.get('API_ENDPOINT');
+
+      if (Deno.env.get('CORS') !== url.origin) {
+        return new Response(undefined, {
+          status: 403,
+          statusText: 'Forbidden',
+        });
+      }
 
       if (!cookies.accessToken) {
         throw new Error('Access token not defined');
@@ -273,10 +264,7 @@ export const handler: Handlers = {
           return response;
         }
 
-        return new Response(pack.id, {
-          status: 200,
-          headers,
-        });
+        return new Response(pack.id);
       } else {
         throw new Error('Fable endpoint not defined');
       }
@@ -285,7 +273,6 @@ export const handler: Handlers = {
 
       return new Response(err?.message, {
         status: 500,
-        headers,
       });
     }
   },

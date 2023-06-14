@@ -3,20 +3,6 @@ import { Handlers } from '$fresh/server.ts';
 import { deleteCookie, getCookies } from '$std/http/cookie.ts';
 
 export const handler: Handlers = {
-  OPTIONS(): Response {
-    const headers = new Headers({
-      'Allow': 'POST, OPTIONS',
-      'Access-Control-Allow-Origin': Deno.env.get('CORS') ?? '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': '',
-    });
-
-    return new Response(undefined, {
-      status: 200,
-      headers,
-    });
-  },
-
   async POST(req) {
     const url = new URL(req.url);
 
@@ -24,6 +10,13 @@ export const handler: Handlers = {
 
     const clientId = Deno.env.get('CLIENT_ID');
     const clientSecret = Deno.env.get('CLIENT_SECRET');
+
+    if (Deno.env.get('CORS') !== url.origin) {
+      return new Response(undefined, {
+        status: 403,
+        statusText: 'Forbidden',
+      });
+    }
 
     if (!clientId || !clientSecret) {
       return Response.error();
@@ -58,8 +51,6 @@ export const handler: Handlers = {
     );
 
     headers.set('location', `/`);
-
-    headers.set('Access-Control-Allow-Origin', Deno.env.get('CORS') ?? '*');
 
     return new Response(null, {
       status: 303, // see other redirect

@@ -5,21 +5,6 @@ import { setCookie } from '$std/http/cookie.ts';
 import nanoid from '../utils/nanoid.ts';
 
 export const handler: Handlers = {
-  OPTIONS(): Response {
-    const headers = new Headers({
-      'Allow': 'POST, OPTIONS',
-      // deno-lint-ignore no-non-null-assertion
-      'Access-Control-Allow-Origin': Deno.env.get('CORS')!,
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': '',
-    });
-
-    return new Response(undefined, {
-      status: 200,
-      headers,
-    });
-  },
-
   POST(req) {
     const url = new URL(req.url);
 
@@ -28,6 +13,13 @@ export const handler: Handlers = {
     const state = nanoid();
 
     const clientId = Deno.env.get('CLIENT_ID');
+
+    if (Deno.env.get('CORS') !== url.origin) {
+      return new Response(undefined, {
+        status: 403,
+        statusText: 'Forbidden',
+      });
+    }
 
     if (!clientId) {
       return Response.error();
@@ -55,9 +47,6 @@ export const handler: Handlers = {
       'location',
       `https://discord.com/oauth2/authorize?${query}`,
     );
-
-    // deno-lint-ignore no-non-null-assertion
-    headers.set('Access-Control-Allow-Origin', Deno.env.get('CORS')!);
 
     return new Response(null, {
       status: 303, // see other redirect
