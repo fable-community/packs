@@ -23,6 +23,8 @@ export default {
   },
   popularityHint:
     'Should be the number of followers / game sales or any other number that indicates how popular the media is.',
+  aliases: 'Also Known As',
+  aliasesHint: 'Additional aliases help improve search-ability',
   links: 'Links',
   linksNotice:
     'Only links to YouTube, Twitch, Crunchyroll, Tapas, Webtoon, and Amazon are allowed.',
