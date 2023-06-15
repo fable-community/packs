@@ -28,6 +28,7 @@ export default {
     'Only links to YouTube, Twitch, Crunchyroll, Tapas, Webtoon, and Amazon are allowed.',
   description: 'Description',
   rating: 'Rating',
+  role: 'Role',
   primaryMedia: 'Media',
   primaryMediaNotice: 'Character won\'t appear in Gacha',
   success: {

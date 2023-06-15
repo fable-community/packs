@@ -145,34 +145,53 @@ export default (
               key={`${signal.value.id}-title`}
             />
 
-            <Select
-              label={strings.primaryMedia}
-              data-warning={!signal.value.media?.length}
-              defaultValue={signal.value.media?.[0]?.mediaId}
-              list={media.value.reduce((acc, media) => {
-                return media.title.english
-                  ? { ...acc, [media.title.english]: media.id }
-                  : acc;
-              }, {})}
-              onChange={(mediaId: string) => {
-                signal.value.media = mediaId
-                  // TODO allow selecting character role
-                  ? [{ mediaId, role: CharacterRole.Main }]
-                  : undefined;
-                // required to show warning notice if no media is assigned
-                forceUpdate();
-              }}
-            />
-
-            <div class={'other'}>
-              {!signal.value.media?.length
+            <div class={'group'}>
+              <Select
+                label={strings.primaryMedia}
+                data-warning={!signal.value.media?.length}
+                defaultValue={signal.value.media?.[0]?.mediaId}
+                list={media.value.reduce((acc, media) => {
+                  return media.title.english
+                    ? { ...acc, [media.title.english]: media.id }
+                    : acc;
+                }, {})}
+                onChange={(mediaId: string) => {
+                  signal.value.media = mediaId
+                    // TODO allow selecting character role
+                    ? [{ mediaId, role: CharacterRole.Main }]
+                    : undefined;
+                  // required to show warning notice if no media is assigned
+                  forceUpdate();
+                }}
+              />
+              {signal.value.media?.length
                 ? (
-                  <Notice type={'warn'}>
-                    {strings.primaryMediaNotice}
-                  </Notice>
+                  <Select
+                    required
+                    label={strings.role}
+                    list={CharacterRole}
+                    // deno-lint-ignore no-non-null-assertion
+                    defaultValue={signal.value.media![0].role}
+                    onChange={(role: CharacterRole) => {
+                      // deno-lint-ignore no-non-null-assertion
+                      signal.value.media![0].role = role;
+                      // required to show warning notice if no media is assigned
+                      forceUpdate();
+                    }}
+                  />
                 )
                 : undefined}
+            </div>
 
+            {!signal.value.media?.length
+              ? (
+                <Notice type={'warn'}>
+                  {strings.primaryMediaNotice}
+                </Notice>
+              )
+              : undefined}
+
+            <div class={'other'}>
               <div class={'rating'}>
                 <label class={'label'}>
                   {strings.rating}
