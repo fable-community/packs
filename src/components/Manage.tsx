@@ -83,6 +83,7 @@ export default (props: {
             .split('/');
 
           console.error(path);
+          console.error(err);
 
           if (path[0] === 'media' || path[0] === 'characters') {
             if (path[1] === 'new') {

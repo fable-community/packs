@@ -7,7 +7,7 @@ export default function (size = 16) {
       id += byte.toString(36);
     } else if (byte < 62) {
       // `A-Z`
-      id += (byte - 26).toString(36).toUpperCase();
+      id += (byte - 26).toString(36).toLowerCase();
     } else if (byte > 62) {
       id += '-';
     } else {

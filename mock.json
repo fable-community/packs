@@ -21,10 +21,6 @@
       "type": "ANIME",
       "images": [{
         "url": "https://s2.vndb.org/cv/68/45668.jpg"
-      }],
-      "externalLinks": [{
-        "site": "Webtoon",
-        "url": "http://localhost:8080"
       }]
     }]
   },
@@ -46,10 +42,6 @@
       }],
       "images": [{
         "url": "https://i.imgur.com/ClaapHd.png"
-      }],
-      "externalLinks": [{
-        "site": "YouTube",
-        "url": "http://localhost:8080"
       }]
     }]
   }
