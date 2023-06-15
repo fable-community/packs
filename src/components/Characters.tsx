@@ -24,6 +24,7 @@ import IconPlus2 from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
 import IconAdd from 'icons/circle-plus.tsx';
 import IconRemove from 'icons/circle-minus.tsx';
+import IconReset from 'icons/circle-x.tsx';
 
 import { defaultImage } from './Dashboard.tsx';
 
@@ -144,36 +145,61 @@ export default (
               key={`${signal.value.id}-title`}
             />
 
-            <Select
-              label={strings.primaryMedia}
-              data-warning={!signal.value.media?.length}
-              defaultValue={signal.value.media?.[0]?.mediaId}
-              list={media.value.reduce((acc, media) => {
-                return media.title.english
-                  ? { ...acc, [media.title.english]: media.id }
-                  : acc;
-              }, {})}
-              onChange={(mediaId: string) => {
-                signal.value.media = mediaId
-                  // TODO allow selecting character role
-                  ? [{ mediaId, role: CharacterRole.Main }]
-                  : undefined;
-                // required to show warning notice if no media is assigned
-                forceUpdate();
-              }}
-            />
-
-            <div class={'other'}>
-              {!signal.value.media?.length
+            <div class={'group'}>
+              <Select
+                label={strings.primaryMedia}
+                data-warning={!signal.value.media?.length}
+                defaultValue={signal.value.media?.[0]?.mediaId}
+                list={media.value.reduce((acc, media) => {
+                  return media.title.english
+                    ? { ...acc, [media.title.english]: media.id }
+                    : acc;
+                }, {})}
+                onChange={(mediaId: string) => {
+                  signal.value.media = mediaId
+                    // TODO allow selecting character role
+                    ? [{ mediaId, role: CharacterRole.Main }]
+                    : undefined;
+                  // required to show warning notice if no media is assigned
+                  forceUpdate();
+                }}
+              />
+              {signal.value.media?.length
                 ? (
-                  <Notice type={'warn'}>
-                    {strings.primaryMediaNotice}
-                  </Notice>
+                  <Select
+                    required
+                    label={strings.role}
+                    list={CharacterRole}
+                    // deno-lint-ignore no-non-null-assertion
+                    defaultValue={signal.value.media![0].role}
+                    onChange={(role: CharacterRole) => {
+                      // deno-lint-ignore no-non-null-assertion
+                      signal.value.media![0].role = role;
+                      // required to show warning notice if no media is assigned
+                      forceUpdate();
+                    }}
+                  />
                 )
                 : undefined}
+            </div>
 
+            {!signal.value.media?.length
+              ? (
+                <Notice type={'warn'}>
+                  {strings.primaryMediaNotice}
+                </Notice>
+              )
+              : undefined}
+
+            <div class={'other'}>
               <div class={'rating'}>
-                <label class={'label'}>{strings.rating}</label>
+                <label class={'label'}>
+                  {strings.rating}
+                  {': '}
+                  {typeof signal.value.popularity === 'number'
+                    ? strings.basedOnIndividual
+                    : strings.basedOnMedia}
+                </label>
                 <div>
                   <div>
                     <Star class={'star'} data-on={true} />
@@ -183,6 +209,19 @@ export default (
                     <Star class={'star'} data-on={rating >= 5} />
                   </div>
                   <div>
+                    {typeof signal.value.popularity === 'number'
+                      ? (
+                        <div
+                          onClick={() => {
+                            delete signal.value.popularity;
+                            // required since updating the popularity doesn't update the component
+                            forceUpdate();
+                          }}
+                        >
+                          <IconReset class={'button'} />
+                        </div>
+                      )
+                      : undefined}
                     <div
                       onClick={() => {
                         const target = Math.min(5, rating + 1);
@@ -226,7 +265,6 @@ export default (
               </div>
 
               <TextInput
-                markdown
                 multiline
                 pattern='.{1,2048}'
                 label={strings.description}
@@ -236,6 +274,52 @@ export default (
                   signal.value.description = value || undefined}
                 key={`${signal.value.id}-description`}
               />
+
+              <div class={'links'}>
+                <label class={'label'}>{strings.aliases}</label>
+                <label class={'hint'}>{strings.aliasesHint}</label>
+                {signal.value.name.alternative?.map((alias, i) => (
+                  <div class={'group'}>
+                    <TextInput
+                      required
+                      value={alias}
+                      placeholder={'Batman'}
+                      pattern='.{1,128}'
+                      onInput={(value) =>
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.name.alternative![i] = value}
+                      key={`${signal.value.id}-alias-${i}`}
+                    />
+
+                    <IconTrash
+                      onClick={() => {
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.name.alternative!.splice(i, 1);
+                        // required since updating the links doesn't update the component
+                        forceUpdate();
+                      }}
+                    />
+                  </div>
+                ))}
+                {(signal.value.externalLinks?.length ?? 0) < 10
+                  ? (
+                    <button
+                      onClick={() => {
+                        if (!signal.value.name.alternative) {
+                          signal.value.name.alternative = [];
+                        }
+
+                        signal.value.name.alternative.push('');
+
+                        // required since updating the links doesn't update the component
+                        forceUpdate();
+                      }}
+                    >
+                      <IconPlus2 />
+                    </button>
+                  )
+                  : undefined}
+              </div>
 
               <div class={'links'}>
                 <label class={'label'}>{strings.links}</label>
@@ -271,16 +355,24 @@ export default (
                     />
                   </div>
                 ))}
-                <button
-                  onClick={() => {
-                    // deno-lint-ignore no-non-null-assertion
-                    signal.value.externalLinks!.push({ site: '', url: '' });
-                    // required since updating the links doesn't update the component
-                    forceUpdate();
-                  }}
-                >
-                  <IconPlus2 />
-                </button>
+                {(signal.value.externalLinks?.length ?? 0) < 5
+                  ? (
+                    <button
+                      onClick={() => {
+                        if (!signal.value.externalLinks) {
+                          signal.value.externalLinks = [];
+                        }
+
+                        signal.value.externalLinks.push({ site: '', url: '' });
+
+                        // required since updating the links doesn't update the component
+                        forceUpdate();
+                      }}
+                    >
+                      <IconPlus2 />
+                    </button>
+                  )
+                  : undefined}
               </div>
             </div>
           </>

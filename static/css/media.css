@@ -169,6 +169,7 @@
   height: auto;
   fill: var(--disabled);
   pointer-events: none;
+  transition: fill 0.25s;
 }
 
 .manage-dialog-media .rating .star[data-on="true"] {

@@ -164,7 +164,6 @@ export default (
               />
 
               <TextInput
-                markdown
                 multiline
                 pattern='.{1,2048}'
                 label={strings.description}
@@ -173,6 +172,52 @@ export default (
                 onInput={(value) => signal.value.description = value}
                 key={`${signal.value.id}-description`}
               />
+
+              <div class={'links'}>
+                <label class={'label'}>{strings.aliases}</label>
+                <label class={'hint'}>{strings.aliasesHint}</label>
+                {signal.value.title.alternative?.map((alias, i) => (
+                  <div class={'group'}>
+                    <TextInput
+                      required
+                      value={alias}
+                      placeholder={'Harry Potter: the 11th Book'}
+                      pattern='.{1,128}'
+                      onInput={(value) =>
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.title.alternative![i] = value}
+                      key={`${signal.value.id}-alias-${i}`}
+                    />
+
+                    <IconTrash
+                      onClick={() => {
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.title.alternative!.splice(i, 1);
+                        // required since updating the links doesn't update the component
+                        forceUpdate();
+                      }}
+                    />
+                  </div>
+                ))}
+                {(signal.value.externalLinks?.length ?? 0) < 10
+                  ? (
+                    <button
+                      onClick={() => {
+                        if (!signal.value.title.alternative) {
+                          signal.value.title.alternative = [];
+                        }
+
+                        signal.value.title.alternative.push('');
+
+                        // required since updating the links doesn't update the component
+                        forceUpdate();
+                      }}
+                    >
+                      <IconPlus2 />
+                    </button>
+                  )
+                  : undefined}
+              </div>
 
               <div class={'links'}>
                 <label class={'label'}>{strings.links}</label>
