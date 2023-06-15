@@ -333,55 +333,60 @@ export default (
               <div class={'group-colum'}>
                 <label class={'label'}>{strings.links}</label>
                 <Notice type={'info'}>{strings.linksNotice}</Notice>
-                {signal.value.externalLinks?.map((link, i) => (
-                  <div class={'group'}>
-                    <TextInput
-                      required
-                      value={link.site}
-                      placeholder={'YouTube'}
-                      onInput={(site) =>
-                        // deno-lint-ignore no-non-null-assertion
-                        signal.value.externalLinks![i].site = site}
-                      key={`${signal.value.id}-link-${i}-site`}
-                    />
-                    <TextInput
-                      required
-                      value={link.url}
-                      pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|crunchyroll\\.com|tapas\\.io|webtoon\\.com|amazon\\.com)[\\S]*$'}
-                      placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
-                      onInput={(url) =>
-                        // deno-lint-ignore no-non-null-assertion
-                        signal.value.externalLinks![i].url = url}
-                      key={`${signal.value.id}-link-${i}-url`}
-                    />
-                    <IconTrash
-                      onClick={() => {
-                        // deno-lint-ignore no-non-null-assertion
-                        signal.value.externalLinks!.splice(i, 1);
-                        // required since updating the links doesn't update the component
-                        forceUpdate();
-                      }}
-                    />
-                  </div>
-                ))}
-                {(signal.value.externalLinks?.length ?? 0) < 5
-                  ? (
-                    <button
-                      onClick={() => {
-                        if (!signal.value.externalLinks) {
-                          signal.value.externalLinks = [];
-                        }
+                <div class={'links'}>
+                  {signal.value.externalLinks?.map((link, i) => (
+                    <div class={'group'}>
+                      <TextInput
+                        required
+                        value={link.site}
+                        placeholder={'YouTube'}
+                        onInput={(site) =>
+                          // deno-lint-ignore no-non-null-assertion
+                          signal.value.externalLinks![i].site = site}
+                        key={`${signal.value.id}-link-${i}-site`}
+                      />
+                      <TextInput
+                        required
+                        value={link.url}
+                        pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|crunchyroll\\.com|tapas\\.io|webtoon\\.com|amazon\\.com)[\\S]*$'}
+                        placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+                        onInput={(url) =>
+                          // deno-lint-ignore no-non-null-assertion
+                          signal.value.externalLinks![i].url = url}
+                        key={`${signal.value.id}-link-${i}-url`}
+                      />
+                      <IconTrash
+                        onClick={() => {
+                          // deno-lint-ignore no-non-null-assertion
+                          signal.value.externalLinks!.splice(i, 1);
+                          // required since updating the links doesn't update the component
+                          forceUpdate();
+                        }}
+                      />
+                    </div>
+                  ))}
+                  {(signal.value.externalLinks?.length ?? 0) < 5
+                    ? (
+                      <button
+                        onClick={() => {
+                          if (!signal.value.externalLinks) {
+                            signal.value.externalLinks = [];
+                          }
 
-                        signal.value.externalLinks.push({ site: '', url: '' });
+                          signal.value.externalLinks.push({
+                            site: '',
+                            url: '',
+                          });
 
-                        // required since updating the links doesn't update the component
-                        forceUpdate();
-                      }}
-                    >
-                      <IconPlus2 />
-                    </button>
-                  )
-                  : undefined}
+                          // required since updating the links doesn't update the component
+                          forceUpdate();
+                        }}
+                      >
+                        <IconPlus2 />
+                      </button>
+                    )
+                    : undefined}
+                </div>
               </div>
             </div>
           </>
