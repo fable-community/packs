@@ -45,6 +45,8 @@ export default (
   // used to force the entire component to redrew
   const forceUpdate = useCallback(() => updateState({}), []);
 
+  const newAliasValue = useSignal('');
+
   const signal = useSignal<Character>({
     name: { english: '' },
     id: '',
@@ -275,53 +277,60 @@ export default (
                 key={`${signal.value.id}-description`}
               />
 
-              <div class={'links'}>
+              <div class={'group-colum'}>
                 <label class={'label'}>{strings.aliases}</label>
                 <label class={'hint'}>{strings.aliasesHint}</label>
-                {signal.value.name.alternative?.map((alias, i) => (
-                  <div class={'group'}>
-                    <TextInput
-                      required
-                      value={alias}
-                      placeholder={'Batman'}
-                      pattern='.{1,128}'
-                      onInput={(value) =>
-                        // deno-lint-ignore no-non-null-assertion
-                        signal.value.name.alternative![i] = value}
-                      key={`${signal.value.id}-alias-${i}`}
-                    />
+                <div class={'aliases'}>
+                  {signal.value.name.alternative?.map((alias, i) => (
+                    <div class={'alias'}>
+                      <i>{alias}</i>
+                      <IconTrash
+                        class={'delete'}
+                        onClick={() => {
+                          // deno-lint-ignore no-non-null-assertion
+                          signal.value.name.alternative!.splice(i, 1);
+                          // required since updating the links doesn't update the component
+                          forceUpdate();
+                        }}
+                      />
+                    </div>
+                  ))}
 
-                    <IconTrash
-                      onClick={() => {
-                        // deno-lint-ignore no-non-null-assertion
-                        signal.value.name.alternative!.splice(i, 1);
-                        // required since updating the links doesn't update the component
-                        forceUpdate();
-                      }}
-                    />
-                  </div>
-                ))}
-                {(signal.value.externalLinks?.length ?? 0) < 10
-                  ? (
-                    <button
-                      onClick={() => {
-                        if (!signal.value.name.alternative) {
-                          signal.value.name.alternative = [];
-                        }
+                  {(signal.value.name.alternative?.length ?? 0) < 5
+                    ? (
+                      <div class={'alias'}>
+                        <input
+                          required
+                          pattern='.{1,128}'
+                          placeholder={'Batman'}
+                          value={newAliasValue}
+                          onInput={(event) =>
+                            newAliasValue.value =
+                              (event.target as HTMLInputElement).value}
+                        />
+                        <IconPlus2
+                          onClick={() => {
+                            if (!signal.value.name.alternative) {
+                              signal.value.name.alternative = [];
+                            }
 
-                        signal.value.name.alternative.push('');
+                            signal.value.name.alternative.push(
+                              newAliasValue.value,
+                            );
 
-                        // required since updating the links doesn't update the component
-                        forceUpdate();
-                      }}
-                    >
-                      <IconPlus2 />
-                    </button>
-                  )
-                  : undefined}
+                            newAliasValue.value = '';
+
+                            // required since updating the links doesn't update the component
+                            forceUpdate();
+                          }}
+                        />
+                      </div>
+                    )
+                    : undefined}
+                </div>
               </div>
 
-              <div class={'links'}>
+              <div class={'group-colum'}>
                 <label class={'label'}>{strings.links}</label>
                 <Notice type={'info'}>{strings.linksNotice}</Notice>
                 {signal.value.externalLinks?.map((link, i) => (
