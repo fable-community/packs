@@ -28,7 +28,7 @@ export default {
     'Only links to YouTube, Twitch, Crunchyroll, Tapas, Webtoon, and Amazon are allowed.',
   description: 'Description',
   rating: 'Rating',
-  primaryMedia: 'Primary Media',
+  primaryMedia: 'Media',
   primaryMediaNotice: 'Character won\'t appear in Gacha',
   success: {
     title:
@@ -38,4 +38,6 @@ export default {
     permissionToInstall:
       ' permission to install packs, If you don\'t have it you can always ask someone who does to install the pack for you.',
   },
+  basedOnMedia: 'Based on Media',
+  basedOnIndividual: 'Individual',
 };

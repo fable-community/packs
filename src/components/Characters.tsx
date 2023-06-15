@@ -24,6 +24,7 @@ import IconPlus2 from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
 import IconAdd from 'icons/circle-plus.tsx';
 import IconRemove from 'icons/circle-minus.tsx';
+import IconReset from 'icons/circle-x.tsx';
 
 import { defaultImage } from './Dashboard.tsx';
 
@@ -173,7 +174,13 @@ export default (
                 : undefined}
 
               <div class={'rating'}>
-                <label class={'label'}>{strings.rating}</label>
+                <label class={'label'}>
+                  {strings.rating}
+                  {': '}
+                  {typeof signal.value.popularity === 'number'
+                    ? strings.basedOnIndividual
+                    : strings.basedOnMedia}
+                </label>
                 <div>
                   <div>
                     <Star class={'star'} data-on={true} />
@@ -183,6 +190,19 @@ export default (
                     <Star class={'star'} data-on={rating >= 5} />
                   </div>
                   <div>
+                    {typeof signal.value.popularity === 'number'
+                      ? (
+                        <div
+                          onClick={() => {
+                            delete signal.value.popularity;
+                            // required since updating the popularity doesn't update the component
+                            forceUpdate();
+                          }}
+                        >
+                          <IconReset class={'button'} />
+                        </div>
+                      )
+                      : undefined}
                     <div
                       onClick={() => {
                         const target = Math.min(5, rating + 1);
@@ -271,20 +291,24 @@ export default (
                     />
                   </div>
                 ))}
-                <button
-                  onClick={() => {
-                    if (!signal.value.externalLinks) {
-                      signal.value.externalLinks = [];
-                    }
+                {(signal.value.externalLinks?.length ?? 0) < 5
+                  ? (
+                    <button
+                      onClick={() => {
+                        if (!signal.value.externalLinks) {
+                          signal.value.externalLinks = [];
+                        }
 
-                    signal.value.externalLinks.push({ site: '', url: '' });
+                        signal.value.externalLinks.push({ site: '', url: '' });
 
-                    // required since updating the links doesn't update the component
-                    forceUpdate();
-                  }}
-                >
-                  <IconPlus2 />
-                </button>
+                        // required since updating the links doesn't update the component
+                        forceUpdate();
+                      }}
+                    >
+                      <IconPlus2 />
+                    </button>
+                  )
+                  : undefined}
               </div>
             </div>
           </>
