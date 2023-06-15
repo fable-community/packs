@@ -125,25 +125,30 @@
   margin: 0 0 0.5em 0;
 }
 
-.group {
+.manage-dialog-media .group {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 1em;
 }
 
-.group > * {
+.manage-dialog-media .group-colum {
+  display: flex;
+  flex-direction: column;
+}
+
+.manage-dialog-media .group > * {
   flex-grow: 1;
 }
 
-.group > svg {
+.manage-dialog-media .group > svg {
   width: 24px;
   height: 24px;
   cursor: pointer;
   flex-grow: unset;
 }
 
-.rating > div {
+.manage-dialog-media .rating > div {
   display: flex;
   align-items: center;
   padding: 0.25em 0;
@@ -174,6 +179,46 @@
 
 .manage-dialog-media .rating .star[data-on="true"] {
   fill: var(--fable);
+}
+
+.manage-dialog-media .aliases {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0.5em;
+  gap: 0.5em;
+}
+
+.manage-dialog-media .alias {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--embed);
+  border-radius: 100vw;
+  padding: 1em 1.5em;
+  gap: 0.5em;
+}
+
+.manage-dialog-media .alias > svg {
+  width: 16px;
+  height: auto;
+  cursor: pointer;
+}
+
+.manage-dialog-media .alias > svg.delete {
+  color: var(--red);
+}
+
+.manage-dialog-media .alias input {
+  border: 0;
+  padding: 0;
+  border-radius: inherit;
+  background-color: inherit;
+  width: 180px;
+}
+
+.manage-dialog-media .alias input:invalid ~ svg {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .manage-dialog-media .links {

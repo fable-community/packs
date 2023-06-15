@@ -43,6 +43,8 @@ export default (
   // used to force the entire component to redrew
   const forceUpdate = useCallback(() => updateState({}), []);
 
+  const newAliasValue = useSignal('');
+
   const signal = useSignal<Media>({
     type: MediaType.Anime,
     title: { english: '' },
@@ -173,96 +175,105 @@ export default (
                 key={`${signal.value.id}-description`}
               />
 
-              <div class={'links'}>
+              <div class={'group-colum'}>
                 <label class={'label'}>{strings.aliases}</label>
                 <label class={'hint'}>{strings.aliasesHint}</label>
-                {signal.value.title.alternative?.map((alias, i) => (
-                  <div class={'group'}>
-                    <TextInput
-                      required
-                      value={alias}
-                      placeholder={'Harry Potter: the 11th Book'}
-                      pattern='.{1,128}'
-                      onInput={(value) =>
-                        // deno-lint-ignore no-non-null-assertion
-                        signal.value.title.alternative![i] = value}
-                      key={`${signal.value.id}-alias-${i}`}
-                    />
+                <div class={'aliases'}>
+                  {signal.value.title.alternative?.map((alias, i) => (
+                    <div class={'alias'}>
+                      <i>{alias}</i>
+                      <IconTrash
+                        class={'delete'}
+                        onClick={() => {
+                          // deno-lint-ignore no-non-null-assertion
+                          signal.value.title.alternative!.splice(i, 1);
+                          // required since updating the links doesn't update the component
+                          forceUpdate();
+                        }}
+                      />
+                    </div>
+                  ))}
 
-                    <IconTrash
-                      onClick={() => {
-                        // deno-lint-ignore no-non-null-assertion
-                        signal.value.title.alternative!.splice(i, 1);
-                        // required since updating the links doesn't update the component
-                        forceUpdate();
-                      }}
-                    />
-                  </div>
-                ))}
-                {(signal.value.externalLinks?.length ?? 0) < 10
-                  ? (
-                    <button
-                      onClick={() => {
-                        if (!signal.value.title.alternative) {
-                          signal.value.title.alternative = [];
-                        }
+                  {(signal.value.title.alternative?.length ?? 0) < 5
+                    ? (
+                      <div class={'alias'}>
+                        <input
+                          required
+                          pattern='.{1,128}'
+                          placeholder={'Harry Potter: 11th Book'}
+                          value={newAliasValue}
+                          onInput={(event) =>
+                            newAliasValue.value =
+                              (event.target as HTMLInputElement).value}
+                        />
+                        <IconPlus2
+                          onClick={() => {
+                            if (!signal.value.title.alternative) {
+                              signal.value.title.alternative = [];
+                            }
 
-                        signal.value.title.alternative.push('');
+                            signal.value.title.alternative.push(
+                              newAliasValue.value,
+                            );
 
-                        // required since updating the links doesn't update the component
-                        forceUpdate();
-                      }}
-                    >
-                      <IconPlus2 />
-                    </button>
-                  )
-                  : undefined}
+                            newAliasValue.value = '';
+
+                            // required since updating the links doesn't update the component
+                            forceUpdate();
+                          }}
+                        />
+                      </div>
+                    )
+                    : undefined}
+                </div>
               </div>
 
-              <div class={'links'}>
+              <div class={'group-colum'}>
                 <label class={'label'}>{strings.links}</label>
                 <Notice type={'info'}>{strings.linksNotice}</Notice>
-                {signal.value.externalLinks?.map((link, i) => (
-                  <div class={'group'}>
-                    <TextInput
-                      required
-                      value={link.site}
-                      placeholder={'YouTube'}
-                      onInput={(site) =>
-                        // deno-lint-ignore no-non-null-assertion
-                        signal.value.externalLinks![i].site = site}
-                      key={`${signal.value.id}-link-${i}-site`}
-                    />
-                    <TextInput
-                      required
-                      value={link.url}
-                      pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|crunchyroll\\.com|tapas\\.io|webtoon\\.com|amazon\\.com)[\\S]*$'}
-                      placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
-                      onInput={(url) =>
-                        // deno-lint-ignore no-non-null-assertion
-                        signal.value.externalLinks![i].url = url}
-                      key={`${signal.value.id}-link-${i}-url`}
-                    />
-                    <IconTrash
-                      onClick={() => {
-                        // deno-lint-ignore no-non-null-assertion
-                        signal.value.externalLinks!.splice(i, 1);
-                        // required since updating the links doesn't update the component
-                        forceUpdate();
-                      }}
-                    />
-                  </div>
-                ))}
-                <button
-                  onClick={() => {
-                    // deno-lint-ignore no-non-null-assertion
-                    signal.value.externalLinks!.push({ site: '', url: '' });
-                    // required since updating the links doesn't update the component
-                    forceUpdate();
-                  }}
-                >
-                  <IconPlus2 />
-                </button>
+                <div class={'links'}>
+                  {signal.value.externalLinks?.map((link, i) => (
+                    <div class={'group'}>
+                      <TextInput
+                        required
+                        value={link.site}
+                        placeholder={'YouTube'}
+                        onInput={(site) =>
+                          // deno-lint-ignore no-non-null-assertion
+                          signal.value.externalLinks![i].site = site}
+                        key={`${signal.value.id}-link-${i}-site`}
+                      />
+                      <TextInput
+                        required
+                        value={link.url}
+                        pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|crunchyroll\\.com|tapas\\.io|webtoon\\.com|amazon\\.com)[\\S]*$'}
+                        placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+                        onInput={(url) =>
+                          // deno-lint-ignore no-non-null-assertion
+                          signal.value.externalLinks![i].url = url}
+                        key={`${signal.value.id}-link-${i}-url`}
+                      />
+                      <IconTrash
+                        onClick={() => {
+                          // deno-lint-ignore no-non-null-assertion
+                          signal.value.externalLinks!.splice(i, 1);
+                          // required since updating the links doesn't update the component
+                          forceUpdate();
+                        }}
+                      />
+                    </div>
+                  ))}
+                  <button
+                    onClick={() => {
+                      // deno-lint-ignore no-non-null-assertion
+                      signal.value.externalLinks!.push({ site: '', url: '' });
+                      // required since updating the links doesn't update the component
+                      forceUpdate();
+                    }}
+                  >
+                    <IconPlus2 />
+                  </button>
+                </div>
               </div>
             </div>
           </>
