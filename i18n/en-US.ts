@@ -13,13 +13,17 @@ export default {
   popularity: 'Popularity',
   age: 'Age',
   gender: 'Gender',
+  packAuthor: 'Pack Author',
+  packDescription: 'Pack Description',
   placeholder: {
     gender: 'Classified',
     age: 'Ancient',
+    packAuthor: 'The Mario Bros',
     charDescription:
       'A young girl with pink hair and blood red eyes, her goal in life is to become a demon queen...',
     mediaDescription:
       'A 30-year-old man was hit by a truck one day and reincarnated as a tree...',
+    packDescription: 'A Pack Containing Various Mushrooms',
   },
   popularityHint:
     'Should be the number of followers / game sales or any other number that indicates how popular the media is.',
