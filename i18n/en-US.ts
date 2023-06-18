@@ -43,4 +43,6 @@ export default {
   },
   basedOnMedia: 'Based on Media',
   basedOnIndividual: 'Individual',
+  userId: 'User ID',
+  addNew: 'Add New Collaborator',
 };

@@ -1,0 +1,87 @@
+.maintainers {
+  cursor: pointer;
+}
+
+.manage-dialog-maintainers {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.manage-dialog-maintainers > .text-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.manage-dialog-maintainers > .text-input > input {
+  border: 2px solid var(--embed);
+  font-size: 1em;
+}
+
+.manage-dialog-maintainers > .text-input > input:invalid {
+  border: 2px solid var(--red);
+}
+
+.manage-dialog-maintainers > .text-input > label {
+  font-size: 0.85em;
+  color: var(--disabled);
+  text-transform: uppercase;
+  margin: 0.5em 0;
+}
+
+.manage-dialog-maintainers > .separator {
+  height: 2px;
+  width: 100%;
+  background-color: var(--grey);
+}
+
+.manage-dialog-maintainers > .profile {
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 1.5em;
+  grid-template-areas:
+    "icon . btn"
+    "icon . btn";
+}
+
+.manage-dialog-maintainers > .profile > img {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  grid-area: icon;
+}
+
+.manage-dialog-maintainers > .profile > i:empty {
+  width: 20vw;
+  height: 22px;
+  display: block;
+  background-color: var(--grey);
+}
+
+.manage-dialog-maintainers > .profile > i:nth-child(2) {
+  font-weight: 600;
+}
+
+.manage-dialog-maintainers > .profile > i:nth-child(3) {
+  font-size: 0.85em;
+}
+
+.manage-dialog-maintainers > .profile > i:empty:nth-child(3) {
+  width: 15vw;
+  height: 18px;
+}
+
+.manage-dialog-maintainers > .profile > svg {
+  width: 24px;
+  height: 24px;
+  grid-area: btn;
+  color: var(--red);
+  cursor: pointer;
+}
+
+.manage-dialog-maintainers > .profile > svg.owner {
+  pointer-events: none;
+  color: var(--fable);
+}

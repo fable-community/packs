@@ -42,15 +42,30 @@ export const handler: Handlers = {
     }
 
     if (data.user && endpoint) {
-      const response = await fetch(`${endpoint}/${data.user.id}`, {
-        method: 'GET',
-      });
+      if (production) {
+        const response = await fetch(`${endpoint}/${data.user.id}`, {
+          method: 'GET',
+        });
 
-      const packs = (await response.json() as { data: Schema.Pack[] }).data;
+        const packs = (await response.json() as { data: Schema.Pack[] }).data;
 
-      data.packs = packs.reduce((acc, pack) => {
-        return { ...acc, [pack.manifest.id]: pack };
-      }, {});
+        data.packs = packs.reduce((acc, pack) => {
+          return { ...acc, [pack.manifest.id]: pack };
+        }, {});
+      } else {
+        const { default: mock } = await import('../../mock.json', {
+          assert: { type: 'json' },
+        });
+
+        const packs = [{
+          owner: data.user.id,
+          manifest: { ...mock },
+        }] as unknown as Schema.Pack[];
+
+        data.packs = packs.reduce((acc, pack) => {
+          return { ...acc, [pack.manifest.id]: pack };
+        }, {});
+      }
     }
 
     // if the selected pack is not found in the user's packs
