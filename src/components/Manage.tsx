@@ -12,6 +12,8 @@ import Media from './Media.tsx';
 import Characters from './Characters.tsx';
 import Maintainers from './Maintainers.tsx';
 
+import TextInput from './TextInput.tsx';
+
 import IconClose from 'icons/x.tsx';
 import IconInfo from 'icons/info-circle.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
@@ -34,6 +36,8 @@ export default (props: {
   const error = useSignal<string | undefined>(undefined);
 
   const title = useSignal<string | undefined>(pack.title);
+  const author = useSignal<string | undefined>(pack.author);
+  const description = useSignal<string | undefined>(pack.description);
   const image = useSignal<IImageInput | undefined>(undefined);
 
   const media = useSignal(pack.media?.new ?? []);
@@ -45,6 +49,8 @@ export default (props: {
     const body: Data = {
       old: pack,
       title: title.value,
+      description: description.value,
+      author: author.value,
       image: image.value,
       media: media.value,
       characters: characters.value,
@@ -131,7 +137,7 @@ export default (props: {
         <noscript>{strings.noScript}</noscript>
 
         <Dialog name={'info'} class={'dialog-normal'}>
-          <div>
+          <div class={'metadata'}>
             <IconClose data-dialog-cancel={'info'} class={'close'} />
 
             <div
@@ -142,11 +148,20 @@ export default (props: {
               <IconClipboard />
             </div>
 
-            <Notice type={'info'}>
-              {strings.success.youNeed}
-              <strong>{strings.success.manageServer}</strong>
-              {strings.success.permissionToInstall}
-            </Notice>
+            <TextInput
+              value={author}
+              label={strings.packAuthor}
+              placeholder={strings.placeholder.packAuthor}
+              onInput={(value) => author.value = value}
+            />
+
+            <TextInput
+              multiline
+              value={description}
+              label={strings.packDescription}
+              placeholder={strings.placeholder.packDescription}
+              onInput={(value) => description.value = value}
+            />
           </div>
         </Dialog>
 

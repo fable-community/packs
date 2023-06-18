@@ -38,6 +38,8 @@ interface Upload {
 export interface Data {
   old: Schema.Pack['manifest'];
   title?: string;
+  description?: string;
+  author?: string;
   image?: IImageInput;
   characters?: Character[];
   media?: Media[];
@@ -149,10 +151,18 @@ export const handler: Handlers = {
         new Uint8Array(await req.arrayBuffer()),
       ) as Data;
 
-      const { old: pack, title, image } = data;
+      const { old: pack } = data;
 
-      if (title) {
-        pack.title = title;
+      if (data.title) {
+        pack.title = data.title;
+      }
+
+      if (data.description) {
+        pack.description = data.description;
+      }
+
+      if (data.author) {
+        pack.author = data.author;
       }
 
       if (!pack.id) {
@@ -172,10 +182,10 @@ export const handler: Handlers = {
 
       const credentials = await setUpImages();
 
-      if (image?.file) {
+      if (data.image?.file) {
         pack.image = await uploadImage({
           credentials,
-          file: image.file,
+          file: data.image.file,
         });
       }
 

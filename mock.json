@@ -1,5 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/ker0olos/fable/main/json/schema.json",
+  "$description": "A mock pack used for offline local development",
   "id": "utawarerumono",
   "title": "Utawarerumono",
   "description": "Contains characters from Utawarerumono: Mask of Deception",
