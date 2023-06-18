@@ -18,9 +18,10 @@ import type { PageProps } from '$fresh/server.ts';
 export type User = {
   id: string;
   username: string;
+  avatar?: string;
+  discriminator?: string;
   // deno-lint-ignore camelcase
   display_name?: string;
-  avatar?: string;
 };
 
 export interface DashboardData {

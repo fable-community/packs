@@ -52,42 +52,42 @@ export default (
   });
 
   return (
-    <div class={'media'}>
-      {Object.values(media.value)
-        .map(({ images }, i) => (
-          <img
-            key={i}
-            src={images?.[0]?.url ?? defaultImage}
-            style={{
-              backgroundColor: images?.[0]?.url ? undefined : 'transparent',
-            }}
+    <>
+      <div class={'media'}>
+        {Object.values(media.value)
+          .map(({ images }, i) => (
+            <img
+              key={i}
+              src={images?.[0]?.url ?? defaultImage}
+              style={{
+                backgroundColor: images?.[0]?.url ? undefined : 'transparent',
+              }}
+              onClick={() => {
+                signal.value = media.value[i];
+                requestAnimationFrame(() => showDialog('media'));
+              }}
+            />
+          ))}
+
+        {
+          <div
+            data-dialog={'media'}
             onClick={() => {
-              signal.value = media.value[i];
-              requestAnimationFrame(() => showDialog('media'));
+              const item: Media = {
+                type: MediaType.Anime,
+                id: `${nanoid(4)}`,
+                title: { english: '' },
+              };
+
+              media.value.push(item);
+
+              signal.value = item;
             }}
-          />
-        ))}
-
-      {
-        <div
-          data-dialog={'media'}
-          onClick={() => {
-            const item: Media = {
-              type: MediaType.Anime,
-              id: `${nanoid(4)}`,
-              title: { english: '' },
-            };
-
-            media.value.push(item);
-
-            signal.value = item;
-          }}
-        >
-          <IconPlus />
-        </div>
-      }
-
-      {/* dialog */}
+          >
+            <IconPlus />
+          </div>
+        }
+      </div>
 
       <Dialog name={'media'} class={'dialog-normal'}>
         <div class={'manage-dialog-media'}>
@@ -115,170 +115,162 @@ export default (
             />
           </div>
 
-          <>
-            <ImageInput
-              key={`${signal.value.id}-image`}
-              default={signal.value.images?.[0]?.url ?? ''}
-              accept={['image/png', 'image/jpeg', 'image/webp']}
-              onChange={(image) => {
-                signal.value.images = [image];
-                // required to redraw the image in the outside container as well
-                forceUpdate();
-              }}
-            />
+          <ImageInput
+            key={`${signal.value.id}-image`}
+            default={signal.value.images?.[0]?.url ?? ''}
+            accept={['image/png', 'image/jpeg', 'image/webp']}
+            onChange={(image) => {
+              signal.value.images = [image];
+              forceUpdate();
+            }}
+          />
 
+          <Select
+            required
+            list={MediaType}
+            label={strings.type}
+            defaultValue={signal.value.type}
+            onChange={(t: MediaType) => signal.value.type = t}
+          />
+
+          <TextInput
+            required
+            pattern='.{1,128}'
+            label={strings.title}
+            value={signal.value.title.english ?? ''}
+            onInput={(value) => signal.value.title.english = value}
+            key={`${signal.value.id}-title`}
+          />
+
+          <div class={'other'}>
             <Select
-              required
-              list={MediaType}
-              label={strings.type}
-              defaultValue={signal.value.type}
-              onChange={(t: MediaType) => signal.value.type = t}
+              list={MediaFormat}
+              label={strings.format}
+              defaultValue={signal.value.format}
+              onChange={(f: MediaFormat) =>
+                signal.value.format = f || undefined}
             />
 
             <TextInput
-              required
-              pattern='.{1,128}'
-              label={strings.title}
-              value={signal.value.title.english ?? ''}
-              onInput={(value) => signal.value.title.english = value}
-              key={`${signal.value.id}-title`}
+              min={0}
+              max={2147483647}
+              type={'number'}
+              label={strings.popularity}
+              value={signal.value.popularity ?? 0}
+              hint={strings.popularityHint}
+              onInput={(value) => signal.value.popularity = Number(value ?? 0)}
+              key={`${signal.value.id}-popularity`}
             />
 
-            <div class={'other'}>
-              <Select
-                list={MediaFormat}
-                label={strings.format}
-                defaultValue={signal.value.format}
-                onChange={(f: MediaFormat) =>
-                  signal.value.format = f || undefined}
-              />
+            <TextInput
+              multiline
+              pattern='.{1,2048}'
+              label={strings.description}
+              placeholder={strings.placeholder.mediaDescription}
+              value={signal.value.description}
+              onInput={(value) => signal.value.description = value}
+              key={`${signal.value.id}-description`}
+            />
 
-              <TextInput
-                min={0}
-                max={2147483647}
-                type={'number'}
-                label={strings.popularity}
-                value={signal.value.popularity ?? 0}
-                hint={strings.popularityHint}
-                onInput={(value) =>
-                  signal.value.popularity = Number(value ?? 0)}
-                key={`${signal.value.id}-popularity`}
-              />
+            <div class={'group-colum'}>
+              <label class={'label'}>{strings.aliases}</label>
+              <label class={'hint'}>{strings.aliasesHint}</label>
+              <div class={'aliases'}>
+                {signal.value.title.alternative?.map((alias, i) => (
+                  <div class={'alias'}>
+                    <i>{alias}</i>
+                    <IconTrash
+                      class={'delete'}
+                      onClick={() => {
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.title.alternative!.splice(i, 1);
+                        forceUpdate();
+                      }}
+                    />
+                  </div>
+                ))}
 
-              <TextInput
-                multiline
-                pattern='.{1,2048}'
-                label={strings.description}
-                placeholder={strings.placeholder.mediaDescription}
-                value={signal.value.description}
-                onInput={(value) => signal.value.description = value}
-                key={`${signal.value.id}-description`}
-              />
-
-              <div class={'group-colum'}>
-                <label class={'label'}>{strings.aliases}</label>
-                <label class={'hint'}>{strings.aliasesHint}</label>
-                <div class={'aliases'}>
-                  {signal.value.title.alternative?.map((alias, i) => (
+                {(signal.value.title.alternative?.length ?? 0) < 5
+                  ? (
                     <div class={'alias'}>
-                      <i>{alias}</i>
-                      <IconTrash
-                        class={'delete'}
+                      <input
+                        required
+                        pattern='.{1,128}'
+                        placeholder={'Harry Potter: 11th Book'}
+                        value={newAliasValue}
+                        onInput={(event) =>
+                          newAliasValue.value =
+                            (event.target as HTMLInputElement).value}
+                      />
+                      <IconPlus2
                         onClick={() => {
-                          // deno-lint-ignore no-non-null-assertion
-                          signal.value.title.alternative!.splice(i, 1);
-                          // required since updating the links doesn't update the component
+                          if (!signal.value.title.alternative) {
+                            signal.value.title.alternative = [];
+                          }
+
+                          signal.value.title.alternative.push(
+                            newAliasValue.value,
+                          );
+
+                          newAliasValue.value = '';
+
                           forceUpdate();
                         }}
                       />
                     </div>
-                  ))}
-
-                  {(signal.value.title.alternative?.length ?? 0) < 5
-                    ? (
-                      <div class={'alias'}>
-                        <input
-                          required
-                          pattern='.{1,128}'
-                          placeholder={'Harry Potter: 11th Book'}
-                          value={newAliasValue}
-                          onInput={(event) =>
-                            newAliasValue.value =
-                              (event.target as HTMLInputElement).value}
-                        />
-                        <IconPlus2
-                          onClick={() => {
-                            if (!signal.value.title.alternative) {
-                              signal.value.title.alternative = [];
-                            }
-
-                            signal.value.title.alternative.push(
-                              newAliasValue.value,
-                            );
-
-                            newAliasValue.value = '';
-
-                            // required since updating the links doesn't update the component
-                            forceUpdate();
-                          }}
-                        />
-                      </div>
-                    )
-                    : undefined}
-                </div>
-              </div>
-
-              <div class={'group-colum'}>
-                <label class={'label'}>{strings.links}</label>
-                <Notice type={'info'}>{strings.linksNotice}</Notice>
-                <div class={'links'}>
-                  {signal.value.externalLinks?.map((link, i) => (
-                    <div class={'group'}>
-                      <TextInput
-                        required
-                        value={link.site}
-                        placeholder={'YouTube'}
-                        onInput={(site) =>
-                          // deno-lint-ignore no-non-null-assertion
-                          signal.value.externalLinks![i].site = site}
-                        key={`${signal.value.id}-link-${i}-site`}
-                      />
-                      <TextInput
-                        required
-                        value={link.url}
-                        pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|crunchyroll\\.com|tapas\\.io|webtoon\\.com|amazon\\.com)[\\S]*$'}
-                        placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
-                        onInput={(url) =>
-                          // deno-lint-ignore no-non-null-assertion
-                          signal.value.externalLinks![i].url = url}
-                        key={`${signal.value.id}-link-${i}-url`}
-                      />
-                      <IconTrash
-                        onClick={() => {
-                          // deno-lint-ignore no-non-null-assertion
-                          signal.value.externalLinks!.splice(i, 1);
-                          // required since updating the links doesn't update the component
-                          forceUpdate();
-                        }}
-                      />
-                    </div>
-                  ))}
-                  <button
-                    onClick={() => {
-                      // deno-lint-ignore no-non-null-assertion
-                      signal.value.externalLinks!.push({ site: '', url: '' });
-                      // required since updating the links doesn't update the component
-                      forceUpdate();
-                    }}
-                  >
-                    <IconPlus2 />
-                  </button>
-                </div>
+                  )
+                  : undefined}
               </div>
             </div>
-          </>
+
+            <div class={'group-colum'}>
+              <label class={'label'}>{strings.links}</label>
+              <Notice type={'info'}>{strings.linksNotice}</Notice>
+              <div class={'links'}>
+                {signal.value.externalLinks?.map((link, i) => (
+                  <div class={'group'}>
+                    <TextInput
+                      required
+                      value={link.site}
+                      placeholder={'YouTube'}
+                      onInput={(site) =>
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.externalLinks![i].site = site}
+                      key={`${signal.value.id}-link-${i}-site`}
+                    />
+                    <TextInput
+                      required
+                      value={link.url}
+                      pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|crunchyroll\\.com|tapas\\.io|webtoon\\.com|amazon\\.com)[\\S]*$'}
+                      placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+                      onInput={(url) =>
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.externalLinks![i].url = url}
+                      key={`${signal.value.id}-link-${i}-url`}
+                    />
+                    <IconTrash
+                      onClick={() => {
+                        // deno-lint-ignore no-non-null-assertion
+                        signal.value.externalLinks!.splice(i, 1);
+                        forceUpdate();
+                      }}
+                    />
+                  </div>
+                ))}
+                <button
+                  onClick={() => {
+                    // deno-lint-ignore no-non-null-assertion
+                    signal.value.externalLinks!.push({ site: '', url: '' });
+                    forceUpdate();
+                  }}
+                >
+                  <IconPlus2 />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </Dialog>
-    </div>
+    </>
   );
 };

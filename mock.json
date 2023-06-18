@@ -6,6 +6,10 @@
   "author": "Fable Community",
   "image": "https://media.tenor.com/n9YTIWj9H-gAAAAC/utawarerumono-kuon.gif",
   "url": "https://github.com/fable-community/fable-pack-utawarerumono",
+  "maintainers": [
+    "228674702414053386",
+    "839261971185664011"
+  ],
   "media": {
     "conflicts": ["anilist:21218"],
     "new": [{

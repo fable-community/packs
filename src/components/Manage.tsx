@@ -39,6 +39,8 @@ export default (props: {
   const media = useSignal(pack.media?.new ?? []);
   const characters = useSignal(pack.characters?.new ?? []);
 
+  const maintainers = useSignal(pack.maintainers ?? []);
+
   const onPublish = async () => {
     const body: Data = {
       old: pack,
@@ -46,6 +48,7 @@ export default (props: {
       image: image.value,
       media: media.value,
       characters: characters.value,
+      maintainers: maintainers.value,
     };
 
     loading.value = true;
@@ -184,9 +187,8 @@ export default (props: {
             <i />
 
             <Maintainers
-              list={props.new
-                ? [props.user]
-                : [props.pack?.owner, ...pack.maintainers ?? []]}
+              maintainers={maintainers}
+              owner={props.pack?.owner ?? props.user}
             />
           </div>
         </div>
