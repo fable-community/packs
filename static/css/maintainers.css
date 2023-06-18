@@ -8,25 +8,25 @@
   gap: 2em;
 }
 
-.manage-dialog-maintainers > .text-input {
+.manage-dialog-maintainers {
   display: flex;
   flex-direction: column;
 }
 
-.manage-dialog-maintainers > .text-input > input {
+.manage-dialog-maintainers > label {
+  font-size: 0.85em;
+  color: var(--disabled);
+  text-transform: uppercase;
+  margin-bottom: -1.5em;
+}
+
+.manage-dialog-maintainers > input {
   border: 2px solid var(--embed);
   font-size: 1em;
 }
 
-.manage-dialog-maintainers > .text-input > input:invalid {
+.manage-dialog-maintainers > input:invalid {
   border: 2px solid var(--red);
-}
-
-.manage-dialog-maintainers > .text-input > label {
-  font-size: 0.85em;
-  color: var(--disabled);
-  text-transform: uppercase;
-  margin: 0.5em 0;
 }
 
 .manage-dialog-maintainers > .separator {

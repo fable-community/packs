@@ -121,7 +121,6 @@ export default (
             accept={['image/png', 'image/jpeg', 'image/webp']}
             onChange={(image) => {
               signal.value.images = [image];
-              // required to redraw the image in the outside container as well
               forceUpdate();
             }}
           />
@@ -185,7 +184,6 @@ export default (
                       onClick={() => {
                         // deno-lint-ignore no-non-null-assertion
                         signal.value.title.alternative!.splice(i, 1);
-                        // required since updating the links doesn't update the component
                         forceUpdate();
                       }}
                     />
@@ -216,7 +214,6 @@ export default (
 
                           newAliasValue.value = '';
 
-                          // required since updating the links doesn't update the component
                           forceUpdate();
                         }}
                       />
@@ -255,7 +252,6 @@ export default (
                       onClick={() => {
                         // deno-lint-ignore no-non-null-assertion
                         signal.value.externalLinks!.splice(i, 1);
-                        // required since updating the links doesn't update the component
                         forceUpdate();
                       }}
                     />
@@ -265,7 +261,6 @@ export default (
                   onClick={() => {
                     // deno-lint-ignore no-non-null-assertion
                     signal.value.externalLinks!.push({ site: '', url: '' });
-                    // required since updating the links doesn't update the component
                     forceUpdate();
                   }}
                 >

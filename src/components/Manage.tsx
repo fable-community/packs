@@ -38,6 +38,7 @@ export default (props: {
 
   const media = useSignal(pack.media?.new ?? []);
   const characters = useSignal(pack.characters?.new ?? []);
+
   const maintainers = useSignal(pack.maintainers ?? []);
 
   const onPublish = async () => {
@@ -47,6 +48,7 @@ export default (props: {
       image: image.value,
       media: media.value,
       characters: characters.value,
+      maintainers: maintainers.value,
     };
 
     loading.value = true;

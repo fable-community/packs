@@ -1,20 +1,23 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useCallback, useEffect, useState } from 'preact/hooks';
+
+import { type Signal, useSignal } from '@preact/signals';
 
 import Dialog from './Dialog.tsx';
-
-import TextInput from './TextInput.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconCrown from 'icons/crown.tsx';
 
 import strings from '../../i18n/en-US.ts';
 
-import type { Signal } from '@preact/signals';
-
 import type { User } from './Dashboard.tsx';
 
 const Profile = (
-  { id, user, removable }: { id: string; user?: User; removable: boolean },
+  { id, user, removable, onClick }: {
+    id: string;
+    user?: User;
+    removable: boolean;
+    onClick?: () => void;
+  },
 ) => {
   return (
     <div class={'profile'}>
@@ -33,7 +36,9 @@ const Profile = (
           : ''}
       </i>
 
-      {removable ? <IconTrash /> : <IconCrown class={'owner'} />}
+      {removable
+        ? <IconTrash onClick={onClick} />
+        : <IconCrown class={'owner'} />}
     </div>
   );
 };
@@ -41,7 +46,14 @@ const Profile = (
 export default (
   { owner, maintainers }: { owner: string; maintainers: Signal<string[]> },
 ) => {
+  const [, updateState] = useState({});
+
+  // used to force the entire component to redrew
+  const forceUpdate = useCallback(() => updateState({}), []);
+
   const [data, setData] = useState<Record<string, User>>({});
+
+  const userId = useSignal('');
 
   useEffect(() => {
     Promise.all(
@@ -61,7 +73,7 @@ export default (
         setData(_data);
       })
       .catch(console.error);
-  }, [maintainers.value]);
+  }, [...maintainers.value]);
 
   return (
     <>
@@ -82,22 +94,41 @@ export default (
 
       <Dialog name={'maintainers'} class={'dialog-normal'}>
         <div class={'manage-dialog-maintainers'}>
-          <TextInput
+          <label>{strings.userId}</label>
+          <input
             type={'text'}
-            label={strings.userId}
             pattern={'[0-9]{18,19}'}
             placeholder={'185033133521895424'}
+            onInput={(event) =>
+              userId.value = (event.target as HTMLInputElement).value}
           />
 
-          <button>{strings.addNew}</button>
+          <button
+            disabled={userId.value?.length <= 0}
+            onClick={() => {
+              maintainers.value.push(userId.value);
+              forceUpdate();
+            }}
+          >
+            {strings.addNew}
+          </button>
 
           <div class={'separator'} />
 
           <Profile id={owner} user={data[owner]} removable={false} />
 
           {maintainers.value
-            .map((id) => (
-              <Profile key={id} id={id} user={data[id]} removable={true} />
+            .map((id, i) => (
+              <Profile
+                key={id}
+                id={id}
+                user={data[id]}
+                removable={true}
+                onClick={() => {
+                  maintainers.value.splice(i, 1);
+                  forceUpdate();
+                }}
+              />
             ))}
         </div>
       </Dialog>

@@ -41,6 +41,7 @@ export interface Data {
   image?: IImageInput;
   characters?: Character[];
   media?: Media[];
+  maintainers?: string[];
 }
 
 const idRegex = /[^-_a-z0-9]+/g;
@@ -231,6 +232,8 @@ export const handler: Handlers = {
           };
         }) ?? [],
       );
+
+      pack.maintainers = data.maintainers ?? [];
 
       //
       // console.log(pack);

@@ -132,7 +132,6 @@ export default (
             accept={['image/png', 'image/jpeg', 'image/webp']}
             onChange={(image) => {
               signal.value.images = [image];
-              // required to redraw the image in the outside container as well
               forceUpdate();
             }}
           />
@@ -161,7 +160,6 @@ export default (
                   // TODO allow selecting character role
                   ? [{ mediaId, role: CharacterRole.Main }]
                   : undefined;
-                // required to show warning notice if no media is assigned
                 forceUpdate();
               }}
             />
@@ -176,7 +174,6 @@ export default (
                   onChange={(role: CharacterRole) => {
                     // deno-lint-ignore no-non-null-assertion
                     signal.value.media![0].role = role;
-                    // required to show warning notice if no media is assigned
                     forceUpdate();
                   }}
                 />
@@ -215,7 +212,6 @@ export default (
                       <div
                         onClick={() => {
                           delete signal.value.popularity;
-                          // required since updating the popularity doesn't update the component
                           forceUpdate();
                         }}
                       >
@@ -227,7 +223,6 @@ export default (
                     onClick={() => {
                       const target = Math.min(5, rating + 1);
                       signal.value.popularity = getPopularity(target);
-                      // required since update the popularity doesn't update the component
                       forceUpdate();
                     }}
                   >
@@ -237,7 +232,6 @@ export default (
                     onClick={() => {
                       const target = Math.max(1, rating - 1);
                       signal.value.popularity = getPopularity(target);
-                      // required since updating the popularity doesn't update the component
                       forceUpdate();
                     }}
                   >
@@ -287,7 +281,6 @@ export default (
                       onClick={() => {
                         // deno-lint-ignore no-non-null-assertion
                         signal.value.name.alternative!.splice(i, 1);
-                        // required since updating the links doesn't update the component
                         forceUpdate();
                       }}
                     />
@@ -318,7 +311,6 @@ export default (
 
                           newAliasValue.value = '';
 
-                          // required since updating the links doesn't update the component
                           forceUpdate();
                         }}
                       />
@@ -357,7 +349,6 @@ export default (
                       onClick={() => {
                         // deno-lint-ignore no-non-null-assertion
                         signal.value.externalLinks!.splice(i, 1);
-                        // required since updating the links doesn't update the component
                         forceUpdate();
                       }}
                     />
@@ -376,7 +367,6 @@ export default (
                           url: '',
                         });
 
-                        // required since updating the links doesn't update the component
                         forceUpdate();
                       }}
                     >
