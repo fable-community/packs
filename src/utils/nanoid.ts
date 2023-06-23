@@ -1,5 +1,5 @@
 // https://github.com/ai/nanoid/blob/main/index.browser.js
-export default function (size = 16) {
+export default (size = 16) => {
   return crypto.getRandomValues(new Uint8Array(size)).reduce((id, byte) => {
     byte &= 63;
     if (byte < 36) {
@@ -15,4 +15,4 @@ export default function (size = 16) {
     }
     return id;
   }, '');
-}
+};

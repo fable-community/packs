@@ -1,6 +1,6 @@
-import type { Schema } from './Dashboard.tsx';
+import type { Pack } from '../utils/types.ts';
 
-export default ({ pack }: { pack: Schema.Pack }) => {
+export default ({ pack }: { pack: Pack }) => {
   return (
     <a class={'dashboard-card'} href={pack.manifest.id}>
       {pack.manifest.image ? <img src={pack.manifest.image} /> : undefined}

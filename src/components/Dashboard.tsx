@@ -11,7 +11,7 @@ import IconClipboard from 'icons/clipboard-text.tsx';
 
 import strings from '../../i18n/en-US.ts';
 
-import type { Schema } from '../utils/types.ts';
+import type { Pack } from '../utils/types.ts';
 
 import type { PageProps } from '$fresh/server.ts';
 
@@ -26,13 +26,11 @@ export type User = {
 
 export interface DashboardData {
   user?: User;
-  packs: Record<string, Schema.Pack>;
+  packs: Record<string, Pack>;
 }
 
 export const defaultImage =
   'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
-
-export { Schema };
 
 export default ({ data, url, params }: PageProps<DashboardData>) => {
   const { searchParams } = url;
@@ -83,9 +81,9 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
               </p>
               <div
                 class={'install-info'}
-                data-clipboard={`/packs install id: ${hasSuccess}`}
+                data-clipboard={`/community install id: ${hasSuccess}`}
               >
-                <i>{`/packs install id: ${hasSuccess}`}</i>
+                <i>{`/community install id: ${hasSuccess}`}</i>
                 <IconClipboard />
               </div>
               <Notice type={'info'}>

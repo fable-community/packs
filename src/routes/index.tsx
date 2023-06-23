@@ -6,9 +6,10 @@ import Login from '../components/Login.tsx';
 
 import Dashboard, {
   type DashboardData,
-  type Schema,
   type User,
 } from '../components/Dashboard.tsx';
+
+import type { Pack } from '../utils/types.ts';
 
 interface Cookies {
   accessToken?: string;
@@ -47,7 +48,7 @@ export const handler: Handlers = {
           method: 'GET',
         });
 
-        const packs = (await response.json() as { data: Schema.Pack[] }).data;
+        const packs = (await response.json() as { data: Pack[] }).data;
 
         data.packs = packs.reduce((acc, pack) => {
           return { ...acc, [pack.manifest.id]: pack };
@@ -58,9 +59,11 @@ export const handler: Handlers = {
         });
 
         const packs = [{
+          servers: 200,
+          approved: true,
           owner: data.user.id,
           manifest: { ...mock },
-        }] as unknown as Schema.Pack[];
+        }] as unknown as Pack[];
 
         data.packs = packs.reduce((acc, pack) => {
           return { ...acc, [pack.manifest.id]: pack };

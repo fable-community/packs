@@ -8,17 +8,11 @@ import { deserialize } from 'bson';
 
 import nanoid from '../utils/nanoid.ts';
 
-import {
-  type Character,
-  type CharacterRole,
-  type Media,
-} from '../utils/types.ts';
-
 import type { Handlers } from '$fresh/server.ts';
 
-import type { Schema } from '../components/Dashboard.tsx';
-
 import type { IImageInput } from '../components/ImageInput.tsx';
+
+import type { Character, CharacterRole, Media, Pack } from '../utils/types.ts';
 
 interface Cookies {
   accessToken?: string;
@@ -36,8 +30,9 @@ interface Upload {
 }
 
 export interface Data {
-  old: Schema.Pack['manifest'];
+  old: Pack['manifest'];
   title?: string;
+  private?: boolean;
   description?: string;
   author?: string;
   image?: IImageInput;
@@ -153,15 +148,19 @@ export const handler: Handlers = {
 
       const { old: pack } = data;
 
-      if (data.title) {
+      if (typeof data.title === 'string') {
         pack.title = data.title;
       }
 
-      if (data.description) {
+      if (typeof data.private === 'boolean') {
+        pack.private = data.private;
+      }
+
+      if (typeof data.description === 'string') {
         pack.description = data.description;
       }
 
-      if (data.author) {
+      if (typeof data.author === 'string') {
         pack.author = data.author;
       }
 
