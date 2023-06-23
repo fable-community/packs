@@ -15,6 +15,11 @@ export default {
   gender: 'Gender',
   packAuthor: 'Pack Author',
   packDescription: 'Pack Description',
+  packServers: 'Installed on % servers',
+  setPublic: 'Make Public',
+  setPrivate: 'Make Private',
+  privateNotice:
+    'Only you and other collaborators are allowed to install this pack',
   placeholder: {
     gender: 'Classified',
     age: 'Ancient',

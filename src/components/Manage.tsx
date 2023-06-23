@@ -18,24 +18,29 @@ import IconClose from 'icons/x.tsx';
 import IconInfo from 'icons/info-circle.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
 
-import { Schema } from './Dashboard.tsx';
+import compact from '../utils/compact.ts';
 
 import strings from '../../i18n/en-US.ts';
 
 import type { Data } from '../api/publish.ts';
 
+import type { Pack } from '../utils/types.ts';
+
 export default (props: {
   user: string;
-  pack?: Schema.Pack;
+  pack?: Pack;
   new?: boolean;
 }) => {
-  const pack: Readonly<Schema.Pack['manifest']> = props.pack?.manifest ??
+  const servers = compact(props.pack?.servers ?? 0);
+
+  const pack: Readonly<Pack['manifest']> = props.pack?.manifest ??
     { id: '' };
 
   const loading = useSignal<boolean>(false);
   const error = useSignal<string | undefined>(undefined);
 
   const title = useSignal<string | undefined>(pack.title);
+  const privacy = useSignal<boolean | undefined>(pack.private);
   const author = useSignal<string | undefined>(pack.author);
   const description = useSignal<string | undefined>(pack.description);
   const image = useSignal<IImageInput | undefined>(undefined);
@@ -49,6 +54,7 @@ export default (props: {
     const body: Data = {
       old: pack,
       title: title.value,
+      private: privacy.value,
       description: description.value,
       author: author.value,
       image: image.value,
@@ -140,13 +146,32 @@ export default (props: {
           <div class={'metadata'}>
             <IconClose data-dialog-cancel={'info'} class={'close'} />
 
+            <label>{strings.packServers.replace('%', servers)}</label>
+
             <div
               class={'install-info'}
-              data-clipboard={`/packs install id: ${pack.id}`}
+              data-clipboard={`/community install id: ${pack.id}`}
             >
-              <i>{`/packs install id: ${pack.id}`}</i>
+              <i>{`/community install id: ${pack.id}`}</i>
               <IconClipboard />
             </div>
+
+            {privacy.value
+              ? (
+                <>
+                  <Notice type={'info'}>{strings.privateNotice}</Notice>
+                  <button onClick={() => privacy.value = false}>
+                    {strings.setPublic}
+                  </button>
+                </>
+              )
+              : (
+                <>
+                  <button onClick={() => privacy.value = true}>
+                    {strings.setPrivate}
+                  </button>
+                </>
+              )}
 
             <TextInput
               value={author}

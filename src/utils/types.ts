@@ -27,5 +27,5 @@ export {
   MediaFormat,
   MediaRelation,
   MediaType,
-  type Schema,
+  type Pack,
 } from 'https://raw.githubusercontent.com/ker0olos/fable/main/src/types.ts';
