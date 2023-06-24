@@ -12,7 +12,7 @@ import { getRating } from '../utils/rating.ts';
 
 import type { Handlers } from '$fresh/server.ts';
 
-import type { IImageInput } from '../components/ImageInput.tsx';
+import { IImageInput, TEN_MB } from '../components/ImageInput.tsx';
 
 import { Character, CharacterRole, Media, Pack } from '../utils/types.ts';
 
@@ -77,6 +77,11 @@ const uploadImage = async ({ file, credentials }: {
   credentials?: Credentials;
 }) => {
   if (!credentials) {
+    return '';
+  }
+
+  if (file.size > TEN_MB) {
+    console.error('image is over 10 mb');
     return '';
   }
 

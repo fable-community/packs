@@ -16,6 +16,8 @@ export interface IImageInput {
   url: string;
 }
 
+export const TEN_MB = 10000000;
+
 export default (
   props: {
     accept: string[];
@@ -56,6 +58,14 @@ export default (
           // deno-lint-ignore no-non-null-assertion
           ref.current!.onload = () => {
             placeholderRef.current?.remove();
+
+            if (file.size > TEN_MB) {
+              // deno-lint-ignore no-non-null-assertion
+              ref.current!.setAttribute('invalid', 'true');
+            } else {
+              // deno-lint-ignore no-non-null-assertion
+              ref.current!.removeAttribute('invalid');
+            }
           };
 
           file.arrayBuffer().then((buffer) => {
