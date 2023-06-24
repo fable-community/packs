@@ -146,7 +146,7 @@ export default (props: {
           <div class={'metadata'}>
             <IconClose data-dialog-cancel={'info'} class={'close'} />
 
-            <label>{strings.packServers.replace('%', servers)}</label>
+            <label>{strings.packServers.replace(/%/g, servers)}</label>
 
             <div
               class={'install-info'}
