@@ -12,7 +12,7 @@ import type { Handlers } from '$fresh/server.ts';
 
 import type { IImageInput } from '../components/ImageInput.tsx';
 
-import type { Character, CharacterRole, Media, Pack } from '../utils/types.ts';
+import { Character, CharacterRole, Media, Pack } from '../utils/types.ts';
 
 interface Cookies {
   accessToken?: string;
@@ -191,6 +191,31 @@ export const handler: Handlers = {
       pack.media ??= {};
       pack.characters ??= {};
 
+      // sort media by popularity
+      data.media
+        ?.sort((a, b) => {
+          return (b.popularity ?? 0) - (a.popularity ?? 0);
+        });
+
+      // sort media by role then popularity
+      data.characters
+        ?.sort((a, b) => {
+          if (
+            a.media?.length && b?.media?.length &&
+            a.media[0].role !== b.media[0].role
+          ) {
+            const v = {
+              [CharacterRole.Main]: 0,
+              [CharacterRole.Supporting]: 1,
+              [CharacterRole.Background]: 2,
+            };
+
+            return v[a.media[0].role] - v[b.media[0].role];
+          } else {
+            return (b.popularity ?? 0) - (a.popularity ?? 0);
+          }
+        });
+
       pack.media!.new = await Promise.all(
         data.media?.map(async (media) => {
           const url = media.images?.length && media.images[0].file
@@ -206,7 +231,7 @@ export const handler: Handlers = {
           }[] = [];
 
           // discover and link media to the characters that reference it
-          pack.characters?.new?.forEach((character) => {
+          data.characters?.forEach((character) => {
             const find = character.media
               ?.find(({ mediaId }) => media.id === mediaId);
 
