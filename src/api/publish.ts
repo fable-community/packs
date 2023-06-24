@@ -8,6 +8,8 @@ import { deserialize } from 'bson';
 
 import nanoid from '../utils/nanoid.ts';
 
+import { getRating } from '../utils/rating.ts';
+
 import type { Handlers } from '$fresh/server.ts';
 
 import type { IImageInput } from '../components/ImageInput.tsx';
@@ -212,7 +214,52 @@ export const handler: Handlers = {
 
             return v[a.media[0].role] - v[b.media[0].role];
           } else {
-            return (b.popularity ?? 0) - (a.popularity ?? 0);
+            let aRating: number;
+            let bRating: number;
+
+            if (a.popularity) {
+              aRating = getRating({
+                popularity: a.popularity ?? 0,
+              });
+            } else if (a.media?.[0].mediaId) {
+              const media = data.media?.find(({ id }) =>
+                a.media?.[0].mediaId === id
+              );
+
+              if (media) {
+                aRating = getRating({
+                  popularity: media.popularity ?? 0,
+                  role: a.media?.[0].role,
+                });
+              } else {
+                aRating = 1;
+              }
+            } else {
+              aRating = 1;
+            }
+
+            if (b.popularity) {
+              bRating = getRating({
+                popularity: b.popularity ?? 0,
+              });
+            } else if (b.media?.length) {
+              const media = data.media?.find(({ id }) =>
+                b.media?.[0].mediaId === id
+              );
+
+              if (media) {
+                bRating = getRating({
+                  popularity: media.popularity ?? 0,
+                  role: b.media?.[0].role,
+                });
+              } else {
+                bRating = 1;
+              }
+            } else {
+              bRating = 1;
+            }
+
+            return bRating - aRating;
           }
         });
 
