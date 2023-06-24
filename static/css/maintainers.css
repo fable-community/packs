@@ -3,14 +3,12 @@
 }
 
 .manage-dialog-maintainers {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 2em;
 }
 
-.manage-dialog-maintainers {
-  display: flex;
-  flex-direction: column;
+.manage-dialog-maintainers > .close {
+  margin-bottom: -2em;
 }
 
 .manage-dialog-maintainers > label {
@@ -35,7 +33,12 @@
   background-color: var(--grey);
 }
 
-.manage-dialog-maintainers > .profile {
+.manage-dialog-maintainers > div {
+  display: grid;
+  gap: 2em;
+}
+
+.manage-dialog-maintainers > div > .profile {
   display: grid;
   align-items: center;
   grid-template-columns: auto 1fr auto;
@@ -46,34 +49,34 @@
     "icon . btn";
 }
 
-.manage-dialog-maintainers > .profile > img {
+.manage-dialog-maintainers > div > .profile > img {
   width: 32px;
   height: 32px;
   border-radius: 100%;
   grid-area: icon;
 }
 
-.manage-dialog-maintainers > .profile > i:empty {
+.manage-dialog-maintainers > div > .profile > i:empty {
   width: 20vw;
   height: 22px;
   display: block;
   background-color: var(--grey);
 }
 
-.manage-dialog-maintainers > .profile > i:nth-child(2) {
+.manage-dialog-maintainers > div > .profile > i:nth-child(2) {
   font-weight: 600;
 }
 
-.manage-dialog-maintainers > .profile > i:nth-child(3) {
+.manage-dialog-maintainers > div > .profile > i:nth-child(3) {
   font-size: 0.85em;
 }
 
-.manage-dialog-maintainers > .profile > i:empty:nth-child(3) {
+.manage-dialog-maintainers > div > .profile > i:empty:nth-child(3) {
   width: 15vw;
   height: 18px;
 }
 
-.manage-dialog-maintainers > .profile > svg {
+.manage-dialog-maintainers > div > .profile > svg {
   width: 24px;
   height: 24px;
   grid-area: btn;
@@ -81,7 +84,7 @@
   cursor: pointer;
 }
 
-.manage-dialog-maintainers > .profile > svg.owner {
+.manage-dialog-maintainers > div > .profile > svg.owner {
   pointer-events: none;
   color: var(--fable);
 }

@@ -50,6 +50,7 @@ addEventListener('load', () => {
         ...document.querySelectorAll('[data-dialog-cb="info"]'),
         ...document.querySelectorAll('[data-dialog-cb="media"]'),
         ...document.querySelectorAll('[data-dialog-cb="characters"]'),
+        ...document.querySelectorAll('[data-dialog-cb="maintainers"]'),
       ];
 
       elements.forEach(

@@ -4,6 +4,7 @@ import { type Signal, useSignal } from '@preact/signals';
 
 import Dialog from './Dialog.tsx';
 
+import IconClose from 'icons/x.tsx';
 import IconTrash from 'icons/trash.tsx';
 import IconCrown from 'icons/crown.tsx';
 
@@ -94,6 +95,8 @@ export default (
 
       <Dialog name={'maintainers'} class={'dialog-normal'}>
         <div class={'manage-dialog-maintainers'}>
+          <IconClose data-dialog-cancel={'maintainers'} class={'close'} />
+
           <label>{strings.userId}</label>
           <input
             type={'text'}
@@ -115,21 +118,23 @@ export default (
 
           <div class={'separator'} />
 
-          <Profile id={owner} user={data[owner]} removable={false} />
+          <div>
+            <Profile id={owner} user={data[owner]} removable={false} />
 
-          {maintainers.value
-            .map((id, i) => (
-              <Profile
-                key={id}
-                id={id}
-                user={data[id]}
-                removable={true}
-                onClick={() => {
-                  maintainers.value.splice(i, 1);
-                  forceUpdate();
-                }}
-              />
-            ))}
+            {maintainers.value
+              .map((id, i) => (
+                <Profile
+                  key={id}
+                  id={id}
+                  user={data[id]}
+                  removable={true}
+                  onClick={() => {
+                    maintainers.value.splice(i, 1);
+                    forceUpdate();
+                  }}
+                />
+              ))}
+          </div>
         </div>
       </Dialog>
     </>
