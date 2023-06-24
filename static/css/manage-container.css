@@ -96,6 +96,10 @@
   margin: 1.5em;
 }
 
+.metadata {
+  display: grid;
+}
+
 .metadata .text-input {
   display: flex;
   flex-direction: column;

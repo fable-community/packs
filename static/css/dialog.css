@@ -27,7 +27,6 @@
 }
 
 .dialog-normal > div {
-  display: grid;
   overflow: hidden auto;
   background-color: var(--embedHighlight);
   border-radius: 10px;
