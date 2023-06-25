@@ -194,7 +194,7 @@ export default (props: {
           <div class={'manage-header'}>
             <ImageInput
               default={pack.image}
-              accept={['image/png', 'image/jpeg', 'image/webp', 'image/gif']}
+              accept={['image/png', 'image/jpeg', 'image/webp']}
               onChange={(value) => image.value = value}
             />
 
