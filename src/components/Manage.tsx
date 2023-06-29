@@ -27,7 +27,7 @@ import type { Data } from '../api/publish.ts';
 import type { Pack } from '../utils/types.ts';
 
 export default (props: {
-  user: string;
+  userId: string;
   pack?: Pack;
   new?: boolean;
 }) => {
@@ -62,6 +62,7 @@ export default (props: {
       media: media.value,
       characters: characters.value,
       maintainers: maintainers.value,
+      userId: props.userId,
     };
 
     loading.value = true;
@@ -247,7 +248,7 @@ export default (props: {
 
           <Maintainers
             visible={active.value === 2}
-            owner={props.pack?.owner ?? props.user}
+            owner={props.pack?.owner ?? props.userId}
             maintainers={maintainers}
           />
         </div>
