@@ -11,7 +11,7 @@
   margin: 1.5em;
   width: calc(100% - 3em);
   height: calc(100% - 3em);
-  gap: 2em;
+  gap: 0.5em;
 }
 
 .manage-header {
@@ -36,8 +36,11 @@
 
 .manage-header > button {
   background-color: var(--discord);
-  height: 90%;
-  margin: auto;
+  position: fixed;
+  margin: 1.5em 3em;
+  height: inherit;
+  bottom: 0;
+  right: 0;
 }
 
 .manage-header > svg {
@@ -51,49 +54,24 @@
   scale: 0.8;
 }
 
-@media (max-width: 850px) {
-  .manage-header > button {
-    position: fixed;
-    margin: 1.5em 3em;
-    height: inherit;
-    bottom: 0;
-    right: 0;
-  }
-}
-
-.manage-boxes {
-  grid-area: _;
+.tabs {
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  justify-content: center;
 }
 
-@media (min-width: 850px) {
-  .manage-boxes {
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .manage-boxes > div {
-    max-width: 400px;
-    width: calc(50% - 3em);
-    height: calc(50% - 3em);
-  }
-
-  .manage-boxes > i {
-    flex-basis: 100%;
-  }
-}
-
-.manage-boxes > div {
+.tabs > div {
   padding: 1em;
-  border: 2px solid var(--grey);
-  box-sizing: border-box;
-  border-radius: 12px;
-  overflow: hidden auto;
-  margin: 1.5em;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tabs > div[data-selected="true"] {
+  border-bottom: 2px solid var(--foreground);
+}
+
+.tabs > div:not([data-selected="true"]) {
+  opacity: 0.5;
 }
 
 .metadata {
@@ -124,6 +102,7 @@
   margin: 0.5em 0;
   gap: 0.5em;
 }
+
 .metadata button {
   width: 100%;
   margin: 1em 0;

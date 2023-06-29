@@ -1,44 +1,39 @@
 .maintainers {
-  cursor: pointer;
-}
-
-.manage-dialog-maintainers {
   display: grid;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
   gap: 2em;
 }
 
-.manage-dialog-maintainers > .close {
+.maintainers > .close {
   margin-bottom: -2em;
 }
 
-.manage-dialog-maintainers > label {
+.maintainers > label {
   font-size: 0.85em;
   color: var(--disabled);
   text-transform: uppercase;
   margin-bottom: -1.5em;
 }
 
-.manage-dialog-maintainers > input {
-  border: 2px solid var(--embed);
+.maintainers > input {
+  border-radius: 0;
+  border-bottom: 2px solid var(--embed);
+  padding: 1em 0;
   font-size: 1em;
 }
 
-.manage-dialog-maintainers > input:invalid {
-  border: 2px solid var(--red);
+.maintainers > input:invalid {
+  border-bottom: 2px solid var(--red);
 }
 
-.manage-dialog-maintainers > .separator {
-  height: 2px;
-  width: 100%;
-  background-color: var(--grey);
-}
-
-.manage-dialog-maintainers > div {
+.maintainers > div {
   display: grid;
   gap: 2em;
 }
 
-.manage-dialog-maintainers > div > .profile {
+.maintainers > div > .profile {
   display: grid;
   align-items: center;
   grid-template-columns: auto 1fr auto;
@@ -49,34 +44,34 @@
     "icon . btn";
 }
 
-.manage-dialog-maintainers > div > .profile > img {
+.maintainers > div > .profile > img {
   width: 32px;
   height: 32px;
   border-radius: 100%;
   grid-area: icon;
 }
 
-.manage-dialog-maintainers > div > .profile > i:empty {
+.maintainers > div > .profile > i:empty {
   width: 20vw;
   height: 22px;
   display: block;
   background-color: var(--grey);
 }
 
-.manage-dialog-maintainers > div > .profile > i:nth-child(2) {
+.maintainers > div > .profile > i:nth-child(2) {
   font-weight: 600;
 }
 
-.manage-dialog-maintainers > div > .profile > i:nth-child(3) {
+.maintainers > div > .profile > i:nth-child(3) {
   font-size: 0.85em;
 }
 
-.manage-dialog-maintainers > div > .profile > i:empty:nth-child(3) {
+.maintainers > div > .profile > i:empty:nth-child(3) {
   width: 15vw;
   height: 18px;
 }
 
-.manage-dialog-maintainers > div > .profile > svg {
+.maintainers > div > .profile > svg {
   width: 24px;
   height: 24px;
   grid-area: btn;
@@ -84,7 +79,7 @@
   cursor: pointer;
 }
 
-.manage-dialog-maintainers > div > .profile > svg.owner {
+.maintainers > div > .profile > svg.owner {
   pointer-events: none;
   color: var(--fable);
 }

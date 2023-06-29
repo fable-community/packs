@@ -19,8 +19,7 @@ import TextInput from './TextInput.tsx';
 import ImageInput from './ImageInput.tsx';
 
 import IconTrash from 'icons/trash.tsx';
-import IconPlus from 'icons/user-plus.tsx';
-import IconPlus2 from 'icons/plus.tsx';
+import IconPlus from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
 import IconAdd from 'icons/circle-plus.tsx';
 import IconRemove from 'icons/circle-minus.tsx';
@@ -35,9 +34,10 @@ import strings from '../../i18n/en-US.ts';
 import { type Character, CharacterRole, type Media } from '../utils/types.ts';
 
 export default (
-  { media, characters }: {
+  { media, characters, visible }: {
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
+    visible: boolean;
   },
 ) => {
   const [, updateState] = useState({});
@@ -60,44 +60,81 @@ export default (
 
   const rating = getRating({
     popularity: signal.value.popularity ?? primaryMediaRef?.popularity ?? 0,
-    role: !signal.value.popularity ? primaryMedia?.role : undefined,
+    role: !signal.value.popularity && primaryMediaRef
+      ? primaryMedia?.role
+      : undefined,
   });
 
   return (
-    <>
-      <div class={'characters'}>
+    <div style={{ display: visible ? '' : 'none' }}>
+      <div class={'media'}>
+        <div class={'item'}>
+          <div />
+          <i>{strings.name}</i>
+          <i>{strings.primaryMedia}</i>
+          <i>{strings.role}</i>
+          <i>{strings.rating}</i>
+        </div>
+
         {Object.values(characters.value)
-          .map(({ images }, i) => (
-            <img
-              key={i}
-              src={images?.[0]?.url ?? defaultImage}
-              style={{
-                backgroundColor: images?.[0]?.url ? undefined : 'transparent',
-              }}
-              onClick={() => {
-                signal.value = characters.value[i];
-                requestAnimationFrame(() => showDialog('characters'));
-              }}
-            />
-          ))}
+          .map((char, i) => {
+            const primaryMedia = char.media?.[0];
 
-        {
-          <div
-            data-dialog={'characters'}
-            onClick={() => {
-              const item: Character = {
-                id: `${nanoid(4)}`,
-                name: { english: '' },
-              };
+            const primaryMediaRef = primaryMedia
+              ? media.value.find(({ id }) => primaryMedia.mediaId === id)
+              : undefined;
 
-              characters.value.push(item);
+            const rating = getRating({
+              popularity: primaryMediaRef?.popularity ?? 0,
+              role: primaryMediaRef ? primaryMedia?.role : undefined,
+            });
 
-              signal.value = item;
-            }}
-          >
-            <IconPlus />
-          </div>
-        }
+            return (
+              <div
+                key={i}
+                class={'item'}
+                onClick={() => {
+                  signal.value = characters.value[i];
+                  requestAnimationFrame(() => showDialog('characters'));
+                }}
+              >
+                <img
+                  src={char.images?.[0]?.url ?? defaultImage}
+                  style={{
+                    backgroundColor: char.images?.[0]?.url
+                      ? undefined
+                      : 'transparent',
+                  }}
+                />
+                <i>{char.name.english}</i>
+                <i>{primaryMediaRef?.title.english ?? ''}</i>
+                <i>
+                  {primaryMedia?.role
+                    ? `${primaryMedia.role.substring(0, 1)}${
+                      primaryMedia.role.substring(1).toLowerCase()
+                    }`
+                    : ''}
+                </i>
+                <i>{rating}</i>
+              </div>
+            );
+          })}
+
+        <button
+          data-dialog={'characters'}
+          onClick={() => {
+            const item: Character = {
+              id: `${nanoid(4)}`,
+              name: { english: '' },
+            };
+
+            characters.value.push(item);
+
+            signal.value = item;
+          }}
+        >
+          <IconPlus />
+        </button>
       </div>
 
       <Dialog name={'characters'} class={'dialog-normal'}>
@@ -299,7 +336,7 @@ export default (
                           newAliasValue.value =
                             (event.target as HTMLInputElement).value}
                       />
-                      <IconPlus2
+                      <IconPlus
                         onClick={() => {
                           if (!signal.value.name.alternative) {
                             signal.value.name.alternative = [];
@@ -370,7 +407,7 @@ export default (
                         forceUpdate();
                       }}
                     >
-                      <IconPlus2 />
+                      <IconPlus />
                     </button>
                   )
                   : undefined}
@@ -379,6 +416,6 @@ export default (
           </div>
         </div>
       </Dialog>
-    </>
+    </div>
   );
 };

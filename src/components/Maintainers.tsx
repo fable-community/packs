@@ -2,9 +2,6 @@ import { useCallback, useEffect, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
-import Dialog from './Dialog.tsx';
-
-import IconClose from 'icons/x.tsx';
 import IconTrash from 'icons/trash.tsx';
 import IconCrown from 'icons/crown.tsx';
 
@@ -45,7 +42,11 @@ const Profile = (
 };
 
 export default (
-  { owner, maintainers }: { owner: string; maintainers: Signal<string[]> },
+  { owner, maintainers, visible }: {
+    owner: string;
+    maintainers: Signal<string[]>;
+    visible: boolean;
+  },
 ) => {
   const [, updateState] = useState({});
 
@@ -77,66 +78,47 @@ export default (
   }, [...maintainers.value]);
 
   return (
-    <>
-      <div class={'maintainers'} data-dialog={'maintainers'}>
-        <img
-          key={owner}
-          src={`https://discord-probe.deno.dev/avatar/${owner}`}
-        />
+    <div
+      style={{ display: visible ? '' : 'none' }}
+      class={'maintainers'}
+    >
+      <label>{strings.userId}</label>
+
+      <input
+        type={'text'}
+        pattern={'[0-9]{18,19}'}
+        placeholder={'185033133521895424'}
+        onInput={(event) =>
+          userId.value = (event.target as HTMLInputElement).value}
+      />
+
+      <button
+        disabled={userId.value?.length <= 0}
+        onClick={() => {
+          maintainers.value.push(userId.value);
+          forceUpdate();
+        }}
+      >
+        {strings.addNew}
+      </button>
+
+      <div>
+        <Profile id={owner} user={data[owner]} removable={false} />
 
         {maintainers.value
-          .map((id) => (
-            <img
+          .map((id, i) => (
+            <Profile
               key={id}
-              src={`https://discord-probe.deno.dev/avatar/${id}`}
+              id={id}
+              user={data[id]}
+              removable={true}
+              onClick={() => {
+                maintainers.value.splice(i, 1);
+                forceUpdate();
+              }}
             />
           ))}
       </div>
-
-      <Dialog name={'maintainers'} class={'dialog-normal'}>
-        <div class={'manage-dialog-maintainers'}>
-          <IconClose data-dialog-cancel={'maintainers'} class={'close'} />
-
-          <label>{strings.userId}</label>
-          <input
-            type={'text'}
-            pattern={'[0-9]{18,19}'}
-            placeholder={'185033133521895424'}
-            onInput={(event) =>
-              userId.value = (event.target as HTMLInputElement).value}
-          />
-
-          <button
-            disabled={userId.value?.length <= 0}
-            onClick={() => {
-              maintainers.value.push(userId.value);
-              forceUpdate();
-            }}
-          >
-            {strings.addNew}
-          </button>
-
-          <div class={'separator'} />
-
-          <div>
-            <Profile id={owner} user={data[owner]} removable={false} />
-
-            {maintainers.value
-              .map((id, i) => (
-                <Profile
-                  key={id}
-                  id={id}
-                  user={data[id]}
-                  removable={true}
-                  onClick={() => {
-                    maintainers.value.splice(i, 1);
-                    forceUpdate();
-                  }}
-                />
-              ))}
-          </div>
-        </div>
-      </Dialog>
-    </>
+    </div>
   );
 };

@@ -1,6 +1,6 @@
 export function showDialog(name) {
   document.querySelectorAll(`[data-dialog-cb="${name}"]`).forEach((ele) => {
-    ele.style.display = 'inherit';
+    ele.style.display = '';
   });
 }
 
