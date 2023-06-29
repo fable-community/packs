@@ -5,7 +5,7 @@ export default {
   logout: 'Log Out',
   publish: 'Publish',
   save: 'Save',
-  tabs: ['Characters', 'Media', 'Collaborators'],
+  tabs: ['Characters', 'Series', 'Collaborators'],
   okay: 'Okay',
   name: 'Name',
   title: 'Title',
@@ -32,7 +32,7 @@ export default {
     packDescription: 'A Pack Containing Various Mushrooms',
   },
   popularityHint:
-    'Should be the number of followers / game sales or any other number that indicates how popular the media is.',
+    'Should be the number of followers / game sales or any other number that indicates how popular the series is.',
   aliases: 'Also Known As',
   aliasesHint: 'Additional aliases help improve search-ability',
   links: 'Links',
@@ -41,7 +41,7 @@ export default {
   description: 'Description',
   rating: 'Rating',
   role: 'Role',
-  primaryMedia: 'Media',
+  primaryMedia: 'Series',
   primaryMediaNotice: 'Character won\'t appear in Gacha',
   success: {
     title:
@@ -51,10 +51,10 @@ export default {
     permissionToInstall:
       ' permission to install packs, If you don\'t have it you can always ask someone who does to install the pack for you.',
   },
-  basedOnMedia: 'Based on Media',
+  basedOnMedia: 'Based on Series',
   basedOnIndividual: 'Individual',
   userId: 'User ID',
   addNew: 'Add',
   addNewCharacter: 'New Character',
-  addNewMedia: 'New Media',
+  addNewMedia: 'New Series',
 };
