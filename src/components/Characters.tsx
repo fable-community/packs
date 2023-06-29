@@ -60,7 +60,9 @@ export default (
 
   const rating = getRating({
     popularity: signal.value.popularity ?? primaryMediaRef?.popularity ?? 0,
-    role: !signal.value.popularity ? primaryMedia?.role : undefined,
+    role: !signal.value.popularity && primaryMediaRef
+      ? primaryMedia?.role
+      : undefined,
   });
 
   return (
@@ -68,28 +70,55 @@ export default (
       <div class={'media'}>
         <div class={'item'}>
           <div />
-          {'Name'}
+          <i>{strings.name}</i>
+          <i>{strings.primaryMedia}</i>
+          <i>{strings.role}</i>
+          <i>{strings.rating}</i>
         </div>
 
         {Object.values(characters.value)
-          .map(({ name, images }, i) => (
-            <div
-              key={i}
-              class={'item'}
-              onClick={() => {
-                signal.value = characters.value[i];
-                requestAnimationFrame(() => showDialog('characters'));
-              }}
-            >
-              <img
-                src={images?.[0]?.url ?? defaultImage}
-                style={{
-                  backgroundColor: images?.[0]?.url ? undefined : 'transparent',
+          .map((char, i) => {
+            const primaryMedia = char.media?.[0];
+
+            const primaryMediaRef = primaryMedia
+              ? media.value.find(({ id }) => primaryMedia.mediaId === id)
+              : undefined;
+
+            const rating = getRating({
+              popularity: primaryMediaRef?.popularity ?? 0,
+              role: primaryMediaRef ? primaryMedia?.role : undefined,
+            });
+
+            return (
+              <div
+                key={i}
+                class={'item'}
+                onClick={() => {
+                  signal.value = characters.value[i];
+                  requestAnimationFrame(() => showDialog('characters'));
                 }}
-              />
-              <i>{name.english}</i>
-            </div>
-          ))}
+              >
+                <img
+                  src={char.images?.[0]?.url ?? defaultImage}
+                  style={{
+                    backgroundColor: char.images?.[0]?.url
+                      ? undefined
+                      : 'transparent',
+                  }}
+                />
+                <i>{char.name.english}</i>
+                <i>{primaryMediaRef?.title.english ?? ''}</i>
+                <i>
+                  {primaryMedia?.role
+                    ? `${primaryMedia.role.substring(0, 1)}${
+                      primaryMedia.role.substring(1).toLowerCase()
+                    }`
+                    : ''}
+                </i>
+                <i>{rating}</i>
+              </div>
+            );
+          })}
 
         <button
           data-dialog={'characters'}

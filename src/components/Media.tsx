@@ -56,30 +56,34 @@ export default (
       <div class={'media'}>
         <div class={'item'}>
           <div />
-          <i>{'Title'}</i>
-          <i>{'Popularity'}</i>
+          <i>{strings.title}</i>
+          <i>{strings.popularity}</i>
         </div>
 
         {Object.values(media.value)
-          .map(({ title, popularity, images }, i) => (
-            <div
-              key={i}
-              class={'item'}
-              onClick={() => {
-                signal.value = media.value[i];
-                requestAnimationFrame(() => showDialog('media'));
-              }}
-            >
-              <img
-                src={images?.[0]?.url ?? defaultImage}
-                style={{
-                  backgroundColor: images?.[0]?.url ? undefined : 'transparent',
+          .map((_media, i) => {
+            return (
+              <div
+                key={i}
+                class={'item'}
+                onClick={() => {
+                  signal.value = media.value[i];
+                  requestAnimationFrame(() => showDialog('media'));
                 }}
-              />
-              <i>{title.english}</i>
-              <i>{popularity ?? 0}</i>
-            </div>
-          ))}
+              >
+                <img
+                  src={_media.images?.[0]?.url ?? defaultImage}
+                  style={{
+                    backgroundColor: _media.images?.[0]?.url
+                      ? undefined
+                      : 'transparent',
+                  }}
+                />
+                <i>{_media.title.english}</i>
+                <i>{_media.popularity ?? 0}</i>
+              </div>
+            );
+          })}
 
         <button
           data-dialog={'media'}
