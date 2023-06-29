@@ -49,7 +49,7 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
       <Manage
         new={hasNew}
         pack={packId ? data.packs[packId] : undefined}
-        user={user?.id}
+        userId={user?.id}
       />
     );
   }

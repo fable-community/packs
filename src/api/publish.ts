@@ -32,6 +32,7 @@ interface Upload {
 }
 
 export interface Data {
+  userId: string;
   old: Pack['manifest'];
   title?: string;
   private?: boolean;
@@ -43,6 +44,21 @@ export interface Data {
   maintainers?: string[];
 }
 
+interface DiscordWebhook {
+  username?: string;
+  // deno-lint-ignore camelcase
+  avatar_url?: string;
+  content?: string;
+  embeds?: {
+    title: string;
+    description: string;
+  }[];
+  // deno-lint-ignore camelcase
+  allowed_mentions: {
+    parse: string[];
+  };
+}
+
 const idRegex = /[^-_a-z0-9]+/g;
 
 const b2 = {
@@ -51,6 +67,8 @@ const b2 = {
   bucketName: Deno.env.get('B2_BUCKET_NAME'),
   key: Deno.env.get('B2_KEY'),
 };
+
+const publicWebhookUrl = Deno.env.get('PUBLIC_EVERYTHING_DISCORD_WEBHOOK_URL');
 
 const setUpImages = async () => {
   if (!b2.id || !b2.key || !b2.bucketId || !b2.bucketName) {
@@ -321,7 +339,6 @@ export const handler: Handlers = {
 
       pack.maintainers = data.maintainers ?? [];
 
-      //
       // console.log(pack);
 
       if (endpoint) {
@@ -342,6 +359,24 @@ export const handler: Handlers = {
 
         if (response.status !== 200) {
           return response;
+        }
+
+        if (publicWebhookUrl && !pack.private) {
+          const body: DiscordWebhook = {
+            username: 'Community Packs',
+            content: `<@${data.userId}> updated **${pack.title ?? pack.id}**`,
+            // deno-lint-ignore camelcase
+            avatar_url:
+              'https://raw.githubusercontent.com/fable-community/packs/main/static/icon-512x512.png',
+            // deno-lint-ignore camelcase
+            allowed_mentions: { parse: [] },
+          };
+
+          fetch(publicWebhookUrl, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(body),
+          }).catch(console.error);
         }
 
         return new Response(pack.id);
