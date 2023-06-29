@@ -58,6 +58,17 @@ export default (props: {
 
   const maintainers = useSignal(pack.maintainers ?? []);
 
+  const characterSignal = useSignal<Character>({
+    name: { english: '' },
+    id: '',
+  });
+
+  const mediaSignal = useSignal<TMedia>({
+    type: MediaType.Anime,
+    title: { english: '' },
+    id: '',
+  });
+
   const onPublish = async () => {
     const body: Data = {
       old: pack,
@@ -232,6 +243,7 @@ export default (props: {
               </button>
 
               <button
+                data-dialog={'characters'}
                 style={{ display: active.value === 0 ? '' : 'none' }}
                 onClick={() => {
                   const item: Character = {
@@ -240,12 +252,15 @@ export default (props: {
                   };
 
                   characters.value = [item, ...characters.value];
+
+                  characterSignal.value = item;
                 }}
               >
                 {strings.addNewCharacter}
               </button>
 
               <button
+                data-dialog={'media'}
                 style={{ display: active.value === 1 ? '' : 'none' }}
                 onClick={() => {
                   const item: TMedia = {
@@ -255,6 +270,8 @@ export default (props: {
                   };
 
                   media.value = [item, ...media.value];
+
+                  mediaSignal.value = item;
                 }}
               >
                 {strings.addNewMedia}
@@ -281,12 +298,14 @@ export default (props: {
           </div>
 
           <Characters
+            signal={characterSignal}
             visible={active.value === 0}
             characters={characters}
             media={media}
           />
 
           <Media
+            signal={mediaSignal}
             visible={active.value === 1}
             characters={characters}
             media={media}

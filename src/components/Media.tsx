@@ -32,7 +32,8 @@ import {
 } from '../utils/types.ts';
 
 export default (
-  { media, visible }: {
+  { signal, media, visible }: {
+    signal: Signal<Media>;
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
     visible: boolean;
@@ -44,12 +45,6 @@ export default (
   const forceUpdate = useCallback(() => updateState({}), []);
 
   const newAliasValue = useSignal('');
-
-  const signal = useSignal<Media>({
-    type: MediaType.Anime,
-    title: { english: '' },
-    id: '',
-  });
 
   return (
     <div style={{ display: visible ? '' : 'none' }}>
@@ -91,6 +86,8 @@ export default (
           <div class={'buttons'}>
             <IconApply
               onClick={() => {
+                forceUpdate();
+
                 requestAnimationFrame(() => hideDialog('media'));
               }}
             />

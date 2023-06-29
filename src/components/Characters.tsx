@@ -32,7 +32,8 @@ import strings from '../../i18n/en-US.ts';
 import { type Character, CharacterRole, type Media } from '../utils/types.ts';
 
 export default (
-  { media, characters, visible }: {
+  { signal, media, characters, visible }: {
+    signal: Signal<Character>;
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
     visible: boolean;
@@ -44,11 +45,6 @@ export default (
   const forceUpdate = useCallback(() => updateState({}), []);
 
   const newAliasValue = useSignal('');
-
-  const signal = useSignal<Character>({
-    name: { english: '' },
-    id: '',
-  });
 
   const primaryMedia = signal.value.media?.[0];
 
@@ -82,10 +78,12 @@ export default (
               ? media.value.find(({ id }) => primaryMedia.mediaId === id)
               : undefined;
 
-            const rating = getRating({
-              popularity: primaryMediaRef?.popularity ?? 0,
-              role: primaryMediaRef ? primaryMedia?.role : undefined,
-            });
+            const rating = char.popularity
+              ? getRating({ popularity: char.popularity })
+              : getRating({
+                popularity: primaryMediaRef?.popularity ?? 0,
+                role: primaryMediaRef ? primaryMedia?.role : undefined,
+              });
 
             return (
               <div
@@ -124,6 +122,8 @@ export default (
           <div class={'buttons'}>
             <IconApply
               onClick={() => {
+                forceUpdate();
+
                 requestAnimationFrame(() => hideDialog('characters'));
               }}
             />
