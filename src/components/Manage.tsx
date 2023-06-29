@@ -36,6 +36,7 @@ export default (props: {
   const pack: Readonly<Pack['manifest']> = props.pack?.manifest ??
     { id: '' };
 
+  const active = useSignal<number>(0);
   const loading = useSignal<boolean>(false);
   const error = useSignal<string | undefined>(undefined);
 
@@ -220,17 +221,35 @@ export default (props: {
             <IconClose data-dialog-cancel={'manage'} class={'close'} />
           </div>
 
-          <div class={'manage-boxes'}>
-            <Characters characters={characters} media={media} />
-            <Media characters={characters} media={media} />
-
-            <i />
-
-            <Maintainers
-              maintainers={maintainers}
-              owner={props.pack?.owner ?? props.user}
-            />
+          <div class={'tabs'}>
+            {strings.tabs.map((s, i) => (
+              <div
+                key={i}
+                data-selected={active.value === i}
+                onClick={() => active.value = i}
+              >
+                {s}
+              </div>
+            ))}
           </div>
+
+          <Characters
+            visible={active.value === 0}
+            characters={characters}
+            media={media}
+          />
+
+          <Media
+            visible={active.value === 1}
+            characters={characters}
+            media={media}
+          />
+
+          <Maintainers
+            visible={active.value === 2}
+            owner={props.pack?.owner ?? props.user}
+            maintainers={maintainers}
+          />
         </div>
       </Dialog>
     </>

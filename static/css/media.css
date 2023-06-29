@@ -1,3 +1,51 @@
+.media > .item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 2px solid var(--grey);
+  padding: 1em;
+  gap: 2em;
+}
+
+.media > .item > i {
+  flex-basis: 100%;
+}
+
+.media > button {
+  width: 100%;
+  margin: 1em 0;
+  background-color: transparent;
+}
+
+.media > button:hover {
+  background-color: var(--embedHighlight);
+  box-shadow: none;
+}
+
+.media > .item:first-child {
+  font-weight: 600;
+}
+
+.media > .item:not(:first-child) {
+  cursor: pointer;
+}
+
+.media > .item:not(:first-child):hover {
+  background-color: var(--embedHighlight);
+}
+
+.media > .item > img {
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 90/127;
+  width: auto;
+  height: 90px;
+}
+
+.media > :first-child > :first-child {
+  margin-left: calc(90px * (90 / 127));
+}
+
 .manage-dialog-media {
   display: grid;
   overflow: hidden;

@@ -19,8 +19,7 @@ import TextInput from './TextInput.tsx';
 import ImageInput from './ImageInput.tsx';
 
 import IconTrash from 'icons/trash.tsx';
-import IconPlus from 'icons/user-plus.tsx';
-import IconPlus2 from 'icons/plus.tsx';
+import IconPlus from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
 import IconAdd from 'icons/circle-plus.tsx';
 import IconRemove from 'icons/circle-minus.tsx';
@@ -35,9 +34,10 @@ import strings from '../../i18n/en-US.ts';
 import { type Character, CharacterRole, type Media } from '../utils/types.ts';
 
 export default (
-  { media, characters }: {
+  { media, characters, visible }: {
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
+    visible: boolean;
   },
 ) => {
   const [, updateState] = useState({});
@@ -64,40 +64,48 @@ export default (
   });
 
   return (
-    <>
-      <div class={'characters'}>
+    <div style={{ display: visible ? '' : 'none' }}>
+      <div class={'media'}>
+        <div class={'item'}>
+          <div />
+          {'Name'}
+        </div>
+
         {Object.values(characters.value)
-          .map(({ images }, i) => (
-            <img
+          .map(({ name, images }, i) => (
+            <div
               key={i}
-              src={images?.[0]?.url ?? defaultImage}
-              style={{
-                backgroundColor: images?.[0]?.url ? undefined : 'transparent',
-              }}
+              class={'item'}
               onClick={() => {
                 signal.value = characters.value[i];
                 requestAnimationFrame(() => showDialog('characters'));
               }}
-            />
+            >
+              <img
+                src={images?.[0]?.url ?? defaultImage}
+                style={{
+                  backgroundColor: images?.[0]?.url ? undefined : 'transparent',
+                }}
+              />
+              <i>{name.english}</i>
+            </div>
           ))}
 
-        {
-          <div
-            data-dialog={'characters'}
-            onClick={() => {
-              const item: Character = {
-                id: `${nanoid(4)}`,
-                name: { english: '' },
-              };
+        <button
+          data-dialog={'characters'}
+          onClick={() => {
+            const item: Character = {
+              id: `${nanoid(4)}`,
+              name: { english: '' },
+            };
 
-              characters.value.push(item);
+            characters.value.push(item);
 
-              signal.value = item;
-            }}
-          >
-            <IconPlus />
-          </div>
-        }
+            signal.value = item;
+          }}
+        >
+          <IconPlus />
+        </button>
       </div>
 
       <Dialog name={'characters'} class={'dialog-normal'}>
@@ -299,7 +307,7 @@ export default (
                           newAliasValue.value =
                             (event.target as HTMLInputElement).value}
                       />
-                      <IconPlus2
+                      <IconPlus
                         onClick={() => {
                           if (!signal.value.name.alternative) {
                             signal.value.name.alternative = [];
@@ -370,7 +378,7 @@ export default (
                         forceUpdate();
                       }}
                     >
-                      <IconPlus2 />
+                      <IconPlus />
                     </button>
                   )
                   : undefined}
@@ -379,6 +387,6 @@ export default (
           </div>
         </div>
       </Dialog>
-    </>
+    </div>
   );
 };

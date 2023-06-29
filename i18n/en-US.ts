@@ -5,6 +5,7 @@ export default {
   logout: 'Log Out',
   publish: 'Publish',
   save: 'Save',
+  tabs: ['Characters', 'Media', 'Collaborators'],
   okay: 'Okay',
   name: 'Name',
   title: 'Title',
@@ -53,5 +54,5 @@ export default {
   basedOnMedia: 'Based on Media',
   basedOnIndividual: 'Individual',
   userId: 'User ID',
-  addNew: 'Add New Collaborator',
+  addNew: 'Add',
 };
