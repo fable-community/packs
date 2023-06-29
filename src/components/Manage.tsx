@@ -18,16 +18,23 @@ import IconClose from 'icons/x.tsx';
 import IconInfo from 'icons/info-circle.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
 
+import nanoid from '../utils/nanoid.ts';
 import compact from '../utils/compact.ts';
 
 import strings from '../../i18n/en-US.ts';
 
 import type { Data } from '../api/publish.ts';
 
-import type { Pack } from '../utils/types.ts';
+import {
+  Character,
+  Media as TMedia,
+  MediaType,
+  Pack,
+  User,
+} from '../utils/types.ts';
 
 export default (props: {
-  userId: string;
+  user: User;
   pack?: Pack;
   new?: boolean;
 }) => {
@@ -51,6 +58,17 @@ export default (props: {
 
   const maintainers = useSignal(pack.maintainers ?? []);
 
+  const characterSignal = useSignal<Character>({
+    name: { english: '' },
+    id: '',
+  });
+
+  const mediaSignal = useSignal<TMedia>({
+    type: MediaType.Anime,
+    title: { english: '' },
+    id: '',
+  });
+
   const onPublish = async () => {
     const body: Data = {
       old: pack,
@@ -62,7 +80,7 @@ export default (props: {
       media: media.value,
       characters: characters.value,
       maintainers: maintainers.value,
-      userId: props.userId,
+      userId: props.user.id,
     };
 
     loading.value = true;
@@ -76,7 +94,9 @@ export default (props: {
       if (response.status === 200) {
         open(props.new ? `/?success=${await response.text()}` : '/', '_self');
       } else {
-        const err = await response.json() as {
+        const { errors, pack } = await response.json() as {
+          // deno-lint-ignore no-explicit-any
+          pack: any;
           errors: {
             instancePath: string;
             keyword: string;
@@ -94,7 +114,7 @@ export default (props: {
           ele.removeAttribute(`shake`)
         );
 
-        err.errors.forEach((err) => {
+        errors.forEach((err) => {
           const path = err.instancePath
             .substring(1)
             .split('/');
@@ -106,14 +126,20 @@ export default (props: {
             if (path[1] === 'new') {
               const i = parseInt(path[2]);
 
-              const child = document.querySelector(`.${path[0]}`)?.children[i];
+              const item = path[0] === 'characters'
+                // deno-lint-ignore no-non-null-assertion
+                ? pack.characters!.new![i]
+                // deno-lint-ignore no-non-null-assertion
+                : pack.media!.new![i];
 
-              requestAnimationFrame(() => {
+              const child = document.querySelector(`._${item.id}`);
+
+              setTimeout(() => {
                 child?.setAttribute('shake', 'true');
                 child?.setAttribute('invalid', 'true');
                 document.querySelector('.manage-wrapper')
                   ?.setAttribute('shake', 'true');
-              });
+              }, 100);
             }
           }
         });
@@ -211,9 +237,46 @@ export default (props: {
               ) => (title.value = (ev.target as HTMLInputElement).value)}
             />
 
-            <button disabled={loading} onClick={onPublish}>
-              {props.new ? strings.publish : strings.save}
-            </button>
+            <div class={'buttons'}>
+              <button disabled={loading} onClick={onPublish}>
+                {props.new ? strings.publish : strings.save}
+              </button>
+
+              <button
+                data-dialog={'characters'}
+                style={{ display: active.value === 0 ? '' : 'none' }}
+                onClick={() => {
+                  const item: Character = {
+                    id: `${nanoid(4)}`,
+                    name: { english: '' },
+                  };
+
+                  characters.value = [item, ...characters.value];
+
+                  characterSignal.value = item;
+                }}
+              >
+                {strings.addNewCharacter}
+              </button>
+
+              <button
+                data-dialog={'media'}
+                style={{ display: active.value === 1 ? '' : 'none' }}
+                onClick={() => {
+                  const item: TMedia = {
+                    type: MediaType.Anime,
+                    id: `${nanoid(4)}`,
+                    title: { english: '' },
+                  };
+
+                  media.value = [item, ...media.value];
+
+                  mediaSignal.value = item;
+                }}
+              >
+                {strings.addNewMedia}
+              </button>
+            </div>
 
             {!props.new
               ? <IconInfo data-dialog={'info'} class={'info'} />
@@ -235,12 +298,14 @@ export default (props: {
           </div>
 
           <Characters
+            signal={characterSignal}
             visible={active.value === 0}
             characters={characters}
             media={media}
           />
 
           <Media
+            signal={mediaSignal}
             visible={active.value === 1}
             characters={characters}
             media={media}
@@ -248,7 +313,7 @@ export default (props: {
 
           <Maintainers
             visible={active.value === 2}
-            owner={props.pack?.owner ?? props.userId}
+            owner={props.pack?.owner ?? props.user.id}
             maintainers={maintainers}
           />
         </div>

@@ -1,53 +1,625 @@
 {
-  "$schema": "https://raw.githubusercontent.com/ker0olos/fable/main/json/schema.json",
-  "$description": "A mock pack used for offline local development",
-  "id": "utawarerumono",
-  "title": "Utawarerumono",
-  "description": "Contains characters from Utawarerumono: Mask of Deception",
-  "author": "Fable Community",
-  "image": "https://media.tenor.com/n9YTIWj9H-gAAAAC/utawarerumono-kuon.gif",
-  "url": "https://github.com/fable-community/fable-pack-utawarerumono",
-  "maintainers": [
-    "228674702414053386",
-    "839261971185664011"
-  ],
+  "id": "bluearchive",
+  "title": "Blue Archive",
   "media": {
-    "conflicts": ["anilist:21218"],
-    "new": [{
-      "id": "mask-of-deception",
-      "popularity": 113000,
-      "title": {
-        "english": "Utawarerumono: Mask of Deception",
-        "romaji": "Utawarerumono: Itsuwari no Kamen",
-        "native": "うたわれるもの 偽りの仮面",
-        "alternative": ["Utawarerumono: The False Faces"]
-      },
-      "description": "The only thing I can remember is coming to in the middle of an unfamiliar snowscape. Where that was or how I got there, I don't know. I couldn't even remember my own name. The memories just wouldn't come.\n\nI only had a moment, left at a loss, to ponder what to do — but fate seemed intent on furthering my misery as a giant, insect-like monster burst from the snow and ice to attack me.\n\nNaturally, I ran like hell. The creature cornered me anyway.\n\nThat's when SHE appeared, as if from nowhere — the beautiful, mysterious girl who saved my life.\n\nShe told me her name was Kuon. A beautiful, mysterious girl...\n\n...with a tail and ears like a beast's\n\n(Source: Atlus)",
-      "type": "ANIME",
-      "images": [{
-        "url": "https://s2.vndb.org/cv/68/45668.jpg"
-      }]
-    }]
+    "new": [
+      {
+        "popularity": 1000000,
+        "externalLinks": [],
+        "description": "Blue Archive is a role-playing game developed by Nexon Games, a subsidiary of Nexon. It was released in 2021 for Android and iOS, first in Japan by Yostar and worldwide later that year by Nexon. The game is free-to-play with gacha game mechanics as a means to obtain new characters.\n\nThe player and protagonist is a teacher who was summoned to the academy city of Kivotos by the president of the General Student Council, an extrajudicial committee governing the schools. Following her sudden disappearance, criminal activity rises around Kivotos, and the player is tasked by the remaining members of the council to resolve the issues and help search for the president.\n\n(Source: Wikipedia)",
+        "characters": [
+          {
+            "role": "SUPPORTING",
+            "characterId": "gy40"
+          },
+          {
+            "role": "MAIN",
+            "characterId": "hy_m"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "8ppg"
+          },
+          {
+            "role": "MAIN",
+            "characterId": "idla"
+          },
+          {
+            "role": "MAIN",
+            "characterId": "yz-m"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "enhq"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "blkq"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "sqhb"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "xv9p"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "wknt"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "tzf4"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "w2jf"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "dmff"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "i2xa"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "i8ku"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "yhxu"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "c8sg"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "2hdl"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "inhn"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "r2b5"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "g4mf"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "osup"
+          }
+        ],
+        "id": "xqzn",
+        "relations": [],
+        "title": {
+          "english": "Blue Archive",
+          "alternative": ["BA"]
+        },
+        "type": "ANIME",
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/22TUW0Cu"
+          }
+        ]
+      }
+    ],
+    "conflicts": []
   },
   "characters": {
-    "conflicts": ["anilist:126823"],
-    "new": [{
-      "id": "kuon",
-      "gender": "Female",
-      "name": {
-        "english": "Kuon",
-        "romaji": "Kuon",
-        "native": "クオン",
-        "alternative": ["kuon", "Ku (Uta)"]
+    "new": [
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Onikata Kayoko",
+          "alternative": ["kayoko"]
+        },
+        "description": "The \"Section chief\" of Problem Solver 68 and a 3rd-year student at Gehenna Academy.\n\nUnlike the other fixers, She is not one with ill intentions. However, she is often misunderstood as a delinquent simply due to naturally scary facial expressions and appearance. She normally prefers to keep silent about this topic, as it likely leads to furthering her terrifying image.",
+        "age": "18",
+        "id": "gy40",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/no7wkhu5"
+          }
+        ],
+        "gender": "Female"
       },
-      "description": "An apothecary that left her hometown with ears and tail like an animal's. She's lively and intelligent, while somehow aloof.\n\nSeparated from her homeland, she encounters Haku while traveling along leisurely.\n\nShe gets excited when it comes to bathing and often ends her sentences with \"-かな～\" or, in English, \"I think\".",
-      "media": [{
-        "mediaId": "mask-of-deception",
-        "role": "MAIN"
-      }],
-      "images": [{
-        "url": "https://i.imgur.com/ClaapHd.png"
-      }]
-    }]
-  }
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Takanashi Hoshino",
+          "alternative": ["hoshino"]
+        },
+        "description": "Takanashi Hoshino is the former vice president and the only third-year of Abydos High School, and the current chairwoman for the Countermeasures Committee.\n\nSpeaking like a senile aunt, she enjoys playing around and napping more than work. Because of this, she usually gets scolded by the rest of the Committee. But, once the mission starts, she protects her comrades by fighting valiantly on the front lines.",
+        "age": "17",
+        "id": "hy_m",
+        "media": [
+          {
+            "role": "MAIN",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/rtfbupny"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Natsume Iroha",
+          "alternative": ["iroha"]
+        },
+        "description": "A member of the Pandemonium Society who often views everything as a pain. Not surprising, considering her boss is always stirring up trouble. As she carries out her duties day by day, she lets out a sigh or two and performs her tasks with indifference.",
+        "age": "16",
+        "id": "8ppg",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/dvrxfo2o"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Hayase Yuuka",
+          "alternative": ["yuuka"]
+        },
+        "description": "The treasurer of the Millennium Academy Student Council. She is strict about money and often quarrels with other club activities from her standpoint.\n\nGenerally polite, professional, and easy to deal with if you treat her well. However, most of the people she interacts with are very difficult to deal with, which leads to angry outbursts. This earns her a reputation as cold and ruthless, even though she really isn't. She takes pride in her mathematical skills to the point of stubbornly refusing to believe in the randomness of gacha games. She will also try to cover up her own mistakes due to her pride, such as when she pretended to spend less than 10,000 yen on chocolate.",
+        "age": "16",
+        "id": "idla",
+        "media": [
+          {
+            "role": "MAIN",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/qwwavmra"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Sunaookami Shiroko",
+          "alternative": ["Shiroko"]
+        },
+        "description": "The sports-loving field captain of the Countermeasures Committee of the Abydos High School.\n\nA soft-spoken girl, who deeply cares for her friends, to the extent that she would do anything to help her friends towards their goal of revitalizing the school. Though she is generally calm and reserved, she hyper-focuses on certain interests and can sometimes be oblivious to how others would react to them. She often bikes and walks far more than regular people can keep up, thinking distances of 10s of kilometers are average for her. She fantasizes about robbing banks.",
+        "age": "16",
+        "id": "yz-m",
+        "media": [
+          {
+            "role": "MAIN",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/viqqxhez"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Shiroko Terror",
+          "alternative": []
+        },
+        "description": "A mysterious student(?) whose appearance is unmistakably Sunaookami Shiroko's, but is not quite the same.",
+        "age": "??? ",
+        "id": "enhq",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/9wwgxwvb"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Joumae Saori",
+          "alternative": ["Saori"]
+        },
+        "description": "The leader of the Arius Squad.\n\nAn unparalleled expert in guerilla tactics, Saori can stay calm under pressure and doesn't hesitate to use whatever means necessary to accomplish her objective.\n\nSaori shows the personalities a leader would normally have: fierce, strategic, and responsible. Saori may often come off as stoic, overly serious, and unsociable, but once she shows her emotions, she does not hold back.",
+        "age": "17",
+        "id": "blkq",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/uad3_qyw"
+          }
+        ],
+        "gender": "female"
+      },
+      {
+        "popularity": 1000000,
+        "externalLinks": [],
+        "name": {
+          "english": "Shimoe Koharu",
+          "alternative": ["Koharu"]
+        },
+        "description": "Koharu is a member of the Supplemental Lessons Club of Trinity Integrated Academy. Originally a member of the Justice Actualization Committee, she was forcefully transferred to the Supplemental Lessons Club due to her falling grades and being made to repeat a year.\n\nWhile she may consider herself elite, she is actually rather stupid, so much so in fact that she is completely unable to keep up with her lessons. She has a secret hobby of collecting lewd magazines and experiences delusions about the most trivial things in everyday life.",
+        "age": "15",
+        "id": "sqhb",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/jyargtnp"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 1000000,
+        "externalLinks": [],
+        "name": {
+          "english": "Misono Mika ",
+          "alternative": ["Mika"]
+        },
+        "description": "Student of Trinity Integrated Academy and the former leader of \"Patel\", the student union that makes up Trinity.\n\nMika is a former member of the Tea Party and is also a childhood friend of its leader, Nagisa. However, because of their opposing political positions, they make a clear distinction between their public and private lives. Mika always presents a happy smile and innocent appearance, but she seems to be troubled by something she's unable to confide in others.",
+        "age": "17",
+        "id": "xv9p",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/upypqapc"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 1000000,
+        "externalLinks": [],
+        "name": {
+          "english": "Hanekawa Hasumi",
+          "alternative": ["Hasumi"]
+        },
+        "description": "Enrolled at Trinity Integrated Academy, Hasumi is the Justice Actualization Committee's No. 2.\n\nIn place of its president, Tsurugi, who embodies wildness, Hasumi also acts as the Justice Actualization Committee's tactical commander.\n\nAt a glance she appears composed and intellectual, like the archetypal Trinity student. However, Hasumi too is a fully-fledged member of the Justice Actualization Committee, and will sometimes act recklessly while retaining her composed nature.",
+        "age": "17",
+        "id": "wknt",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/k00bffp5"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 201000,
+        "externalLinks": [],
+        "name": {
+          "english": "Kurodate Haruna",
+          "alternative": ["Haruna"]
+        },
+        "description": "Enrolled at Gehenna Academy, Haruna is the club president of the Gourmet Research Society.\n\nUpon first look at her, one might think she is a rich princess-like and aloof elegance, but get her involved in talks of food and all sense of distinction is lost in this zealous gourmet.\nIn contrast to such gluttony, she is actually not one with much of an appetite. Favorite foods are greasy, full of hormones, and stew-centric.",
+        "age": "17",
+        "id": "tzf4",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/c59n1asn"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 1000000,
+        "externalLinks": [],
+        "name": {
+          "english": "Rikuhachima Aru",
+          "alternative": ["Aru"]
+        },
+        "description": "Gehenna Academy's self-appointed president of Problem Solver 68, conducts all sorts of illegal business as she pleases.\n\nWhile Aru considers herself to be a cool outlaw, but she often falls out of character and thus any appearance disparities are easily revealed.",
+        "age": "16",
+        "id": "w2jf",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/a0wlwjls"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 201000,
+        "externalLinks": [],
+        "name": {
+          "english": "Akashi Junko",
+          "alternative": ["Junko"]
+        },
+        "description": "She is a 1st-year student and a prim yet ravenous eater in Gehenna's Gourmet Research Society.\n\nDiffering from the other members who often overeat everyday food, Junko is one to take part in a certain extent of enjoying reasonable quality gastronomy but is sometimes known to lose her sense of reason when delicious foods are placed in front of her. Her favorite food is dango.",
+        "age": "15",
+        "id": "dmff",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/0rla-ppu"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 1000000,
+        "externalLinks": [],
+        "name": {
+          "english": "Sorasaki Hina",
+          "alternative": ["Hina"]
+        },
+        "description": "She is a 3rd-year student and the current chairwoman of Gehenna's Prefect Team, who is rightfully feared by every student in the academy if not all of Kivotos.\n\nA troublesome, laid-back person, who calls it a \"hassle\" when she talks about school rules. She wishes to retire as she feels exhausted by everything involving Gehenna.",
+        "age": "17",
+        "id": "i2xa",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/_wxd0dm2"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Asagi Mutsuki",
+          "alternative": ["Mutsuki"]
+        },
+        "description": "A 2nd-year student at Gehenna Academy, Mutsuki holds the title of \"Chief of staff\" and is the assault activist and go-getter of Problem Solver 68.\n\nMutsuki is a mischievous prankster at heart, she often exposes Aru's true colors for fun. Contrary to her guilt-riddled childhood friend Aru, she is a devilish troublemaker and commits acts of wanton wrongdoing without hesitation.",
+        "age": "16",
+        "id": "i8ku",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/7ystplz9"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 201000,
+        "externalLinks": [],
+        "name": {
+          "english": "Kosaka Wakamo",
+          "alternative": [
+            "Wakamo",
+            "The Fox of Calamity",
+            "The Fox of Misfortune"
+          ]
+        },
+        "description": "She does not belong to any club and is independent. However, as one of the seven students who escaped the Federal Correction Bureau, she is a member of the Seven Prisoners. \n\nKnown as the Fox of Misfortune for her indiscriminate and large-scale destruction, she is widely feared. Her motives and purpose are shrouded in mystery. Her true face, hidden beneath the mask, is rumored to be as scary as a demon or as ugly as the devil.",
+        "age": "18",
+        "id": "yhxu",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/hulgfnlc"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 1000000,
+        "externalLinks": [],
+        "name": {
+          "english": "Tendou Alice",
+          "alternative": ["Alice", "AL-1S"]
+        },
+        "description": "Originally named \"AL-1S\", Alice is a mysterious Millennium's Game Development Dept member. Found in an abandoned munitions factory at the Ruins, it's impossible to retrieve any information about her origin or age.\n\nAt first, her personality was robotic in both speaking and answering. As the story progresses, she acts more lively although her speech and mannerisms are nearly close to someone with the \"Chuunibyou\" syndrome, a result of being exposed to playing video games.",
+        "id": "c8sg",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/xisq-en4"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 400000,
+        "externalLinks": [],
+        "name": {
+          "english": "Sunohara Shun",
+          "alternative": ["Shun"]
+        },
+        "description": "Instructor of the Training Support Department \"Plum Blossom Garden\" of Shanhaijing Senior Secondary School.\n\nShun is considered as gentle and composed when it comes to handling the children of \"Plum Blossom Garden.\" Like many people, she has a limit and she will start acting childlike once she passed her limit. She also worries about herself and often complains about how she's getting too old. For some reason, she doesn't want anyone to know her age.",
+        "id": "2hdl",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/upqhh27o"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 400000,
+        "externalLinks": [],
+        "name": {
+          "english": "Shiromi Iori",
+          "alternative": ["Iori"]
+        },
+        "description": "A 2nd-year student and a cold-blooded specialist of the feared Prefect Team. As the field captain of its assault corps, she immediately punishes students who violate the rules with overwhelming force whenever and wherever she finds them.\n\nShe's strict with the rules, Iori will punish any and all rule-breakers. Although she's skilled in combat, she tends to be blind to her surroundings when engaging a target. She is also quite exhausted due to having to deal with troublemakers despite the holidays.",
+        "age": "16",
+        "id": "inhn",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/u1xjd16o"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 201000,
+        "externalLinks": [],
+        "name": {
+          "english": "Wakaba Hinata",
+          "alternative": ["Hinata"]
+        },
+        "description": "Hinata is a student of Sisterhood who is in charge of \"managing the supplies in the cathedral\". She is serious and dedicated to her work, but she is also a bit of a dilettante and often makes mistakes that cause her to lose confidence...\n\nA hard-working Sister of the Sisterhood. Hinata possesses physical strength incomparable to the other Sisters, allowing her to easily do heavy-lifting tasks that would require the strength of two or more Sisters. She is also quite clumsy, often forgetting to do simple yet important things such as keeping the door locked.",
+        "age": "17",
+        "id": "r2b5",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/385eq60e"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 201000,
+        "externalLinks": [],
+        "name": {
+          "english": "Urawa Hanako",
+          "alternative": ["Hanako"]
+        },
+        "description": "The problem child of the Supplementary Lesson Department. Despite her appearance, she's a student who only says naughty things when she talks, and her members always seem to be nervous...\n\nShe has a huge risqué behavior, doing things like attending classes in her swimsuit and having almost every word escape her mouth be a double entendre, which makes everyone uneasy around her. However, it's revealed she's very intelligent, and only acts bawdy to prevent the Sisterhood or Tea Party from trying to recruit her, as Hanako doesn't want to play their political games.",
+        "age": "16",
+        "id": "g4mf",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/y3abxjty"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 400000,
+        "externalLinks": [],
+        "name": {
+          "english": "Amau Ako",
+          "alternative": ["Ako"]
+        },
+        "description": "Ako, an administrative officer of the Disciplinary Committee, belonging to Gehenna Academy!\n\n",
+        "age": "17",
+        "id": "osup",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/feolv223"
+          }
+        ],
+        "gender": "Female"
+      }
+    ],
+    "conflicts": []
+  },
+  "maintainers": ["228674702414053386", "839261971185664011"],
+  "image": "https://f005.backblazeb2.com/file/fable-packs/dkihlBqc",
+  "author": "Fable Community",
+  "description": "A pack containing the various characters from the game Blue Archive"
 }

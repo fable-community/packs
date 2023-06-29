@@ -346,8 +346,8 @@ export const handler: Handlers = {
           method: 'POST',
           body: JSON.stringify(
             {
-              accessToken: cookies.accessToken,
               manifest: pack,
+              accessToken: cookies.accessToken,
             }, // filter null values
             (_, value) => {
               if (value !== null) {
@@ -358,7 +358,15 @@ export const handler: Handlers = {
         });
 
         if (response.status !== 200) {
-          return response;
+          const { errors } = await response.json();
+
+          return new Response(
+            JSON.stringify({
+              pack,
+              errors,
+            }),
+            { status: response.status },
+          );
         }
 
         if (publicWebhookUrl && !pack.private) {
@@ -367,7 +375,7 @@ export const handler: Handlers = {
             content: `<@${data.userId}> updated **${pack.title ?? pack.id}**`,
             // deno-lint-ignore camelcase
             avatar_url:
-              'https://raw.githubusercontent.com/fable-community/packs/main/static/icon-512x512.png',
+              'https://raw.githubusercontent.com/fable-community/packs/main/static/bot.png',
             // deno-lint-ignore camelcase
             allowed_mentions: { parse: [] },
           };

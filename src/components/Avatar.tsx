@@ -4,7 +4,7 @@ import IconLogout from 'icons/logout.tsx';
 
 import strings from '../../i18n/en-US.ts';
 
-export default ({ id, avatar }: { id?: string; avatar?: string }) => {
+export default ({ id, avatar }: { id: string; avatar?: string }) => {
   return (
     <>
       <img

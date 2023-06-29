@@ -11,18 +11,9 @@ import IconClipboard from 'icons/clipboard-text.tsx';
 
 import strings from '../../i18n/en-US.ts';
 
-import type { Pack } from '../utils/types.ts';
+import type { Pack, User } from '../utils/types.ts';
 
 import type { PageProps } from '$fresh/server.ts';
-
-export type User = {
-  id: string;
-  username: string;
-  avatar?: string;
-  discriminator?: string;
-  // deno-lint-ignore camelcase
-  display_name?: string;
-};
 
 export interface DashboardData {
   user?: User;
@@ -47,16 +38,16 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
   if (packId || hasNew) {
     return (
       <Manage
+        user={user}
         new={hasNew}
         pack={packId ? data.packs[packId] : undefined}
-        userId={user?.id}
       />
     );
   }
 
   return (
     <>
-      <Avatar id={user?.id} avatar={user?.avatar} />
+      <Avatar id={user.id} avatar={user.avatar} />
 
       <div class={'dashboard-wrapper'}>
         {Object.values(data.packs).map((pack) => (

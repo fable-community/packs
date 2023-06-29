@@ -6,7 +6,9 @@ import { type Signal, useSignal } from '@preact/signals';
 
 import { hideDialog, showDialog } from '../../static/js/dialogs.js';
 
-import nanoid from '../utils/nanoid.ts';
+import { getPopularity, getRating } from '../utils/rating.ts';
+
+import { defaultImage } from './Dashboard.tsx';
 
 import Notice from './Notice.tsx';
 
@@ -25,16 +27,13 @@ import IconAdd from 'icons/circle-plus.tsx';
 import IconRemove from 'icons/circle-minus.tsx';
 import IconReset from 'icons/circle-x.tsx';
 
-import { defaultImage } from './Dashboard.tsx';
-
-import { getPopularity, getRating } from '../utils/rating.ts';
-
 import strings from '../../i18n/en-US.ts';
 
 import { type Character, CharacterRole, type Media } from '../utils/types.ts';
 
 export default (
-  { media, characters, visible }: {
+  { signal, media, characters, visible }: {
+    signal: Signal<Character>;
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
     visible: boolean;
@@ -46,11 +45,6 @@ export default (
   const forceUpdate = useCallback(() => updateState({}), []);
 
   const newAliasValue = useSignal('');
-
-  const signal = useSignal<Character>({
-    name: { english: '' },
-    id: '',
-  });
 
   const primaryMedia = signal.value.media?.[0];
 
@@ -84,15 +78,17 @@ export default (
               ? media.value.find(({ id }) => primaryMedia.mediaId === id)
               : undefined;
 
-            const rating = getRating({
-              popularity: primaryMediaRef?.popularity ?? 0,
-              role: primaryMediaRef ? primaryMedia?.role : undefined,
-            });
+            const rating = char.popularity
+              ? getRating({ popularity: char.popularity })
+              : getRating({
+                popularity: primaryMediaRef?.popularity ?? 0,
+                role: primaryMediaRef ? primaryMedia?.role : undefined,
+              });
 
             return (
               <div
-                key={i}
-                class={'item'}
+                key={characters.value[i].id}
+                class={`item _${characters.value[i].id}`}
                 onClick={() => {
                   signal.value = characters.value[i];
                   requestAnimationFrame(() => showDialog('characters'));
@@ -119,22 +115,6 @@ export default (
               </div>
             );
           })}
-
-        <button
-          data-dialog={'characters'}
-          onClick={() => {
-            const item: Character = {
-              id: `${nanoid(4)}`,
-              name: { english: '' },
-            };
-
-            characters.value.push(item);
-
-            signal.value = item;
-          }}
-        >
-          <IconPlus />
-        </button>
       </div>
 
       <Dialog name={'characters'} class={'dialog-normal'}>
@@ -142,6 +122,8 @@ export default (
           <div class={'buttons'}>
             <IconApply
               onClick={() => {
+                forceUpdate();
+
                 requestAnimationFrame(() => hideDialog('characters'));
               }}
             />

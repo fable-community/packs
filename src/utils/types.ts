@@ -8,6 +8,15 @@ import type {
 
 import type { IImageInput } from '../components/ImageInput.tsx';
 
+export type User = {
+  id: string;
+  username: string;
+  avatar?: string;
+  discriminator?: string;
+  // deno-lint-ignore camelcase
+  display_name?: string;
+};
+
 export type Media = Modify<
   DisaggregatedMedia,
   { images?: IImageInput[] }
