@@ -6,7 +6,9 @@ import { type Signal, useSignal } from '@preact/signals';
 
 import { hideDialog, showDialog } from '../../static/js/dialogs.js';
 
-import nanoid from '../utils/nanoid.ts';
+import { getPopularity, getRating } from '../utils/rating.ts';
+
+import { defaultImage } from './Dashboard.tsx';
 
 import Notice from './Notice.tsx';
 
@@ -24,10 +26,6 @@ import IconApply from 'icons/check.tsx';
 import IconAdd from 'icons/circle-plus.tsx';
 import IconRemove from 'icons/circle-minus.tsx';
 import IconReset from 'icons/circle-x.tsx';
-
-import { defaultImage } from './Dashboard.tsx';
-
-import { getPopularity, getRating } from '../utils/rating.ts';
 
 import strings from '../../i18n/en-US.ts';
 
@@ -91,8 +89,8 @@ export default (
 
             return (
               <div
-                key={i}
-                class={'item'}
+                key={characters.value[i].id}
+                class={`item _${characters.value[i].id}`}
                 onClick={() => {
                   signal.value = characters.value[i];
                   requestAnimationFrame(() => showDialog('characters'));
@@ -119,22 +117,6 @@ export default (
               </div>
             );
           })}
-
-        <button
-          data-dialog={'characters'}
-          onClick={() => {
-            const item: Character = {
-              id: `${nanoid(4)}`,
-              name: { english: '' },
-            };
-
-            characters.value.push(item);
-
-            signal.value = item;
-          }}
-        >
-          <IconPlus />
-        </button>
       </div>
 
       <Dialog name={'characters'} class={'dialog-normal'}>

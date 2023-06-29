@@ -6,7 +6,7 @@ import { type Signal, useSignal } from '@preact/signals';
 
 import { hideDialog, showDialog } from '../../static/js/dialogs.js';
 
-import nanoid from '../utils/nanoid.ts';
+import { defaultImage } from './Dashboard.tsx';
 
 import Notice from './Notice.tsx';
 
@@ -20,9 +20,9 @@ import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
 
-import strings from '../../i18n/en-US.ts';
+import comma from '../utils/comma.ts';
 
-import { defaultImage } from './Dashboard.tsx';
+import strings from '../../i18n/en-US.ts';
 
 import {
   Character,
@@ -64,8 +64,8 @@ export default (
           .map((_media, i) => {
             return (
               <div
-                key={i}
-                class={'item'}
+                key={media.value[i].id}
+                class={`item _${media.value[i].id}`}
                 onClick={() => {
                   signal.value = media.value[i];
                   requestAnimationFrame(() => showDialog('media'));
@@ -80,27 +80,10 @@ export default (
                   }}
                 />
                 <i>{_media.title.english}</i>
-                <i>{_media.popularity ?? 0}</i>
+                <i>{comma(_media.popularity ?? 0)}</i>
               </div>
             );
           })}
-
-        <button
-          data-dialog={'media'}
-          onClick={() => {
-            const item: Media = {
-              type: MediaType.Anime,
-              id: `${nanoid(4)}`,
-              title: { english: '' },
-            };
-
-            media.value.push(item);
-
-            signal.value = item;
-          }}
-        >
-          <IconPlus />
-        </button>
       </div>
 
       <Dialog name={'media'} class={'dialog-normal'}>

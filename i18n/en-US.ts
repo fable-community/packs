@@ -55,4 +55,6 @@ export default {
   basedOnIndividual: 'Individual',
   userId: 'User ID',
   addNew: 'Add',
+  addNewCharacter: 'New Character',
+  addNewMedia: 'New Media',
 };

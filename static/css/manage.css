@@ -34,13 +34,19 @@
   padding: 0;
 }
 
-.manage-header > button {
-  background-color: var(--discord);
+.manage-header > .buttons {
+  display: flex;
+  flex-direction: row-reverse;
   position: fixed;
   margin: 1.5em 3em;
   height: inherit;
   bottom: 0;
   right: 0;
+  gap: 1em;
+}
+
+.manage-header > .buttons > :first-child {
+  background-color: var(--discord);
 }
 
 .manage-header > svg {
