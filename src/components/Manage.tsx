@@ -24,10 +24,10 @@ import strings from '../../i18n/en-US.ts';
 
 import type { Data } from '../api/publish.ts';
 
-import type { Pack } from '../utils/types.ts';
+import type { Pack, User } from '../utils/types.ts';
 
 export default (props: {
-  userId: string;
+  user: User;
   pack?: Pack;
   new?: boolean;
 }) => {
@@ -62,7 +62,7 @@ export default (props: {
       media: media.value,
       characters: characters.value,
       maintainers: maintainers.value,
-      userId: props.userId,
+      userId: props.user.id,
     };
 
     loading.value = true;
@@ -248,7 +248,7 @@ export default (props: {
 
           <Maintainers
             visible={active.value === 2}
-            owner={props.pack?.owner ?? props.userId}
+            owner={props.pack?.owner ?? props.user.id}
             maintainers={maintainers}
           />
         </div>

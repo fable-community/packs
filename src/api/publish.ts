@@ -367,7 +367,7 @@ export const handler: Handlers = {
             content: `<@${data.userId}> updated **${pack.title ?? pack.id}**`,
             // deno-lint-ignore camelcase
             avatar_url:
-              'https://raw.githubusercontent.com/fable-community/packs/main/static/icon-512x512.png',
+              'https://raw.githubusercontent.com/fable-community/packs/main/static/bot.png',
             // deno-lint-ignore camelcase
             allowed_mentions: { parse: [] },
           };
