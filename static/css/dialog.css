@@ -1,6 +1,6 @@
 .dialog-holder {
   z-index: 2;
-  position: absolute;
+  position: fixed;
   background: var(--embed);
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
 
 .dialog-wrapper {
   z-index: 3;
-  position: absolute;
+  position: fixed;
   overflow: hidden auto;
 }
 
