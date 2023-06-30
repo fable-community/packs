@@ -4,12 +4,11 @@ import { getCookies } from '$std/http/cookie.ts';
 
 import Login from '../components/Login.tsx';
 
-import Dashboard, {
-  type DashboardData,
-  type User,
-} from '../components/Dashboard.tsx';
+import Maintenance from './_503.tsx';
 
-import type { Pack } from '../utils/types.ts';
+import Dashboard, { type DashboardData } from '../components/Dashboard.tsx';
+
+import type { Pack, User } from '../utils/types.ts';
 
 interface Cookies {
   accessToken?: string;
@@ -20,6 +19,12 @@ export const production = !!Deno.env.get('DENO_DEPLOYMENT_ID');
 
 export const handler: Handlers = {
   async GET(req, ctx) {
+    const maintenance = Deno.env.get('MAINTENANCE') === '1';
+
+    if (maintenance) {
+      return ctx.render({ maintenance: true });
+    }
+
     const packId = ctx.params.id;
 
     const data = { packs: {} } as DashboardData;
@@ -81,5 +86,8 @@ export const handler: Handlers = {
 };
 
 export default (props: PageProps<DashboardData>) => {
+  if (props.data.maintenance) {
+    return <Maintenance />;
+  }
   return props.data.user ? <Dashboard {...props} /> : <Login />;
 };

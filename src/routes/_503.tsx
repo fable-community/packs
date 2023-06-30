@@ -7,7 +7,7 @@ export default () => {
         textTransform: 'uppercase',
       }}
     >
-      Oops
+      Unavailable
     </h1>
   );
 };
