@@ -32,7 +32,8 @@ import {
 } from '../utils/types.ts';
 
 export default (
-  { signal, media, visible }: {
+  { layout, signal, media, visible }: {
+    layout: Signal<number>;
     signal: Signal<Media>;
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
@@ -48,7 +49,7 @@ export default (
 
   return (
     <div style={{ display: visible ? '' : 'none' }}>
-      <div class={'media'}>
+      <div class={'media'} data-layout={layout.value}>
         <div class={'item'}>
           <div />
           <i>{strings.title}</i>

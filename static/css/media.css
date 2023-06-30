@@ -1,6 +1,7 @@
 .media {
   max-width: 980px;
   margin: 0 auto;
+  margin-bottom: 15vh;
 }
 
 .media > .item {
@@ -49,6 +50,26 @@
 
 .media > :first-child > :first-child {
   margin-left: calc(90px * (90 / 127));
+}
+
+.media[data-layout="1"] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2em;
+}
+
+.media[data-layout="1"] > .item {
+  border-bottom: 0;
+  padding: 0;
+}
+
+.media[data-layout="1"] > .item:first-child {
+  display: none;
+}
+
+.media[data-layout="1"] > .item > :not(:first-child) {
+  display: none;
 }
 
 .manage-dialog-media {

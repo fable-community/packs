@@ -102,6 +102,8 @@ export default (
         {strings.addNew}
       </button>
 
+      <i />
+
       <div>
         <Profile id={owner} user={data[owner]} removable={false} />
 

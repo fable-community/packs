@@ -6,10 +6,6 @@
   gap: 2em;
 }
 
-.maintainers > .close {
-  margin-bottom: -2em;
-}
-
 .maintainers > label {
   font-size: 0.85em;
   color: var(--disabled);
@@ -26,6 +22,15 @@
 
 .maintainers > input:invalid {
   border-bottom: 2px solid var(--red);
+}
+
+.maintainers > i {
+  height: 2px;
+  background-color: var(--grey);
+}
+
+.maintainers > button {
+  height: 46px;
 }
 
 .maintainers > div {
