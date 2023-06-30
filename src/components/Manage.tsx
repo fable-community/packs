@@ -17,6 +17,7 @@ import TextInput from './TextInput.tsx';
 import IconClose from 'icons/x.tsx';
 import IconInfo from 'icons/info-circle.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
+import IconLayout from 'icons/layout-board.tsx';
 
 import nanoid from '../utils/nanoid.ts';
 import compact from '../utils/compact.ts';
@@ -43,7 +44,9 @@ export default (props: {
   const pack: Readonly<Pack['manifest']> = props.pack?.manifest ??
     { id: '' };
 
+  const layout = useSignal<number>(1);
   const active = useSignal<number>(0);
+
   const loading = useSignal<boolean>(false);
   const error = useSignal<string | undefined>(undefined);
 
@@ -278,11 +281,23 @@ export default (props: {
               </button>
             </div>
 
-            {!props.new
-              ? <IconInfo data-dialog={'info'} class={'info'} />
+            {[0, 1].includes(active.value)
+              ? (
+                <IconLayout
+                  onClick={() => {
+                    if (layout.value === 0) {
+                      layout.value = 1;
+                    } else {
+                      layout.value = 0;
+                    }
+                  }}
+                />
+              )
               : undefined}
 
-            <IconClose data-dialog-cancel={'manage'} class={'close'} />
+            {!props.new ? <IconInfo data-dialog={'info'} /> : undefined}
+
+            <IconClose data-dialog-cancel={'manage'} />
           </div>
 
           <div class={'tabs'}>
@@ -298,6 +313,7 @@ export default (props: {
           </div>
 
           <Characters
+            layout={layout}
             signal={characterSignal}
             visible={active.value === 0}
             characters={characters}
@@ -305,6 +321,7 @@ export default (props: {
           />
 
           <Media
+            layout={layout}
             signal={mediaSignal}
             visible={active.value === 1}
             characters={characters}
