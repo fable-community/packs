@@ -344,6 +344,7 @@ export const handler: Handlers = {
       if (endpoint) {
         const response = await fetch(`${endpoint}/publish`, {
           method: 'POST',
+          headers: { 'authorization': `Bearer ${cookies.accessToken}` },
           body: JSON.stringify(
             {
               manifest: pack,

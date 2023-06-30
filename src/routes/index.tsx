@@ -51,6 +51,7 @@ export const handler: Handlers = {
       if (production) {
         const response = await fetch(`${endpoint}/${data.user.id}`, {
           method: 'GET',
+          headers: { 'authorization': `Bearer ${cookies.accessToken}` },
         });
 
         const packs = (await response.json() as { data: Pack[] }).data;
