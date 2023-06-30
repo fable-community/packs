@@ -17,6 +17,7 @@ import type { PageProps } from '$fresh/server.ts';
 
 export interface DashboardData {
   user?: User;
+  maintenance: boolean;
   packs: Record<string, Pack>;
 }
 
