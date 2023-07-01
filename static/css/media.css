@@ -43,6 +43,7 @@
 .media > .item > img {
   object-fit: cover;
   object-position: center;
+  background-color: var(--grey);
   aspect-ratio: 90/127;
   width: auto;
   height: 90px;

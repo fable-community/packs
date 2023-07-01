@@ -49,7 +49,7 @@ export const handler: Handlers = {
 
     if (data.user && endpoint) {
       if (production) {
-        const response = await fetch(`${endpoint}/${data.user.id}`, {
+        const response = await fetch(`${endpoint}`, {
           method: 'GET',
           headers: { 'authorization': `Bearer ${cookies.accessToken}` },
         });

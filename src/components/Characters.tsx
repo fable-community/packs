@@ -177,7 +177,6 @@ export default (
               }, {})}
               onChange={(mediaId: string) => {
                 signal.value.media = mediaId
-                  // TODO allow selecting character role
                   ? [{ mediaId, role: CharacterRole.Main }]
                   : undefined;
                 forceUpdate();
