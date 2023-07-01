@@ -50,11 +50,15 @@ export default (
   return (
     <div style={{ display: visible ? '' : 'none' }}>
       <div class={'media'} data-layout={layout.value}>
-        <div class={'item'}>
-          <div />
-          <i>{strings.title}</i>
-          <i>{strings.popularity}</i>
-        </div>
+        {media.value.length
+          ? (
+            <div class={'item'}>
+              <div />
+              <i>{strings.title}</i>
+              <i>{strings.popularity}</i>
+            </div>
+          )
+          : undefined}
 
         {Object.values(media.value)
           .map((_media, i) => {

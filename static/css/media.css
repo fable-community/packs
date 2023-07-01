@@ -4,6 +4,16 @@
   margin-bottom: 15vh;
 }
 
+.media:empty::after {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  content: "Empty";
+  font-weight: 600;
+  margin: 2em;
+}
+
 .media > .item {
   display: flex;
   flex-direction: row;
