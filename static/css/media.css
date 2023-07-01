@@ -4,6 +4,16 @@
   margin-bottom: 15vh;
 }
 
+.media:empty::after {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  content: "Empty";
+  font-weight: 600;
+  margin: 2em;
+}
+
 .media > .item {
   display: flex;
   flex-direction: row;
@@ -43,6 +53,7 @@
 .media > .item > img {
   object-fit: cover;
   object-position: center;
+  background-color: var(--grey);
   aspect-ratio: 90/127;
   width: auto;
   height: 90px;

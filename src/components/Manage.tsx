@@ -41,8 +41,9 @@ export default (props: {
 }) => {
   const servers = compact(props.pack?.servers ?? 0);
 
-  const pack: Readonly<Pack['manifest']> = props.pack?.manifest ??
-    { id: '' };
+  const pack: Readonly<Pack['manifest']> = props.pack?.manifest
+    ? JSON.parse(JSON.stringify(props.pack?.manifest))
+    : { id: '' };
 
   const layout = useSignal<number>(1);
   const active = useSignal<number>(0);
@@ -74,7 +75,8 @@ export default (props: {
 
   const onPublish = async () => {
     const body: Data = {
-      old: pack,
+      new: props.new,
+      old: props.pack?.manifest ?? pack,
       title: title.value,
       private: privacy.value,
       description: description.value,
@@ -83,7 +85,8 @@ export default (props: {
       media: media.value,
       characters: characters.value,
       maintainers: maintainers.value,
-      userId: props.user.id,
+      username: props.user.display_name ??
+        props.user.username ?? 'undefined',
     };
 
     loading.value = true;
@@ -177,15 +180,21 @@ export default (props: {
           <div class={'metadata'}>
             <IconClose data-dialog-cancel={'info'} class={'close'} />
 
-            <label>{strings.packServers.replace(/%/g, servers)}</label>
+            {!props.new
+              ? (
+                <>
+                  <label>{strings.packServers.replace(/%/g, servers)}</label>
 
-            <div
-              class={'install-info'}
-              data-clipboard={`/community install id: ${pack.id}`}
-            >
-              <i>{`/community install id: ${pack.id}`}</i>
-              <IconClipboard />
-            </div>
+                  <div
+                    class={'install-info'}
+                    data-clipboard={`/community install id: ${pack.id}`}
+                  >
+                    <i>{`/community install id: ${pack.id}`}</i>
+                    <IconClipboard />
+                  </div>
+                </>
+              )
+              : undefined}
 
             {privacy.value
               ? (
@@ -295,7 +304,7 @@ export default (props: {
               )
               : undefined}
 
-            {!props.new ? <IconInfo data-dialog={'info'} /> : undefined}
+            <IconInfo data-dialog={'info'} />
 
             <IconClose data-dialog-cancel={'manage'} />
           </div>

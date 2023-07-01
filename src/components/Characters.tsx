@@ -63,13 +63,17 @@ export default (
   return (
     <div style={{ display: visible ? '' : 'none' }}>
       <div class={'media'} data-layout={layout.value}>
-        <div class={'item'}>
-          <div />
-          <i>{strings.name}</i>
-          <i>{strings.primaryMedia}</i>
-          <i>{strings.role}</i>
-          <i>{strings.rating}</i>
-        </div>
+        {characters.value.length
+          ? (
+            <div class={'item'}>
+              <div />
+              <i>{strings.name}</i>
+              <i>{strings.primaryMedia}</i>
+              <i>{strings.role}</i>
+              <i>{strings.rating}</i>
+            </div>
+          )
+          : undefined}
 
         {Object.values(characters.value)
           .map((char, i) => {
@@ -177,7 +181,6 @@ export default (
               }, {})}
               onChange={(mediaId: string) => {
                 signal.value.media = mediaId
-                  // TODO allow selecting character role
                   ? [{ mediaId, role: CharacterRole.Main }]
                   : undefined;
                 forceUpdate();

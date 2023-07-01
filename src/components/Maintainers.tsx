@@ -7,7 +7,7 @@ import IconCrown from 'icons/crown.tsx';
 
 import strings from '../../i18n/en-US.ts';
 
-import type { User } from './Dashboard.tsx';
+import type { User } from '../utils/types.ts';
 
 const Profile = (
   { id, user, removable, onClick }: {
