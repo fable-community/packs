@@ -17,6 +17,12 @@ export type User = {
   display_name?: string;
 };
 
+export type Entity = {
+  id: string;
+  alias?: string;
+  image?: string;
+};
+
 export type Media = Modify<
   DisaggregatedMedia,
   { images?: IImageInput[] }

@@ -45,6 +45,7 @@ export interface Data {
   characters?: Character[];
   media?: Media[];
   maintainers?: string[];
+  conflicts?: string[];
   new?: boolean;
 }
 

@@ -1,6 +1,10 @@
 {
   "id": "bluearchive",
   "title": "Blue Archive",
+  "conflicts": [
+    "anilist:1",
+    "anilist:2"
+  ],
   "media": {
     "new": [
       {

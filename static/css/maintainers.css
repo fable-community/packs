@@ -88,3 +88,25 @@
   pointer-events: none;
   color: var(--fable);
 }
+
+.maintainers > .group {
+  display: flex;
+  gap: 1em;
+}
+
+.maintainers > .group > .entity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--embedHighlight);
+  border-radius: 100vw;
+  padding: 1em 1.5em;
+  gap: 0.5em;
+}
+
+.maintainers > .group > .entity > svg {
+  width: 16px;
+  height: auto;
+  cursor: pointer;
+  color: var(--red);
+}

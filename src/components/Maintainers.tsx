@@ -41,13 +41,11 @@ const Profile = (
   );
 };
 
-export default (
-  { owner, maintainers, visible }: {
-    owner: string;
-    maintainers: Signal<string[]>;
-    visible: boolean;
-  },
-) => {
+export default ({ owner, maintainers, visible }: {
+  owner: string;
+  maintainers: Signal<string[]>;
+  visible: boolean;
+}) => {
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
@@ -95,7 +93,9 @@ export default (
       <button
         disabled={userId.value?.length <= 0}
         onClick={() => {
-          maintainers.value.push(userId.value);
+          if (!maintainers.value.includes(userId.value)) {
+            maintainers.value.push(userId.value);
+          }
           forceUpdate();
         }}
       >

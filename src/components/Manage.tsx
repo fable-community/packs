@@ -11,6 +11,7 @@ import Notice, { Dismissible } from './Notice.tsx';
 import Media from './Media.tsx';
 import Characters from './Characters.tsx';
 import Maintainers from './Maintainers.tsx';
+import Conflicts from './Conflicts.tsx';
 
 import TextInput from './TextInput.tsx';
 
@@ -64,6 +65,7 @@ export default (props: {
   const characters = useSignal(pack.characters?.new ?? []);
 
   const maintainers = useSignal(pack.maintainers ?? []);
+  const conflicts = useSignal(pack.conflicts ?? []);
 
   const characterSignal = useSignal<Character>({
     name: { english: '' },
@@ -89,6 +91,7 @@ export default (props: {
       media: media.value,
       characters: characters.value,
       maintainers: maintainers.value,
+      conflicts: conflicts.value,
       username: props.user.display_name ??
         props.user.username ?? 'undefined',
     };
@@ -348,6 +351,11 @@ export default (props: {
             visible={active.value === 2}
             owner={props.pack?.owner ?? props.user.id}
             maintainers={maintainers}
+          />
+
+          <Conflicts
+            visible={active.value === 3}
+            conflicts={conflicts}
           />
         </div>
       </Dialog>
