@@ -33,12 +33,13 @@
   height: 46px;
 }
 
-.maintainers > div {
+.maintainers > .grid {
   display: grid;
+  margin-bottom: 15vh;
   gap: 2em;
 }
 
-.maintainers > div > .profile {
+.maintainers > .grid > .profile {
   display: grid;
   align-items: center;
   grid-template-columns: auto 1fr auto;
@@ -49,34 +50,34 @@
     "icon . btn";
 }
 
-.maintainers > div > .profile > img {
+.maintainers > .grid > .profile > img {
   width: 32px;
   height: 32px;
   border-radius: 100%;
   grid-area: icon;
 }
 
-.maintainers > div > .profile > i:empty {
+.maintainers > .grid > .profile > i:empty {
   width: 20vw;
   height: 22px;
   display: block;
   background-color: var(--grey);
 }
 
-.maintainers > div > .profile > i:nth-child(2) {
+.maintainers > .grid > .profile > i:nth-child(2) {
   font-weight: 600;
 }
 
-.maintainers > div > .profile > i:nth-child(3) {
+.maintainers > .grid > .profile > i:nth-child(3) {
   font-size: 0.85em;
 }
 
-.maintainers > div > .profile > i:empty:nth-child(3) {
+.maintainers > .grid > .profile > i:empty:nth-child(3) {
   width: 15vw;
   height: 18px;
 }
 
-.maintainers > div > .profile > svg {
+.maintainers > .grid > .profile > svg {
   width: 24px;
   height: 24px;
   grid-area: btn;
@@ -84,7 +85,30 @@
   cursor: pointer;
 }
 
-.maintainers > div > .profile > svg.owner {
+.maintainers > .grid > .profile > svg.owner {
   pointer-events: none;
   color: var(--fable);
+}
+
+.maintainers > .group {
+  display: flex;
+  margin-bottom: 15vh;
+  gap: 1em;
+}
+
+.maintainers > .group > .entity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--embedHighlight);
+  border-radius: 100vw;
+  padding: 1em 1.5em;
+  gap: 0.5em;
+}
+
+.maintainers > .group > .entity > svg {
+  width: 16px;
+  height: auto;
+  cursor: pointer;
+  color: var(--red);
 }

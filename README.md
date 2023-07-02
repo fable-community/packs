@@ -24,6 +24,7 @@ deno task start
 
 - API_ENDPOINT: an endpoint for a self-hosted instance of
   [Fable](https://github.com/ker0olos/fable)
+- PUBLIC_DISCORD_WEBHOOK_URL: a discord webhook url
 - B2_KEY_ID: [B2 Cloud Storage][b2] app key id
 - B2_KEY: [B2 Cloud Storage][b2] app key
 - B2_BUCKET_ID: [B2 Cloud Storage][b2] bucket id

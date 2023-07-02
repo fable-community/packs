@@ -5,7 +5,6 @@
   color: var(--foreground);
   border-radius: 5px;
   border: 2px solid var(--grey);
-  background-color: var(--embedHighlight);
   margin: 1em 0;
   padding: 1em;
   gap: 1em;

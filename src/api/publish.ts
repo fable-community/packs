@@ -38,12 +38,14 @@ export interface Data {
   old: Pack['manifest'];
   title?: string;
   private?: boolean;
-  description?: string;
   author?: string;
+  description?: string;
+  webhookUrl?: string;
   image?: IImageInput;
   characters?: Character[];
   media?: Media[];
   maintainers?: string[];
+  conflicts?: string[];
   new?: boolean;
 }
 
@@ -167,12 +169,16 @@ export const handler: Handlers = {
         pack.private = data.private;
       }
 
+      if (typeof data.author === 'string') {
+        pack.author = data.author;
+      }
+
       if (typeof data.description === 'string') {
         pack.description = data.description;
       }
 
-      if (typeof data.author === 'string') {
-        pack.author = data.author;
+      if (typeof data.webhookUrl === 'string') {
+        pack.webhookUrl = data.webhookUrl;
       }
 
       if (!pack.id) {
@@ -199,8 +205,9 @@ export const handler: Handlers = {
         });
       }
 
-      pack.media ??= {};
-      pack.characters ??= {};
+      pack.media = {};
+      pack.characters = {};
+      pack.conflicts = [];
 
       // sort media by popularity
       data.media
@@ -353,18 +360,24 @@ export const handler: Handlers = {
           );
         }
 
-        const publicWebhookUrl = Deno.env.get(
-          'PUBLIC_EVERYTHING_DISCORD_WEBHOOK_URL',
-        );
+        const publicWebhookUrl = Deno.env.get('PUBLIC_DISCORD_WEBHOOK_URL');
+
+        const body = getWebhook({
+          pack,
+          username: data.username,
+          old: !data.new ? JSON.parse(old) : undefined,
+        });
 
         if (publicWebhookUrl && !pack.private) {
-          const body = getWebhook({
-            pack,
-            username: data.username,
-            old: !data.new ? JSON.parse(old) : undefined,
-          });
-
           fetch(publicWebhookUrl, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(body),
+          }).catch(console.error);
+        }
+
+        if (pack.webhookUrl) {
+          fetch(pack.webhookUrl, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(body),

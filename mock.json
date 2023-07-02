@@ -1,6 +1,10 @@
 {
   "id": "bluearchive",
   "title": "Blue Archive",
+  "conflicts": [
+    "anilist:1",
+    "anilist:2"
+  ],
   "media": {
     "new": [
       {
@@ -110,8 +114,7 @@
           }
         ]
       }
-    ],
-    "conflicts": []
+    ]
   },
   "characters": {
     "new": [
@@ -615,8 +618,7 @@
         ],
         "gender": "Female"
       }
-    ],
-    "conflicts": []
+    ]
   },
   "maintainers": ["228674702414053386", "839261971185664011"],
   "image": "https://f005.backblazeb2.com/file/fable-packs/dkihlBqc",

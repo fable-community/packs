@@ -5,7 +5,7 @@ export default {
   logout: 'Log Out',
   publish: 'Publish',
   save: 'Save',
-  tabs: ['Characters', 'Series', 'Collaborators'],
+  tabs: ['Characters', 'Series', 'Collaborators', 'Conflicts'],
   okay: 'Okay',
   name: 'Name',
   title: 'Title',
@@ -17,6 +17,9 @@ export default {
   packAuthor: 'Pack Author',
   packDescription: 'Pack Description',
   packServers: 'Installed on % servers',
+  packWebhookUrl: 'Discord Webhook URL',
+  packWebhookUrlHint:
+    'Every time this pack is updated the changes will be sent to this webhook',
   setPublic: 'Make Public',
   setPrivate: 'Make Private',
   privateNotice:
@@ -54,7 +57,12 @@ export default {
   basedOnMedia: 'Based on Series',
   basedOnIndividual: 'Individual',
   userId: 'User ID',
+  entityId: 'Character/Series ID',
   addNew: 'Add',
   addNewCharacter: 'New Character',
   addNewMedia: 'New Series',
+  maintainersNotice:
+    'Collaborators have full access to manage and edit the pack',
+  conflictsNotice:
+    'Conflicts are a way to disable builtin characters and series, in most cases you would want to disable the entities your pack replaces, disabling a series disables all the characters from it as well.',
 };
