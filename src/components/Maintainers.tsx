@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
+import Notice from './Notice.tsx';
+
 import IconTrash from 'icons/trash.tsx';
 import IconCrown from 'icons/crown.tsx';
 
@@ -104,7 +106,9 @@ export default ({ owner, maintainers, visible }: {
 
       <i />
 
-      <div>
+      <Notice type={'info'}>{strings.maintainersNotice}</Notice>
+
+      <div class='grid'>
         <Profile id={owner} user={data[owner]} removable={false} />
 
         {maintainers.value

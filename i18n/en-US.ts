@@ -61,4 +61,8 @@ export default {
   addNew: 'Add',
   addNewCharacter: 'New Character',
   addNewMedia: 'New Series',
+  maintainersNotice:
+    'Collaborators have full access to manage and edit the pack',
+  conflictsNotice:
+    'Conflicts are a way to disable builtin characters and series, in most cases you would want to disable the entities your pack replaces, disabling a series disables all the characters from it as well.',
 };

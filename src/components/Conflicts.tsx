@@ -2,6 +2,8 @@ import { useCallback, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
+import Notice from './Notice.tsx';
+
 import IconTrash from 'icons/trash.tsx';
 
 import strings from '../../i18n/en-US.ts';
@@ -58,6 +60,8 @@ export default ({ conflicts, visible }: {
       </button>
 
       <i />
+
+      <Notice type={'info'}>{strings.conflictsNotice}</Notice>
 
       <div class='group'>
         {conflicts.value
