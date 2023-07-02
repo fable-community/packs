@@ -17,6 +17,9 @@ export default {
   packAuthor: 'Pack Author',
   packDescription: 'Pack Description',
   packServers: 'Installed on % servers',
+  packWebhookUrl: 'Discord Webhook URL',
+  packWebhookUrlHint:
+    'Every time this pack is updated the changes will be sent to this webhook',
   setPublic: 'Make Public',
   setPrivate: 'Make Private',
   privateNotice:

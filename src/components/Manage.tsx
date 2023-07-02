@@ -15,9 +15,11 @@ import Maintainers from './Maintainers.tsx';
 import TextInput from './TextInput.tsx';
 
 import IconClose from 'icons/x.tsx';
-import IconInfo from 'icons/info-circle.tsx';
+import IconApply from 'icons/check.tsx';
+import IconAdjustments from 'icons/adjustments-horizontal.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
-import IconLayout from 'icons/layout-board.tsx';
+import IconGrid from 'icons/layout-grid.tsx';
+import IconTable from 'icons/table.tsx';
 
 import nanoid from '../utils/nanoid.ts';
 import compact from '../utils/compact.ts';
@@ -55,6 +57,7 @@ export default (props: {
   const privacy = useSignal<boolean | undefined>(pack.private);
   const author = useSignal<string | undefined>(pack.author);
   const description = useSignal<string | undefined>(pack.description);
+  const webhookUrl = useSignal<string | undefined>(pack.webhookUrl);
   const image = useSignal<IImageInput | undefined>(undefined);
 
   const media = useSignal(pack.media?.new ?? []);
@@ -79,8 +82,9 @@ export default (props: {
       old: props.pack?.manifest ?? pack,
       title: title.value,
       private: privacy.value,
-      description: description.value,
       author: author.value,
+      description: description.value,
+      webhookUrl: webhookUrl.value,
       image: image.value,
       media: media.value,
       characters: characters.value,
@@ -176,9 +180,9 @@ export default (props: {
         {/* this component require client-side javascript */}
         <noscript>{strings.noScript}</noscript>
 
-        <Dialog name={'info'} class={'dialog-normal'}>
+        <Dialog name={'extra'} class={'dialog-normal'}>
           <div class={'metadata'}>
-            <IconClose data-dialog-cancel={'info'} class={'close'} />
+            <IconApply data-dialog-cancel={'extra'} class={'close'} />
 
             {!props.new
               ? (
@@ -226,6 +230,15 @@ export default (props: {
               label={strings.packDescription}
               placeholder={strings.placeholder.packDescription}
               onInput={(value) => description.value = value}
+            />
+
+            <TextInput
+              value={webhookUrl}
+              label={strings.packWebhookUrl}
+              hint={strings.packWebhookUrlHint}
+              pattern={'https:\/\/discord\.com\/api\/webhooks\/[0-9]{18,19}\/.+'}
+              placeholder={'https://discord.com/api/webhooks/185033133521895424/AAabbb'}
+              onInput={(value) => webhookUrl.value = value}
             />
           </div>
         </Dialog>
@@ -292,19 +305,13 @@ export default (props: {
 
             {[0, 1].includes(active.value)
               ? (
-                <IconLayout
-                  onClick={() => {
-                    if (layout.value === 0) {
-                      layout.value = 1;
-                    } else {
-                      layout.value = 0;
-                    }
-                  }}
-                />
+                layout.value === 0
+                  ? <IconTable onClick={() => layout.value = 1} />
+                  : <IconGrid onClick={() => layout.value = 0} />
               )
               : undefined}
 
-            <IconInfo data-dialog={'info'} />
+            <IconAdjustments data-dialog={'extra'} />
 
             <IconClose data-dialog-cancel={'manage'} />
           </div>
