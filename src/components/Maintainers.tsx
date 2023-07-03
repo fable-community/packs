@@ -11,30 +11,31 @@ import strings from '../../i18n/en-US.ts';
 
 import type { User } from '../utils/types.ts';
 
-const Profile = (
-  { id, user, removable, onClick }: {
-    id: string;
-    user?: User;
-    removable: boolean;
-    onClick?: () => void;
-  },
-) => {
+const Profile = ({ id, user, removable, onClick }: {
+  id: string;
+  user?: User;
+  removable: boolean;
+  onClick?: () => void;
+}) => {
   return (
-    <div class={'profile'}>
-      <img
-        key={id}
-        src={`https://discord-probe.deno.dev/avatar/${id}`}
-      />
+    <div class={'entity'}>
+      <img src={`https://discord-probe.deno.dev/avatar/${id}`} />
 
-      <i>{user?.display_name ?? user?.username ?? ''}</i>
+      <div>
+        {user ? <i>{user?.display_name ?? user?.username}</i> : undefined}
 
-      <i>
-        {user?.username
-          ? user?.discriminator !== '0'
-            ? `${user?.username}#${user?.discriminator}`
-            : user?.username
-          : ''}
-      </i>
+        {user
+          ? (
+            <i>
+              {user?.username
+                ? user?.discriminator !== '0'
+                  ? `${user?.username}#${user?.discriminator}`
+                  : `@${user?.username}`
+                : ''}
+            </i>
+          )
+          : undefined}
+      </div>
 
       {removable
         ? <IconTrash onClick={onClick} />
@@ -78,10 +79,7 @@ export default ({ owner, maintainers, visible }: {
   }, [...maintainers.value]);
 
   return (
-    <div
-      style={{ display: visible ? '' : 'none' }}
-      class={'maintainers'}
-    >
+    <div style={{ display: visible ? '' : 'none' }} class={'maintainers'}>
       <label>{strings.userId}</label>
 
       <input
@@ -98,6 +96,7 @@ export default ({ owner, maintainers, visible }: {
           if (!maintainers.value.includes(userId.value)) {
             maintainers.value.push(userId.value);
           }
+
           forceUpdate();
         }}
       >
@@ -108,14 +107,14 @@ export default ({ owner, maintainers, visible }: {
 
       <Notice type={'info'}>{strings.maintainersNotice}</Notice>
 
-      <div class='grid'>
+      <div class='group'>
         <Profile id={owner} user={data[owner]} removable={false} />
 
         {maintainers.value
           .map((id, i) => (
             <Profile
-              key={id}
               id={id}
+              key={id}
               user={data[id]}
               removable={true}
               onClick={() => {

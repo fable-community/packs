@@ -5,7 +5,8 @@ export default {
   logout: 'Log Out',
   publish: 'Publish',
   save: 'Save',
-  tabs: ['Characters', 'Series', 'Collaborators', 'Conflicts'],
+  search: 'Search',
+  tabs: ['Characters', 'Series', 'Collaborators', 'Disable'],
   okay: 'Okay',
   name: 'Name',
   title: 'Title',
@@ -56,13 +57,12 @@ export default {
   },
   basedOnMedia: 'Based on Series',
   basedOnIndividual: 'Individual',
-  userId: 'User ID',
-  entityId: 'Character/Series ID',
+  userId: 'Discord User ID',
   addNew: 'Add',
   addNewCharacter: 'New Character',
   addNewMedia: 'New Series',
   maintainersNotice:
     'Collaborators have full access to manage and edit the pack',
   conflictsNotice:
-    'Conflicts are a way to disable builtin characters and series, in most cases you would want to disable the entities your pack replaces, disabling a series disables all the characters from it as well.',
+    'In most cases you would want to disable the series your pack replaces or conflicts with',
 };

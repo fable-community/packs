@@ -1,5 +1,6 @@
 .maintainers {
   display: grid;
+  position: relative;
   width: 100%;
   max-width: 980px;
   margin: 0 auto;
@@ -13,14 +14,15 @@
   margin-bottom: -1.5em;
 }
 
-.maintainers > input {
+.maintainers input {
+  width: 100%;
   border-radius: 0;
   border-bottom: 2px solid var(--embed);
   padding: 1em 0;
-  font-size: 1em;
+  font-size: 1.1em;
 }
 
-.maintainers > input:invalid {
+.maintainers input:invalid {
   border-bottom: 2px solid var(--red);
 }
 
@@ -33,65 +35,9 @@
   height: 46px;
 }
 
-.maintainers > .grid {
-  display: grid;
-  margin-bottom: 15vh;
-  gap: 2em;
-}
-
-.maintainers > .grid > .profile {
-  display: grid;
-  align-items: center;
-  grid-template-columns: auto 1fr auto;
-  grid-template-rows: 1fr 1fr;
-  column-gap: 1.5em;
-  grid-template-areas:
-    "icon . btn"
-    "icon . btn";
-}
-
-.maintainers > .grid > .profile > img {
-  width: 32px;
-  height: 32px;
-  border-radius: 100%;
-  grid-area: icon;
-}
-
-.maintainers > .grid > .profile > i:empty {
-  width: 20vw;
-  height: 22px;
-  display: block;
-  background-color: var(--grey);
-}
-
-.maintainers > .grid > .profile > i:nth-child(2) {
-  font-weight: 600;
-}
-
-.maintainers > .grid > .profile > i:nth-child(3) {
-  font-size: 0.85em;
-}
-
-.maintainers > .grid > .profile > i:empty:nth-child(3) {
-  width: 15vw;
-  height: 18px;
-}
-
-.maintainers > .grid > .profile > svg {
-  width: 24px;
-  height: 24px;
-  grid-area: btn;
-  color: var(--red);
-  cursor: pointer;
-}
-
-.maintainers > .grid > .profile > svg.owner {
-  pointer-events: none;
-  color: var(--fable);
-}
-
 .maintainers > .group {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 15vh;
   gap: 1em;
 }
@@ -103,12 +49,97 @@
   background-color: var(--embedHighlight);
   border-radius: 100vw;
   padding: 1em 1.5em;
-  gap: 0.5em;
+  gap: 1em;
+}
+
+.maintainers > .group > .entity > img {
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  background-image: var(--grey);
+  object-position: center;
+  object-fit: cover;
 }
 
 .maintainers > .group > .entity > svg {
-  width: 16px;
+  width: 18px;
   height: auto;
   cursor: pointer;
   color: var(--red);
+}
+
+.maintainers > .group > .entity > svg.owner {
+  color: var(--fable);
+}
+
+.maintainers > .group > .entity > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.maintainers > .group > .entity > div:empty {
+  width: 52px;
+  height: 16px;
+  background-color: var(--grey);
+}
+
+.maintainers > .group > .entity > i,
+.maintainers > .group > .entity > div > :nth-child(2) {
+  opacity: 0.6;
+}
+
+.maintainers > .search {
+  width: 100%;
+  position: relative;
+  z-index: 3;
+}
+
+.maintainers > .holder {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.maintainers > .holder:not([data-active="true"]) {
+  display: none;
+}
+
+.maintainers > .search > .suggestions:not([data-active="true"]) {
+  display: none;
+}
+
+.maintainers > .search > .suggestions {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  width: 100%;
+  max-height: 35vh;
+  background-color: var(--highlight);
+  overflow: hidden auto;
+}
+
+.maintainers > .search > .suggestions:empty {
+  height: 100px;
+}
+
+.maintainers > .search > .suggestions:empty::after {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  content: "Empty";
+  font-weight: 600;
+  height: 100px;
+}
+
+.maintainers > .search > .suggestions > i {
+  cursor: pointer;
+  padding: 1em 2em;
+}
+
+.maintainers > .search > .suggestions > i:hover {
+  background-color: var(--grey);
 }

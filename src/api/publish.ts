@@ -161,20 +161,20 @@ export const handler: Handlers = {
 
       const old = JSON.stringify(pack);
 
-      if (typeof data.title === 'string') {
-        pack.title = data.title;
-      }
-
       if (typeof data.private === 'boolean') {
         pack.private = data.private;
       }
 
+      if (typeof data.title === 'string') {
+        pack.title = data.title.trim();
+      }
+
       if (typeof data.author === 'string') {
-        pack.author = data.author;
+        pack.author = data.author.trim();
       }
 
       if (typeof data.description === 'string') {
-        pack.description = data.description;
+        pack.description = data.description.trim();
       }
 
       if (typeof data.webhookUrl === 'string') {
