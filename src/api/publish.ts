@@ -207,7 +207,9 @@ export const handler: Handlers = {
 
       pack.media = {};
       pack.characters = {};
-      pack.conflicts = [];
+
+      pack.maintainers = data.maintainers ?? [];
+      pack.conflicts = data.conflicts ?? [];
 
       // sort media by popularity
       data.media
@@ -329,8 +331,6 @@ export const handler: Handlers = {
           };
         }) ?? [],
       );
-
-      pack.maintainers = data.maintainers ?? [];
 
       // console.log(pack);
 
