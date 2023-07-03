@@ -11,20 +11,15 @@ import strings from '../../i18n/en-US.ts';
 
 import type { User } from '../utils/types.ts';
 
-const Profile = (
-  { id, user, removable, onClick }: {
-    id: string;
-    user?: User;
-    removable: boolean;
-    onClick?: () => void;
-  },
-) => {
+const Profile = ({ id, user, removable, onClick }: {
+  id: string;
+  user?: User;
+  removable: boolean;
+  onClick?: () => void;
+}) => {
   return (
     <div class={'entity'}>
-      <img
-        key={id}
-        src={`https://discord-probe.deno.dev/avatar/${id}`}
-      />
+      <img src={`https://discord-probe.deno.dev/avatar/${id}`} />
 
       <div>
         {user ? <i>{user?.display_name ?? user?.username}</i> : undefined}
@@ -120,8 +115,8 @@ export default ({ owner, maintainers, visible }: {
         {maintainers.value
           .map((id, i) => (
             <Profile
-              key={id}
               id={id}
+              key={id}
               user={data[id]}
               removable={true}
               onClick={() => {

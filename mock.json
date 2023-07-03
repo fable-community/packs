@@ -1,28 +1,17 @@
 {
   "id": "bluearchive",
   "title": "Blue Archive",
-  "conflicts": [
-    "anilist:1",
-    "anilist:2"
-  ],
   "media": {
     "new": [
       {
+        "format": "VIDEO_GAME",
         "popularity": 1000000,
         "externalLinks": [],
         "description": "Blue Archive is a role-playing game developed by Nexon Games, a subsidiary of Nexon. It was released in 2021 for Android and iOS, first in Japan by Yostar and worldwide later that year by Nexon. The game is free-to-play with gacha game mechanics as a means to obtain new characters.\n\nThe player and protagonist is a teacher who was summoned to the academy city of Kivotos by the president of the General Student Council, an extrajudicial committee governing the schools. Following her sudden disappearance, criminal activity rises around Kivotos, and the player is tasked by the remaining members of the council to resolve the issues and help search for the president.\n\n(Source: Wikipedia)",
         "characters": [
           {
-            "role": "SUPPORTING",
-            "characterId": "gy40"
-          },
-          {
             "role": "MAIN",
             "characterId": "hy_m"
-          },
-          {
-            "role": "SUPPORTING",
-            "characterId": "8ppg"
           },
           {
             "role": "MAIN",
@@ -31,14 +20,6 @@
           {
             "role": "MAIN",
             "characterId": "yz-m"
-          },
-          {
-            "role": "SUPPORTING",
-            "characterId": "enhq"
-          },
-          {
-            "role": "SUPPORTING",
-            "characterId": "blkq"
           },
           {
             "role": "SUPPORTING",
@@ -54,15 +35,7 @@
           },
           {
             "role": "SUPPORTING",
-            "characterId": "tzf4"
-          },
-          {
-            "role": "SUPPORTING",
             "characterId": "w2jf"
-          },
-          {
-            "role": "SUPPORTING",
-            "characterId": "dmff"
           },
           {
             "role": "SUPPORTING",
@@ -70,15 +43,39 @@
           },
           {
             "role": "SUPPORTING",
-            "characterId": "i8ku"
-          },
-          {
-            "role": "SUPPORTING",
-            "characterId": "yhxu"
-          },
-          {
-            "role": "SUPPORTING",
             "characterId": "c8sg"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "oqu7"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "lv7c"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "ahzd"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "gy40"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "8ppg"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "enhq"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "blkq"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "i8ku"
           },
           {
             "role": "SUPPORTING",
@@ -90,6 +87,26 @@
           },
           {
             "role": "SUPPORTING",
+            "characterId": "osup"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "fkle"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "tzf4"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "dmff"
+          },
+          {
+            "role": "SUPPORTING",
+            "characterId": "yhxu"
+          },
+          {
+            "role": "SUPPORTING",
             "characterId": "r2b5"
           },
           {
@@ -98,7 +115,7 @@
           },
           {
             "role": "SUPPORTING",
-            "characterId": "osup"
+            "characterId": "3eyw"
           }
         ],
         "id": "xqzn",
@@ -107,39 +124,18 @@
           "english": "Blue Archive",
           "alternative": ["BA"]
         },
-        "type": "ANIME",
+        "type": "OTHER",
         "images": [
           {
             "url": "https://f005.backblazeb2.com/file/fable-packs/22TUW0Cu"
           }
         ]
       }
-    ]
+    ],
+    "conflicts": []
   },
   "characters": {
     "new": [
-      {
-        "externalLinks": [],
-        "name": {
-          "english": "Onikata Kayoko",
-          "alternative": ["kayoko"]
-        },
-        "description": "The \"Section chief\" of Problem Solver 68 and a 3rd-year student at Gehenna Academy.\n\nUnlike the other fixers, She is not one with ill intentions. However, she is often misunderstood as a delinquent simply due to naturally scary facial expressions and appearance. She normally prefers to keep silent about this topic, as it likely leads to furthering her terrifying image.",
-        "age": "18",
-        "id": "gy40",
-        "media": [
-          {
-            "role": "SUPPORTING",
-            "mediaId": "xqzn"
-          }
-        ],
-        "images": [
-          {
-            "url": "https://f005.backblazeb2.com/file/fable-packs/no7wkhu5"
-          }
-        ],
-        "gender": "Female"
-      },
       {
         "externalLinks": [],
         "name": {
@@ -158,28 +154,6 @@
         "images": [
           {
             "url": "https://f005.backblazeb2.com/file/fable-packs/rtfbupny"
-          }
-        ],
-        "gender": "Female"
-      },
-      {
-        "externalLinks": [],
-        "name": {
-          "english": "Natsume Iroha",
-          "alternative": ["iroha"]
-        },
-        "description": "A member of the Pandemonium Society who often views everything as a pain. Not surprising, considering her boss is always stirring up trouble. As she carries out her duties day by day, she lets out a sigh or two and performs her tasks with indifference.",
-        "age": "16",
-        "id": "8ppg",
-        "media": [
-          {
-            "role": "SUPPORTING",
-            "mediaId": "xqzn"
-          }
-        ],
-        "images": [
-          {
-            "url": "https://f005.backblazeb2.com/file/fable-packs/dvrxfo2o"
           }
         ],
         "gender": "Female"
@@ -227,50 +201,6 @@
           }
         ],
         "gender": "Female"
-      },
-      {
-        "externalLinks": [],
-        "name": {
-          "english": "Shiroko Terror",
-          "alternative": []
-        },
-        "description": "A mysterious student(?) whose appearance is unmistakably Sunaookami Shiroko's, but is not quite the same.",
-        "age": "??? ",
-        "id": "enhq",
-        "media": [
-          {
-            "role": "SUPPORTING",
-            "mediaId": "xqzn"
-          }
-        ],
-        "images": [
-          {
-            "url": "https://f005.backblazeb2.com/file/fable-packs/9wwgxwvb"
-          }
-        ],
-        "gender": "Female"
-      },
-      {
-        "externalLinks": [],
-        "name": {
-          "english": "Joumae Saori",
-          "alternative": ["Saori"]
-        },
-        "description": "The leader of the Arius Squad.\n\nAn unparalleled expert in guerilla tactics, Saori can stay calm under pressure and doesn't hesitate to use whatever means necessary to accomplish her objective.\n\nSaori shows the personalities a leader would normally have: fierce, strategic, and responsible. Saori may often come off as stoic, overly serious, and unsociable, but once she shows her emotions, she does not hold back.",
-        "age": "17",
-        "id": "blkq",
-        "media": [
-          {
-            "role": "SUPPORTING",
-            "mediaId": "xqzn"
-          }
-        ],
-        "images": [
-          {
-            "url": "https://f005.backblazeb2.com/file/fable-packs/uad3_qyw"
-          }
-        ],
-        "gender": "female"
       },
       {
         "popularity": 1000000,
@@ -342,29 +272,6 @@
         "gender": "Female"
       },
       {
-        "popularity": 201000,
-        "externalLinks": [],
-        "name": {
-          "english": "Kurodate Haruna",
-          "alternative": ["Haruna"]
-        },
-        "description": "Enrolled at Gehenna Academy, Haruna is the club president of the Gourmet Research Society.\n\nUpon first look at her, one might think she is a rich princess-like and aloof elegance, but get her involved in talks of food and all sense of distinction is lost in this zealous gourmet.\nIn contrast to such gluttony, she is actually not one with much of an appetite. Favorite foods are greasy, full of hormones, and stew-centric.",
-        "age": "17",
-        "id": "tzf4",
-        "media": [
-          {
-            "role": "SUPPORTING",
-            "mediaId": "xqzn"
-          }
-        ],
-        "images": [
-          {
-            "url": "https://f005.backblazeb2.com/file/fable-packs/c59n1asn"
-          }
-        ],
-        "gender": "Female"
-      },
-      {
         "popularity": 1000000,
         "externalLinks": [],
         "name": {
@@ -383,29 +290,6 @@
         "images": [
           {
             "url": "https://f005.backblazeb2.com/file/fable-packs/a0wlwjls"
-          }
-        ],
-        "gender": "Female"
-      },
-      {
-        "popularity": 201000,
-        "externalLinks": [],
-        "name": {
-          "english": "Akashi Junko",
-          "alternative": ["Junko"]
-        },
-        "description": "She is a 1st-year student and a prim yet ravenous eater in Gehenna's Gourmet Research Society.\n\nDiffering from the other members who often overeat everyday food, Junko is one to take part in a certain extent of enjoying reasonable quality gastronomy but is sometimes known to lose her sense of reason when delicious foods are placed in front of her. Her favorite food is dango.",
-        "age": "15",
-        "id": "dmff",
-        "media": [
-          {
-            "role": "SUPPORTING",
-            "mediaId": "xqzn"
-          }
-        ],
-        "images": [
-          {
-            "url": "https://f005.backblazeb2.com/file/fable-packs/0rla-ppu"
           }
         ],
         "gender": "Female"
@@ -434,55 +318,6 @@
         "gender": "Female"
       },
       {
-        "externalLinks": [],
-        "name": {
-          "english": "Asagi Mutsuki",
-          "alternative": ["Mutsuki"]
-        },
-        "description": "A 2nd-year student at Gehenna Academy, Mutsuki holds the title of \"Chief of staff\" and is the assault activist and go-getter of Problem Solver 68.\n\nMutsuki is a mischievous prankster at heart, she often exposes Aru's true colors for fun. Contrary to her guilt-riddled childhood friend Aru, she is a devilish troublemaker and commits acts of wanton wrongdoing without hesitation.",
-        "age": "16",
-        "id": "i8ku",
-        "media": [
-          {
-            "role": "SUPPORTING",
-            "mediaId": "xqzn"
-          }
-        ],
-        "images": [
-          {
-            "url": "https://f005.backblazeb2.com/file/fable-packs/7ystplz9"
-          }
-        ],
-        "gender": "Female"
-      },
-      {
-        "popularity": 201000,
-        "externalLinks": [],
-        "name": {
-          "english": "Kosaka Wakamo",
-          "alternative": [
-            "Wakamo",
-            "The Fox of Calamity",
-            "The Fox of Misfortune"
-          ]
-        },
-        "description": "She does not belong to any club and is independent. However, as one of the seven students who escaped the Federal Correction Bureau, she is a member of the Seven Prisoners. \n\nKnown as the Fox of Misfortune for her indiscriminate and large-scale destruction, she is widely feared. Her motives and purpose are shrouded in mystery. Her true face, hidden beneath the mask, is rumored to be as scary as a demon or as ugly as the devil.",
-        "age": "18",
-        "id": "yhxu",
-        "media": [
-          {
-            "role": "SUPPORTING",
-            "mediaId": "xqzn"
-          }
-        ],
-        "images": [
-          {
-            "url": "https://f005.backblazeb2.com/file/fable-packs/hulgfnlc"
-          }
-        ],
-        "gender": "Female"
-      },
-      {
         "popularity": 1000000,
         "externalLinks": [],
         "name": {
@@ -500,6 +335,185 @@
         "images": [
           {
             "url": "https://f005.backblazeb2.com/file/fable-packs/xisq-en4"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 1000000,
+        "externalLinks": [],
+        "name": {
+          "english": "Ichinose Asuna",
+          "alternative": ["Asuna"]
+        },
+        "description": "An agent of Millennium's secret agency \"C&C\".\n\nWith a callsign of Zero-one, Asuna is a veteran who has frequently overcome many difficulties with brute intuition.\nOn missions, she's very openly trusting of people and breaks any sense of doubt or uncertainty. Her actions are hard to understand but never fail to produce results in the end.",
+        "age": "17",
+        "id": "oqu7",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/3jjebwun"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 1000000,
+        "externalLinks": [],
+        "name": {
+          "english": "Kakudate Karin",
+          "alternative": ["Karin"]
+        },
+        "description": "Agent of the Millennium Academy secret organization \"C&C\".\n\nWith a call sign of \"Zero-Two\", she provides powerful fire support from the back line.\nDespite her rough appearance, she is actually the most prudent member of the group, and is constantly struggling to hold back the battle-frenzied Asuna and Akane.",
+        "age": "16",
+        "id": "lv7c",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/panrys5i"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 1000000,
+        "externalLinks": [],
+        "name": {
+          "english": "Asuma Toki",
+          "alternative": ["Toki"]
+        },
+        "description": "A member of the Millennium Science School, the fifth agent of its secret \"C&C\" agency.\n\nAlthough she belongs to C&C, Toki has been working as Rio's exclusive maid and bodyguard until now, so few people are familiar with her. A superior agent who fights based with high-tech weaponry. Until now, Toki has mainly acted alone, but she actually has a lonely side.",
+        "age": "16",
+        "id": "ahzd",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/iyabhk_v"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Onikata Kayoko",
+          "alternative": ["kayoko"]
+        },
+        "description": "The \"Section chief\" of Problem Solver 68 and a 3rd-year student at Gehenna Academy.\n\nUnlike the other fixers, She is not one with ill intentions. However, she is often misunderstood as a delinquent simply due to naturally scary facial expressions and appearance. She normally prefers to keep silent about this topic, as it likely leads to furthering her terrifying image.",
+        "age": "18",
+        "id": "gy40",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/no7wkhu5"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Natsume Iroha",
+          "alternative": ["iroha"]
+        },
+        "description": "A member of the Pandemonium Society who often views everything as a pain. Not surprising, considering her boss is always stirring up trouble. As she carries out her duties day by day, she lets out a sigh or two and performs her tasks with indifference.",
+        "age": "16",
+        "id": "8ppg",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/dvrxfo2o"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Shiroko Terror",
+          "alternative": []
+        },
+        "description": "A mysterious student(?) whose appearance is unmistakably Sunaookami Shiroko's, but is not quite the same.",
+        "age": "??? ",
+        "id": "enhq",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/9wwgxwvb"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Joumae Saori",
+          "alternative": ["Saori"]
+        },
+        "description": "The leader of the Arius Squad.\n\nAn unparalleled expert in guerilla tactics, Saori can stay calm under pressure and doesn't hesitate to use whatever means necessary to accomplish her objective.\n\nSaori shows the personalities a leader would normally have: fierce, strategic, and responsible. Saori may often come off as stoic, overly serious, and unsociable, but once she shows her emotions, she does not hold back.",
+        "age": "17",
+        "id": "blkq",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/uad3_qyw"
+          }
+        ],
+        "gender": "female"
+      },
+      {
+        "externalLinks": [],
+        "name": {
+          "english": "Asagi Mutsuki",
+          "alternative": ["Mutsuki"]
+        },
+        "description": "A 2nd-year student at Gehenna Academy, Mutsuki holds the title of \"Chief of staff\" and is the assault activist and go-getter of Problem Solver 68.\n\nMutsuki is a mischievous prankster at heart, she often exposes Aru's true colors for fun. Contrary to her guilt-riddled childhood friend Aru, she is a devilish troublemaker and commits acts of wanton wrongdoing without hesitation.",
+        "age": "16",
+        "id": "i8ku",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/7ystplz9"
           }
         ],
         "gender": "Female"
@@ -545,6 +559,125 @@
         "images": [
           {
             "url": "https://f005.backblazeb2.com/file/fable-packs/u1xjd16o"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 400000,
+        "externalLinks": [],
+        "name": {
+          "english": "Amau Ako",
+          "alternative": ["Ako"]
+        },
+        "description": "Ako, an administrative officer of the Disciplinary Committee, belonging to Gehenna Academy!\n\n",
+        "age": "17",
+        "id": "osup",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/feolv223"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 400000,
+        "externalLinks": [],
+        "name": {
+          "english": "Mikamo Neru",
+          "alternative": ["Neru"]
+        },
+        "description": "The leader of Millennium's secret agency \"C&C\".\n\nLooking indisputably like a delinquent with her attire, she's actually prideful of being the strongest agent, boasting a 100% mission success rate.\nBecause of this, she's earned the callsign \"Double O\" which is seen as a guarantee of certain victory.\n\n",
+        "age": "17",
+        "id": "fkle",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/h4dlpy4x"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 201000,
+        "externalLinks": [],
+        "name": {
+          "english": "Kurodate Haruna",
+          "alternative": ["Haruna"]
+        },
+        "description": "Enrolled at Gehenna Academy, Haruna is the club president of the Gourmet Research Society.\n\nUpon first look at her, one might think she is a rich princess-like and aloof elegance, but get her involved in talks of food and all sense of distinction is lost in this zealous gourmet.\nIn contrast to such gluttony, she is actually not one with much of an appetite. Favorite foods are greasy, full of hormones, and stew-centric.",
+        "age": "17",
+        "id": "tzf4",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/c59n1asn"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 201000,
+        "externalLinks": [],
+        "name": {
+          "english": "Akashi Junko",
+          "alternative": ["Junko"]
+        },
+        "description": "She is a 1st-year student and a prim yet ravenous eater in Gehenna's Gourmet Research Society.\n\nDiffering from the other members who often overeat everyday food, Junko is one to take part in a certain extent of enjoying reasonable quality gastronomy but is sometimes known to lose her sense of reason when delicious foods are placed in front of her. Her favorite food is dango.",
+        "age": "15",
+        "id": "dmff",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/0rla-ppu"
+          }
+        ],
+        "gender": "Female"
+      },
+      {
+        "popularity": 201000,
+        "externalLinks": [],
+        "name": {
+          "english": "Kosaka Wakamo",
+          "alternative": [
+            "Wakamo",
+            "The Fox of Calamity",
+            "The Fox of Misfortune"
+          ]
+        },
+        "description": "She does not belong to any club and is independent. However, as one of the seven students who escaped the Federal Correction Bureau, she is a member of the Seven Prisoners. \n\nKnown as the Fox of Misfortune for her indiscriminate and large-scale destruction, she is widely feared. Her motives and purpose are shrouded in mystery. Her true face, hidden beneath the mask, is rumored to be as scary as a demon or as ugly as the devil.",
+        "age": "18",
+        "id": "yhxu",
+        "media": [
+          {
+            "role": "SUPPORTING",
+            "mediaId": "xqzn"
+          }
+        ],
+        "images": [
+          {
+            "url": "https://f005.backblazeb2.com/file/fable-packs/hulgfnlc"
           }
         ],
         "gender": "Female"
@@ -596,15 +729,15 @@
         "gender": "Female"
       },
       {
-        "popularity": 400000,
+        "popularity": 201000,
         "externalLinks": [],
         "name": {
-          "english": "Amau Ako",
-          "alternative": ["Ako"]
+          "english": "Murokasa Akane",
+          "alternative": ["Akane"]
         },
-        "description": "Ako, an administrative officer of the Disciplinary Committee, belonging to Gehenna Academy!\n\n",
-        "age": "17",
-        "id": "osup",
+        "description": "An agent of Millennium's secret society \"C&C\".\n\nHaving a callsign of Zero-three, she is an essential member of C&C specializing in \"cleaning up\".\nAkane has earned her nickname of \"Master Cleaner\" for her ability to infiltrate enemy lines with a deceivingly tender impression and gracefully yet explosively \"clean out\" the enemy.",
+        "age": "16",
+        "id": "3eyw",
         "media": [
           {
             "role": "SUPPORTING",
@@ -613,15 +746,24 @@
         ],
         "images": [
           {
-            "url": "https://f005.backblazeb2.com/file/fable-packs/feolv223"
+            "url": "https://f005.backblazeb2.com/file/fable-packs/cgj2dlxm"
           }
         ],
         "gender": "Female"
       }
-    ]
+    ],
+    "conflicts": []
   },
   "maintainers": ["228674702414053386", "839261971185664011"],
   "image": "https://f005.backblazeb2.com/file/fable-packs/dkihlBqc",
   "author": "Fable Community",
-  "description": "A pack containing the various characters from the game Blue Archive"
+  "description": "A pack containing the various characters from the game Blue Archive",
+  "conflicts": [
+    "pack-id:abc",
+    "anilist:161049",
+    "anilist:138416",
+    "anilist:160589",
+    "anilist:161050",
+    "anilist:143177"
+  ]
 }

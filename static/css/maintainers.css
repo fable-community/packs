@@ -35,6 +35,7 @@
 
 .maintainers > .group {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 15vh;
   gap: 1em;
 }
@@ -54,6 +55,8 @@
   height: 24px;
   border-radius: 100%;
   background-image: var(--grey);
+  object-position: center;
+  object-fit: cover;
 }
 
 .maintainers > .group > .entity > svg {
@@ -78,6 +81,7 @@
   background-color: var(--grey);
 }
 
+.maintainers > .group > .entity > i,
 .maintainers > .group > .entity > div > :nth-child(2) {
   opacity: 0.6;
 }
