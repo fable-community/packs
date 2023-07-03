@@ -49,7 +49,7 @@ export default (props: {
     : { id: '' };
 
   const layout = useSignal<number>(1);
-  const active = useSignal<number>(0);
+  const active = useSignal<number>(2);
 
   const loading = useSignal<boolean>(false);
   const error = useSignal<string | undefined>(undefined);

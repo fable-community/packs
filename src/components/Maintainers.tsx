@@ -20,21 +20,27 @@ const Profile = (
   },
 ) => {
   return (
-    <div class={'profile'}>
+    <div class={'entity'}>
       <img
         key={id}
         src={`https://discord-probe.deno.dev/avatar/${id}`}
       />
 
-      <i>{user?.display_name ?? user?.username ?? ''}</i>
+      <div>
+        {user ? <i>{user?.display_name ?? user?.username}</i> : undefined}
 
-      <i>
-        {user?.username
-          ? user?.discriminator !== '0'
-            ? `${user?.username}#${user?.discriminator}`
-            : user?.username
-          : ''}
-      </i>
+        {user
+          ? (
+            <i>
+              {user?.username
+                ? user?.discriminator !== '0'
+                  ? `${user?.username}#${user?.discriminator}`
+                  : `@${user?.username}`
+                : ''}
+            </i>
+          )
+          : undefined}
+      </div>
 
       {removable
         ? <IconTrash onClick={onClick} />
@@ -108,7 +114,7 @@ export default ({ owner, maintainers, visible }: {
 
       <Notice type={'info'}>{strings.maintainersNotice}</Notice>
 
-      <div class='grid'>
+      <div class='group'>
         <Profile id={owner} user={data[owner]} removable={false} />
 
         {maintainers.value
