@@ -43,6 +43,7 @@
   bottom: 0;
   right: 0;
   gap: 1em;
+  z-index: 1;
 }
 
 .manage-header > .buttons > button:first-child {

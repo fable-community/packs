@@ -1,5 +1,6 @@
 .maintainers {
   display: grid;
+  position: relative;
   width: 100%;
   max-width: 980px;
   margin: 0 auto;
@@ -13,14 +14,15 @@
   margin-bottom: -1.5em;
 }
 
-.maintainers > input {
+.maintainers input {
+  width: 100%;
   border-radius: 0;
   border-bottom: 2px solid var(--embed);
   padding: 1em 0;
-  font-size: 1em;
+  font-size: 1.1em;
 }
 
-.maintainers > input:invalid {
+.maintainers input:invalid {
   border-bottom: 2px solid var(--red);
 }
 
@@ -84,4 +86,60 @@
 .maintainers > .group > .entity > i,
 .maintainers > .group > .entity > div > :nth-child(2) {
   opacity: 0.6;
+}
+
+.maintainers > .search {
+  width: 100%;
+  position: relative;
+  z-index: 3;
+}
+
+.maintainers > .holder {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.maintainers > .holder:not([data-active="true"]) {
+  display: none;
+}
+
+.maintainers > .search > .suggestions:not([data-active="true"]) {
+  display: none;
+}
+
+.maintainers > .search > .suggestions {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  width: 100%;
+  max-height: 35vh;
+  background-color: var(--highlight);
+  overflow: hidden auto;
+}
+
+.maintainers > .search > .suggestions:empty {
+  height: 100px;
+}
+
+.maintainers > .search > .suggestions:empty::after {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  content: "Empty";
+  font-weight: 600;
+  height: 100px;
+}
+
+.maintainers > .search > .suggestions > i {
+  cursor: pointer;
+  padding: 1em 2em;
+}
+
+.maintainers > .search > .suggestions > i:hover {
+  background-color: var(--grey);
 }

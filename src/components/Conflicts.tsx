@@ -10,6 +10,18 @@ import { gql, request } from '../utils/graphql.ts';
 
 import strings from '../../i18n/en-US.ts';
 
+const getAnilistIds = (ids: string[]) => {
+  const anilistIds: number[] = [];
+
+  ids.forEach((id) => {
+    if (id.startsWith('anilist:')) {
+      anilistIds.push(parseInt(id.split(':')[1]));
+    }
+  });
+
+  return anilistIds;
+};
+
 interface Media {
   id: number;
   title?: {
@@ -62,23 +74,20 @@ export default ({ conflicts, visible }: {
   // used to force the entire component to redrew
   const forceUpdate = useCallback(() => updateState({}), []);
 
+  const search = useSignal('');
+
+  const timeout: Signal<number | undefined> = useSignal(undefined);
+
   const [data, setData] = useState<Record<string, Media>>({});
 
-  const entityId = useSignal('');
+  const [suggestions, setSuggestions] = useState<Media[]>([]);
 
-  useEffect(() => {
-    const anilistIds: number[] = [];
+  const focused = useSignal(false);
 
-    conflicts.value.forEach((id) => {
-      if (id.startsWith('anilist:')) {
-        anilistIds.push(parseInt(id.split(':')[1]));
-      }
-    });
-
-    const query = gql`
-      query ($ids: [Int]) {
+  const query = gql`
+      query ($search: String, $ids: [Int]) {
         Page {
-          media(id_in: $ids) {
+          media(search: $search, id_in: $ids, sort: POPULARITY_DESC) {
             id
             title {
               romaji
@@ -93,14 +102,11 @@ export default ({ conflicts, visible }: {
       }
     `;
 
-    if (anilistIds.length) {
-      console.log(anilistIds);
+  useEffect(() => {
+    const anilistIds = getAnilistIds(conflicts.value);
 
-      request<{
-        Page: {
-          media: Media[];
-        };
-      }>({
+    if (anilistIds.length) {
+      request<{ Page: { media: Media[] } }>({
         query,
         url: 'https://graphql.anilist.co',
         variables: { ids: anilistIds },
@@ -117,31 +123,68 @@ export default ({ conflicts, visible }: {
   }, [...conflicts.value]);
 
   return (
-    <div
-      style={{ display: visible ? '' : 'none' }}
-      class={'maintainers'}
-    >
-      <label>{strings.entityId}</label>
+    <div style={{ display: visible ? '' : 'none' }} class={'maintainers'}>
+      <div class={'search'}>
+        <input
+          type={'text'}
+          placeholder={strings.search}
+          onFocus={() => focused.value = true}
+          onInput={(event) => {
+            search.value = (event.target as HTMLInputElement).value;
 
-      <input
-        type={'text'}
-        pattern={'[\\-_a-z0-9]+:[\\-_a-z0-9]+'}
-        placeholder={'anilist:1'}
-        onInput={(event) =>
-          entityId.value = (event.target as HTMLInputElement).value}
+            if (timeout.value) {
+              clearTimeout(timeout.value);
+            }
+
+            timeout.value = setTimeout(() => {
+              request<{ Page: { media: Media[] } }>({
+                query,
+                url: 'https://graphql.anilist.co',
+                variables: { search: search.value },
+              })
+                .then((response) => {
+                  const anilistIds = getAnilistIds(conflicts.value);
+
+                  setSuggestions(response.Page.media.filter((media) =>
+                    !anilistIds.includes(media.id)
+                  ));
+                })
+                .catch(console.error);
+            }, 500);
+          }}
+        />
+
+        <div class={'suggestions'} data-active={focused}>
+          {suggestions.map((media, i) => (
+            <i
+              key={media.id}
+              onClick={() => {
+                const id = `anilist:${media.id}`;
+
+                if (!conflicts.value.includes(id)) {
+                  conflicts.value.push(id);
+                }
+
+                suggestions.splice(i, 1);
+
+                focused.value = false;
+
+                forceUpdate();
+              }}
+            >
+              {media.title?.english ?? media.title?.romaji ??
+                media.title?.native}
+            </i>
+          ))}
+        </div>
+      </div>
+
+      <div
+        class={'holder'}
+        data-active={focused}
+        onClick={() =>
+          focused.value = false}
       />
-
-      <button
-        disabled={entityId.value?.length <= 0}
-        onClick={() => {
-          if (!conflicts.value.includes(entityId.value)) {
-            conflicts.value.push(entityId.value);
-          }
-          forceUpdate();
-        }}
-      >
-        {strings.addNew}
-      </button>
 
       <i />
 

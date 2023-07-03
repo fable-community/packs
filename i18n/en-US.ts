@@ -5,6 +5,7 @@ export default {
   logout: 'Log Out',
   publish: 'Publish',
   save: 'Save',
+  search: 'Search',
   tabs: ['Characters', 'Series', 'Collaborators', 'Disable'],
   okay: 'Okay',
   name: 'Name',
@@ -57,12 +58,11 @@ export default {
   basedOnMedia: 'Based on Series',
   basedOnIndividual: 'Individual',
   userId: 'Discord User ID',
-  entityId: 'Character/Series ID',
   addNew: 'Add',
   addNewCharacter: 'New Character',
   addNewMedia: 'New Series',
   maintainersNotice:
     'Collaborators have full access to manage and edit the pack',
   conflictsNotice:
-    'Disabling a series disables all the characters from it as well. In most cases you would want to disable the things your pack replaces or conflicts with.',
+    'In most cases you would want to disable the series your pack replaces or conflicts with',
 };

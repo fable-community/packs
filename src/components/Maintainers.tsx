@@ -79,10 +79,7 @@ export default ({ owner, maintainers, visible }: {
   }, [...maintainers.value]);
 
   return (
-    <div
-      style={{ display: visible ? '' : 'none' }}
-      class={'maintainers'}
-    >
+    <div style={{ display: visible ? '' : 'none' }} class={'maintainers'}>
       <label>{strings.userId}</label>
 
       <input
@@ -99,6 +96,7 @@ export default ({ owner, maintainers, visible }: {
           if (!maintainers.value.includes(userId.value)) {
             maintainers.value.push(userId.value);
           }
+
           forceUpdate();
         }}
       >

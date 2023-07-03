@@ -759,7 +759,6 @@
   "author": "Fable Community",
   "description": "A pack containing the various characters from the game Blue Archive",
   "conflicts": [
-    "pack-id:abc",
     "anilist:161049",
     "anilist:138416",
     "anilist:160589",

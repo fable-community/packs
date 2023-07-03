@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   color: var(--foreground);
+  background-color: var(--embed);
   border-radius: 5px;
   border: 2px solid var(--grey);
   margin: 1em 0;
