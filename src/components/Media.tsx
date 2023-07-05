@@ -258,8 +258,15 @@ export default (
                 ))}
                 <button
                   onClick={() => {
-                    // deno-lint-ignore no-non-null-assertion
-                    signal.value.externalLinks!.push({ site: '', url: '' });
+                    if (!signal.value.externalLinks) {
+                      signal.value.externalLinks = [];
+                    }
+
+                    signal.value.externalLinks.push({
+                      site: '',
+                      url: '',
+                    });
+
                     forceUpdate();
                   }}
                 >
