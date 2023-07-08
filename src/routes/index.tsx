@@ -34,15 +34,22 @@ export const handler: Handlers = {
     const endpoint = Deno.env.get('API_ENDPOINT');
 
     if (cookies.accessToken) {
-      const response = await fetch('https://discord.com/api/users/@me', {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'authorization': `Bearer ${cookies.accessToken}`,
-        },
-      });
+      if (production) {
+        const response = await fetch('https://discord.com/api/users/@me', {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+            'authorization': `Bearer ${cookies.accessToken}`,
+          },
+        });
 
-      data.user = await response.json() as User;
+        data.user = await response.json() as User;
+      } else {
+        data.user = {
+          id: '1',
+          username: 'test',
+        };
+      }
     } else if (cookies.refreshToken) {
       // TODO support refreshing the access token #2
     }
