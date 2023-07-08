@@ -282,7 +282,7 @@ export const handler: Handlers = {
         });
 
       pack.media!.new = await Promise.all(
-        data.media?.map(async (media, i) => {
+        data.media?.map(async (media) => {
           const url = media.images?.length && media.images[0].file
             ? await uploadImage({
               file: media.images[0].file,
@@ -308,16 +308,24 @@ export const handler: Handlers = {
             }
           });
 
+          let images: { url: string }[];
+
+          if (url?.length) {
+            images = [{ url }];
+          } else {
+            images = media.images?.map(({ url }) => ({ url })) ?? [];
+          }
+
           return {
             ...media,
             characters,
-            images: url ? [{ url }] : pack.media?.new?.[i]?.images ?? [],
+            images,
           };
         }) ?? [],
       );
 
       pack.characters!.new = await Promise.all(
-        data.characters?.map(async (char, i) => {
+        data.characters?.map(async (char) => {
           const url = char.images?.length && char.images[0].file
             ? await uploadImage({
               file: char.images[0].file,
@@ -325,9 +333,17 @@ export const handler: Handlers = {
             })
             : undefined;
 
+          let images: { url: string }[];
+
+          if (url?.length) {
+            images = [{ url }];
+          } else {
+            images = char.images?.map(({ url }) => ({ url })) ?? [];
+          }
+
           return {
             ...char,
-            images: url ? [{ url }] : pack.characters?.new?.[i]?.images ?? [],
+            images,
           };
         }) ?? [],
       );
