@@ -103,13 +103,11 @@ export default (
                   signal.value.id === id
                 );
 
-                if (i > -1) {
+                if (i > -1 && window.confirm(strings.deleteMedia)) {
                   media.value.splice(i, 1);
+                  forceUpdate();
+                  requestAnimationFrame(() => hideDialog('media'));
                 }
-
-                forceUpdate();
-
-                requestAnimationFrame(() => hideDialog('media'));
               }}
             />
           </div>

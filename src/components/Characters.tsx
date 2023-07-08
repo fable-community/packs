@@ -139,13 +139,11 @@ export default (
                   signal.value.id === id
                 );
 
-                if (i > -1) {
+                if (i > -1 && window.confirm(strings.deleteCharacter)) {
                   characters.value.splice(i, 1);
+                  forceUpdate();
+                  requestAnimationFrame(() => hideDialog('characters'));
                 }
-
-                forceUpdate();
-
-                requestAnimationFrame(() => hideDialog('characters'));
               }}
             />
           </div>
