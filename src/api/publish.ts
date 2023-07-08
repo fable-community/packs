@@ -282,7 +282,7 @@ export const handler: Handlers = {
         });
 
       pack.media!.new = await Promise.all(
-        data.media?.map(async (media) => {
+        data.media?.map(async (media, i) => {
           const url = media.images?.length && media.images[0].file
             ? await uploadImage({
               file: media.images[0].file,
@@ -311,13 +311,13 @@ export const handler: Handlers = {
           return {
             ...media,
             characters,
-            images: url ? [{ url }] : media.images,
+            images: url ? [{ url }] : pack.media?.new?.[i].images ?? [],
           };
         }) ?? [],
       );
 
       pack.characters!.new = await Promise.all(
-        data.characters?.map(async (char) => {
+        data.characters?.map(async (char, i) => {
           const url = char.images?.length && char.images[0].file
             ? await uploadImage({
               file: char.images[0].file,
@@ -327,7 +327,7 @@ export const handler: Handlers = {
 
           return {
             ...char,
-            images: url ? [{ url }] : char.images,
+            images: url ? [{ url }] : pack.characters?.new?.[i].images ?? [],
           };
         }) ?? [],
       );
