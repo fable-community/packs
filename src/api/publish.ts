@@ -311,7 +311,7 @@ export const handler: Handlers = {
           return {
             ...media,
             characters,
-            images: url ? [{ url }] : pack.media?.new?.[i].images ?? [],
+            images: url ? [{ url }] : pack.media?.new?.[i]?.images ?? [],
           };
         }) ?? [],
       );
@@ -327,7 +327,7 @@ export const handler: Handlers = {
 
           return {
             ...char,
-            images: url ? [{ url }] : pack.characters?.new?.[i].images ?? [],
+            images: url ? [{ url }] : pack.characters?.new?.[i]?.images ?? [],
           };
         }) ?? [],
       );
