@@ -108,8 +108,10 @@ export default (props: {
         open(props.new ? `/?success=${await response.text()}` : '/', '_self');
       } else {
         const { errors, pack } = await response.json() as {
-          // deno-lint-ignore no-explicit-any
-          pack: any;
+          pack: {
+            media?: { id: string }[];
+            characters?: { id: string }[];
+          };
           errors: {
             instancePath: string;
             keyword: string;
@@ -141,9 +143,9 @@ export default (props: {
 
               const item = path[0] === 'characters'
                 // deno-lint-ignore no-non-null-assertion
-                ? pack.characters!.new![i]
+                ? pack.characters![i]
                 // deno-lint-ignore no-non-null-assertion
-                : pack.media!.new![i];
+                : pack.media![i];
 
               const child = document.querySelector(`._${item.id}`);
 

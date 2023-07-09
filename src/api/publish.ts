@@ -371,7 +371,13 @@ export const handler: Handlers = {
           const { errors } = await response.json();
 
           return new Response(
-            JSON.stringify({ pack, errors }),
+            JSON.stringify({
+              errors,
+              pack: {
+                characters: pack.characters?.new?.map(({ id }) => ({ id })),
+                media: pack.media?.new?.map(({ id }) => ({ id })),
+              },
+            }),
             { status: response.status },
           );
         }
