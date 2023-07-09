@@ -239,15 +239,15 @@ export const handler: Handlers = {
               aRating = getRating({
                 popularity: a.popularity ?? 0,
               });
-            } else if (a.media?.[0].mediaId) {
+            } else if (a.media?.[0]?.mediaId) {
               const media = data.media?.find(({ id }) =>
-                a.media?.[0].mediaId === id
+                a.media?.[0]?.mediaId === id
               );
 
               if (media) {
                 aRating = getRating({
                   popularity: media.popularity ?? 0,
-                  role: a.media?.[0].role,
+                  role: a.media?.[0]?.role,
                 });
               } else {
                 aRating = 1;
@@ -262,13 +262,13 @@ export const handler: Handlers = {
               });
             } else if (b.media?.length) {
               const media = data.media?.find(({ id }) =>
-                b.media?.[0].mediaId === id
+                b.media?.[0]?.mediaId === id
               );
 
               if (media) {
                 bRating = getRating({
                   popularity: media.popularity ?? 0,
-                  role: b.media?.[0].role,
+                  role: b.media?.[0]?.role,
                 });
               } else {
                 bRating = 1;
