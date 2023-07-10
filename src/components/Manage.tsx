@@ -129,13 +129,14 @@ export default (props: {
           ele.removeAttribute(`shake`)
         );
 
+        console.error(errors);
+
         errors.forEach((err) => {
           const path = err.instancePath
             .substring(1)
             .split('/');
 
           console.error(path);
-          console.error(err);
 
           if (path[0] === 'media' || path[0] === 'characters') {
             if (path[1] === 'new') {
