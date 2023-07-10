@@ -28,10 +28,7 @@ import * as login from './src/api/login.ts';
 import * as logout from './src/api/logout.ts';
 import * as publish from './src/api/publish.ts';
 
-import config from './deno.json' assert { type: 'json' };
-
 const manifest: Manifest = {
-  config,
   baseUrl: import.meta.url,
   islands: {
     // islands enable client-side interactivity
@@ -54,4 +51,7 @@ const manifest: Manifest = {
   },
 };
 
-await start(manifest, { port: 8080 });
+await start(manifest, {
+  experimentalDenoServe: true,
+  port: 8080,
+});

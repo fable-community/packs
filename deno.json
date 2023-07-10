@@ -23,7 +23,8 @@
   "lock": false,
   "importMap": "./import_map.json",
   "tasks": {
-    "start": "deno run -A --watch=static/,src/,i18n/ main.ts"
+    "start": "deno run -A --watch=static/,src/,i18n/ main.ts",
+    "udd": "deno run -A https://deno.land/x/udd/main.ts import_map.json"
   },
   "compilerOptions": {
     "jsx": "react-jsx",
