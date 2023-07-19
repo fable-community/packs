@@ -52,6 +52,5 @@ const manifest: Manifest = {
 };
 
 await start(manifest, {
-  experimentalDenoServe: true,
   port: 8080,
 });
