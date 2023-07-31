@@ -28,7 +28,7 @@ const empty = '\u200B';
 const defaultUsername = 'Community Packs';
 
 const defaultAvatar =
-  'https://raw.githubusercontent.com/fable-community/packs/main/static/bot.png';
+  'https://raw.githubusercontent.com/fable-community/packs/main/static/icon-512x512.png';
 
 export const getWebhook = (
   { username, pack, old }: {
@@ -103,13 +103,15 @@ export const getWebhook = (
       }];
     }
 
-    const b = old.characters?.new
-      ?.find((b) => a.id === b.id);
+    // const b = old.characters?.new
+    //   ?.find((b) => a.id === b.id);
 
-    if (!b || JSON.stringify(a) !== JSON.stringify(b)) {
-      // deno-lint-ignore no-non-null-assertion
-      webhook.embeds!.push(embed);
-    }
+    // if (!b || JSON.stringify(a) !== JSON.stringify(b)) {
+    //   // deno-lint-ignore no-non-null-assertion
+    //   webhook.embeds!.push(embed);
+    // }
+
+    webhook.embeds?.push(embed);
   });
 
   webhook.embeds = webhook.embeds?.slice(0, 3);
