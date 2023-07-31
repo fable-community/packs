@@ -28,7 +28,7 @@ const empty = '\u200B';
 const defaultUsername = 'Community Packs';
 
 const defaultAvatar =
-  'https://raw.githubusercontent.com/fable-community/packs/main/static/bot.png';
+  'https://raw.githubusercontent.com/fable-community/packs/main/static/icon-512x512.png';
 
 export const getWebhook = (
   { username, pack, old }: {

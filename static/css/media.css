@@ -307,6 +307,28 @@
   opacity: 0.5;
 }
 
+.manage-dialog-media .relations {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5em;
+  gap: 0.5em;
+}
+
+.manage-dialog-media .relation {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.manage-dialog-media .relation > i {
+  flex-grow: 1;
+  font-weight: 700;
+}
+
+.manage-dialog-media .relation > .select {
+  flex-grow: 1;
+}
+
 .manage-dialog-media .links {
   display: flex;
   flex-direction: column;

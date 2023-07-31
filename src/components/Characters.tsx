@@ -295,7 +295,7 @@ export default (
               <label class={'hint'}>{strings.aliasesHint}</label>
               <div class={'aliases'}>
                 {signal.value.name.alternative?.map((alias, i) => (
-                  <div class={'alias'}>
+                  <div class={'alias'} key={i}>
                     <i>{alias}</i>
                     <IconTrash
                       class={'delete'}

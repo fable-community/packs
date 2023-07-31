@@ -3,17 +3,19 @@ import type { JSX } from 'preact';
 import type { Modify } from '../utils/types.ts';
 
 export default <T,>(
-  { list, label, defaultValue, required, onChange, ...props }: Modify<
-    JSX.HTMLAttributes<HTMLSelectElement>,
-    {
-      label?: string;
-      hint?: string;
-      list: Record<string, string>;
-      required?: boolean;
-      defaultValue?: string;
-      onChange?: (value: T) => void;
-    }
-  >,
+  { list, label, defaultValue, nullLabel, required, onChange, ...props }:
+    Modify<
+      JSX.HTMLAttributes<HTMLSelectElement>,
+      {
+        label?: string;
+        hint?: string;
+        list: Record<string, string>;
+        required?: boolean;
+        defaultValue?: string;
+        nullLabel?: string;
+        onChange?: (value: T) => void;
+      }
+    >,
 ) => {
   return (
     <div class={'select'}>
@@ -21,11 +23,17 @@ export default <T,>(
       <select
         {...props}
         onChange={(ev) => {
-          onChange?.((ev.target as HTMLSelectElement).value as T);
+          const t = (ev.target as HTMLSelectElement).value as T;
+
+          onChange?.(t);
         }}
       >
         {!required
-          ? <option selected={!defaultValue} value={undefined}>{''}</option>
+          ? (
+            <option selected={!defaultValue} value={''}>
+              {nullLabel ?? ''}
+            </option>
+          )
           : undefined}
 
         {Object.entries(list)
