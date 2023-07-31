@@ -33,14 +33,44 @@ export type Character = Modify<
   { images?: IImageInput[] }
 >;
 
+export enum MediaFormat {
+  'Anime' = 'TV',
+  // 'Tv Short' = 'TV_SHORT',
+  'Manga' = 'MANGA',
+  'Movie' = 'MOVIE',
+  // 'Special' = 'SPECIAL',
+  'OVA' = 'OVA',
+  'ONA' = 'ONA',
+  'One Shot' = 'ONE_SHOT',
+  // 'Music' = 'MUSIC',
+  'Novel' = 'NOVEL',
+  'Video Game' = 'VIDEO_GAME',
+}
+
+export enum MediaRelation {
+  'is a Prequel' = 'PREQUEL',
+  'is a Sequel' = 'SEQUEL',
+  // Parent = 'PARENT',
+  // Contains = 'CONTAINS',
+  'is an Adaptation' = 'ADAPTATION',
+  'is a Side Story' = 'SIDE_STORY',
+  // Character = 'CHARACTER',
+  // Summary = 'SUMMARY',
+  // Alternative = 'ALTERNATIVE',
+  'is a Spin Off' = 'SPIN_OFF',
+  // Other = 'OTHER',
+  // Source = 'SOURCE',
+  // Compilation = 'COMPILATION',
+}
+
 export { Modify };
 
 export {
   CharacterRole,
   type DisaggregatedCharacter,
   type DisaggregatedMedia,
-  MediaFormat,
-  MediaRelation,
+  // MediaFormat,
+  // MediaRelation,
   MediaType,
   type Pack,
 } from 'https://raw.githubusercontent.com/ker0olos/fable/main/src/types.ts';

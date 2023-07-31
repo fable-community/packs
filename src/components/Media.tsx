@@ -28,6 +28,7 @@ import {
   Character,
   type Media,
   MediaFormat,
+  MediaRelation,
   MediaType,
 } from '../utils/types.ts';
 
@@ -145,7 +146,8 @@ export default (
               label={strings.format}
               defaultValue={signal.value.format}
               onChange={(f: MediaFormat) =>
-                signal.value.format = f || undefined}
+                // deno-lint-ignore no-explicit-any
+                signal.value.format = (f as any) || undefined}
             />
 
             <TextInput
@@ -174,7 +176,7 @@ export default (
               <label class={'hint'}>{strings.aliasesHint}</label>
               <div class={'aliases'}>
                 {signal.value.title.alternative?.map((alias, i) => (
-                  <div class={'alias'}>
+                  <div class={'alias'} key={i}>
                     <i>{alias}</i>
                     <IconTrash
                       class={'delete'}
@@ -217,6 +219,67 @@ export default (
                     </div>
                   )
                   : undefined}
+              </div>
+            </div>
+
+            <div class={'group-colum'}>
+              <label class={'label'}>{strings.relations}</label>
+              {/* <label class={'hint'}>{strings.aliasesHint}</label> */}
+              <div class={'relations'}>
+                {media.value
+                  .filter(({ id }) => id !== signal.value.id)
+                  .map((media, i) => {
+                    const defaultValue = Number(
+                      signal.value.relations?.findIndex((r) =>
+                        r.mediaId === media.id
+                      ),
+                    );
+
+                    return (
+                      <div class={'relation'} key={i}>
+                        <i>
+                          {media.title.english}
+                        </i>
+                        <Select
+                          nullLabel={strings.none}
+                          list={MediaRelation}
+                          defaultValue={defaultValue > -1
+                            // deno-lint-ignore no-non-null-assertion
+                            ? signal.value.relations![defaultValue].relation
+                            : undefined}
+                          onChange={(rel: MediaRelation) => {
+                            const exists = Number(
+                              signal.value.relations?.findIndex((r) =>
+                                r.mediaId === media.id
+                              ),
+                            );
+
+                            if (exists > -1) {
+                              if (rel) {
+                                // deno-lint-ignore  no-non-null-assertion
+                                signal.value.relations![exists].relation =
+                                  // deno-lint-ignore no-explicit-any
+                                  rel as any;
+                              } else {
+                                // deno-lint-ignore no-non-null-assertion
+                                signal.value.relations!.splice(exists, 1);
+                              }
+                            } else {
+                              if (!signal.value.relations) {
+                                signal.value.relations = [];
+                              }
+
+                              signal.value.relations.push({
+                                mediaId: media.id,
+                                // deno-lint-ignore no-explicit-any
+                                relation: rel as any,
+                              });
+                            }
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
               </div>
             </div>
 

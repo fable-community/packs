@@ -12,6 +12,7 @@ export default {
   title: 'Title',
   type: 'Type',
   format: 'Format',
+  none: 'None',
   popularity: 'Popularity',
   age: 'Age',
   gender: 'Gender',
@@ -36,9 +37,10 @@ export default {
     packDescription: 'A Pack Containing Various Mushrooms',
   },
   popularityHint:
-    'Should be the number of followers / game sales or any other number that indicates how popular the series is.',
+    'Should be the number of followers / game sales or any other number that indicates how popular the series is',
   aliases: 'Also Known As',
   aliasesHint: 'Additional aliases help improve search-ability',
+  relations: 'Relations',
   links: 'Links',
   linksNotice:
     'Only links to YouTube, Twitch, Crunchyroll, Tapas, Webtoon, and Amazon are allowed.',
