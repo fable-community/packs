@@ -103,15 +103,13 @@ export const getWebhook = (
       }];
     }
 
-    // const b = old.characters?.new
-    //   ?.find((b) => a.id === b.id);
+    const b = old.characters?.new
+      ?.find((b) => a.id === b.id);
 
-    // if (!b || JSON.stringify(a) !== JSON.stringify(b)) {
-    //   // deno-lint-ignore no-non-null-assertion
-    //   webhook.embeds!.push(embed);
-    // }
-
-    webhook.embeds?.push(embed);
+    if (!b || JSON.stringify(a) !== JSON.stringify(b)) {
+      // deno-lint-ignore no-non-null-assertion
+      webhook.embeds!.push(embed);
+    }
   });
 
   webhook.embeds = webhook.embeds?.slice(0, 3);
