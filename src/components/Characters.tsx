@@ -359,7 +359,7 @@ export default (
                     <TextInput
                       required
                       value={link.url}
-                      pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|crunchyroll\\.com|tapas\\.io|webtoon\\.com|amazon\\.com)[\\S]*$'}
+                      pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|crunchyroll\\.com|tapas\\.io|webtoons\\.com|amazon\\.com)[\\S]*$'}
                       placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
                       onInput={(url) =>
                         // deno-lint-ignore no-non-null-assertion
