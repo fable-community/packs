@@ -1,6 +1,6 @@
 import '#filter-boolean';
 
-import { useCallback, useContext, useState } from 'preact/hooks';
+import { useCallback, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
@@ -22,7 +22,7 @@ import IconApply from 'icons/check.tsx';
 
 import comma from '../utils/comma.ts';
 
-import { i18n, i18nContext } from '../utils/i18n.ts';
+import strings from '../../i18n/en-US.ts';
 
 import {
   Character,
@@ -41,8 +41,6 @@ export default (
     visible: boolean;
   },
 ) => {
-  const locale = useContext(i18nContext);
-
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
@@ -57,8 +55,8 @@ export default (
           ? (
             <div class={'item'}>
               <div />
-              <i>{i18n('title', locale)}</i>
-              <i>{i18n('popularity', locale)}</i>
+              <i>{strings.title}</i>
+              <i>{strings.popularity}</i>
             </div>
           )
           : undefined}
@@ -106,7 +104,7 @@ export default (
                   signal.value.id === id
                 );
 
-                if (i > -1 && window.confirm(i18n('deleteMedia', locale))) {
+                if (i > -1 && window.confirm(strings.deleteMedia)) {
                   media.value.splice(i, 1);
                   forceUpdate();
                   requestAnimationFrame(() => hideDialog('media'));
@@ -128,7 +126,7 @@ export default (
           <Select
             required
             list={MediaType}
-            label={i18n('type', locale)}
+            label={strings.type}
             defaultValue={signal.value.type}
             onChange={(t: MediaType) => signal.value.type = t}
           />
@@ -136,7 +134,7 @@ export default (
           <TextInput
             required
             pattern='.{1,128}'
-            label={i18n('title', locale)}
+            label={strings.title}
             value={signal.value.title.english ?? ''}
             onInput={(value) => signal.value.title.english = value}
             key={`${signal.value.id}-title`}
@@ -145,7 +143,7 @@ export default (
           <div class={'other'}>
             <Select
               list={MediaFormat}
-              label={i18n('format', locale)}
+              label={strings.format}
               defaultValue={signal.value.format}
               onChange={(f: MediaFormat) =>
                 // deno-lint-ignore no-explicit-any
@@ -156,9 +154,9 @@ export default (
               min={0}
               max={2147483647}
               type={'number'}
-              label={i18n('popularity', locale)}
+              label={strings.popularity}
               value={signal.value.popularity ?? 0}
-              hint={i18n('popularityHint', locale)}
+              hint={strings.popularityHint}
               onInput={(value) => signal.value.popularity = Number(value ?? 0)}
               key={`${signal.value.id}-popularity`}
             />
@@ -166,16 +164,16 @@ export default (
             <TextInput
               multiline
               pattern='.{1,2048}'
-              label={i18n('description', locale)}
-              placeholder={i18n('placeholderMediaDescription', locale)}
+              label={strings.description}
+              placeholder={strings.placeholder.mediaDescription}
               value={signal.value.description}
               onInput={(value) => signal.value.description = value}
               key={`${signal.value.id}-description`}
             />
 
             <div class={'group-colum'}>
-              <label class={'label'}>{i18n('aliases', locale)}</label>
-              <label class={'hint'}>{i18n('aliasesHint', locale)}</label>
+              <label class={'label'}>{strings.aliases}</label>
+              <label class={'hint'}>{strings.aliasesHint}</label>
               <div class={'aliases'}>
                 {signal.value.title.alternative?.map((alias, i) => (
                   <div class={'alias'} key={i}>
@@ -225,7 +223,7 @@ export default (
             </div>
 
             <div class={'group-colum'}>
-              <label class={'label'}>{i18n('relations', locale)}</label>
+              <label class={'label'}>{strings.relations}</label>
               {/* <label class={'hint'}>{strings.aliasesHint}</label> */}
               <div class={'relations'}>
                 {media.value
@@ -243,7 +241,7 @@ export default (
                           {media.title.english}
                         </i>
                         <Select
-                          nullLabel={i18n('none', locale)}
+                          nullLabel={strings.none}
                           list={MediaRelation}
                           defaultValue={defaultValue > -1
                             // deno-lint-ignore no-non-null-assertion
@@ -286,8 +284,8 @@ export default (
             </div>
 
             <div class={'group-colum'}>
-              <label class={'label'}>{i18n('links', locale)}</label>
-              <Notice type={'info'}>{i18n('linksNotice', locale)}</Notice>
+              <label class={'label'}>{strings.links}</label>
+              <Notice type={'info'}>{strings.linksNotice}</Notice>
               <div class={'links'}>
                 {signal.value.externalLinks?.map((link, i) => (
                   <div class={'group'}>

@@ -1,5 +1,3 @@
-import { useContext } from 'preact/hooks';
-
 import { useSignal } from '@preact/signals';
 
 import { serialize } from 'bson';
@@ -27,7 +25,7 @@ import IconTable from 'icons/table.tsx';
 import nanoid from '../utils/nanoid.ts';
 import compact from '../utils/compact.ts';
 
-import { i18n, i18nContext } from '../utils/i18n.ts';
+import strings from '../../i18n/en-US.ts';
 
 import type { Data } from '../api/publish.ts';
 
@@ -44,8 +42,6 @@ export default (props: {
   pack?: Pack;
   new?: boolean;
 }) => {
-  const locale = useContext(i18nContext);
-
   const servers = compact(props.pack?.servers ?? 0);
 
   const pack: Readonly<Pack['manifest']> = props.pack?.manifest
@@ -225,7 +221,7 @@ export default (props: {
         action={'back'}
       >
         {/* this component require client-side javascript */}
-        <noscript>{i18n('noScript', locale)}</noscript>
+        <noscript>{strings.noScript}</noscript>
 
         <Dialog name={'extra'} class={'dialog-normal'}>
           <div class={'metadata'}>
@@ -234,7 +230,7 @@ export default (props: {
             {!props.new
               ? (
                 <>
-                  <label>{i18n('packServers', locale, servers)}</label>
+                  <label>{strings.packServers.replace(/%/g, servers)}</label>
 
                   <div
                     class={'install-info'}
@@ -250,46 +246,46 @@ export default (props: {
             {privacy.value
               ? (
                 <>
-                  <Notice type={'info'}>{i18n('privateNotice', locale)}</Notice>
+                  <Notice type={'info'}>{strings.privateNotice}</Notice>
                   <button onClick={() => privacy.value = false}>
-                    {i18n('setPublic', locale)}
+                    {strings.setPublic}
                   </button>
                 </>
               )
               : (
                 <>
                   <button onClick={() => privacy.value = true}>
-                    {i18n('setPrivate', locale)}
+                    {strings.setPrivate}
                   </button>
                 </>
               )}
 
             <TextInput
               value={author}
-              label={i18n('packAuthor', locale)}
-              placeholder={i18n('placeholderPackAuthor', locale)}
+              label={strings.packAuthor}
+              placeholder={strings.placeholder.packAuthor}
               onInput={(value) => author.value = value}
             />
 
             <TextInput
               multiline
               value={description}
-              label={i18n('packDescription', locale)}
-              placeholder={i18n('placeholderPackDescription', locale)}
+              label={strings.packDescription}
+              placeholder={strings.placeholder.packDescription}
               onInput={(value) => description.value = value}
             />
 
             <TextInput
               value={webhookUrl}
-              label={i18n('packWebhookUrl', locale)}
-              hint={i18n('packWebhookUrlHint', locale)}
+              label={strings.packWebhookUrl}
+              hint={strings.packWebhookUrlHint}
               pattern={'https:\/\/discord\.com\/api\/webhooks\/[0-9]{18,19}\/.+'}
               placeholder={'https://discord.com/api/webhooks/185033133521895424/AAabbb'}
               onInput={(value) => webhookUrl.value = value}
             />
 
             <button onClick={onExport} class={'export'}>
-              {i18n('export', locale)}
+              {strings.export}
             </button>
           </div>
         </Dialog>
@@ -307,7 +303,7 @@ export default (props: {
               type={'text'}
               value={title}
               pattern='.{3,128}'
-              placeholder={i18n('packTitle', locale)}
+              placeholder={strings.packTitle}
               onInput={(
                 ev,
               ) => (title.value = (ev.target as HTMLInputElement).value)}
@@ -315,7 +311,7 @@ export default (props: {
 
             <div class={'buttons'}>
               <button disabled={loading} onClick={onPublish}>
-                {props.new ? i18n('publish', locale) : i18n('save', locale)}
+                {props.new ? strings.publish : strings.save}
               </button>
 
               <button
@@ -332,7 +328,7 @@ export default (props: {
                   characterSignal.value = item;
                 }}
               >
-                {i18n('addNewCharacter', locale)}
+                {strings.addNewCharacter}
               </button>
 
               <button
@@ -350,7 +346,7 @@ export default (props: {
                   mediaSignal.value = item;
                 }}
               >
-                {i18n('addNewMedia', locale)}
+                {strings.addNewMedia}
               </button>
             </div>
 
@@ -368,16 +364,15 @@ export default (props: {
           </div>
 
           <div class={'tabs'}>
-            {(i18n('tabs', locale) as unknown as string[])
-              .map((s, i) => (
-                <div
-                  key={i}
-                  data-selected={active.value === i}
-                  onClick={() => active.value = i}
-                >
-                  {s}
-                </div>
-              ))}
+            {strings.tabs.map((s, i) => (
+              <div
+                key={i}
+                data-selected={active.value === i}
+                onClick={() => active.value = i}
+              >
+                {s}
+              </div>
+            ))}
           </div>
 
           <Characters
