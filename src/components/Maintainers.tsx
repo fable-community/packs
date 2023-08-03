@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'preact/hooks';
+import { useCallback, useContext, useEffect, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
@@ -7,7 +7,7 @@ import Notice from './Notice.tsx';
 import IconTrash from 'icons/trash.tsx';
 import IconCrown from 'icons/crown.tsx';
 
-import strings from '../../i18n/en-US.ts';
+import { i18n, i18nContext } from '../utils/i18n.ts';
 
 import type { User } from '../utils/types.ts';
 
@@ -49,6 +49,8 @@ export default ({ owner, maintainers, visible }: {
   maintainers: Signal<string[]>;
   visible: boolean;
 }) => {
+  const locale = useContext(i18nContext);
+
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
@@ -80,7 +82,7 @@ export default ({ owner, maintainers, visible }: {
 
   return (
     <div style={{ display: visible ? '' : 'none' }} class={'maintainers'}>
-      <label>{strings.userId}</label>
+      <label>{i18n('userId', locale)}</label>
 
       <input
         type={'text'}
@@ -100,12 +102,12 @@ export default ({ owner, maintainers, visible }: {
           forceUpdate();
         }}
       >
-        {strings.addNew}
+        {i18n('addNew', locale)}
       </button>
 
       <i />
 
-      <Notice type={'info'}>{strings.maintainersNotice}</Notice>
+      <Notice type={'info'}>{i18n('maintainersNotice', locale)}</Notice>
 
       <div class='group'>
         <Profile id={owner} user={data[owner]} removable={false} />

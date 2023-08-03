@@ -1,3 +1,5 @@
+import { useContext } from 'preact/hooks';
+
 import Card from './Card.tsx';
 import Avatar from './Avatar.tsx';
 
@@ -9,7 +11,7 @@ import IconLink from 'icons/link.tsx';
 import IconPlus from 'icons/plus.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
 
-import strings from '../../i18n/en-US.ts';
+import { i18n, i18nContext } from '../utils/i18n.ts';
 
 import type { Pack, User } from '../utils/types.ts';
 
@@ -28,6 +30,8 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
   const { searchParams } = url;
 
   const packId = params.id;
+
+  const locale = useContext(i18nContext);
 
   // deno-lint-ignore no-non-null-assertion
   const user = data.user!;
@@ -69,7 +73,7 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
           <Dialog name={'success'} class={'dialog-normal'} visible={true}>
             <div>
               <p>
-                {strings.success.title}
+                {i18n('successTitle', locale)}
               </p>
               <div
                 class={'install-info'}
@@ -79,11 +83,13 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
                 <IconClipboard />
               </div>
               <Notice type={'info'}>
-                {strings.success.youNeed}
-                <strong>{strings.success.manageServer}</strong>
-                {strings.success.permissionToInstall}
+                {i18n('successYouNeed', locale)}
+                <strong>{i18n('successManageServer', locale)}</strong>
+                {i18n('successPermissionToInstall', locale)}
               </Notice>
-              <button data-dialog-cancel={'success'}>{strings.okay}</button>
+              <button data-dialog-cancel={'success'}>
+                {i18n('okay', locale)}
+              </button>
             </div>
           </Dialog>
         )
