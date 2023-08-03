@@ -34,7 +34,6 @@ interface Upload {
 }
 
 export interface Data {
-  username: string;
   old: Pack['manifest'];
   title?: string;
   private?: boolean;
@@ -47,6 +46,7 @@ export interface Data {
   maintainers?: string[];
   conflicts?: string[];
   new?: boolean;
+  username?: string;
 }
 
 const idRegex = /[^-_a-z0-9]+/g;
@@ -386,7 +386,7 @@ export const handler: Handlers = {
 
         const body = getWebhook({
           pack,
-          username: data.username,
+          username: data.username!,
           old: !data.new ? JSON.parse(old) : undefined,
         });
 

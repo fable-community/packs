@@ -78,20 +78,24 @@ export default (props: {
     id: '',
   });
 
+  const getData = (): Data => ({
+    old: props.pack?.manifest ?? pack,
+    title: title.value,
+    private: privacy.value,
+    author: author.value,
+    description: description.value,
+    webhookUrl: webhookUrl.value,
+    image: image.value,
+    media: media.value,
+    characters: characters.value,
+    maintainers: maintainers.value,
+    conflicts: conflicts.value,
+  });
+
   const onPublish = async () => {
-    const body: Data = {
+    const body = {
+      ...getData(),
       new: props.new,
-      old: props.pack?.manifest ?? pack,
-      title: title.value,
-      private: privacy.value,
-      author: author.value,
-      description: description.value,
-      webhookUrl: webhookUrl.value,
-      image: image.value,
-      media: media.value,
-      characters: characters.value,
-      maintainers: maintainers.value,
-      conflicts: conflicts.value,
       username: props.user.display_name ??
         props.user.username ?? 'undefined',
     };
@@ -165,6 +169,39 @@ export default (props: {
     } finally {
       loading.value = false;
     }
+  };
+
+  const onExport = () => {
+    const data = getData();
+
+    const blob = new Blob([
+      JSON.stringify(data),
+    ], { type: 'application/json' });
+
+    const downloadFile = document.createElement('a');
+
+    downloadFile.innerHTML = '';
+
+    downloadFile.download = `${props.pack?.manifest?.id ?? 'new'}-export.json`;
+
+    if (window.webkitURL) {
+      // Chrome allows the link to be clicked without actually adding it to the DOM.
+      downloadFile.href = window.webkitURL.createObjectURL(blob);
+    } else {
+      // Firefox requires the link to be added to the DOM before it can be clicked.
+
+      downloadFile.href = window.URL.createObjectURL(blob);
+
+      downloadFile.onclick = (ev) => {
+        document.body.removeChild(ev.target as HTMLAnchorElement);
+      };
+
+      downloadFile.style.display = 'none';
+
+      document.body.appendChild(downloadFile);
+    }
+
+    downloadFile.click();
   };
 
   return (
@@ -246,6 +283,10 @@ export default (props: {
               placeholder={'https://discord.com/api/webhooks/185033133521895424/AAabbb'}
               onInput={(value) => webhookUrl.value = value}
             />
+
+            <button onClick={onExport} class={'export'}>
+              {strings.export}
+            </button>
           </div>
         </Dialog>
 

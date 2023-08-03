@@ -5,6 +5,8 @@ export default {
   logout: 'Log Out',
   publish: 'Publish',
   save: 'Save',
+  export: 'Export',
+  import: 'Import',
   search: 'Search',
   tabs: ['Characters', 'Series', 'Collaborators', 'Disable'],
   okay: 'Okay',
