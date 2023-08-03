@@ -1,6 +1,6 @@
 import '#filter-boolean';
 
-import { useCallback, useState } from 'preact/hooks';
+import { useCallback, useContext, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
@@ -27,7 +27,7 @@ import IconAdd from 'icons/circle-plus.tsx';
 import IconRemove from 'icons/circle-minus.tsx';
 import IconReset from 'icons/circle-x.tsx';
 
-import strings from '../../i18n/en-US.ts';
+import { i18n, i18nContext } from '../utils/i18n.ts';
 
 import { type Character, CharacterRole, type Media } from '../utils/types.ts';
 
@@ -40,6 +40,8 @@ export default (
     visible: boolean;
   },
 ) => {
+  const locale = useContext(i18nContext);
+
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
@@ -67,10 +69,10 @@ export default (
           ? (
             <div class={'item'}>
               <div />
-              <i>{strings.name}</i>
-              <i>{strings.primaryMedia}</i>
-              <i>{strings.role}</i>
-              <i>{strings.rating}</i>
+              <i>{i18n('name', locale)}</i>
+              <i>{i18n('primaryMedia', locale)}</i>
+              <i>{i18n('role', locale)}</i>
+              <i>{i18n('rating', locale)}</i>
             </div>
           )
           : undefined}
@@ -139,7 +141,7 @@ export default (
                   signal.value.id === id
                 );
 
-                if (i > -1 && window.confirm(strings.deleteCharacter)) {
+                if (i > -1 && window.confirm(i18n('deleteCharacter', locale))) {
                   characters.value.splice(i, 1);
                   forceUpdate();
                   requestAnimationFrame(() => hideDialog('characters'));
@@ -161,7 +163,7 @@ export default (
           <TextInput
             required
             pattern='.{1,128}'
-            label={strings.name}
+            label={i18n('name', locale)}
             value={signal.value.name.english ?? ''}
             onInput={(value) => signal.value.name.english = value}
             key={`${signal.value.id}-title`}
@@ -169,7 +171,7 @@ export default (
 
           <div class={'group'}>
             <Select
-              label={strings.primaryMedia}
+              label={i18n('primaryMedia', locale)}
               data-warning={!signal.value.media?.length}
               defaultValue={signal.value.media?.[0]?.mediaId}
               list={media.value.reduce((acc, media) => {
@@ -188,7 +190,7 @@ export default (
               ? (
                 <Select
                   required
-                  label={strings.role}
+                  label={i18n('role', locale)}
                   list={CharacterRole}
                   // deno-lint-ignore no-non-null-assertion
                   defaultValue={signal.value.media![0].role}
@@ -205,7 +207,7 @@ export default (
           {!signal.value.media?.length
             ? (
               <Notice type={'warn'}>
-                {strings.primaryMediaNotice}
+                {i18n('primaryMediaNotice', locale)}
               </Notice>
             )
             : undefined}
@@ -213,11 +215,11 @@ export default (
           <div class={'other'}>
             <div class={'rating'}>
               <label class={'label'}>
-                {strings.rating}
+                {i18n('rating', locale)}
                 {': '}
                 {typeof signal.value.popularity === 'number'
-                  ? strings.basedOnIndividual
-                  : strings.basedOnMedia}
+                  ? i18n('basedOnIndividual', locale)
+                  : i18n('basedOnMedia', locale)}
               </label>
               <div>
                 <div>
@@ -264,16 +266,16 @@ export default (
 
             <div class={'group'}>
               <TextInput
-                label={strings.age}
-                placeholder={strings.placeholder.age}
+                label={i18n('age', locale)}
+                placeholder={i18n('placeholderAge', locale)}
                 value={signal.value.age ?? ''}
                 onInput={(value) => signal.value.age = value || undefined}
                 key={`${signal.value.id}-age`}
               />
 
               <TextInput
-                label={strings.gender}
-                placeholder={strings.placeholder.gender}
+                label={i18n('gender', locale)}
+                placeholder={i18n('placeholderGender', locale)}
                 value={signal.value.gender ?? ''}
                 onInput={(value) => signal.value.gender = value || undefined}
                 key={`${signal.value.id}-gender`}
@@ -283,16 +285,16 @@ export default (
             <TextInput
               multiline
               pattern='.{1,2048}'
-              label={strings.description}
-              placeholder={strings.placeholder.charDescription}
+              label={i18n('description', locale)}
+              placeholder={i18n('placeholderCharDescription', locale)}
               value={signal.value.description}
               onInput={(value) => signal.value.description = value || undefined}
               key={`${signal.value.id}-description`}
             />
 
             <div class={'group-colum'}>
-              <label class={'label'}>{strings.aliases}</label>
-              <label class={'hint'}>{strings.aliasesHint}</label>
+              <label class={'label'}>{i18n('aliases', locale)}</label>
+              <label class={'hint'}>{i18n('aliasesHint', locale)}</label>
               <div class={'aliases'}>
                 {signal.value.name.alternative?.map((alias, i) => (
                   <div class={'alias'} key={i}>
@@ -342,8 +344,8 @@ export default (
             </div>
 
             <div class={'group-colum'}>
-              <label class={'label'}>{strings.links}</label>
-              <Notice type={'info'}>{strings.linksNotice}</Notice>
+              <label class={'label'}>{i18n('links', locale)}</label>
+              <Notice type={'info'}>{i18n('linksNotice', locale)}</Notice>
               <div class={'links'}>
                 {signal.value.externalLinks?.map((link, i) => (
                   <div class={'group'}>
