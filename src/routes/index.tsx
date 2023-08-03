@@ -8,8 +8,6 @@ import Maintenance from './_503.tsx';
 
 import Dashboard, { type DashboardData } from '../components/Dashboard.tsx';
 
-import { i18nContext, pick } from '../utils/i18n.ts';
-
 import type { Pack, User } from '../utils/types.ts';
 
 interface Cookies {
@@ -91,21 +89,13 @@ export const handler: Handlers = {
       return ctx.renderNotFound();
     }
 
-    return ctx.render({
-      ...data,
-      locale: pick(req.headers.get('Accept-Language') ?? ''),
-    });
+    return ctx.render(data);
   },
 };
 
-export default (props: PageProps<DashboardData & { locale: string }>) => {
-  return (
-    <i18nContext.Provider value={props.data.locale}>
-      {props.data.maintenance
-        ? <Maintenance />
-        : props.data.user
-        ? <Dashboard {...props} />
-        : <Login />}
-    </i18nContext.Provider>
-  );
+export default (props: PageProps<DashboardData>) => {
+  if (props.data.maintenance) {
+    return <Maintenance />;
+  }
+  return props.data.user ? <Dashboard {...props} /> : <Login />;
 };
