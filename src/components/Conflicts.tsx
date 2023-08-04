@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'preact/hooks';
+import { useCallback, useEffect, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
@@ -8,7 +8,7 @@ import IconTrash from 'icons/trash.tsx';
 
 import { gql, request } from '../utils/graphql.ts';
 
-import { i18n, i18nContext } from '../utils/i18n.ts';
+import { i18n } from '../utils/i18n.ts';
 
 const getAnilistIds = (ids: string[]) => {
   const anilistIds: number[] = [];
@@ -69,8 +69,6 @@ export default ({ conflicts, visible }: {
   conflicts: Signal<string[]>;
   visible: boolean;
 }) => {
-  const locale = useContext(i18nContext);
-
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
@@ -129,7 +127,7 @@ export default ({ conflicts, visible }: {
       <div class={'search'}>
         <input
           type={'text'}
-          placeholder={i18n('search', locale)}
+          placeholder={i18n('search')}
           onFocus={() => focused.value = true}
           onInput={(event) => {
             search.value = (event.target as HTMLInputElement).value;
@@ -190,7 +188,7 @@ export default ({ conflicts, visible }: {
 
       <i />
 
-      <Notice type={'info'}>{i18n('conflictsNotice', locale)}</Notice>
+      <Notice type={'info'}>{i18n('conflictsNotice')}</Notice>
 
       <div class='group'>
         {conflicts.value
