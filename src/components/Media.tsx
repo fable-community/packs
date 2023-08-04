@@ -24,13 +24,7 @@ import comma from '../utils/comma.ts';
 
 import { i18n } from '../utils/i18n.ts';
 
-import {
-  Character,
-  type Media,
-  MediaFormat,
-  MediaRelation,
-  MediaType,
-} from '../utils/types.ts';
+import { Character, type Media, MediaType } from '../utils/types.ts';
 
 export default (
   { layout, signal, media, visible }: {
@@ -47,6 +41,25 @@ export default (
   const forceUpdate = useCallback(() => updateState({}), []);
 
   const newAliasValue = useSignal('');
+
+  const MediaFormat = {
+    [i18n('anime')]: 'TV',
+    [i18n('manga')]: 'MANGA',
+    [i18n('movie')]: 'MOVIE',
+    [i18n('OVA')]: 'OVA',
+    [i18n('ONA')]: 'ONA',
+    [i18n('oneShot')]: 'ONE_SHOT',
+    [i18n('novel')]: 'NOVEL',
+    [i18n('videoGame')]: 'VIDEO_GAME',
+  };
+
+  const MediaRelation = {
+    [i18n('prequel')]: 'PREQUEL',
+    [i18n('sequel')]: 'SEQUEL',
+    [i18n('adaptation')]: 'ADAPTATION',
+    [i18n('sideStory')]: 'SIDE_STORY',
+    [i18n('spinoff')]: 'SPIN_OFF',
+  };
 
   return (
     <div style={{ display: visible ? '' : 'none' }}>
@@ -145,7 +158,7 @@ export default (
               list={MediaFormat}
               label={i18n('format')}
               defaultValue={signal.value.format}
-              onChange={(f: MediaFormat) =>
+              onChange={(f) =>
                 // deno-lint-ignore no-explicit-any
                 signal.value.format = (f as any) || undefined}
             />
@@ -247,7 +260,7 @@ export default (
                             // deno-lint-ignore no-non-null-assertion
                             ? signal.value.relations![defaultValue].relation
                             : undefined}
-                          onChange={(rel: MediaRelation) => {
+                          onChange={(r) => {
                             const exists = Number(
                               signal.value.relations?.findIndex((r) =>
                                 r.mediaId === media.id
@@ -255,11 +268,11 @@ export default (
                             );
 
                             if (exists > -1) {
-                              if (rel) {
+                              if (r) {
                                 // deno-lint-ignore  no-non-null-assertion
                                 signal.value.relations![exists].relation =
                                   // deno-lint-ignore no-explicit-any
-                                  rel as any;
+                                  r as any;
                               } else {
                                 // deno-lint-ignore no-non-null-assertion
                                 signal.value.relations!.splice(exists, 1);
@@ -272,7 +285,7 @@ export default (
                               signal.value.relations.push({
                                 mediaId: media.id,
                                 // deno-lint-ignore no-explicit-any
-                                relation: rel as any,
+                                relation: r as any,
                               });
                             }
                           }}

@@ -29,8 +29,9 @@ export default {
   setPublic: 'Establecer como Público',
   setPrivate: 'Establecer como Privado',
   privateNotice: 'Solo tú y otros colaboradores podrán instalar este pack',
-  placeholderGender: 'Clasificado',
 
+  //
+  placeholderGender: 'Clasificado',
   placeholderAge: 'Ancestral',
   placeholderPackAuthor: 'The Mario Bros',
   placeholderCharDescription:
@@ -38,6 +39,7 @@ export default {
   placeholderMediaDescription:
     'Un hombre de 30 años es golpeado por un camión y se reencarna en un árbol...',
   placeholderPackDescription: 'Un Pack Que Contiene Varios Champiñones',
+  //
 
   popularityHint:
     'Debería ser el número de seguidores / ventas o cualquier otro número que indique qué tan popular es la serie',
@@ -53,12 +55,14 @@ export default {
   primaryMedia: 'Serie',
   primaryMediaNotice: 'El personaje no aparecerá en el gacha',
 
+  //
   successTitle:
     'Has publicado un nuevo pack exitosamente. Ahora puedes instalarlo usando:',
   successYouNeed: 'Necesitas el permiso ',
   successManageServer: 'Administrar Servidor',
   successPermissionToInstall:
     ' para instalar packs. Si no lo tienes puedes pedirle a alguien que lo tenga que instale el pack por tí.',
+  //
 
   basedOnMedia: 'Basado en la serie',
   basedOnIndividual: 'Individual',
@@ -72,4 +76,23 @@ export default {
     'En la mayoría de casos querrás desactivar las series que tu pack reemplaza o con las que tiene conflicto',
   deleteMedia: '¿Estás seguro/a de que quieres borrar esta serie?',
   deleteCharacter: '¿Estás seguro/a de que quieres borrar este personaje?',
+
+  // formats
+  anime: 'Anime',
+  manga: 'Manga',
+  movie: 'Movie',
+  OVA: 'OVA',
+  ONA: 'ONA',
+  oneShot: 'One Shot',
+  novel: 'Novel',
+  videoGame: 'Video Game',
+  //
+
+  // relations
+  prequel: 'is a Prequel',
+  sequel: 'is a Sequel',
+  adaptation: 'is an Adaptation',
+  sideStory: 'is a Side Story',
+  spinoff: 'is a Spin Off',
+  //
 };
