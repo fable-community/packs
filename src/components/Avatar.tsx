@@ -1,10 +1,14 @@
+import { useContext } from 'preact/hooks';
+
 import Dialog from './Dialog.tsx';
 
 import IconLogout from 'icons/logout.tsx';
 
-import strings from '../../i18n/en-US.ts';
+import { i18n, i18nContext } from '../utils/i18n.ts';
 
 export default ({ id, avatar }: { id: string; avatar?: string }) => {
+  const locale = useContext(i18nContext);
+
   return (
     <>
       <img
@@ -18,7 +22,7 @@ export default ({ id, avatar }: { id: string; avatar?: string }) => {
       <Dialog name={'logout'} class={'user-dialog'}>
         <form method={'post'} action={'/api/logout'}>
           <button type={'submit'}>
-            {strings.logout}
+            {i18n('logout', locale)}
             <IconLogout />
           </button>
         </form>

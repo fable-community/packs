@@ -8,6 +8,8 @@ import Maintenance from './_503.tsx';
 
 import Dashboard, { type DashboardData } from '../components/Dashboard.tsx';
 
+import { i18nContext, pick } from '../utils/i18n.ts';
+
 import type { Pack, User } from '../utils/types.ts';
 
 interface Cookies {
@@ -34,21 +36,17 @@ export const handler: Handlers = {
     const endpoint = Deno.env.get('API_ENDPOINT');
 
     if (cookies.accessToken) {
-      if (production) {
-        const response = await fetch('https://discord.com/api/users/@me', {
-          method: 'GET',
-          headers: {
-            'content-type': 'application/json',
-            'authorization': `Bearer ${cookies.accessToken}`,
-          },
-        });
+      const response = await fetch('https://discord.com/api/users/@me', {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          'authorization': `Bearer ${cookies.accessToken}`,
+        },
+      })
+        .catch(console.error);
 
+      if (response?.ok && response?.status === 200) {
         data.user = await response.json() as User;
-      } else {
-        data.user = {
-          id: '1',
-          username: 'test',
-        };
       }
     } else if (cookies.refreshToken) {
       // TODO support refreshing the access token #2
@@ -89,13 +87,21 @@ export const handler: Handlers = {
       return ctx.renderNotFound();
     }
 
-    return ctx.render(data);
+    return ctx.render({
+      ...data,
+      locale: pick(req.headers.get('Accept-Language') ?? ''),
+    });
   },
 };
 
-export default (props: PageProps<DashboardData>) => {
-  if (props.data.maintenance) {
-    return <Maintenance />;
-  }
-  return props.data.user ? <Dashboard {...props} /> : <Login />;
+export default (props: PageProps<DashboardData & { locale: string }>) => {
+  return (
+    <i18nContext.Provider value={props.data.locale}>
+      {props.data.maintenance
+        ? <Maintenance />
+        : props.data.user
+        ? <Dashboard {...props} />
+        : <Login />}
+    </i18nContext.Provider>
+  );
 };
