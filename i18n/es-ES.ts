@@ -1,3 +1,5 @@
+// deno-lint-ignore-file prefer-ascii
+
 export default {
   noScript: 'javascript es necesario para utilizar esta app!',
   packTitle: 'Título del pack',
