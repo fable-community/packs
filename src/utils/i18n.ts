@@ -8,14 +8,16 @@ export const i18nContext = createContext('');
 const regex = /((([a-zA-Z]+(-[a-zA-Z0-9]+){0,2})|\*)(;q=[0-1](\.[0-9]+)?)?)*/g;
 
 export const availableLocales = [
+  'en',
   'en-US',
+  'es',
   'es-ES',
 ];
 
 export function pick(acceptHeader: string) {
-  const strings = (acceptHeader).match(regex) ?? [];
+  const langs = (acceptHeader).match(regex) ?? [];
 
-  const options = strings.map((lang) => {
+  const options = langs.map((lang) => {
     if (!lang) {
       return;
     }
@@ -31,21 +33,25 @@ export function pick(acceptHeader: string) {
     .filter((l) => availableLocales.includes(l.locale))
     .sort((a, b) => b.quality - a.quality);
 
+  // console.log(acceptHeader, options);
+  // console.log(options[0].locale);
+
   if (options.length > 0) {
     return options[0].locale;
   } else {
-    return 'en-US';
+    return 'en';
   }
 }
 
 export function i18n(
   key: keyof typeof enUS,
-  locale = 'en-US',
+  locale = 'en',
   ...args: (string | number)[]
 ): string {
   let value: string | string[];
 
   switch (locale) {
+    case 'es':
     case 'es-ES':
       value = esES[key];
       break;
