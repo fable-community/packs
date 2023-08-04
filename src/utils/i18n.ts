@@ -1,9 +1,11 @@
-import { createContext } from 'preact';
+import { signal } from '@preact/signals';
+
+import { IS_BROWSER } from '$fresh/runtime.ts';
 
 import enUS from '../../i18n/en-US.ts';
 import esES from '../../i18n/es-ES.ts';
 
-export const i18nContext = createContext('');
+export const locale = signal('en-US');
 
 const regex = /((([a-zA-Z]+(-[a-zA-Z0-9]+){0,2})|\*)(;q=[0-1](\.[0-9]+)?)?)*/g;
 
@@ -14,7 +16,7 @@ export const availableLocales = [
   'es-ES',
 ];
 
-export function pick(acceptHeader: string) {
+export function i18nSSR(acceptHeader: string) {
   const langs = (acceptHeader).match(regex) ?? [];
 
   const options = langs.map((lang) => {
@@ -33,24 +35,23 @@ export function pick(acceptHeader: string) {
     .filter((l) => availableLocales.includes(l.locale))
     .sort((a, b) => b.quality - a.quality);
 
-  // console.log(acceptHeader, options);
-  // console.log(options[0].locale);
-
   if (options.length > 0) {
-    return options[0].locale;
-  } else {
-    return 'en';
+    locale.value = options[0].locale;
   }
 }
 
 export function i18n(
   key: keyof typeof enUS,
-  locale = 'en',
   ...args: (string | number)[]
 ): string {
   let value: string | string[];
 
-  switch (locale) {
+  // on browser the single would not have been updated from i18nSSR()
+  if (IS_BROWSER) {
+    locale.value = navigator.languages[0];
+  }
+
+  switch (locale.value) {
     case 'es':
     case 'es-ES':
       value = esES[key];
