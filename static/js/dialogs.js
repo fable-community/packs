@@ -1,3 +1,5 @@
+import { IS_BROWSER } from '$fresh/runtime.ts';
+
 export function showDialog(name) {
   document.querySelectorAll(`[data-dialog-cb="${name}"]`).forEach((ele) => {
     ele.style.display = '';
@@ -21,44 +23,46 @@ export function hideDialog(name) {
   });
 }
 
-addEventListener('load', () => {
-  const dialogs = document.querySelectorAll('[data-dialog]');
+if (IS_BROWSER) {
+  addEventListener('load', () => {
+    const dialogs = document.querySelectorAll('[data-dialog]');
 
-  // handle buttons that want to show a dialog
-  dialogs.forEach((ele) => {
-    ele.addEventListener('click', () => {
-      const name = ele.getAttribute('data-dialog');
-      showDialog(name);
+    // handle buttons that want to show a dialog
+    dialogs.forEach((ele) => {
+      ele.addEventListener('click', () => {
+        const name = ele.getAttribute('data-dialog');
+        showDialog(name);
+      });
     });
-  });
 
-  const dialogsCancels = document.querySelectorAll('[data-dialog-cancel]');
+    const dialogsCancels = document.querySelectorAll('[data-dialog-cancel]');
 
-  // handle buttons that want to cancel a dialog
+    // handle buttons that want to cancel a dialog
 
-  dialogsCancels.forEach((ele) => {
-    ele.addEventListener('click', () => {
-      const name = ele.getAttribute('data-dialog-cancel');
-      hideDialog(name);
+    dialogsCancels.forEach((ele) => {
+      ele.addEventListener('click', () => {
+        const name = ele.getAttribute('data-dialog-cancel');
+        hideDialog(name);
+      });
     });
+
+    // press `esc` to close dialogs
+    onkeydown = (e) => {
+      if (e.key === 'Escape') {
+        const elements = [
+          ...document.querySelectorAll('[data-dialog-cb="info"]'),
+          ...document.querySelectorAll('[data-dialog-cb="media"]'),
+          ...document.querySelectorAll('[data-dialog-cb="characters"]'),
+          ...document.querySelectorAll('[data-dialog-cb="maintainers"]'),
+        ];
+
+        elements.forEach(
+          (ele) => {
+            e.preventDefault();
+            ele.style.display = 'none';
+          },
+        );
+      }
+    };
   });
-
-  // press `esc` to close dialogs
-  onkeydown = (e) => {
-    if (e.key === 'Escape') {
-      const elements = [
-        ...document.querySelectorAll('[data-dialog-cb="info"]'),
-        ...document.querySelectorAll('[data-dialog-cb="media"]'),
-        ...document.querySelectorAll('[data-dialog-cb="characters"]'),
-        ...document.querySelectorAll('[data-dialog-cb="maintainers"]'),
-      ];
-
-      elements.forEach(
-        (ele) => {
-          e.preventDefault();
-          ele.style.display = 'none';
-        },
-      );
-    }
-  };
-});
+}
