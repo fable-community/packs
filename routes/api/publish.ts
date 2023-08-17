@@ -6,15 +6,15 @@ import { getCookies } from '$std/http/cookie.ts';
 
 import { deserialize } from 'bson';
 
-import nanoid from '../utils/nanoid.ts';
+import nanoid from '../../utils/nanoid.ts';
 
-import { getRating } from '../utils/rating.ts';
+import { getRating } from '../../utils/rating.ts';
 
-import { getWebhook } from '../utils/embeds.ts';
+import { getWebhook } from '../../utils/embeds.ts';
 
-import { IImageInput, TEN_MB } from '../components/ImageInput.tsx';
+import { IImageInput, TEN_MB } from '../../components/ImageInput.tsx';
 
-import { Character, CharacterRole, Media, Pack } from '../utils/types.ts';
+import { Character, CharacterRole, Media, Pack } from '../../utils/types.ts';
 
 import type { Handlers } from '$fresh/server.ts';
 

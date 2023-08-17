@@ -21,13 +21,26 @@
     "indentWidth": 2
   },
   "lock": false,
-  "importMap": "./import_map.json",
   "tasks": {
-    "start": "deno run -A --watch=static/,src/,i18n/ main.ts",
-    "udd": "deno run -A https://deno.land/x/udd/main.ts import_map.json"
+    "start": "deno run -A --watch=static/,src/,i18n/ dev.ts",
+    "build": "deno run -A dev.ts build",
+    "preview": "deno run -A main.ts",
+    "update": "deno run -A -r https://fresh.deno.dev/update ."
   },
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
+  },
+  "imports": {
+    "@preact/signals-core": "https://esm.sh/@preact/signals-core@1.3.1",
+    "@preact/signals": "https://esm.sh/*@preact/signals@1.1.3",
+    "#filter-boolean": "https://esm.sh/@total-typescript/ts-reset@0.4.2/filter-boolean",
+    "$fresh/": "https://deno.land/x/fresh@1.4.1/",
+    "$std/": "https://deno.land/std@0.198.0/",
+    "bson": "https://raw.githubusercontent.com/lucsoft/web_bson/v0.3.0/mod.js",
+    "icons/": "https://deno.land/x/tabler_icons_tsx@0.0.4/tsx/",
+    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.1",
+    "preact": "https://esm.sh/preact@10.15.1",
+    "preact/": "https://esm.sh/preact@10.15.1/"
   }
 }

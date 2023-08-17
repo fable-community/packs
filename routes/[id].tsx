@@ -65,7 +65,7 @@ export const handler: Handlers = {
           return { ...acc, [pack.manifest.id]: pack };
         }, {});
       } else {
-        const { default: mock } = await import('../../mock.json', {
+        const { default: mock } = await import('../mock.json', {
           assert: { type: 'json' },
         });
 
