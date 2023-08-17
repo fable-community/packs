@@ -18,7 +18,8 @@
   "fmt": {
     "useTabs": false,
     "singleQuote": true,
-    "indentWidth": 2
+    "indentWidth": 2,
+    "exclude": ["_fresh"]
   },
   "lock": false,
   "tasks": {
