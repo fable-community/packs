@@ -17,7 +17,7 @@ export const availableLocales = [
 ];
 
 export function i18nSSR(acceptHeader: string) {
-  const langs = (acceptHeader).match(regex) ?? [];
+  const langs = acceptHeader.match(regex) ?? [];
 
   const options = langs.map((lang) => {
     if (!lang) {
