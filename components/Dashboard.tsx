@@ -3,7 +3,8 @@ import Avatar from './Avatar.tsx';
 
 import Notice from './Notice.tsx';
 import Dialog from './Dialog.tsx';
-import Manage from './Manage.tsx';
+
+import Manage from '../islands/Manage.tsx';
 
 import IconLink from 'icons/link.tsx';
 import IconPlus from 'icons/plus.tsx';

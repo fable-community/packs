@@ -1,6 +1,10 @@
 name: deno
 
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   fmt:
@@ -20,3 +24,23 @@ jobs:
         with:
           deno-version: v1.x
       - run: deno lint --config deno.json
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write 
+      contents: read 
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - run: "deno task build"
+
+      - uses: denoland/deployctl@v1
+        with:
+          project: "packs"
+          entrypoint: "./main.ts"

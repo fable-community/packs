@@ -4,7 +4,7 @@ import { useCallback, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
-import { hideDialog, showDialog } from '../../static/js/dialogs.js';
+import { hideDialog, showDialog } from '../static/js/dialogs.js';
 
 import { getPopularity, getRating } from '../utils/rating.ts';
 

@@ -2,18 +2,18 @@ import { useSignal } from '@preact/signals';
 
 import { serialize } from 'bson';
 
-import ImageInput, { type IImageInput } from './ImageInput.tsx';
+import ImageInput, { type IImageInput } from '../components/ImageInput.tsx';
 
-import Dialog from './Dialog.tsx';
+import Dialog from '../components/Dialog.tsx';
 
-import Notice, { Dismissible } from './Notice.tsx';
+import Notice, { Dismissible } from '../components/Notice.tsx';
 
-import Media from './Media.tsx';
-import Characters from './Characters.tsx';
-import Maintainers from './Maintainers.tsx';
-import Conflicts from './Conflicts.tsx';
+import Media from '../components/Media.tsx';
+import Characters from '../components/Characters.tsx';
+import Maintainers from '../components/Maintainers.tsx';
+import Conflicts from '../components/Conflicts.tsx';
 
-import TextInput from './TextInput.tsx';
+import TextInput from '../components/TextInput.tsx';
 
 import IconClose from 'icons/x.tsx';
 import IconApply from 'icons/check.tsx';
@@ -27,7 +27,7 @@ import compact from '../utils/compact.ts';
 
 import { i18n, locale } from '../utils/i18n.ts';
 
-import type { Data } from '../api/publish.ts';
+import type { Data } from '../routes/api/publish.ts';
 
 import {
   Character,

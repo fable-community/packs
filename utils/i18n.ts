@@ -2,8 +2,8 @@ import { signal } from '@preact/signals';
 
 import { IS_BROWSER } from '$fresh/runtime.ts';
 
-import enUS from '../../i18n/en-US.ts';
-import esES from '../../i18n/es-ES.ts';
+import enUS from '../i18n/en-US.ts';
+import esES from '../i18n/es-ES.ts';
 
 export const locale = signal('en-US');
 
@@ -17,7 +17,7 @@ export const availableLocales = [
 ];
 
 export function i18nSSR(acceptHeader: string) {
-  const langs = (acceptHeader).match(regex) ?? [];
+  const langs = acceptHeader.match(regex) ?? [];
 
   const options = langs.map((lang) => {
     if (!lang) {
@@ -46,7 +46,7 @@ export function i18n(
 ): string {
   let value: string | string[];
 
-  // on browser the single would not have been updated from i18nSSR()
+  // on browser the signal would not have been updated from i18nSSR()
   if (IS_BROWSER) {
     locale.value = navigator.languages[0];
   }
