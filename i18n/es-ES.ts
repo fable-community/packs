@@ -80,19 +80,19 @@ export default {
   // formats
   anime: 'Anime',
   manga: 'Manga',
-  movie: 'Movie',
+  movie: 'Película',
   OVA: 'OVA',
   ONA: 'ONA',
   oneShot: 'One Shot',
-  novel: 'Novel',
-  videoGame: 'Video Game',
+  novel: 'Novela',
+  videoGame: 'Videojuego',
   //
 
   // relations
-  prequel: 'is a Prequel',
-  sequel: 'is a Sequel',
-  adaptation: 'is an Adaptation',
-  sideStory: 'is a Side Story',
-  spinoff: 'is a Spin Off',
+  prequel: 'es una Precuela',
+  sequel: 'es una Secuela',
+  adaptation: 'es una Adaptación',
+  sideStory: 'es una Historia Paralela',
+  spinoff: 'es un Spin Off',
   //
 };
