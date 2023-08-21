@@ -7,11 +7,8 @@ import * as $1 from './routes/_404.tsx';
 import * as $2 from './routes/_500.tsx';
 import * as $3 from './routes/_503.tsx';
 import * as $4 from './routes/_app.tsx';
-import * as $5 from './routes/api/login.ts';
-import * as $6 from './routes/api/logout.ts';
-import * as $7 from './routes/api/publish.ts';
-import * as $8 from './routes/callback.tsx';
-import * as $9 from './routes/index.tsx';
+import * as $5 from './routes/api/publish.ts';
+import * as $6 from './routes/index.tsx';
 import * as $$0 from './islands/Manage.tsx';
 
 const manifest = {
@@ -21,11 +18,8 @@ const manifest = {
     './routes/_500.tsx': $2,
     './routes/_503.tsx': $3,
     './routes/_app.tsx': $4,
-    './routes/api/login.ts': $5,
-    './routes/api/logout.ts': $6,
-    './routes/api/publish.ts': $7,
-    './routes/callback.tsx': $8,
-    './routes/index.tsx': $9,
+    './routes/api/publish.ts': $5,
+    './routes/index.tsx': $6,
   },
   islands: {
     './islands/Manage.tsx': $$0,

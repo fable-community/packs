@@ -1,6 +1,8 @@
 import { Handlers, type PageProps } from '$fresh/server.ts';
 
-import { getCookies } from '$std/http/cookie.ts';
+import { getSessionAccessToken, getSessionId } from 'kv_oauth';
+
+import { getDiscordOAuth2Client } from '../utils/oauth.ts';
 
 import Login from '../components/Login.tsx';
 
@@ -11,11 +13,6 @@ import Dashboard, { type DashboardData } from '../components/Dashboard.tsx';
 import { i18nSSR } from '../utils/i18n.ts';
 
 import type { Pack, User } from '../utils/types.ts';
-
-interface Cookies {
-  accessToken?: string;
-  refreshToken?: string;
-}
 
 export const production = !!Deno.env.get('DENO_DEPLOYMENT_ID');
 
@@ -31,16 +28,20 @@ export const handler: Handlers = {
 
     const data = { packs: {} } as DashboardData;
 
-    const cookies = getCookies(req.headers) as Cookies;
-
     const endpoint = Deno.env.get('API_ENDPOINT');
 
-    if (cookies.accessToken) {
+    const sessionId = await getSessionId(req);
+
+    const accessToken = sessionId
+      ? await getSessionAccessToken(getDiscordOAuth2Client(req), sessionId)
+      : null;
+
+    if (accessToken) {
       const response = await fetch('https://discord.com/api/users/@me', {
         method: 'GET',
         headers: {
           'content-type': 'application/json',
-          'authorization': `Bearer ${cookies.accessToken}`,
+          'authorization': `Bearer ${accessToken}`,
         },
       })
         .catch(console.error);
@@ -48,15 +49,13 @@ export const handler: Handlers = {
       if (response?.ok && response?.status === 200) {
         data.user = await response.json() as User;
       }
-    } else if (cookies.refreshToken) {
-      // TODO support refreshing the access token #2
     }
 
     if (data.user && endpoint) {
       if (production) {
         const response = await fetch(`${endpoint}`, {
           method: 'GET',
-          headers: { 'authorization': `Bearer ${cookies.accessToken}` },
+          headers: { 'authorization': `Bearer ${accessToken}` },
         });
 
         const packs = (await response.json() as { data: Pack[] }).data;

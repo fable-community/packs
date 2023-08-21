@@ -1,4 +1,4 @@
-import { IS_BROWSER } from '$fresh/runtime.ts';
+const IS_BROWSER = typeof document !== 'undefined';
 
 if (IS_BROWSER) {
   addEventListener('load', () => {

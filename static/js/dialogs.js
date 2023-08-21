@@ -1,4 +1,4 @@
-import { IS_BROWSER } from '$fresh/runtime.ts';
+const IS_BROWSER = typeof document !== 'undefined';
 
 export function showDialog(name) {
   document.querySelectorAll(`[data-dialog-cb="${name}"]`).forEach((ele) => {

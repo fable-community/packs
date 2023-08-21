@@ -2,9 +2,11 @@
 
 import { encode } from '$std/encoding/base64.ts';
 
-import { getCookies } from '$std/http/cookie.ts';
-
 import { deserialize } from 'bson';
+
+import { getSessionAccessToken, getSessionId } from 'kv_oauth';
+
+import { getDiscordOAuth2Client } from '../../utils/oauth.ts';
 
 import nanoid from '../../utils/nanoid.ts';
 
@@ -145,11 +147,15 @@ const uploadImage = async ({ file, credentials }: {
 export const handler: Handlers = {
   async POST(req): Promise<Response> {
     try {
-      const cookies = getCookies(req.headers) as Cookies;
-
       const endpoint = Deno.env.get('API_ENDPOINT');
 
-      if (!cookies.accessToken) {
+      const sessionId = await getSessionId(req);
+
+      const accessToken = sessionId
+        ? await getSessionAccessToken(getDiscordOAuth2Client(req), sessionId)
+        : null;
+
+      if (!accessToken) {
         throw new Error('Access token not defined');
       }
 
@@ -353,11 +359,11 @@ export const handler: Handlers = {
       if (endpoint) {
         const response = await fetch(`${endpoint}/publish`, {
           method: 'POST',
-          headers: { 'authorization': `Bearer ${cookies.accessToken}` },
+          headers: { 'authorization': `Bearer ${accessToken}` },
           body: JSON.stringify(
             {
               manifest: pack,
-              accessToken: cookies.accessToken,
+              accessToken: accessToken,
             }, // filter null values
             (_, value) => {
               if (value !== null) {

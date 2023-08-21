@@ -17,8 +17,8 @@ deno task start
 
 ###### Required Environment Variables:
 
-- CLIENT_ID: a discord oauth client id
-- CLIENT_SECRET: a discord oauth client secret
+- DISCORD_CLIENT_ID: a discord oauth client id
+- DISCORD_CLIENT_SECRET: a discord oauth client secret
 
 ###### Optional Environment Variables:
 

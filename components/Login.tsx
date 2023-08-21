@@ -4,7 +4,7 @@ import { i18n } from '../utils/i18n.ts';
 
 export default () => {
   return (
-    <form class={'login-wrapper'} method={'post'} action={'/api/login'}>
+    <form class={'login-wrapper'} method={'post'} action={'/login'}>
       <div class={'login-container'}>
         <img src={'/icon.png'} />
         <button type={'submit'}>
