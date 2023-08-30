@@ -78,9 +78,8 @@ export const getWebhook = (
     }
 
     if (a.media?.[0].mediaId) {
-      media = pack.media?.new?.find((m) =>
-        m.id === a.media?.[0].mediaId
-      )?.title.english;
+      media = pack.media?.new?.find((m) => m.id === a.media?.[0].mediaId)?.title
+        .english;
     }
 
     if (a.gender && a.age) {

@@ -1,8 +1,8 @@
 import { Handlers, type PageProps } from '$fresh/server.ts';
 
-import { getSessionAccessToken, getSessionId } from 'kv_oauth';
+import { getSessionAccessToken, getSessionId } from 'kv_oauth/mod.ts';
 
-import { getDiscordOAuth2Client } from '../utils/oauth.ts';
+import { oauthClient } from '../utils/oauth.ts';
 
 import Login from '../components/Login.tsx';
 
@@ -33,7 +33,7 @@ export const handler: Handlers = {
     const sessionId = await getSessionId(req);
 
     const accessToken = sessionId
-      ? await getSessionAccessToken(getDiscordOAuth2Client(req), sessionId)
+      ? await getSessionAccessToken(oauthClient(req), sessionId)
       : null;
 
     if (accessToken) {

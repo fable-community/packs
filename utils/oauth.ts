@@ -5,37 +5,33 @@ import {
   handleCallback,
   signIn,
   signOut,
-} from 'kv_oauth';
+} from 'kv_oauth/mod.ts';
 
-export const getDiscordOAuth2Client = (req: Request) =>
+export const oauthClient = (req: Request) =>
   createDiscordOAuth2Client({
     defaults: { scope: ['identify'] },
     redirectUri: `${new URL(req.url).origin}/callback`,
   });
 
 export const plugin: Plugin = {
-  name: 'oauth',
+  name: 'kv-oauth',
   routes: [
     {
       path: '/login',
       handler: async (req) => {
-        return await signIn(req, getDiscordOAuth2Client(req));
+        return await signIn(req, oauthClient(req));
       },
     },
     {
       path: '/callback',
       handler: async (req) => {
-        const { response } = await handleCallback(
-          req,
-          getDiscordOAuth2Client(req),
-        );
-
+        const { response } = await handleCallback(req, oauthClient(req));
         return response;
       },
     },
     {
       path: '/logout',
-      handler: async (req) => await signOut(req),
+      handler: signOut,
     },
   ],
 };
