@@ -42,7 +42,7 @@
   },
   "imports": {
     "#filter-boolean": "https://esm.sh/@total-typescript/ts-reset@0.4.2/filter-boolean",
-    "$fresh/": "https://deno.land/x/fresh@1.4.2/",
+    "$fresh/": "https://deno.land/x/fresh@1.4.3/",
     "$std/": "https://deno.land/std@0.198.0/",
     "preact": "https://esm.sh/preact@10.15.1",
     "preact/": "https://esm.sh/preact@10.15.1/",
