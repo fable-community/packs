@@ -94,4 +94,6 @@ export default {
   sideStory: 'is a Side Story',
   spinoff: 'is a Spin Off',
   //
+
+  maxConflicts: 'The maximum number of series you can disable is 10',
 };

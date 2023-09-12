@@ -95,4 +95,6 @@ export default {
   sideStory: 'es una Historia Paralela',
   spinoff: 'es un Spin Off',
   //
+
+  maxConflicts: 'The maximum number of series you can disable is 10',
 };

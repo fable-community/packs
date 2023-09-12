@@ -124,71 +124,77 @@ export default ({ conflicts, visible }: {
 
   return (
     <div style={{ display: visible ? '' : 'none' }} class={'maintainers'}>
-      <div class={'search'}>
-        <input
-          type={'text'}
-          placeholder={i18n('search')}
-          onFocus={() => focused.value = true}
-          onInput={(event) => {
-            search.value = (event.target as HTMLInputElement).value;
+      {conflicts.value.length >= 10 ? <></> : (
+        <>
+          <div class={'search'}>
+            <input
+              type={'text'}
+              placeholder={i18n('search')}
+              onFocus={() => focused.value = true}
+              onInput={(event) => {
+                search.value = (event.target as HTMLInputElement).value;
 
-            if (timeout.value) {
-              clearTimeout(timeout.value);
-            }
-
-            timeout.value = setTimeout(() => {
-              request<{ Page: { media: Media[] } }>({
-                query,
-                url: 'https://graphql.anilist.co',
-                variables: { search: search.value },
-              })
-                .then((response) => {
-                  const anilistIds = getAnilistIds(conflicts.value);
-
-                  setSuggestions(response.Page.media.filter((media) =>
-                    !anilistIds.includes(media.id)
-                  ));
-                })
-                .catch(console.error);
-            }, 500);
-          }}
-        />
-
-        <div class={'suggestions'} data-active={focused}>
-          {suggestions.map((media, i) => (
-            <i
-              key={media.id}
-              onClick={() => {
-                const id = `anilist:${media.id}`;
-
-                if (!conflicts.value.includes(id)) {
-                  conflicts.value.push(id);
+                if (timeout.value) {
+                  clearTimeout(timeout.value);
                 }
 
-                suggestions.splice(i, 1);
+                timeout.value = setTimeout(() => {
+                  request<{ Page: { media: Media[] } }>({
+                    query,
+                    url: 'https://graphql.anilist.co',
+                    variables: { search: search.value },
+                  })
+                    .then((response) => {
+                      const anilistIds = getAnilistIds(conflicts.value);
 
-                focused.value = false;
-
-                forceUpdate();
+                      setSuggestions(
+                        response.Page.media.filter((media) =>
+                          !anilistIds.includes(media.id)
+                        ),
+                      );
+                    })
+                    .catch(console.error);
+                }, 500);
               }}
-            >
-              {media.title?.english ?? media.title?.romaji ??
-                media.title?.native}
-            </i>
-          ))}
-        </div>
-      </div>
+            />
+
+            <div class={'suggestions'} data-active={focused}>
+              {suggestions.map((media, i) => (
+                <i
+                  key={media.id}
+                  onClick={() => {
+                    const id = `anilist:${media.id}`;
+
+                    if (!conflicts.value.includes(id)) {
+                      conflicts.value.push(id);
+                    }
+
+                    suggestions.splice(i, 1);
+
+                    focused.value = false;
+
+                    forceUpdate();
+                  }}
+                >
+                  {media.title?.english ?? media.title?.romaji ??
+                    media.title?.native}
+                </i>
+              ))}
+            </div>
+          </div>
+          <i />
+        </>
+      )}
 
       <div
         class={'holder'}
         data-active={focused}
-        onClick={() =>
-          focused.value = false}
+        onClick={() => focused.value = false}
       />
 
-      <i />
-
-      <Notice type={'info'}>{i18n('conflictsNotice')}</Notice>
+      {conflicts.value.length >= 10
+        ? <Notice type={'warn'}>{i18n('maxConflicts')}</Notice>
+        : <Notice type={'info'}>{i18n('conflictsNotice')}</Notice>}
 
       <div class='group'>
         {conflicts.value

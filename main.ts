@@ -4,15 +4,6 @@
 /// <reference lib="dom.asynciterable" />
 /// <reference lib="deno.ns" />
 
-import { load } from '$std/dotenv/mod.ts';
-
-await load({
-  allowEmptyValues: true,
-  defaultsPath: '.env.example',
-  examplePath: null,
-  export: true,
-});
-
 import { start } from '$fresh/server.ts';
 
 import manifest from './fresh.gen.ts';
