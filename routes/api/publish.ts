@@ -4,9 +4,7 @@ import { encode } from '$std/encoding/base64.ts';
 
 import { deserialize } from 'bson';
 
-import { getSessionAccessToken, getSessionId } from 'kv_oauth/mod.ts';
-
-import { oauthClient } from '../../utils/oauth.ts';
+import { getAccessToken } from '../../utils/oauth.ts';
 
 import nanoid from '../../utils/nanoid.ts';
 
@@ -149,11 +147,7 @@ export const handler: Handlers = {
     try {
       const endpoint = Deno.env.get('API_ENDPOINT');
 
-      const sessionId = await getSessionId(req);
-
-      const accessToken = sessionId
-        ? await getSessionAccessToken(oauthClient(req), sessionId)
-        : null;
+      const accessToken = getAccessToken(req);
 
       if (!accessToken) {
         throw new Error('Access token not defined');

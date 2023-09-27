@@ -1,8 +1,6 @@
 import { Handlers, type PageProps } from '$fresh/server.ts';
 
-import { getSessionAccessToken, getSessionId } from 'kv_oauth/mod.ts';
-
-import { oauthClient } from '../utils/oauth.ts';
+import { getAccessToken } from '../utils/oauth.ts';
 
 import Login from '../components/Login.tsx';
 
@@ -30,11 +28,7 @@ export const handler: Handlers = {
 
     const endpoint = Deno.env.get('API_ENDPOINT');
 
-    const sessionId = await getSessionId(req);
-
-    const accessToken = sessionId
-      ? await getSessionAccessToken(oauthClient(req), sessionId)
-      : null;
+    const accessToken = getAccessToken(req);
 
     if (accessToken) {
       const response = await fetch('https://discord.com/api/users/@me', {
