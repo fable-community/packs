@@ -39,6 +39,8 @@ export {
   CharacterRole,
   type DisaggregatedCharacter,
   type DisaggregatedMedia,
+  type Manifest,
   MediaType,
-  type Pack,
 } from 'https://raw.githubusercontent.com/ker0olos/fable/main/src/types.ts';
+
+export { type Pack } from 'https://raw.githubusercontent.com/ker0olos/fable/main/db/schema.ts';

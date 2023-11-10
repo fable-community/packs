@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase
 
-import type { Pack } from './types.ts';
+import type { Manifest } from './types.ts';
 
 interface Webhook {
   username?: string;
@@ -33,8 +33,8 @@ const defaultAvatar =
 export const getWebhook = (
   { username, pack, old }: {
     username: string;
-    pack: Pack['manifest'];
-    old?: Pack['manifest'];
+    pack: Manifest;
+    old?: Manifest;
   },
 ): Webhook => {
   // const endpoint = Deno.env.get('API_ENDPOINT');
@@ -73,12 +73,13 @@ export const getWebhook = (
 
     let media: string | undefined = undefined;
 
-    if (a.images?.[0].url) {
+    if (a.images?.[0]?.url) {
       embed.thumbnail = { url: a.images[0].url };
     }
 
-    if (a.media?.[0].mediaId) {
-      media = pack.media?.new?.find((m) => m.id === a.media?.[0].mediaId)?.title
+    if (a.media?.[0]?.mediaId) {
+      media = pack.media?.new?.find((m) => m.id === a.media?.[0]?.mediaId)
+        ?.title
         .english;
     }
 
