@@ -25,11 +25,8 @@ export default ({ Component }: AppProps) => {
         />
 
         <link rel='stylesheet' href={'css/root.css'} />
-        <link rel='stylesheet' href={'css/login.css'} />
-        <link rel='stylesheet' href={'css/user.css'} />
         <link rel='stylesheet' href={'css/dashboard.css'} />
 
-        <link rel='stylesheet' href={'css/notice.css'} />
         <link rel='stylesheet' href={'css/dialog.css'} />
         <link rel='stylesheet' href={'css/image_input.css'} />
 

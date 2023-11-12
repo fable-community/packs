@@ -37,12 +37,6 @@ export const getWebhook = (
     old?: Manifest;
   },
 ): Webhook => {
-  // const endpoint = Deno.env.get('API_ENDPOINT');
-
-  // if (!endpoint) {
-  //   throw new Error('endpoint not defined');
-  // }
-
   const webhook: Webhook = {
     username: defaultUsername,
     avatar_url: defaultAvatar,

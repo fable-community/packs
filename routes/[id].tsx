@@ -46,33 +46,16 @@ export const handler: Handlers = {
     }
 
     if (data.user && endpoint) {
-      if (production) {
-        const response = await fetch(`${endpoint}`, {
-          method: 'GET',
-          headers: { 'authorization': `Bearer ${accessToken}` },
-        });
+      const response = await fetch(`${endpoint}`, {
+        method: 'GET',
+        headers: { 'authorization': `Bearer ${accessToken}` },
+      });
 
-        const packs = (await response.json() as { data: Pack[] }).data;
+      const packs = (await response.json() as { data: Pack[] }).data;
 
-        data.packs = packs.reduce((acc, pack) => {
-          return { ...acc, [pack.manifest.id]: pack };
-        }, {});
-      } else {
-        const { default: mock } = await import('../mock.json', {
-          assert: { type: 'json' },
-        });
-
-        const packs = [{
-          servers: 200,
-          approved: true,
-          owner: data.user.id,
-          manifest: { ...mock },
-        }] as unknown as Pack[];
-
-        data.packs = packs.reduce((acc, pack) => {
-          return { ...acc, [pack.manifest.id]: pack };
-        }, {});
-      }
+      data.packs = packs.reduce((acc, pack) => {
+        return { ...acc, [pack.manifest.id]: pack };
+      }, {});
     }
 
     // if the selected pack is not found in the user's packs
@@ -90,6 +73,5 @@ export default (props: PageProps<DashboardData>) => {
   if (props.data.maintenance) {
     return <Maintenance />;
   }
-
   return props.data.user ? <Dashboard {...props} /> : <Login />;
 };

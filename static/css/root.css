@@ -146,6 +146,32 @@ input:invalid ~ button {
   }
 }
 
+.red {
+  background-color: var(--red);
+}
+
+.embed {
+  background-color: var(--embed);
+}
+
+.discord-blue {
+  background-color: var(--discord);
+}
+
+.foreground,
+.text-white,
+.text-info {
+  color: var(--foreground);
+}
+
+.text-error {
+  color: var(--red);
+}
+
+.text-warn {
+  color: var(--fable);
+}
+
 [shake="true"] {
   animation-name: shake;
   animation-duration: 0.35s;

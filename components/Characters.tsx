@@ -220,7 +220,7 @@ export default (
                   : i18n('basedOnMedia')}
               </label>
               <div>
-                <div>
+                <div class={'flex'}>
                   <Star class={'star'} data-on={true} />
                   <Star class={'star'} data-on={rating >= 2} />
                   <Star class={'star'} data-on={rating >= 3} />
