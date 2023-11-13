@@ -19,12 +19,6 @@
   gap: 1.5em;
 }
 
-.manage-header > .image-input {
-  width: 44px;
-  aspect-ratio: 1;
-  border-radius: 100%;
-}
-
 .manage-header > input {
   border-radius: 0;
   height: 48px;

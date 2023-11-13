@@ -294,6 +294,7 @@ export default (props: {
           <div class={'manage-header'}>
             <ImageInput
               default={pack.image}
+              class={'w-[44px] aspect-square rounded-full'}
               accept={['image/png', 'image/jpeg', 'image/webp']}
               onChange={(value) => image.value = value}
             />

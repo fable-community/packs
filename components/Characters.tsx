@@ -149,7 +149,9 @@ export default (
           </div>
 
           <ImageInput
+            style={{ gridArea: 'i' }}
             key={`${signal.value.id}-image`}
+            class={'w-auto h-[192px] object-cover object-center aspect-[90/127] mx-auto'}
             default={signal.value.images?.[0]?.url ?? ''}
             accept={['image/png', 'image/jpeg', 'image/webp']}
             onChange={(image) => {

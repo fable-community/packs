@@ -6,6 +6,8 @@ import IconImage from 'icons/photo-plus.tsx';
 
 import nanoid from '../utils/nanoid.ts';
 
+import type { JSX } from 'preact/jsx-runtime';
+
 export interface IImageInput {
   file?: {
     name: string;
@@ -22,6 +24,8 @@ export default (
   props: {
     accept: string[];
     default?: string;
+    class?: string;
+    style?: JSX.HTMLAttributes<HTMLDivElement>['style'];
     onChange?: (value: IImageInput) => void;
   },
 ) => {
@@ -31,21 +35,32 @@ export default (
   const name = nanoid();
 
   return (
-    <div class={'image-input'}>
+    <div
+      style={props.style}
+      class={`flex relative items-center justify-center overflow-hidden box-border border-2 border-grey ${props.class}`}
+    >
       {!props.default
         ? (
-          <i ref={placeholderRef}>
-            <IconImage />
+          <i
+            ref={placeholderRef}
+            class={'text-grey absolute w-[28px] h-[28px]'}
+          >
+            <IconImage class={'w-full h-full'} />
           </i>
         )
         : undefined}
-      <img ref={ref} src={props.default ?? ''} />
-      <label for={name} />
+      <img
+        ref={ref}
+        class={'absolute object-cover object-center indent-[-100vh] w-full h-full'}
+        src={props.default ?? ''}
+      />
+      <label class={'absolute w-full h-full cursor-pointer'} for={name} />
       <input
-        type={'file'}
         id={name}
         name={name}
+        type={'file'}
         accept={props.accept.join(',')}
+        style={{ visibility: 'hidden' }}
         onChange={(ev) => {
           // deno-lint-ignore no-non-null-assertion
           const file = (ev.target as HTMLInputElement).files![0];

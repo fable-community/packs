@@ -122,26 +122,11 @@
   scale: 0.8;
 }
 
-.manage-dialog-media > .image-input {
-  width: auto;
-  height: auto;
-  max-height: 192px;
-  object-fit: cover;
-  object-position: center;
-  aspect-ratio: 90/127;
-  grid-area: i;
-  margin: 0 auto;
-}
-
 @media (max-width: 600px) {
   .manage-dialog-media {
     display: flex;
     flex-direction: column;
     gap: 1em;
-  }
-
-  .manage-dialog-media > .image-input {
-    min-height: 192px;
   }
 }
 
