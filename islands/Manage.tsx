@@ -217,15 +217,23 @@ export default (props: {
       <Dialog
         visible={true}
         name={'manage'}
-        class={'manage-wrapper'}
+        class={'top-0 left-0 w-full h-full'}
         action={'back'}
       >
-        {/* this component require client-side javascript */}
+        {/* this component require client-side javascript enabled */}
         <noscript>{i18n('noScript')}</noscript>
 
-        <Dialog name={'extra'} class={'dialog-normal'}>
-          <div class={'metadata'}>
-            <IconApply data-dialog-cancel={'extra'} class={'close'} />
+        <Dialog
+          name={'extra'}
+          class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
+        >
+          <div
+            class={'metadata embed2 overflow-x-hidden overflow-y-auto rounded-[10px] m-4 p-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
+          >
+            <IconApply
+              data-dialog-cancel={'extra'}
+              class={'cursor-pointer w-[28px] h-[28px] ml-auto'}
+            />
 
             {!props.new
               ? (
@@ -290,8 +298,8 @@ export default (props: {
           </div>
         </Dialog>
 
-        <div class={'manage-container'}>
-          <div class={'manage-header'}>
+        <div class={'embed m-4 w-full h-full'}>
+          <div class={'manage-header flex items-center gap-4 w-full'}>
             <ImageInput
               default={pack.image}
               class={'w-[44px] aspect-square rounded-full'}
@@ -304,13 +312,15 @@ export default (props: {
               type={'text'}
               value={title}
               pattern='.{3,128}'
+              class={'embed h-[48px] grow'}
               placeholder={i18n('packTitle')}
               onInput={(
                 ev,
               ) => (title.value = (ev.target as HTMLInputElement).value)}
             />
 
-            <div class={'buttons'}>
+            {
+              /* <div class={'flex fixed mx-2 my-4 bottom-0 right-0 gap-1 z-1'}>
               <button disabled={loading} onClick={onPublish}>
                 {props.new ? i18n('publish') : i18n('save')}
               </button>
@@ -349,27 +359,38 @@ export default (props: {
               >
                 {i18n('addNewMedia')}
               </button>
-            </div>
+            </div> */
+            }
 
-            {[0, 1].includes(active.value)
+            {
+              /* {[0, 1].includes(active.value)
               ? (
                 layout.value === 0
                   ? <IconTable onClick={() => layout.value = 1} />
                   : <IconGrid onClick={() => layout.value = 0} />
               )
-              : undefined}
+              : undefined} */
+            }
 
-            <IconAdjustments data-dialog={'extra'} />
-
-            <IconClose data-dialog-cancel={'manage'} />
+            <IconAdjustments
+              class={'w-[28px] h-[28px]'}
+              data-dialog={'extra'}
+            />
+            <IconClose
+              class={'w-[28px] h-[28px]'}
+              data-dialog-cancel={'manage'}
+            />
           </div>
 
-          <div class={'tabs'}>
+          <div class={'grid grid-flow-col overflow-auto'}>
             {(i18n('tabs') as unknown as string[])
               .map((s, i) => (
                 <div
                   key={i}
-                  data-selected={active.value === i}
+                  class={[
+                    'text-center px-1 py-2 font-[600] uppercase cursor-pointer border-b-2 hover:border-white',
+                    active.value === i ? 'border-white' : 'border-grey',
+                  ].join(' ')}
                   onClick={() => active.value = i}
                 >
                   {s}

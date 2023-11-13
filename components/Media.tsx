@@ -35,6 +35,8 @@ export default (
     visible: boolean;
   },
 ) => {
+  layout.value = 0;
+
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
@@ -62,14 +64,23 @@ export default (
   };
 
   return (
-    <div style={{ display: visible ? '' : 'none' }}>
-      <div class={'media'} data-layout={layout.value}>
-        {media.value.length
+    <div class={visible ? '' : 'hidden'}>
+      <div
+        class={[
+          layout.value === 1
+            ? 'flex flex-wrap justify-center gap-8'
+            : 'flex flex-col gap-8',
+          'max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]',
+        ].join(' ')}
+      >
+        {layout.value !== 1
           ? (
-            <div class={'item'}>
-              <div />
-              <i>{i18n('title')}</i>
-              <i>{i18n('popularity')}</i>
+            <div
+              class={'flex flex-row items-center border-grey border-b-2 p-2 gap-2'}
+            >
+              <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
+              <i class={'basis-full'}>{i18n('title')}</i>
+              <i class={'basis-full'}>{i18n('popularity')}</i>
             </div>
           )
           : undefined}
@@ -79,29 +90,34 @@ export default (
             return (
               <div
                 key={media.value[i].id}
-                class={`item _${media.value[i].id}`}
+                class={'flex flex-row items-center p-2 gap-2'}
                 onClick={() => {
                   signal.value = media.value[i];
                   requestAnimationFrame(() => showDialog('media'));
                 }}
               >
                 <img
+                  class={'grey w-auto h-[90px] aspect-[90/127] mr-4 object-cover object-center'}
                   src={_media.images?.[0]?.url ?? defaultImage}
-                  style={{
-                    backgroundColor: _media.images?.[0]?.url
-                      ? undefined
-                      : 'transparent',
-                  }}
                 />
-                <i>{_media.title.english}</i>
-                <i>{comma(_media.popularity ?? 0)}</i>
+                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                  {_media.title.english}
+                </i>
+                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                  {comma(_media.popularity ?? 0)}
+                </i>
               </div>
             );
           })}
       </div>
 
-      <Dialog name={'media'} class={'dialog-normal'}>
-        <div class={'manage-dialog-media'}>
+      <Dialog
+        name={'media'}
+        class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
+      >
+        <div
+          class={'manage-dialog-media embed2 overflow-x-hidden overflow-y-auto rounded-[10px] m-4 p-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
+        >
           <div class={'buttons'}>
             <IconApply
               onClick={() => {

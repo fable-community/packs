@@ -67,8 +67,14 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
 
       {hasSuccess
         ? (
-          <Dialog name={'success'} class={'dialog-normal'} visible={true}>
-            <div>
+          <Dialog
+            name={'success'}
+            class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
+            visible={true}
+          >
+            <div
+              class={'embed2 overflow-x-hidden overflow-y-auto rounded-[10px] m-4 p-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
+            >
               <p>
                 {i18n('successTitle')}
               </p>

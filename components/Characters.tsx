@@ -40,6 +40,8 @@ export default (
     visible: boolean;
   },
 ) => {
+  layout.value = 0;
+
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
@@ -61,16 +63,25 @@ export default (
   });
 
   return (
-    <div style={{ display: visible ? '' : 'none' }}>
-      <div class={'media'} data-layout={layout.value}>
-        {characters.value.length
+    <div class={visible ? '' : 'hidden'}>
+      <div
+        class={[
+          layout.value === 1
+            ? 'flex flex-wrap justify-center gap-8'
+            : 'flex flex-col gap-8',
+          'max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]',
+        ].join(' ')}
+      >
+        {layout.value !== 1
           ? (
-            <div class={'item'}>
-              <div />
-              <i>{i18n('name')}</i>
-              <i>{i18n('primaryMedia')}</i>
-              <i>{i18n('role')}</i>
-              <i>{i18n('rating')}</i>
+            <div
+              class={'flex flex-row items-center border-grey border-b-2 p-2 gap-2'}
+            >
+              <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
+              <i class={'basis-full'}>{i18n('name')}</i>
+              <i class={'basis-full'}>{i18n('primaryMedia')}</i>
+              <i class={'basis-full'}>{i18n('role')}</i>
+              <i class={'basis-full'}>{i18n('rating')}</i>
             </div>
           )
           : undefined}
@@ -92,38 +103,45 @@ export default (
 
             return (
               <div
+                class={'flex flex-row items-center p-2 gap-2'}
                 key={characters.value[i].id}
-                class={`item _${characters.value[i].id}`}
                 onClick={() => {
                   signal.value = characters.value[i];
                   requestAnimationFrame(() => showDialog('characters'));
                 }}
               >
                 <img
+                  class={'grey w-auto h-[90px] aspect-[90/127] mr-4 object-cover object-center'}
                   src={char.images?.[0]?.url ?? defaultImage}
-                  style={{
-                    backgroundColor: char.images?.[0]?.url
-                      ? undefined
-                      : 'transparent',
-                  }}
                 />
-                <i>{char.name.english}</i>
-                <i>{primaryMediaRef?.title.english ?? ''}</i>
-                <i>
+                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                  {char.name.english}
+                </i>
+                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                  {primaryMediaRef?.title.english ?? ''}
+                </i>
+                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
                   {primaryMedia?.role
                     ? `${primaryMedia.role.substring(0, 1)}${
                       primaryMedia.role.substring(1).toLowerCase()
                     }`
                     : ''}
                 </i>
-                <i>{rating}</i>
+                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                  {rating}
+                </i>
               </div>
             );
           })}
       </div>
 
-      <Dialog name={'characters'} class={'dialog-normal'}>
-        <div class={'manage-dialog-media'}>
+      <Dialog
+        name={'characters'}
+        class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
+      >
+        <div
+          class={'manage-dialog-media embed2 overflow-x-hidden overflow-y-auto rounded-[10px] m-4 p-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
+        >
           <div class={'buttons'}>
             <IconApply
               onClick={() => {

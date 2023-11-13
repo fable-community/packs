@@ -1,6 +1,5 @@
 :root {
   color-scheme: dark;
-
   --grey: #4f4f4f;
   --foreground: #ffffff;
   --background: #313338;
@@ -40,11 +39,6 @@ body {
   align-items: center;
   overflow: hidden auto;
   user-select: none;
-}
-
-[disabled] {
-  opacity: 0.3;
-  pointer-events: none;
 }
 
 button {
@@ -150,8 +144,16 @@ input:invalid ~ button {
   background-color: var(--red);
 }
 
+.grey {
+  background-color: var(--grey);
+}
+
 .embed {
   background-color: var(--embed);
+}
+
+.embed2 {
+  background-color: var(--embedHighlight);
 }
 
 .discord-blue {
@@ -178,6 +180,15 @@ input:invalid ~ button {
 
 .border-grey {
   border-color: var(--grey);
+}
+
+.border-white {
+  border-color: var(--foreground);
+}
+
+[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 [shake="true"] {
