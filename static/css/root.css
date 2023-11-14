@@ -45,6 +45,7 @@ button {
   justify-content: center;
   display: flex;
   align-items: center;
+  background-color: var(--discord);
 
   border: 0;
   font-weight: 600;
@@ -154,6 +155,10 @@ input:invalid ~ button {
 
 .embed2 {
   background-color: var(--embedHighlight);
+}
+
+.highlight {
+  background-color: var(--highlight);
 }
 
 .discord-blue {

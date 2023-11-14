@@ -319,8 +319,7 @@ export default (props: {
               ) => (title.value = (ev.target as HTMLInputElement).value)}
             />
 
-            {
-              /* <div class={'flex fixed mx-2 my-4 bottom-0 right-0 gap-1 z-1'}>
+            <div class={'flex fixed mx-2 my-4 bottom-0 right-0 gap-1 z-1'}>
               <button disabled={loading} onClick={onPublish}>
                 {props.new ? i18n('publish') : i18n('save')}
               </button>
@@ -359,8 +358,7 @@ export default (props: {
               >
                 {i18n('addNewMedia')}
               </button>
-            </div> */
-            }
+            </div>
 
             {
               /* {[0, 1].includes(active.value)

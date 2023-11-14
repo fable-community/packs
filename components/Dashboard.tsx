@@ -51,17 +51,18 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
     <>
       <Avatar id={user.id} avatar={user.avatar} />
 
-      <div class={'dashboard-wrapper'}>
+      <div
+        class={'flex flex-wrap justify-center w-full px-[10vw] my-[5vh] gap-8'}
+      >
         {Object.values(data.packs).map((pack) => (
           <Card key={pack.manifest.id} pack={pack} />
         ))}
 
-        <a class={'dashboard-action-button'} href={`?new`}>
-          <IconPlus />
-        </a>
-
-        <a disabled class={'dashboard-action-button'} href={`?import`}>
-          <IconLink />
+        <a
+          href={`?new`}
+          class={'flex items-center justify-center w-[128px] min-h-[32px] rounded-xl border-2 px-[16px] py-[24px] border-dashed border-grey hover:translate-y-[-8px] transition-all duration-150'}
+        >
+          <IconPlus class={'w-[32px] h-auto text-grey'} />
         </a>
       </div>
 
@@ -73,17 +74,19 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
             visible={true}
           >
             <div
-              class={'embed2 overflow-x-hidden overflow-y-auto rounded-[10px] m-4 p-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
+              class={'embed2 flex flex-col overflow-x-hidden overflow-y-auto rounded-xl m-4 p-8 gap-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
             >
               <p>
                 {i18n('successTitle')}
               </p>
               <div
-                class={'install-info'}
+                class={'highlight flex items-center p-4 rounded-xl'}
                 data-clipboard={`/community install id: ${hasSuccess}`}
               >
-                <i>{`/community install id: ${hasSuccess}`}</i>
-                <IconClipboard />
+                <i class={'italic grow'}>
+                  {`/community install id: ${hasSuccess}`}
+                </i>
+                <IconClipboard class={'w-[18px] h-[18px]'} />
               </div>
               <Notice type={'info'}>
                 {i18n('successYouNeed')}
