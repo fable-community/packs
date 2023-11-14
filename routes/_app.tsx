@@ -26,8 +26,6 @@ export default ({ Component }: AppProps) => {
 
         <link rel='stylesheet' href={'css/root.css'} />
 
-        <link rel='stylesheet' href={'css/manage.css'} />
-        <link rel='stylesheet' href={'css/maintainers.css'} />
         <link rel='stylesheet' href={'css/media.css'} />
 
         <script async src='/js/dialogs.js' type={'module'} />

@@ -45,7 +45,8 @@ button {
   justify-content: center;
   display: flex;
   align-items: center;
-  background-color: var(--discord);
+
+  background-color: var(--grey);
 
   border: 0;
   font-weight: 600;
@@ -183,12 +184,32 @@ input:invalid ~ button {
   color: var(--grey);
 }
 
+.text-red {
+  color: var(--red);
+}
+
+.text-gold {
+  color: var(--fable);
+}
+
+.text-disabled {
+  color: var(--disabled);
+}
+
 .border-grey {
   border-color: var(--grey);
 }
 
+.border-embed {
+  border-color: var(--embed);
+}
+
 .border-white {
   border-color: var(--foreground);
+}
+
+.border-red {
+  border-color: var(--red);
 }
 
 [disabled] {

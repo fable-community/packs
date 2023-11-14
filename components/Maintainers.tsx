@@ -18,15 +18,22 @@ const Profile = ({ id, user, removable, onClick }: {
   onClick?: () => void;
 }) => {
   return (
-    <div class={'entity'}>
-      <img src={`https://discord-probe.deno.dev/avatar/${id}`} />
+    <div
+      class={'embed2 flex items-center justify-center rounded-[100vw] px-4 py-2 gap-3'}
+    >
+      <img
+        class={'w-[24px] h-auto aspect-square grey object-center object-cover rounded-full'}
+        src={`https://discord-probe.deno.dev/avatar/${id}`}
+      />
 
-      <div>
-        {user ? <i>{user?.display_name ?? user?.username}</i> : undefined}
+      <div class={'flex flex-col'}>
+        {user
+          ? <i>{user?.display_name ?? user?.username}</i>
+          : <div class={'w-[52px] h-[16px] grey'}></div>}
 
         {user
           ? (
-            <i>
+            <i class={'opacity-60'}>
               {user?.username
                 ? user?.discriminator !== '0'
                   ? `${user?.username}#${user?.discriminator}`
@@ -38,8 +45,13 @@ const Profile = ({ id, user, removable, onClick }: {
       </div>
 
       {removable
-        ? <IconTrash onClick={onClick} />
-        : <IconCrown class={'owner'} />}
+        ? (
+          <IconTrash
+            class={'text-red w-[18px] h-auto cursor-pointer'}
+            onClick={onClick}
+          />
+        )
+        : <IconCrown class={'text-gold w-[18px] h-auto'} />}
     </div>
   );
 };
@@ -79,18 +91,27 @@ export default ({ owner, maintainers, visible }: {
   }, [...maintainers.value]);
 
   return (
-    <div style={{ display: visible ? '' : 'none' }} class={'maintainers'}>
-      <label>{i18n('userId')}</label>
+    <div
+      class={[
+        'grid w-full max-w-[980px] my-8 mx-auto gap-4',
+        visible ? '' : 'hidden',
+      ].join(' ')}
+    >
+      <label class={'text-[0.8rem] text-disabled uppercase'}>
+        {i18n('userId')}
+      </label>
 
       <input
         type={'text'}
         pattern={'[0-9]{18,19}'}
         placeholder={'185033133521895424'}
+        class={'w-full text-[1rem] p-2 rounded-0 border-b-2 border-embed'}
         onInput={(event) =>
           userId.value = (event.target as HTMLInputElement).value}
       />
 
       <button
+        class={'h-[46px]'}
         disabled={userId.value?.length <= 0}
         onClick={() => {
           if (!maintainers.value.includes(userId.value)) {
@@ -103,11 +124,11 @@ export default ({ owner, maintainers, visible }: {
         {i18n('addNew')}
       </button>
 
-      <i />
+      <i class={'h-[2px] grey'} />
 
       <Notice type={'info'}>{i18n('maintainersNotice')}</Notice>
 
-      <div class='group'>
+      <div class='flex flex-wrap mb-[15vh] gap-2'>
         <Profile id={owner} user={data[owner]} removable={false} />
 
         {maintainers.value

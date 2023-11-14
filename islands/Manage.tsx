@@ -228,24 +228,28 @@ export default (props: {
           class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
         >
           <div
-            class={'metadata embed2 overflow-x-hidden overflow-y-auto rounded-[10px] m-4 p-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
+            class={'flex flex-col gap-2 embed2 overflow-x-hidden overflow-y-auto rounded-xl m-4 p-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
           >
             <IconApply
               data-dialog-cancel={'extra'}
-              class={'cursor-pointer w-[28px] h-[28px] ml-auto'}
+              class={'cursor-pointer w-[28px] h-[28px] ml-auto shrink-0	'}
             />
 
             {!props.new
               ? (
                 <>
-                  <label>{i18n('packServers', servers)}</label>
+                  <label class={'uppercase italic text-disabled'}>
+                    {i18n('packServers', servers)}
+                  </label>
 
                   <div
-                    class={'install-info'}
+                    class={'highlight flex items-center p-4 rounded-xl'}
                     data-clipboard={`/community install id: ${pack.id}`}
                   >
-                    <i>{`/community install id: ${pack.id}`}</i>
-                    <IconClipboard />
+                    <i class={'italic grow'}>
+                      {`/community install id: ${pack.id}`}
+                    </i>
+                    <IconClipboard class={'w-[18px] h-[18px]'} />
                   </div>
                 </>
               )

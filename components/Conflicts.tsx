@@ -42,8 +42,17 @@ const Media = ({ id, media, onClick }: {
   const anilist = id.startsWith('anilist:');
 
   return (
-    <div class={'entity'}>
-      {anilist ? <img src={media?.coverImage?.medium} /> : undefined}
+    <div
+      class={'embed2 flex items-center justify-center rounded-[100vw] px-4 py-2 gap-3'}
+    >
+      {anilist
+        ? (
+          <img
+            class={'w-[24px] h-auto aspect-square grey object-center object-cover rounded-full'}
+            src={media?.coverImage?.medium}
+          />
+        )
+        : undefined}
 
       {anilist
         ? (
@@ -58,9 +67,14 @@ const Media = ({ id, media, onClick }: {
               : undefined}
           </div>
         )
-        : <i>{id}</i>}
+        : <i class={'opacity-60'}>{id}</i>}
 
-      {<IconTrash onClick={onClick} />}
+      {
+        <IconTrash
+          class={'text-red w-[18px] h-auto cursor-pointer'}
+          onClick={onClick}
+        />
+      }
     </div>
   );
 };
@@ -123,10 +137,15 @@ export default ({ conflicts, visible }: {
   }, [...conflicts.value]);
 
   return (
-    <div style={{ display: visible ? '' : 'none' }} class={'maintainers'}>
+    <div
+      class={[
+        'grid w-full max-w-[980px] my-8 mx-auto gap-4',
+        visible ? '' : 'hidden',
+      ].join(' ')}
+    >
       {conflicts.value.length >= 10 ? <></> : (
         <>
-          <div class={'search'}>
+          <div class={'z-[3] w-full relative'}>
             <input
               type={'text'}
               placeholder={i18n('search')}
@@ -158,9 +177,15 @@ export default ({ conflicts, visible }: {
               }}
             />
 
-            <div class={'suggestions'} data-active={focused}>
+            <div
+              class={[
+                focused.value ? '' : 'hidden',
+                'highlight absolute flex flex-col w-full max-h-[35vh] overflow-x-hidden overflow-y-auto empty:h-[100px]',
+              ].join(' ')}
+            >
               {suggestions.map((media, i) => (
                 <i
+                  class={'cursor-pointer px-2 py-4'}
                   key={media.id}
                   onClick={() => {
                     const id = `anilist:${media.id}`;
@@ -182,13 +207,16 @@ export default ({ conflicts, visible }: {
               ))}
             </div>
           </div>
-          <i />
+
+          <i class={'h-[2px] grey'} />
         </>
       )}
 
       <div
-        class={'holder'}
-        data-active={focused}
+        class={[
+          focused.value ? '' : 'hidden',
+          'fixed z-[2] w-[100vw] h-[100vh] top-0 left-0',
+        ].join(' ')}
         onClick={() => focused.value = false}
       />
 
@@ -196,7 +224,7 @@ export default ({ conflicts, visible }: {
         ? <Notice type={'warn'}>{i18n('maxConflicts')}</Notice>
         : <Notice type={'info'}>{i18n('conflictsNotice')}</Notice>}
 
-      <div class='group'>
+      <div class='flex flex-wrap mb-[15vh] gap-2'>
         {conflicts.value
           .map((id, i) => (
             <Media
