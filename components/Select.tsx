@@ -18,10 +18,17 @@ export default <T,>(
     >,
 ) => {
   return (
-    <div class={'select'}>
-      {label ? <label class={'label'}>{label}</label> : undefined}
+    <div class={`flex flex-col gap-2 ${props.class}`}>
+      {label
+        ? (
+          <label class={'uppercase text-disabled text-[0.8rem]'}>
+            {label}
+          </label>
+        )
+        : undefined}
       <select
         {...props}
+        class={`text-[1em] ${props.class}`}
         onChange={(ev) => {
           const t = (ev.target as HTMLSelectElement).value as T;
 

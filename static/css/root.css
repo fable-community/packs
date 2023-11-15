@@ -189,10 +189,12 @@ input:invalid ~ button {
 }
 
 .text-gold {
+  fill: var(--fable);
   color: var(--fable);
 }
 
 .text-disabled {
+  fill: var(--disabled);
   color: var(--disabled);
 }
 

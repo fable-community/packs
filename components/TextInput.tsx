@@ -14,8 +14,8 @@ export default (
   >,
 ) => {
   return (
-    <div class={'flex flex-col gap-2'}>
-      <div class={'flex flex-col italic text-disabled'}>
+    <div class={'flex flex-col grow gap-2'}>
+      <div class={'flex flex-col text-disabled'}>
         {label
           ? <label class={'uppercase text-[0.8rem]'}>{label}</label>
           : undefined}
@@ -28,7 +28,7 @@ export default (
             {...props as JSX.HTMLAttributes<HTMLTextAreaElement>}
             type={'text'}
             value={value}
-            class={'text-[1em] resize-y'}
+            class={`text-[1em] resize-y ${props.class}`}
             onInput={(ev) => {
               onInput?.((ev.target as HTMLInputElement).value);
             }}
@@ -39,7 +39,7 @@ export default (
             type={'text'}
             {...props}
             value={value}
-            class={'text-[1em]'}
+            class={`text-[1em] ${props.class}`}
             onInput={(ev) => {
               onInput?.((ev.target as HTMLInputElement).value);
             }}
