@@ -48,7 +48,7 @@ export default {
   relations: 'Relaciones',
   links: 'Enlaces',
   linksNotice:
-    'Sólo se permiten enlaces a YouTube, Twitch, Crunchyroll, Tapas, Webtoon, y Amazon.',
+    'Sólo se permiten enlaces a YouTube, Twitch, Crunchyroll, Netflix, Tapas, Webtoon, y Amazon.',
   description: 'Descripción',
   rating: 'Valoración',
   role: 'Rol',

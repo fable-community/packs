@@ -27,16 +27,13 @@ import { i18n } from '../utils/i18n.ts';
 import { Character, type Media, MediaType } from '../utils/types.ts';
 
 export default (
-  { layout, signal, media, visible }: {
-    layout: Signal<number>;
+  { signal, media, visible }: {
     signal: Signal<Media>;
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
     visible: boolean;
   },
 ) => {
-  layout.value = 0;
-
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
@@ -66,24 +63,15 @@ export default (
   return (
     <div class={visible ? '' : 'hidden'}>
       <div
-        class={[
-          layout.value === 1
-            ? 'flex flex-wrap justify-center gap-8'
-            : 'flex flex-col gap-8',
-          'max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]',
-        ].join(' ')}
+        class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
-        {layout.value !== 1
-          ? (
-            <div
-              class={'flex flex-row items-center border-grey border-b-2 p-2 gap-2'}
-            >
-              <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
-              <i class={'basis-full'}>{i18n('title')}</i>
-              <i class={'basis-full'}>{i18n('popularity')}</i>
-            </div>
-          )
-          : undefined}
+        <div
+          class={'flex flex-row items-center border-grey border-b-2 p-2 gap-2'}
+        >
+          <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
+          <i class={'basis-full'}>{i18n('title')}</i>
+          <i class={'basis-full'}>{i18n('popularity')}</i>
+        </div>
 
         {Object.values(media.value)
           .map((_media, i) => {
@@ -97,13 +85,13 @@ export default (
                 }}
               >
                 <img
-                  class={'grey w-auto h-[90px] aspect-[90/127] mr-4 object-cover object-center'}
+                  class={'bg-grey w-auto h-[90px] aspect-[90/127] mr-4 object-cover object-center'}
                   src={_media.images?.[0]?.url ?? defaultImage}
                 />
-                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                <i class={'basis-full'}>
                   {_media.title.english}
                 </i>
-                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                <i class={'basis-full'}>
                   {comma(_media.popularity ?? 0)}
                 </i>
               </div>
@@ -116,7 +104,7 @@ export default (
         class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
       >
         <div
-          class={'embed2 flex flex-col gap-y-6 overflow-x-hidden overflow-y-auto rounded-[10px] m-4 p-4 h-[80vh] w-[80vw] max-w-[680px] pointer-events-auto'}
+          class={'bg-embed2 flex flex-col gap-y-6 overflow-x-hidden overflow-y-auto rounded-[10px] m-4 p-4 h-[80vh] w-[80vw] max-w-[680px] pointer-events-auto'}
         >
           <div class={'flex flex-row-reverse ml-auto gap-2'}>
             <IconApply
@@ -212,7 +200,7 @@ export default (
             <div class={'flex flex-wrap gap-2'}>
               {signal.value.title.alternative?.map((alias, i) => (
                 <div
-                  class={'flex items-center justify-center embed rounded-[100vw] px-6 py-4 gap-2'}
+                  class={'flex items-center justify-center bg-embed rounded-[100vw] px-6 py-4 gap-2'}
                   key={i}
                 >
                   <i>{alias}</i>
@@ -230,12 +218,12 @@ export default (
               {(signal.value.title.alternative?.length ?? 0) < 5
                 ? (
                   <div
-                    class={'flex items-center justify-center embed rounded-[100vw] px-6 py-4 gap-2'}
+                    class={'flex items-center justify-center bg-embed rounded-[100vw] px-6 py-4 gap-2'}
                   >
                     <input
                       placeholder={'Harry Potter: 11th Book'}
                       value={newAliasValue}
-                      class={'border-0 p-0 rounded-[100vw] embed text-[0.8rem] w-[180px]'}
+                      class={'border-0 p-0 rounded-[100vw] bg-embed text-[0.8rem] w-[180px]'}
                       onInput={(event) =>
                         newAliasValue.value =
                           (event.target as HTMLInputElement).value}

@@ -43,12 +43,12 @@ const Media = ({ id, media, onClick }: {
 
   return (
     <div
-      class={'embed2 flex items-center justify-center rounded-[100vw] px-4 py-2 gap-3'}
+      class={'bg-embed2 flex items-center justify-center rounded-[100vw] px-4 py-2 gap-3'}
     >
       {anilist
         ? (
           <img
-            class={'w-[24px] h-auto aspect-square grey object-center object-cover rounded-full'}
+            class={'w-[24px] h-auto aspect-square bg-grey object-center object-cover rounded-full'}
             src={media?.coverImage?.medium}
           />
         )
@@ -180,7 +180,7 @@ export default ({ conflicts, visible }: {
             <div
               class={[
                 focused.value ? '' : 'hidden',
-                'highlight absolute flex flex-col w-full max-h-[35vh] overflow-x-hidden overflow-y-auto empty:h-[100px]',
+                'bg-highlight absolute flex flex-col w-full max-h-[35vh] overflow-x-hidden overflow-y-auto empty:h-[100px]',
               ].join(' ')}
             >
               {suggestions.map((media, i) => (
@@ -208,7 +208,7 @@ export default ({ conflicts, visible }: {
             </div>
           </div>
 
-          <i class={'h-[2px] grey'} />
+          <i class={'h-[2px] bg-grey'} />
         </>
       )}
 

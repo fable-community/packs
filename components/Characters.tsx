@@ -32,16 +32,13 @@ import { i18n } from '../utils/i18n.ts';
 import { type Character, CharacterRole, type Media } from '../utils/types.ts';
 
 export default (
-  { layout, signal, media, characters, visible }: {
-    layout: Signal<number>;
+  { signal, media, characters, visible }: {
     signal: Signal<Character>;
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
     visible: boolean;
   },
 ) => {
-  layout.value = 0;
-
   const [, updateState] = useState({});
 
   // used to force the entire component to redrew
@@ -65,26 +62,17 @@ export default (
   return (
     <div class={visible ? '' : 'hidden'}>
       <div
-        class={[
-          layout.value === 1
-            ? 'flex flex-wrap justify-center gap-8'
-            : 'flex flex-col gap-8',
-          'max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]',
-        ].join(' ')}
+        class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
-        {layout.value !== 1
-          ? (
-            <div
-              class={'flex flex-row items-center border-grey border-b-2 p-2 gap-2'}
-            >
-              <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
-              <i class={'basis-full'}>{i18n('name')}</i>
-              <i class={'basis-full'}>{i18n('primaryMedia')}</i>
-              <i class={'basis-full'}>{i18n('role')}</i>
-              <i class={'basis-full'}>{i18n('rating')}</i>
-            </div>
-          )
-          : undefined}
+        <div
+          class={'flex flex-row items-center border-grey border-b-2 p-2 gap-2'}
+        >
+          <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
+          <i class={'basis-full'}>{i18n('name')}</i>
+          <i class={'basis-full'}>{i18n('primaryMedia')}</i>
+          <i class={'basis-full'}>{i18n('role')}</i>
+          <i class={'basis-full'}>{i18n('rating')}</i>
+        </div>
 
         {Object.values(characters.value)
           .map((char, i) => {
@@ -111,23 +99,23 @@ export default (
                 }}
               >
                 <img
-                  class={'grey w-auto h-[90px] aspect-[90/127] mr-4 object-cover object-center'}
+                  class={'bg-grey w-auto h-[90px] aspect-[90/127] mr-4 object-cover object-center'}
                   src={char.images?.[0]?.url ?? defaultImage}
                 />
-                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                <i class={'basis-full'}>
                   {char.name.english}
                 </i>
-                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                <i class={'basis-full'}>
                   {primaryMediaRef?.title.english ?? ''}
                 </i>
-                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                <i class={'basis-full'}>
                   {primaryMedia?.role
                     ? `${primaryMedia.role.substring(0, 1)}${
                       primaryMedia.role.substring(1).toLowerCase()
                     }`
                     : ''}
                 </i>
-                <i class={layout.value === 1 ? 'hidden' : 'basis-full'}>
+                <i class={'basis-full'}>
                   {rating}
                 </i>
               </div>
@@ -140,7 +128,7 @@ export default (
         class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
       >
         <div
-          class={'embed2 flex flex-col gap-y-6 overflow-x-hidden overflow-y-auto rounded-[10px] m-4 p-4 h-[80vh] w-[80vw] max-w-[680px] pointer-events-auto'}
+          class={'bg-embed2 flex flex-col gap-y-6 overflow-x-hidden overflow-y-auto rounded-[10px] m-4 p-4 h-[80vh] w-[80vw] max-w-[680px] pointer-events-auto'}
         >
           <div class={'flex flex-row-reverse ml-auto gap-2'}>
             <IconApply
@@ -242,29 +230,29 @@ export default (
             <div class={'flex'}>
               <div class={'flex grow'}>
                 <Star
-                  class={'w-[28px] h-auto transition-all duration-250 text-gold'}
+                  class={'w-[28px] h-auto transition-all duration-250 text-fable'}
                 />
                 <Star
                   class={[
-                    rating >= 2 ? 'text-gold' : 'text-disabled',
+                    rating >= 2 ? 'text-fable' : 'text-disabled',
                     'w-[28px] h-auto transition-all duration-250',
                   ].join(' ')}
                 />
                 <Star
                   class={[
-                    rating >= 3 ? 'text-gold' : 'text-disabled',
+                    rating >= 3 ? 'text-fable' : 'text-disabled',
                     'w-[28px] h-auto transition-all duration-250',
                   ].join(' ')}
                 />
                 <Star
                   class={[
-                    rating >= 4 ? 'text-gold' : 'text-disabled',
+                    rating >= 4 ? 'text-fable' : 'text-disabled',
                     'w-[28px] h-auto transition-all duration-250',
                   ].join(' ')}
                 />
                 <Star
                   class={[
-                    rating >= 5 ? 'text-gold' : 'text-disabled',
+                    rating >= 5 ? 'text-fable' : 'text-disabled',
                     'w-[28px] h-auto transition-all duration-250',
                   ].join(' ')}
                 />
@@ -347,7 +335,7 @@ export default (
             <div class={'flex flex-wrap gap-2'}>
               {signal.value.name.alternative?.map((alias, i) => (
                 <div
-                  class={'flex items-center justify-center embed rounded-[100vw] px-6 py-4 gap-2'}
+                  class={'flex items-center justify-center bg-embed rounded-[100vw] px-6 py-4 gap-2'}
                   key={i}
                 >
                   <i>{alias}</i>
@@ -365,12 +353,12 @@ export default (
               {(signal.value.name.alternative?.length ?? 0) < 5
                 ? (
                   <div
-                    class={'flex items-center justify-center embed rounded-[100vw] px-6 py-4 gap-2'}
+                    class={'flex items-center justify-center bg-embed rounded-[100vw] px-6 py-4 gap-2'}
                   >
                     <input
                       placeholder={'Batman'}
                       value={newAliasValue}
-                      class={'border-0 p-0 rounded-[100vw] embed text-[0.8rem] w-[180px]'}
+                      class={'border-0 p-0 rounded-[100vw] bg-embed text-[0.8rem] w-[180px]'}
                       onInput={(event) =>
                         newAliasValue.value =
                           (event.target as HTMLInputElement).value}

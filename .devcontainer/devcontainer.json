@@ -16,9 +16,8 @@
     },
     "codespaces": {
       "openFiles": [
-        "main.ts",
-        "src/routes/index.tsx",
-        "src/components/Dashboard.tsx"
+        "components/Dashboard.tsx",
+        "islands/Manage.tsx"
       ]
     }
   },
@@ -28,10 +27,10 @@
     }
   },
   "secrets": {
-    "CLIENT_ID": {
+    "DISCORD_CLIENT_ID": {
       "description": "A discord oauth client id"
     },
-    "CLIENT_SECRET": {
+    "DISCORD_CLIENT_SECRET": {
       "description": "A discord oauth client secret"
     }
   }

@@ -16,7 +16,7 @@ export default (
         data-dialog-cb={name}
         data-dialog-cb-action={action ?? 'hide'}
         data-dialog-cancel={name}
-        class={`embed fixed z-[9] top-0 left-0 w-full h-full opacity-80`}
+        class={`bg-embed fixed z-[9] top-0 left-0 w-full h-full opacity-80`}
         style={{ display: visible ? 'inherit' : 'none' }}
       />
 

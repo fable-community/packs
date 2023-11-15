@@ -32,7 +32,7 @@ export const Dismissible = (
     <div
       {...props}
       ref={ref}
-      class={'text-white embed z-[99] bottom-0 right-0 margin-1 max-w-[50vw] min-w-[20vw] fixed curser-pointer flex justify-center items-center rounded-[5px] my-1 p-1 gap-2'}
+      class={'text-white bg-embed z-[99] bottom-0 right-0 margin-1 max-w-[50vw] min-w-[20vw] fixed curser-pointer flex justify-center items-center rounded-[5px] my-1 p-1 gap-2'}
       data-type={type}
       onClick={(e) => ref.current?.remove()}
     >

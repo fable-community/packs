@@ -6,7 +6,6 @@ import Dialog from './Dialog.tsx';
 
 import Manage from '../islands/Manage.tsx';
 
-import IconLink from 'icons/link.tsx';
 import IconPlus from 'icons/plus.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
 
@@ -35,7 +34,6 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
 
   const hasNew = searchParams.has('new');
   const hasSuccess = searchParams.get('success');
-  // const hasImport = searchParams.get('import');
 
   if (packId || hasNew) {
     return (
@@ -74,13 +72,13 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
             visible={true}
           >
             <div
-              class={'embed2 flex flex-col overflow-x-hidden overflow-y-auto rounded-xl m-4 p-8 gap-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
+              class={'bg-embed2 flex flex-col overflow-x-hidden overflow-y-auto rounded-xl m-4 p-8 gap-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
             >
               <p>
                 {i18n('successTitle')}
               </p>
               <div
-                class={'highlight flex items-center p-4 rounded-xl'}
+                class={'bg-highlight flex items-center p-4 rounded-xl'}
                 data-clipboard={`/community install id: ${hasSuccess}`}
               >
                 <i class={'italic grow'}>

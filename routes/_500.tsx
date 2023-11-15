@@ -1,12 +1,6 @@
 export default () => {
   return (
-    <h1
-      style={{
-        margin: '0 auto',
-        letterSpacing: '1em',
-        textTransform: 'uppercase',
-      }}
-    >
+    <h1 class={'mx-auto tracking-[1em] uppercase'}>
       Oops
     </h1>
   );

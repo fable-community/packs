@@ -19,17 +19,17 @@ const Profile = ({ id, user, removable, onClick }: {
 }) => {
   return (
     <div
-      class={'embed2 flex items-center justify-center rounded-[100vw] px-4 py-2 gap-3'}
+      class={'bg-embed2 flex items-center justify-center rounded-[100vw] px-4 py-2 gap-3'}
     >
       <img
-        class={'w-[24px] h-auto aspect-square grey object-center object-cover rounded-full'}
+        class={'w-[24px] h-auto aspect-square bg-grey object-center object-cover rounded-full'}
         src={`https://discord-probe.deno.dev/avatar/${id}`}
       />
 
       <div class={'flex flex-col'}>
         {user
           ? <i>{user?.display_name ?? user?.username}</i>
-          : <div class={'w-[52px] h-[16px] grey'}></div>}
+          : <div class={'w-[52px] h-[16px] bg-grey'}></div>}
 
         {user
           ? (
@@ -51,7 +51,7 @@ const Profile = ({ id, user, removable, onClick }: {
             onClick={onClick}
           />
         )
-        : <IconCrown class={'text-gold w-[18px] h-auto'} />}
+        : <IconCrown class={'text-fable w-[18px] h-auto'} />}
     </div>
   );
 };
@@ -124,7 +124,7 @@ export default ({ owner, maintainers, visible }: {
         {i18n('addNew')}
       </button>
 
-      <i class={'h-[2px] grey'} />
+      <i class={'h-[2px] bg-grey'} />
 
       <Notice type={'info'}>{i18n('maintainersNotice')}</Notice>
 

@@ -15,14 +15,11 @@ export default ({ id, avatar }: { id: string; avatar?: string }) => {
         }`}
       />
 
-      <Dialog name={'logout'} class={'top-[2rem] right-[2rem]'}>
+      <Dialog name={'logout'} class={'top-[2rem] right-[4.5rem]'}>
         <form method={'post'} action={'/logout'}>
-          <button
-            type={'submit'}
-            class={'red mr-[2.5rem] flex items-center gap-[0.5rem]'}
-          >
+          <button type={'submit'} class={'bg-red flex items-center gap-2'}>
             {i18n('logout')}
-            <IconLogout />
+            <IconLogout class={'w-[24px] h-auto'} />
           </button>
         </form>
       </Dialog>

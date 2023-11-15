@@ -50,6 +50,7 @@ if (IS_BROWSER) {
     onkeydown = (e) => {
       if (e.key === 'Escape') {
         const elements = [
+          ...document.querySelectorAll('[data-dialog-cb="extra"]'),
           ...document.querySelectorAll('[data-dialog-cb="info"]'),
           ...document.querySelectorAll('[data-dialog-cb="media"]'),
           ...document.querySelectorAll('[data-dialog-cb="characters"]'),
