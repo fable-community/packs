@@ -25,17 +25,6 @@ export default ({ Component }: AppProps) => {
         />
 
         <link rel='stylesheet' href={'css/root.css'} />
-        <link rel='stylesheet' href={'css/login.css'} />
-        <link rel='stylesheet' href={'css/user.css'} />
-        <link rel='stylesheet' href={'css/dashboard.css'} />
-
-        <link rel='stylesheet' href={'css/notice.css'} />
-        <link rel='stylesheet' href={'css/dialog.css'} />
-        <link rel='stylesheet' href={'css/image_input.css'} />
-
-        <link rel='stylesheet' href={'css/manage.css'} />
-        <link rel='stylesheet' href={'css/maintainers.css'} />
-        <link rel='stylesheet' href={'css/media.css'} />
 
         <script async src='/js/dialogs.js' type={'module'} />
         <script async src='/js/clipboards.js' type={'module'} />

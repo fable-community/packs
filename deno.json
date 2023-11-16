@@ -17,7 +17,6 @@
   },
   "fmt": { "useTabs": false, "singleQuote": true, "indentWidth": 2 },
   "lock": false,
-  "unstable": ["kv"],
   "tasks": {
     "start": "deno run -A --env --watch=static/,routes/,islands/,components/,utils/,i18n/ dev.ts",
     "build": "deno run -A dev.ts build",

@@ -6,7 +6,7 @@ import ImageInput, { type IImageInput } from '../components/ImageInput.tsx';
 
 import Dialog from '../components/Dialog.tsx';
 
-import Notice, { Dismissible } from '../components/Notice.tsx';
+import { Dismissible } from '../components/Notice.tsx';
 
 import Media from '../components/Media.tsx';
 import Characters from '../components/Characters.tsx';
@@ -18,14 +18,13 @@ import TextInput from '../components/TextInput.tsx';
 import IconClose from 'icons/x.tsx';
 import IconApply from 'icons/check.tsx';
 import IconAdjustments from 'icons/adjustments-horizontal.tsx';
+import IconCheckmark from 'icons/check.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
-import IconGrid from 'icons/layout-grid.tsx';
-import IconTable from 'icons/table.tsx';
 
 import nanoid from '../utils/nanoid.ts';
 import compact from '../utils/compact.ts';
 
-import { i18n, locale } from '../utils/i18n.ts';
+import { i18n } from '../utils/i18n.ts';
 
 import type { Data } from '../routes/api/publish.ts';
 
@@ -48,7 +47,6 @@ export default (props: {
     ? JSON.parse(JSON.stringify(props.pack?.manifest))
     : { id: '' };
 
-  const layout = useSignal<number>(1);
   const active = useSignal<number>(0);
 
   const loading = useSignal<boolean>(false);
@@ -171,39 +169,6 @@ export default (props: {
     }
   };
 
-  const onExport = () => {
-    const data = getData();
-
-    const blob = new Blob([
-      JSON.stringify(data),
-    ], { type: 'application/json' });
-
-    const downloadFile = document.createElement('a');
-
-    downloadFile.innerHTML = '';
-
-    downloadFile.download = `${props.pack?.manifest?.id ?? 'new'}-export.json`;
-
-    if (window.webkitURL) {
-      // Chrome allows the link to be clicked without actually adding it to the DOM.
-      downloadFile.href = window.webkitURL.createObjectURL(blob);
-    } else {
-      // Firefox requires the link to be added to the DOM before it can be clicked.
-
-      downloadFile.href = window.URL.createObjectURL(blob);
-
-      downloadFile.onclick = (ev) => {
-        document.body.removeChild(ev.target as HTMLAnchorElement);
-      };
-
-      downloadFile.style.display = 'none';
-
-      document.body.appendChild(downloadFile);
-    }
-
-    downloadFile.click();
-  };
-
   return (
     <>
       {error.value
@@ -217,83 +182,17 @@ export default (props: {
       <Dialog
         visible={true}
         name={'manage'}
-        class={'manage-wrapper'}
+        class={'top-0 left-0 w-full h-full'}
         action={'back'}
       >
-        {/* this component require client-side javascript */}
+        {/* this component require client-side javascript enabled */}
         <noscript>{i18n('noScript')}</noscript>
 
-        <Dialog name={'extra'} class={'dialog-normal'}>
-          <div class={'metadata'}>
-            <IconApply data-dialog-cancel={'extra'} class={'close'} />
-
-            {!props.new
-              ? (
-                <>
-                  <label>{i18n('packServers', servers)}</label>
-
-                  <div
-                    class={'install-info'}
-                    data-clipboard={`/community install id: ${pack.id}`}
-                  >
-                    <i>{`/community install id: ${pack.id}`}</i>
-                    <IconClipboard />
-                  </div>
-                </>
-              )
-              : undefined}
-
-            {privacy.value
-              ? (
-                <>
-                  <Notice type={'info'}>{i18n('privateNotice')}</Notice>
-                  <button onClick={() => privacy.value = false}>
-                    {i18n('setPublic')}
-                  </button>
-                </>
-              )
-              : (
-                <>
-                  <button onClick={() => privacy.value = true}>
-                    {i18n('setPrivate')}
-                  </button>
-                </>
-              )}
-
-            <TextInput
-              value={author}
-              label={i18n('packAuthor')}
-              placeholder={i18n('placeholderPackAuthor')}
-              onInput={(value) => author.value = value}
-            />
-
-            <TextInput
-              multiline
-              value={description}
-              label={i18n('packDescription')}
-              placeholder={i18n('placeholderPackDescription')}
-              onInput={(value) => description.value = value}
-            />
-
-            <TextInput
-              value={webhookUrl}
-              label={i18n('packWebhookUrl')}
-              hint={i18n('packWebhookUrlHint')}
-              pattern={'https:\/\/discord\.com\/api\/webhooks\/[0-9]{18,19}\/.+'}
-              placeholder={'https://discord.com/api/webhooks/185033133521895424/AAabbb'}
-              onInput={(value) => webhookUrl.value = value}
-            />
-
-            <button onClick={onExport} class={'export'}>
-              {i18n('export')}
-            </button>
-          </div>
-        </Dialog>
-
-        <div class={'manage-container'}>
-          <div class={'manage-header'}>
+        <div class={'bg-embed m-4 w-full h-full'}>
+          <div class={'manage-header flex items-center gap-4 w-full'}>
             <ImageInput
               default={pack.image}
+              class={'w-[44px] aspect-square rounded-full'}
               accept={['image/png', 'image/jpeg', 'image/webp']}
               onChange={(value) => image.value = value}
             />
@@ -303,13 +202,14 @@ export default (props: {
               type={'text'}
               value={title}
               pattern='.{3,128}'
+              class={'bg-embed h-[48px] grow'}
               placeholder={i18n('packTitle')}
               onInput={(
                 ev,
               ) => (title.value = (ev.target as HTMLInputElement).value)}
             />
 
-            <div class={'buttons'}>
+            <div class={'flex fixed mx-2 my-4 bottom-0 right-4 gap-1 z-1'}>
               <button disabled={loading} onClick={onPublish}>
                 {props.new ? i18n('publish') : i18n('save')}
               </button>
@@ -350,25 +250,25 @@ export default (props: {
               </button>
             </div>
 
-            {[0, 1].includes(active.value)
-              ? (
-                layout.value === 0
-                  ? <IconTable onClick={() => layout.value = 1} />
-                  : <IconGrid onClick={() => layout.value = 0} />
-              )
-              : undefined}
-
-            <IconAdjustments data-dialog={'extra'} />
-
-            <IconClose data-dialog-cancel={'manage'} />
+            <IconAdjustments
+              class={'w-[28px] h-[28px] cursor-pointer'}
+              data-dialog={'extra'}
+            />
+            <IconClose
+              class={'w-[28px] h-[28px] cursor-pointer'}
+              data-dialog-cancel={'manage'}
+            />
           </div>
 
-          <div class={'tabs'}>
+          <div class={'grid grid-flow-col overflow-auto'}>
             {(i18n('tabs') as unknown as string[])
               .map((s, i) => (
                 <div
                   key={i}
-                  data-selected={active.value === i}
+                  class={[
+                    'text-center px-1 py-2 font-[600] uppercase cursor-pointer border-b-2 hover:border-white',
+                    active.value === i ? 'border-white' : 'border-grey',
+                  ].join(' ')}
                   onClick={() => active.value = i}
                 >
                   {s}
@@ -377,7 +277,6 @@ export default (props: {
           </div>
 
           <Characters
-            layout={layout}
             signal={characterSignal}
             visible={active.value === 0}
             characters={characters}
@@ -385,7 +284,6 @@ export default (props: {
           />
 
           <Media
-            layout={layout}
             signal={mediaSignal}
             visible={active.value === 1}
             characters={characters}
@@ -403,6 +301,97 @@ export default (props: {
             conflicts={conflicts}
           />
         </div>
+
+        <Dialog
+          name={'extra'}
+          class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
+        >
+          <div
+            class={'flex flex-col gap-6 bg-embed2 overflow-x-hidden overflow-y-auto rounded-xl m-4 p-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
+          >
+            <IconApply
+              data-dialog-cancel={'extra'}
+              class={'cursor-pointer w-[28px] h-[28px] ml-auto shrink-0	'}
+            />
+
+            {!props.new
+              ? (
+                <>
+                  <label class={'uppercase '}>
+                    {i18n('packServers', servers)}
+                  </label>
+
+                  <div
+                    class={'bg-highlight flex items-center p-4 rounded-xl'}
+                    data-clipboard={`/community install id: ${pack.id}`}
+                  >
+                    <i class={'italic grow select-text'}>
+                      {`/community install id: ${pack.id}`}
+                    </i>
+                    <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
+                  </div>
+                </>
+              )
+              : undefined}
+
+            <div class={'flex flex-col grow gap-2'}>
+              <label class={'uppercase text-[0.8rem] text-disabled'}>
+                {i18n('packVisibility')}
+              </label>
+
+              <div
+                class={'flex flex-col rounded-xl overflow-hidden'}
+              >
+                <button
+                  onClick={() => privacy.value = false}
+                  class={'py-4 justify-start text-left flex gap-4 bg-embed hover:shadow-none'}
+                >
+                  <IconCheckmark
+                    class={['w-[24px]', privacy.value ? 'opacity-0' : ''].join(
+                      ' ',
+                    )}
+                  />
+                  <span>{i18n('publicPackNotice')}</span>
+                </button>
+                <button
+                  onClick={() => privacy.value = true}
+                  class={'py-4 justify-start text-left flex gap-4 bg-embed hover:shadow-none'}
+                >
+                  <IconCheckmark
+                    class={['w-[24px]', privacy.value ? '' : 'opacity-0'].join(
+                      ' ',
+                    )}
+                  />
+                  <span>{i18n('privatePackNotice')}</span>
+                </button>
+              </div>
+            </div>
+
+            <TextInput
+              value={author}
+              label={i18n('packAuthor')}
+              placeholder={i18n('placeholderPackAuthor')}
+              onInput={(value) => author.value = value}
+            />
+
+            <TextInput
+              multiline
+              value={description}
+              label={i18n('packDescription')}
+              placeholder={i18n('placeholderPackDescription')}
+              onInput={(value) => description.value = value}
+            />
+
+            <TextInput
+              value={webhookUrl}
+              label={i18n('packWebhookUrl')}
+              hint={i18n('packWebhookUrlHint')}
+              pattern={'https:\/\/discord\.com\/api\/webhooks\/[0-9]{18,19}\/.+'}
+              placeholder={'https://discord.com/api/webhooks/185033133521895424/AAabbb'}
+              onInput={(value) => webhookUrl.value = value}
+            />
+          </div>
+        </Dialog>
       </Dialog>
     </>
   );

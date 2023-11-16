@@ -16,14 +16,14 @@ export default (
         data-dialog-cb={name}
         data-dialog-cb-action={action ?? 'hide'}
         data-dialog-cancel={name}
-        class={`dialog-holder`}
+        class={`bg-embed fixed z-[9] top-0 left-0 w-full h-full opacity-80`}
         style={{ display: visible ? 'inherit' : 'none' }}
       />
 
       <i
         data-dialog-cb={name}
         data-dialog-cb-action={action ?? 'hide'}
-        class={`dialog-wrapper ${props.class}`}
+        class={`z-[10] fixed overflow-x-hidden overflow-y-auto ${props.class}`}
         style={{ display: visible ? 'inherit' : 'none' }}
       >
         {children}

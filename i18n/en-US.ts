@@ -16,18 +16,19 @@ export default {
   format: 'Format',
   none: 'None',
   popularity: 'Popularity',
+  imageUrl: 'Image Url',
   age: 'Age',
   gender: 'Gender',
   packAuthor: 'Pack Author',
+  packVisibility: 'Pack Visibility',
   packDescription: 'Pack Description',
   packServers: 'Installed on {0} servers',
   packWebhookUrl: 'Discord Webhook URL',
   packWebhookUrlHint:
     'Every time this pack is updated the changes will be sent to this webhook',
-  setPublic: 'Make Public',
-  setPrivate: 'Make Private',
-  privateNotice:
+  privatePackNotice:
     'Only you and other collaborators are allowed to install this pack',
+  publicPackNotice: 'Anyone using Fable can install this pack',
 
   //
   placeholderGender: 'Classified',
@@ -47,7 +48,7 @@ export default {
   relations: 'Relations',
   links: 'Links',
   linksNotice:
-    'Only links to YouTube, Twitch, Crunchyroll, Tapas, Webtoon, and Amazon are allowed.',
+    'Only links to YouTube, Twitch, Crunchyroll, Netflix, Tapas, Webtoon, and Amazon are allowed.',
   description: 'Description',
   rating: 'Rating',
   role: 'Role',
@@ -72,7 +73,7 @@ export default {
   maintainersNotice:
     'Collaborators have full access to manage and edit the pack',
   conflictsNotice:
-    'In most cases you would want to disable series your pack replaces or conflicts with',
+    'In most cases you would want to disable series that conflict or the same as your pack',
   deleteMedia: 'Are you sure you want to delete this series?',
   deleteCharacter: 'Are you sure you want to delete this character?',
 

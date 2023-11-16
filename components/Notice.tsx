@@ -10,9 +10,13 @@ const Notice = (
     & JSX.HTMLAttributes<HTMLDivElement>,
 ) => {
   return (
-    <div class={'notice'} data-type={type} {...props}>
-      <IconInfo />
-      <div>
+    <div
+      class={'text-white flex justify-center items-center my-1 p-1 gap-2'}
+      data-type={type}
+      {...props}
+    >
+      <IconInfo class={`min-w-[18px] min-h-[18px] text-${type}`} />
+      <div class={'mr-auto'}>
         {props.children}
       </div>
     </div>
@@ -28,12 +32,12 @@ export const Dismissible = (
     <div
       {...props}
       ref={ref}
-      class={'notice notice-dismissible'}
+      class={'text-white bg-embed z-[99] bottom-0 right-0 margin-1 max-w-[50vw] min-w-[20vw] fixed curser-pointer flex justify-center items-center rounded-[5px] my-1 p-1 gap-2'}
       data-type={type}
       onClick={(e) => ref.current?.remove()}
     >
-      <IconInfo />
-      <div>
+      <IconInfo class={`min-w-[18px] min-h-[18px] text-${type}`} />
+      <div class={'mr-auto'}>
         {props.children}
       </div>
     </div>

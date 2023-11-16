@@ -1,10 +1,8 @@
 :root {
   color-scheme: dark;
-
   --grey: #4f4f4f;
   --foreground: #ffffff;
   --background: #313338;
-  --grey: #4f4f4f;
   --embed: #2b2d31;
   --embedHighlight: #232428;
   --highlight: #1c1c1c;
@@ -42,15 +40,12 @@ body {
   user-select: none;
 }
 
-[disabled] {
-  opacity: 0.3;
-  pointer-events: none;
-}
-
 button {
   justify-content: center;
   display: flex;
   align-items: center;
+
+  background-color: var(--grey);
 
   border: 0;
   font-weight: 600;
@@ -113,18 +108,18 @@ select:focus {
 }
 
 input:invalid,
-textarea:invalid {
+textarea:invalid,
+[invalid="true"] {
   border-bottom: 2px solid var(--red);
 }
 
-input:invalid ~ button {
+/* input:invalid ~ button {
   opacity: 0.3;
   pointer-events: none;
   background-color: var(--red);
-}
+} */
 
 [invalid="true"] {
-  border: 2px solid var(--red) !important;
   box-sizing: border-box;
 }
 
@@ -151,4 +146,9 @@ input:invalid ~ button {
   animation-duration: 0.35s;
   animation-iteration-count: 2;
   animation-fill-mode: both;
+}
+
+[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
 }
