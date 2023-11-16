@@ -203,6 +203,8 @@ export const handler: Handlers = {
           credentials,
           file: data.image.file,
         });
+      } else if (data.image?.url) {
+        pack.image = data.image.url;
       }
 
       pack.media = {};
@@ -288,6 +290,8 @@ export const handler: Handlers = {
               file: media.images[0].file,
               credentials,
             })
+            : media.images?.length && media.images[0].url
+            ? media.images[0].url
             : undefined;
 
           const characters: {
@@ -331,6 +335,8 @@ export const handler: Handlers = {
               file: char.images[0].file,
               credentials,
             })
+            : char.images?.length && char.images[0].url
+            ? char.images[0].url
             : undefined;
 
           let images: { url: string }[];

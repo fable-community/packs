@@ -16,6 +16,7 @@ export default {
   format: 'Format',
   none: 'None',
   popularity: 'Popularity',
+  imageUrl: 'Image Url',
   age: 'Age',
   gender: 'Gender',
   packAuthor: 'Pack Author',
@@ -25,8 +26,6 @@ export default {
   packWebhookUrl: 'Discord Webhook URL',
   packWebhookUrlHint:
     'Every time this pack is updated the changes will be sent to this webhook',
-  public: 'Public',
-  private: 'Private',
   privatePackNotice:
     'Only you and other collaborators are allowed to install this pack',
   publicPackNotice: 'Anyone using Fable can install this pack',

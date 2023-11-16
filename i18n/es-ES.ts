@@ -18,6 +18,7 @@ export default {
   format: 'Formato',
   none: 'Ninguno',
   popularity: 'Popularidad',
+  imageUrl: 'Image Url',
   age: 'Edad',
   gender: 'Género',
   packAuthor: 'Autor/a del pack',

@@ -190,6 +190,18 @@ export default (
             key={`${signal.value.id}-description`}
           />
 
+          <TextInput
+            class={'text-disabled'}
+            label={i18n('imageUrl')}
+            value={signal.value.images?.[0]?.file?.name ??
+              signal.value.images?.[0]?.url}
+            onInput={(value) => {
+              signal.value.images = [{ url: value }];
+              forceUpdate();
+            }}
+            key={`${signal.value.id}-imageurl`}
+          />
+
           <div class={'flex flex-col gap-2'}>
             <label class={'uppercase text-disabled text-[0.8rem]'}>
               {i18n('aliases')}
