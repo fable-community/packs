@@ -6,7 +6,7 @@ import ImageInput, { type IImageInput } from '../components/ImageInput.tsx';
 
 import Dialog from '../components/Dialog.tsx';
 
-import Notice, { Dismissible } from '../components/Notice.tsx';
+import { Dismissible } from '../components/Notice.tsx';
 
 import Media from '../components/Media.tsx';
 import Characters from '../components/Characters.tsx';
@@ -18,12 +18,13 @@ import TextInput from '../components/TextInput.tsx';
 import IconClose from 'icons/x.tsx';
 import IconApply from 'icons/check.tsx';
 import IconAdjustments from 'icons/adjustments-horizontal.tsx';
+import IconCheckmark from 'icons/check.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
 
 import nanoid from '../utils/nanoid.ts';
 import compact from '../utils/compact.ts';
 
-import { i18n, locale } from '../utils/i18n.ts';
+import { i18n } from '../utils/i18n.ts';
 
 import type { Data } from '../routes/api/publish.ts';
 
@@ -333,24 +334,38 @@ export default (props: {
               )
               : undefined}
 
-            {
-              /* {privacy.value
-              ? (
-                <>
-                  <Notice type={'info'}>{i18n('privateNotice')}</Notice>
-                  <button onClick={() => privacy.value = false}>
-                    {i18n('setPublic')}
-                  </button>
-                </>
-              )
-              : (
-                <>
-                  <button onClick={() => privacy.value = true}>
-                    {i18n('setPrivate')}
-                  </button>
-                </>
-              )} */
-            }
+            <div class={'flex flex-col grow gap-2'}>
+              <label class={'uppercase text-[0.8rem] text-disabled'}>
+                {i18n('packVisibility')}
+              </label>
+
+              <div
+                class={'flex flex-col rounded-xl overflow-hidden'}
+              >
+                <button
+                  onClick={() => privacy.value = false}
+                  class={'py-4 justify-start text-left flex gap-4 bg-embed hover:shadow-none'}
+                >
+                  <IconCheckmark
+                    class={['w-[24px]', privacy.value ? 'opacity-0' : ''].join(
+                      ' ',
+                    )}
+                  />
+                  <span>{i18n('publicPackNotice')}</span>
+                </button>
+                <button
+                  onClick={() => privacy.value = true}
+                  class={'py-4 justify-start text-left flex gap-4 bg-embed hover:shadow-none'}
+                >
+                  <IconCheckmark
+                    class={['w-[24px]', privacy.value ? '' : 'opacity-0'].join(
+                      ' ',
+                    )}
+                  />
+                  <span>{i18n('privatePackNotice')}</span>
+                </button>
+              </div>
+            </div>
 
             <TextInput
               value={author}

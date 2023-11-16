@@ -19,15 +19,17 @@ export default {
   age: 'Age',
   gender: 'Gender',
   packAuthor: 'Pack Author',
+  packVisibility: 'Pack Visibility',
   packDescription: 'Pack Description',
   packServers: 'Installed on {0} servers',
   packWebhookUrl: 'Discord Webhook URL',
   packWebhookUrlHint:
     'Every time this pack is updated the changes will be sent to this webhook',
-  setPublic: 'Make Public',
-  setPrivate: 'Make Private',
-  privateNotice:
+  public: 'Public',
+  private: 'Private',
+  privatePackNotice:
     'Only you and other collaborators are allowed to install this pack',
+  publicPackNotice: 'Anyone using Fable can install this pack',
 
   //
   placeholderGender: 'Classified',
