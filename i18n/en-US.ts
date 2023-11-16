@@ -74,7 +74,7 @@ export default {
   maintainersNotice:
     'Collaborators have full access to manage and edit the pack',
   conflictsNotice:
-    'In most cases you would want to disable series your pack replaces or conflicts with',
+    'In most cases you would want to disable series that conflict or the same as your pack',
   deleteMedia: 'Are you sure you want to delete this series?',
   deleteCharacter: 'Are you sure you want to delete this character?',
 

@@ -209,7 +209,7 @@ export default (props: {
               ) => (title.value = (ev.target as HTMLInputElement).value)}
             />
 
-            <div class={'flex fixed mx-2 my-4 bottom-0 right-0 gap-1 z-1'}>
+            <div class={'flex fixed mx-2 my-4 bottom-0 right-4 gap-1 z-1'}>
               <button disabled={loading} onClick={onPublish}>
                 {props.new ? i18n('publish') : i18n('save')}
               </button>
@@ -325,10 +325,10 @@ export default (props: {
                     class={'bg-highlight flex items-center p-4 rounded-xl'}
                     data-clipboard={`/community install id: ${pack.id}`}
                   >
-                    <i class={'italic grow'}>
+                    <i class={'italic grow select-text'}>
                       {`/community install id: ${pack.id}`}
                     </i>
-                    <IconClipboard class={'w-[18px] h-[18px]'} />
+                    <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
                   </div>
                 </>
               )

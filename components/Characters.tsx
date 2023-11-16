@@ -230,29 +230,29 @@ export default (
             <div class={'flex'}>
               <div class={'flex grow'}>
                 <Star
-                  class={'w-[28px] h-auto transition-all duration-250 text-fable'}
+                  class={'w-[28px] h-auto transition-all duration-250 fill-fable'}
                 />
                 <Star
                   class={[
-                    rating >= 2 ? 'text-fable' : 'text-disabled',
+                    rating >= 2 ? 'fill-fable' : 'fill-disabled',
                     'w-[28px] h-auto transition-all duration-250',
                   ].join(' ')}
                 />
                 <Star
                   class={[
-                    rating >= 3 ? 'text-fable' : 'text-disabled',
+                    rating >= 3 ? 'fill-fable' : 'fill-disabled',
                     'w-[28px] h-auto transition-all duration-250',
                   ].join(' ')}
                 />
                 <Star
                   class={[
-                    rating >= 4 ? 'text-fable' : 'text-disabled',
+                    rating >= 4 ? 'fill-fable' : 'fill-disabled',
                     'w-[28px] h-auto transition-all duration-250',
                   ].join(' ')}
                 />
                 <Star
                   class={[
-                    rating >= 5 ? 'text-fable' : 'text-disabled',
+                    rating >= 5 ? 'fill-fable' : 'fill-disabled',
                     'w-[28px] h-auto transition-all duration-250',
                   ].join(' ')}
                 />
@@ -266,7 +266,7 @@ export default (
                         forceUpdate();
                       }}
                     >
-                      <IconReset class={'w-[28px] h-auto'} />
+                      <IconReset class={'w-[28px] h-auto cursor-pointer'} />
                     </div>
                   )
                   : undefined}
@@ -277,7 +277,7 @@ export default (
                     forceUpdate();
                   }}
                 >
-                  <IconAdd class={'w-[28px] h-auto'} />
+                  <IconAdd class={'w-[28px] h-auto cursor-pointer'} />
                 </div>
                 <div
                   onClick={() => {
@@ -286,7 +286,7 @@ export default (
                     forceUpdate();
                   }}
                 >
-                  <IconRemove class={'w-[28px] h-auto'} />
+                  <IconRemove class={'w-[28px] h-auto cursor-pointer'} />
                 </div>
               </div>
             </div>
