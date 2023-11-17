@@ -155,8 +155,6 @@ export default (props: {
               setTimeout(() => {
                 child?.setAttribute('shake', 'true');
                 child?.setAttribute('invalid', 'true');
-                document.querySelector('.manage-wrapper')
-                  ?.setAttribute('shake', 'true');
               }, 100);
             }
           }
@@ -182,14 +180,14 @@ export default (props: {
       <Dialog
         visible={true}
         name={'manage'}
-        class={'top-0 left-0 w-full h-full'}
+        class={'top-0 left-0 w-full h-full bg-embed'}
         action={'back'}
       >
         {/* this component require client-side javascript enabled */}
         <noscript>{i18n('noScript')}</noscript>
 
-        <div class={'bg-embed m-4 w-full h-full'}>
-          <div class={'manage-header flex items-center gap-4 w-full'}>
+        <div class={'m-4 w-full h-full'}>
+          <div class={'flex items-center gap-4 w-full'}>
             <ImageInput
               default={pack.image}
               class={'w-[44px] aspect-square rounded-full'}
