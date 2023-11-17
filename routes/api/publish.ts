@@ -316,8 +316,10 @@ export const handler: Handlers = {
 
           if (url?.length) {
             images = [{ url }];
+          } else if (media.images?.[0]?.url) {
+            images = media.images?.map(({ url }) => ({ url }));
           } else {
-            images = media.images?.map(({ url }) => ({ url })) ?? [];
+            images = [];
           }
 
           return {
@@ -343,8 +345,10 @@ export const handler: Handlers = {
 
           if (url?.length) {
             images = [{ url }];
+          } else if (char.images?.[0]?.url) {
+            images = char.images?.map(({ url }) => ({ url }));
           } else {
-            images = char.images?.map(({ url }) => ({ url })) ?? [];
+            images = [];
           }
 
           return {
