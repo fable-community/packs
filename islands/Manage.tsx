@@ -221,6 +221,7 @@ export default (props: {
                   const item: Character = {
                     id: `${nanoid(4)}`,
                     name: { english: '' },
+                    added: new Date().toISOString(),
                   };
 
                   characters.value = [item, ...characters.value];
@@ -236,9 +237,10 @@ export default (props: {
                 style={{ display: active.value === 1 ? '' : 'none' }}
                 onClick={() => {
                   const item: TMedia = {
-                    type: MediaType.Anime,
                     id: `${nanoid(4)}`,
                     title: { english: '' },
+                    type: MediaType.Anime,
+                    added: new Date().toISOString(),
                   };
 
                   media.value = [item, ...media.value];

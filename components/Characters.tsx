@@ -59,6 +59,12 @@ export default (
       : undefined,
   });
 
+  const onCharacterUpdate = useCallback(() => {
+    //
+    signal.value.updated = new Date().toISOString();
+    console.log(signal.value.updated);
+  }, []);
+
   return (
     <div class={visible ? '' : 'hidden'}>
       <div
@@ -162,6 +168,7 @@ export default (
             accept={['image/png', 'image/jpeg', 'image/webp']}
             onChange={(image) => {
               signal.value.images = [image];
+              onCharacterUpdate();
               forceUpdate();
             }}
           />
@@ -171,7 +178,10 @@ export default (
             pattern='.{1,128}'
             label={i18n('name')}
             value={signal.value.name.english ?? ''}
-            onInput={(value) => signal.value.name.english = value}
+            onInput={(value) => {
+              signal.value.name.english = value;
+              onCharacterUpdate();
+            }}
             key={`${signal.value.id}-title`}
           />
 
@@ -190,6 +200,7 @@ export default (
                 signal.value.media = mediaId
                   ? [{ mediaId, role: CharacterRole.Main }]
                   : undefined;
+                onCharacterUpdate();
                 forceUpdate();
               }}
             />
@@ -204,6 +215,7 @@ export default (
                   onChange={(role: CharacterRole) => {
                     // deno-lint-ignore no-non-null-assertion
                     signal.value.media![0].role = role;
+                    onCharacterUpdate();
                     forceUpdate();
                   }}
                 />
@@ -263,6 +275,7 @@ export default (
                     <div
                       onClick={() => {
                         delete signal.value.popularity;
+                        onCharacterUpdate();
                         forceUpdate();
                       }}
                     >
@@ -274,6 +287,7 @@ export default (
                   onClick={() => {
                     const target = Math.min(5, rating + 1);
                     signal.value.popularity = getPopularity(target);
+                    onCharacterUpdate();
                     forceUpdate();
                   }}
                 >
@@ -283,6 +297,7 @@ export default (
                   onClick={() => {
                     const target = Math.max(1, rating - 1);
                     signal.value.popularity = getPopularity(target);
+                    onCharacterUpdate();
                     forceUpdate();
                   }}
                 >
@@ -298,7 +313,10 @@ export default (
               label={i18n('age')}
               placeholder={i18n('placeholderAge')}
               value={signal.value.age ?? ''}
-              onInput={(value) => signal.value.age = value || undefined}
+              onInput={(value) => {
+                signal.value.age = value || undefined;
+                onCharacterUpdate();
+              }}
               key={`${signal.value.id}-age`}
             />
 
@@ -307,7 +325,10 @@ export default (
               label={i18n('gender')}
               placeholder={i18n('placeholderGender')}
               value={signal.value.gender ?? ''}
-              onInput={(value) => signal.value.gender = value || undefined}
+              onInput={(value) => {
+                signal.value.gender = value || undefined;
+                onCharacterUpdate();
+              }}
               key={`${signal.value.id}-gender`}
             />
           </div>
@@ -318,7 +339,10 @@ export default (
             label={i18n('description')}
             placeholder={i18n('placeholderCharDescription')}
             value={signal.value.description}
-            onInput={(value) => signal.value.description = value || undefined}
+            onInput={(value) => {
+              signal.value.description = value || undefined;
+              onCharacterUpdate();
+            }}
             key={`${signal.value.id}-description`}
           />
 
@@ -329,6 +353,7 @@ export default (
               signal.value.images?.[0]?.url}
             onInput={(value) => {
               signal.value.images = [{ url: value }];
+              onCharacterUpdate();
               forceUpdate();
             }}
             key={`${signal.value.id}-imageurl`}
@@ -356,6 +381,7 @@ export default (
                     onClick={() => {
                       // deno-lint-ignore no-non-null-assertion
                       signal.value.name.alternative!.splice(i, 1);
+                      onCharacterUpdate();
                       forceUpdate();
                     }}
                   />
@@ -396,6 +422,8 @@ export default (
 
                           newAliasValue.value = '';
 
+                          onCharacterUpdate();
+
                           forceUpdate();
                         }
                       }}
@@ -418,9 +446,11 @@ export default (
                     required
                     value={link.site}
                     placeholder={'YouTube'}
-                    onInput={(site) =>
+                    onInput={(site) => {
                       // deno-lint-ignore no-non-null-assertion
-                      signal.value.externalLinks![i].site = site}
+                      signal.value.externalLinks![i].site = site;
+                      onCharacterUpdate();
+                    }}
                     key={`${signal.value.id}-link-${i}-site`}
                   />
                   <TextInput
@@ -428,9 +458,11 @@ export default (
                     value={link.url}
                     pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|netflix\\.com|crunchyroll\\.com|tapas\\.io|webtoons\\.com|amazon\\.com)[\\S]*$'}
                     placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
-                    onInput={(url) =>
+                    onInput={(url) => {
                       // deno-lint-ignore no-non-null-assertion
-                      signal.value.externalLinks![i].url = url}
+                      signal.value.externalLinks![i].url = url;
+                      onCharacterUpdate();
+                    }}
                     key={`${signal.value.id}-link-${i}-url`}
                   />
                   <IconTrash
@@ -438,6 +470,7 @@ export default (
                     onClick={() => {
                       // deno-lint-ignore no-non-null-assertion
                       signal.value.externalLinks!.splice(i, 1);
+                      onCharacterUpdate();
                       forceUpdate();
                     }}
                   />

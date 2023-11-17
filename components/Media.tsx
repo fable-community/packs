@@ -39,6 +39,12 @@ export default (
   // used to force the entire component to redrew
   const forceUpdate = useCallback(() => updateState({}), []);
 
+  const onMediaUpdate = useCallback(() => {
+    //
+    signal.value.updated = new Date().toISOString();
+    console.log(signal.value.updated);
+  }, []);
+
   const newAliasValue = useSignal('');
 
   const MediaFormat = {
@@ -111,7 +117,6 @@ export default (
               class={'w-[24px] h-[24px] cursor-pointer'}
               onClick={() => {
                 forceUpdate();
-
                 requestAnimationFrame(() => hideDialog('media'));
               }}
             />
@@ -139,6 +144,7 @@ export default (
             accept={['image/png', 'image/jpeg', 'image/webp']}
             onChange={(image) => {
               signal.value.images = [image];
+              onMediaUpdate();
               forceUpdate();
             }}
           />
@@ -148,7 +154,10 @@ export default (
             list={MediaType}
             label={i18n('type')}
             defaultValue={signal.value.type}
-            onChange={(t: MediaType) => signal.value.type = t}
+            onChange={(t: MediaType) => {
+              signal.value.type = t;
+              onMediaUpdate();
+            }}
           />
 
           <TextInput
@@ -156,7 +165,10 @@ export default (
             pattern='.{1,128}'
             label={i18n('title')}
             value={signal.value.title.english ?? ''}
-            onInput={(value) => signal.value.title.english = value}
+            onInput={(value) => {
+              signal.value.title.english = value;
+              onMediaUpdate();
+            }}
             key={`${signal.value.id}-title`}
           />
 
@@ -164,9 +176,11 @@ export default (
             list={MediaFormat}
             label={i18n('format')}
             defaultValue={signal.value.format}
-            onChange={(f) =>
+            onChange={(f) => {
               // deno-lint-ignore no-explicit-any
-              signal.value.format = (f as any) || undefined}
+              signal.value.format = (f as any) || undefined;
+              onMediaUpdate();
+            }}
           />
 
           <TextInput
@@ -176,7 +190,10 @@ export default (
             label={i18n('popularity')}
             value={signal.value.popularity ?? 0}
             hint={i18n('popularityHint')}
-            onInput={(value) => signal.value.popularity = Number(value ?? 0)}
+            onInput={(value) => {
+              signal.value.popularity = Number(value ?? 0);
+              onMediaUpdate();
+            }}
             key={`${signal.value.id}-popularity`}
           />
 
@@ -186,7 +203,10 @@ export default (
             label={i18n('description')}
             placeholder={i18n('placeholderMediaDescription')}
             value={signal.value.description}
-            onInput={(value) => signal.value.description = value}
+            onInput={(value) => {
+              signal.value.description = value;
+              onMediaUpdate();
+            }}
             key={`${signal.value.id}-description`}
           />
 
@@ -197,6 +217,7 @@ export default (
               signal.value.images?.[0]?.url}
             onInput={(value) => {
               signal.value.images = [{ url: value }];
+              onMediaUpdate();
               forceUpdate();
             }}
             key={`${signal.value.id}-imageurl`}
@@ -221,6 +242,7 @@ export default (
                     onClick={() => {
                       // deno-lint-ignore no-non-null-assertion
                       signal.value.title.alternative!.splice(i, 1);
+                      onMediaUpdate();
                       forceUpdate();
                     }}
                   />
@@ -257,6 +279,8 @@ export default (
                         );
 
                         newAliasValue.value = '';
+
+                        onMediaUpdate();
 
                         forceUpdate();
                       }}
@@ -320,6 +344,8 @@ export default (
                               // deno-lint-ignore no-explicit-any
                               relation: r as any,
                             });
+
+                            onMediaUpdate();
                           }
                         }}
                       />
@@ -341,9 +367,11 @@ export default (
                     required
                     value={link.site}
                     placeholder={'YouTube'}
-                    onInput={(site) =>
+                    onInput={(site) => {
                       // deno-lint-ignore no-non-null-assertion
-                      signal.value.externalLinks![i].site = site}
+                      signal.value.externalLinks![i].site = site;
+                      onMediaUpdate();
+                    }}
                     key={`${signal.value.id}-link-${i}-site`}
                   />
                   <TextInput
@@ -351,9 +379,11 @@ export default (
                     value={link.url}
                     pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|netflix\\.com|crunchyroll\\.com|tapas\\.io|webtoons\\.com|amazon\\.com)[\\S]*$'}
                     placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
-                    onInput={(url) =>
+                    onInput={(url) => {
                       // deno-lint-ignore no-non-null-assertion
-                      signal.value.externalLinks![i].url = url}
+                      signal.value.externalLinks![i].url = url;
+                      onMediaUpdate();
+                    }}
                     key={`${signal.value.id}-link-${i}-url`}
                   />
                   <IconTrash
@@ -361,6 +391,7 @@ export default (
                     onClick={() => {
                       // deno-lint-ignore no-non-null-assertion
                       signal.value.externalLinks!.splice(i, 1);
+                      onMediaUpdate();
                       forceUpdate();
                     }}
                   />
