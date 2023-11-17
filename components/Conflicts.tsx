@@ -180,12 +180,12 @@ export default ({ conflicts, visible }: {
             <div
               class={[
                 focused.value ? '' : 'hidden',
-                'bg-highlight absolute flex flex-col w-full max-h-[35vh] overflow-x-hidden overflow-y-auto empty:h-[100px]',
+                'bg-embed2 absolute flex flex-col w-full max-h-[35vh] overflow-x-hidden overflow-y-auto empty:h-[100px]',
               ].join(' ')}
             >
               {suggestions.map((media, i) => (
                 <i
-                  class={'cursor-pointer px-2 py-4'}
+                  class={'cursor-pointer px-2 py-4 hover:bg-highlight'}
                   key={media.id}
                   onClick={() => {
                     const id = `anilist:${media.id}`;

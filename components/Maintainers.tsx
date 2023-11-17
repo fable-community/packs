@@ -112,7 +112,7 @@ export default ({ owner, maintainers, visible }: {
 
       <button
         class={'h-[46px]'}
-        disabled={userId.value?.length <= 0}
+        disabled={!(/^[0-9]{18,19}$/.test(userId.value ?? ''))}
         onClick={() => {
           if (!maintainers.value.includes(userId.value)) {
             maintainers.value.push(userId.value);
