@@ -17,7 +17,9 @@
     "codespaces": {
       "openFiles": [
         "components/Dashboard.tsx",
-        "islands/Manage.tsx"
+        "islands/Manage.tsx",
+        "components/Characters.tsx",
+        "components/Media.tsx"
       ]
     }
   },

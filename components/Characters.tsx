@@ -60,7 +60,6 @@ export default (
   });
 
   const onCharacterUpdate = useCallback(() => {
-    //
     signal.value.updated = new Date().toISOString();
     console.log(signal.value.updated);
   }, []);
@@ -234,75 +233,61 @@ export default (
           <div class={'flex flex-col gap-2'}>
             <label class={'uppercase text-disabled text-[0.8rem]'}>
               {i18n('rating')}
-              {': '}
-              {typeof signal.value.popularity === 'number'
-                ? i18n('basedOnIndividual')
-                : i18n('basedOnMedia')}
             </label>
             <div class={'flex'}>
               <div class={'flex grow'}>
                 <Star
-                  class={'w-[28px] h-auto transition-all duration-250 fill-fable'}
+                  class={'w-[28px] h-auto cursor-pointer transition-all duration-250 fill-fable'}
+                  onClick={() => {
+                    signal.value.popularity = getPopularity(1);
+                    onCharacterUpdate();
+                    forceUpdate();
+                  }}
                 />
                 <Star
                   class={[
                     rating >= 2 ? 'fill-fable' : 'fill-disabled',
-                    'w-[28px] h-auto transition-all duration-250',
+                    'w-[28px] h-auto cursor-pointer transition-all duration-250',
                   ].join(' ')}
+                  onClick={() => {
+                    signal.value.popularity = getPopularity(2);
+                    onCharacterUpdate();
+                    forceUpdate();
+                  }}
                 />
                 <Star
                   class={[
                     rating >= 3 ? 'fill-fable' : 'fill-disabled',
-                    'w-[28px] h-auto transition-all duration-250',
+                    'w-[28px] h-auto cursor-pointer transition-all duration-250',
                   ].join(' ')}
+                  onClick={() => {
+                    signal.value.popularity = getPopularity(3);
+                    onCharacterUpdate();
+                    forceUpdate();
+                  }}
                 />
                 <Star
                   class={[
                     rating >= 4 ? 'fill-fable' : 'fill-disabled',
-                    'w-[28px] h-auto transition-all duration-250',
+                    'w-[28px] h-auto cursor-pointer transition-all duration-250',
                   ].join(' ')}
+                  onClick={() => {
+                    signal.value.popularity = getPopularity(4);
+                    onCharacterUpdate();
+                    forceUpdate();
+                  }}
                 />
                 <Star
                   class={[
                     rating >= 5 ? 'fill-fable' : 'fill-disabled',
-                    'w-[28px] h-auto transition-all duration-250',
+                    'w-[28px] h-auto cursor-pointer transition-all duration-250',
                   ].join(' ')}
+                  onClick={() => {
+                    signal.value.popularity = getPopularity(5);
+                    onCharacterUpdate();
+                    forceUpdate();
+                  }}
                 />
-              </div>
-              <div class={'flex'}>
-                {typeof signal.value.popularity === 'number'
-                  ? (
-                    <div
-                      onClick={() => {
-                        delete signal.value.popularity;
-                        onCharacterUpdate();
-                        forceUpdate();
-                      }}
-                    >
-                      <IconReset class={'w-[28px] h-auto cursor-pointer'} />
-                    </div>
-                  )
-                  : undefined}
-                <div
-                  onClick={() => {
-                    const target = Math.min(5, rating + 1);
-                    signal.value.popularity = getPopularity(target);
-                    onCharacterUpdate();
-                    forceUpdate();
-                  }}
-                >
-                  <IconAdd class={'w-[28px] h-auto cursor-pointer'} />
-                </div>
-                <div
-                  onClick={() => {
-                    const target = Math.max(1, rating - 1);
-                    signal.value.popularity = getPopularity(target);
-                    onCharacterUpdate();
-                    forceUpdate();
-                  }}
-                >
-                  <IconRemove class={'w-[28px] h-auto cursor-pointer'} />
-                </div>
               </div>
             </div>
           </div>

@@ -64,8 +64,6 @@ export default {
     ' permission to install packs, If you don\'t have it you can always ask someone who does to install the pack for you.',
   //
 
-  basedOnMedia: 'Based on Series',
-  basedOnIndividual: 'Individual',
   userId: 'Discord User ID',
   addNew: 'Add',
   addNewCharacter: 'New Character',
