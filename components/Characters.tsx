@@ -23,20 +23,28 @@ import ImageInput from './ImageInput.tsx';
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
-import IconAdd from 'icons/circle-plus.tsx';
-import IconRemove from 'icons/circle-minus.tsx';
-import IconReset from 'icons/circle-x.tsx';
 
 import { i18n } from '../utils/i18n.ts';
 
-import { type Character, CharacterRole, type Media } from '../utils/types.ts';
+import { getRelativeTimeString } from '../utils/timeString.ts';
+
+import {
+  type Character,
+  CharacterRole,
+  type CharacterSorting,
+  type Media,
+  type SortingOrder,
+} from '../utils/types.ts';
 
 export default (
-  { signal, media, characters, visible }: {
+  { signal, media, characters, visible, sorting, order, sortCharacters }: {
     signal: Signal<Character>;
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
     visible: boolean;
+    sorting: Signal<CharacterSorting>;
+    order: Signal<SortingOrder>;
+    sortCharacters: () => void;
   },
 ) => {
   const [, updateState] = useState({});
@@ -61,7 +69,7 @@ export default (
 
   const onCharacterUpdate = useCallback(() => {
     signal.value.updated = new Date().toISOString();
-    console.log(signal.value.updated);
+    sortCharacters();
   }, []);
 
   return (
@@ -70,13 +78,14 @@ export default (
         class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
         <div
-          class={'flex flex-row items-center border-grey border-b-2 p-2 gap-2'}
+          class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-2'}
         >
           <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
           <i class={'basis-full'}>{i18n('name')}</i>
           <i class={'basis-full'}>{i18n('primaryMedia')}</i>
           <i class={'basis-full'}>{i18n('role')}</i>
           <i class={'basis-full'}>{i18n('rating')}</i>
+          <i class={'basis-full'}>{i18n('updated')}</i>
         </div>
 
         {Object.values(characters.value)
@@ -94,9 +103,15 @@ export default (
                 role: primaryMediaRef ? primaryMedia?.role : undefined,
               });
 
+            const date = char.updated ?? char.added;
+
+            const timeString = date
+              ? getRelativeTimeString(new Date(date))
+              : '';
+
             return (
               <div
-                class={'flex flex-row items-center p-2 gap-2'}
+                class={'flex flex-row items-center p-2 gap-2 cursor-pointer hover:bg-highlight'}
                 key={characters.value[i].id}
                 onClick={() => {
                   signal.value = characters.value[i];
@@ -122,6 +137,9 @@ export default (
                 </i>
                 <i class={'basis-full'}>
                   {rating}
+                </i>
+                <i class={'basis-full'}>
+                  {timeString}
                 </i>
               </div>
             );

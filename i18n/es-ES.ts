@@ -18,6 +18,7 @@ export default {
   format: 'Formato',
   none: 'Ninguno',
   popularity: 'Popularidad',
+  updated: 'Updated',
   imageUrl: 'Image Url',
   age: 'Edad',
   gender: 'Género',

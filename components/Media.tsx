@@ -24,14 +24,25 @@ import comma from '../utils/comma.ts';
 
 import { i18n } from '../utils/i18n.ts';
 
-import { Character, type Media, MediaType } from '../utils/types.ts';
+import { getRelativeTimeString } from '../utils/timeString.ts';
+
+import {
+  Character,
+  type Media,
+  type MediaSorting,
+  MediaType,
+  type SortingOrder,
+} from '../utils/types.ts';
 
 export default (
-  { signal, media, visible }: {
+  { signal, media, visible, sorting, order, sortMedia }: {
     signal: Signal<Media>;
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
     visible: boolean;
+    sorting: Signal<MediaSorting>;
+    order: Signal<SortingOrder>;
+    sortMedia: () => void;
   },
 ) => {
   const [, updateState] = useState({});
@@ -40,9 +51,8 @@ export default (
   const forceUpdate = useCallback(() => updateState({}), []);
 
   const onMediaUpdate = useCallback(() => {
-    //
     signal.value.updated = new Date().toISOString();
-    console.log(signal.value.updated);
+    sortMedia();
   }, []);
 
   const newAliasValue = useSignal('');
@@ -72,19 +82,26 @@ export default (
         class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
         <div
-          class={'flex flex-row items-center border-grey border-b-2 p-2 gap-2'}
+          class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-2'}
         >
           <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
           <i class={'basis-full'}>{i18n('title')}</i>
           <i class={'basis-full'}>{i18n('popularity')}</i>
+          <i class={'basis-full'}>{i18n('updated')}</i>
         </div>
 
         {Object.values(media.value)
           .map((_media, i) => {
+            const date = _media.updated ?? _media.added;
+
+            const timeString = date
+              ? getRelativeTimeString(new Date(date))
+              : '';
+
             return (
               <div
                 key={media.value[i].id}
-                class={'flex flex-row items-center p-2 gap-2'}
+                class={'flex flex-row items-center p-2 gap-2 cursor-pointer hover:bg-highlight'}
                 onClick={() => {
                   signal.value = media.value[i];
                   requestAnimationFrame(() => showDialog('media'));
@@ -99,6 +116,9 @@ export default (
                 </i>
                 <i class={'basis-full'}>
                   {comma(_media.popularity ?? 0)}
+                </i>
+                <i class={'basis-full'}>
+                  {timeString}
                 </i>
               </div>
             );

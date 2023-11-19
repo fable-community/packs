@@ -16,6 +16,7 @@ export default {
   format: 'Format',
   none: 'None',
   popularity: 'Popularity',
+  updated: 'Updated',
   imageUrl: 'Image Url',
   age: 'Age',
   gender: 'Gender',

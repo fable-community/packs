@@ -1,5 +1,7 @@
 import { useSignal } from '@preact/signals';
 
+import { useCallback, useEffect } from 'preact/hooks';
+
 import { serialize } from 'bson';
 
 import ImageInput, { type IImageInput } from '../components/ImageInput.tsx';
@@ -24,16 +26,24 @@ import IconClipboard from 'icons/clipboard-text.tsx';
 import nanoid from '../utils/nanoid.ts';
 import compact from '../utils/compact.ts';
 
+import {
+  sortCharacters as _sortCharacters,
+  sortMedia as _sortMedia,
+} from '../utils/sorting.ts';
+
 import { i18n } from '../utils/i18n.ts';
 
 import type { Data } from '../routes/api/publish.ts';
 
 import {
-  Character,
-  Media as TMedia,
+  type Character,
+  type CharacterSorting,
+  type Media as TMedia,
+  type MediaSorting,
   MediaType,
-  Pack,
-  User,
+  type Pack,
+  type SortingOrder,
+  type User,
 } from '../utils/types.ts';
 
 export default (props: {
@@ -59,8 +69,8 @@ export default (props: {
   const webhookUrl = useSignal<string | undefined>(pack.webhookUrl);
   const image = useSignal<IImageInput | undefined>(undefined);
 
-  const media = useSignal(pack.media?.new ?? []);
-  const characters = useSignal(pack.characters?.new ?? []);
+  const media = useSignal(_sortMedia(pack.media?.new ?? []));
+  const characters = useSignal(_sortCharacters(pack.characters?.new ?? []));
 
   const maintainers = useSignal(pack.maintainers ?? []);
   const conflicts = useSignal(pack.conflicts ?? []);
@@ -75,6 +85,28 @@ export default (props: {
     title: { english: '' },
     id: '',
   });
+
+  const mediaSorting = useSignal<MediaSorting>('updated');
+  const mediaSortingOrder = useSignal<SortingOrder>('asc');
+
+  const charactersSorting = useSignal<CharacterSorting>('updated');
+  const charactersSortingOrder = useSignal<SortingOrder>('asc');
+
+  const sortCharacters = useCallback(() => {
+    characters.value = _sortCharacters(characters.value);
+  }, []);
+
+  const sortMedia = useCallback(() => {
+    media.value = _sortMedia(media.value);
+  }, []);
+
+  useEffect(() => {
+    sortCharacters();
+  }, [charactersSorting.value, charactersSortingOrder.value]);
+
+  useEffect(() => {
+    sortMedia();
+  }, [mediaSorting.value, mediaSortingOrder.value]);
 
   const getData = (): Data => ({
     old: props.pack?.manifest ?? pack,
@@ -279,6 +311,9 @@ export default (props: {
           <Characters
             signal={characterSignal}
             visible={active.value === 0}
+            order={charactersSortingOrder}
+            sorting={charactersSorting}
+            sortCharacters={sortCharacters}
             characters={characters}
             media={media}
           />
@@ -286,6 +321,9 @@ export default (props: {
           <Media
             signal={mediaSignal}
             visible={active.value === 1}
+            order={mediaSortingOrder}
+            sorting={mediaSorting}
+            sortMedia={sortMedia}
             characters={characters}
             media={media}
           />

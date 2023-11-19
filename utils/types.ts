@@ -33,6 +33,11 @@ export type Character = Modify<
   { images?: IImageInput[] }
 >;
 
+export type SortingOrder = 'asc' | 'desc';
+
+export type CharacterSorting = 'rating' | 'updated';
+export type MediaSorting = 'popularity' | 'updated';
+
 export { Modify };
 
 export {
