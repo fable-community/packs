@@ -69,9 +69,6 @@ export default (props: {
   const webhookUrl = useSignal<string | undefined>(pack.webhookUrl);
   const image = useSignal<IImageInput | undefined>(undefined);
 
-  const media = useSignal(_sortMedia(pack.media?.new ?? []));
-  const characters = useSignal(_sortCharacters(pack.characters?.new ?? []));
-
   const maintainers = useSignal(pack.maintainers ?? []);
   const conflicts = useSignal(pack.conflicts ?? []);
 
@@ -86,55 +83,53 @@ export default (props: {
     id: '',
   });
 
-  const mediaSorting = useSignal<MediaSorting>(
-    localStorage.getItem('_mediaSorting') as MediaSorting ?? 'updated',
+  const mediaSorting = useSignal<MediaSorting>('updated');
+  const mediaSortingOrder = useSignal<SortingOrder>('desc');
+
+  const charactersSorting = useSignal<CharacterSorting>('updated');
+  const charactersSortingOrder = useSignal<SortingOrder>('desc');
+
+  const media = useSignal(
+    _sortMedia(
+      pack.media?.new ?? [],
+      mediaSorting.value,
+      mediaSortingOrder.value,
+    ),
   );
 
-  const mediaSortingOrder = useSignal<SortingOrder>(
-    localStorage.getItem('_mediaSortingOrder') as SortingOrder ?? 'asc',
+  const characters = useSignal(
+    _sortCharacters(
+      pack.characters?.new ?? [],
+      media.value,
+      charactersSorting.value,
+      charactersSortingOrder.value,
+    ),
   );
-
-  const charactersSorting = useSignal<CharacterSorting>(
-    localStorage.getItem('_charactersSorting') as CharacterSorting ?? 'updated',
-  );
-
-  const charactersSortingOrder = useSignal<SortingOrder>(
-    localStorage.getItem('_charactersSortingOrder') as SortingOrder ?? 'asc',
-  );
-
-  const sortCharacters = useCallback(() => {
-    characters.value = _sortCharacters(characters.value);
-  }, []);
 
   const sortMedia = useCallback(() => {
-    media.value = _sortMedia(media.value);
+    media.value = _sortMedia(
+      media.value,
+      mediaSorting.value,
+      mediaSortingOrder.value,
+    );
   }, []);
 
-  useEffect(() => {
-    sortCharacters();
-
-    localStorage.setItem(
-      '_charactersSorting',
+  const sortCharacters = useCallback(() => {
+    characters.value = _sortCharacters(
+      characters.value,
+      media.value,
       charactersSorting.value,
-    );
-    localStorage.setItem(
-      '_charactersSortingOrder',
       charactersSortingOrder.value,
     );
-  }, [charactersSorting.value, charactersSortingOrder.value]);
+  }, []);
 
   useEffect(() => {
     sortMedia();
-
-    localStorage.setItem(
-      '_mediaSorting',
-      mediaSorting.value,
-    );
-    localStorage.setItem(
-      '_mediaSortingOrder',
-      mediaSortingOrder.value,
-    );
   }, [mediaSorting.value, mediaSortingOrder.value]);
+
+  useEffect(() => {
+    sortCharacters();
+  }, [charactersSorting.value, charactersSortingOrder.value]);
 
   const getData = (): Data => ({
     old: props.pack?.manifest ?? pack,

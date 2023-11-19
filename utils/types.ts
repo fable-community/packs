@@ -35,8 +35,8 @@ export type Character = Modify<
 
 export type SortingOrder = 'asc' | 'desc';
 
-export type CharacterSorting = 'rating' | 'updated';
-export type MediaSorting = 'popularity' | 'updated';
+export type CharacterSorting = 'name' | 'media' | 'role' | 'rating' | 'updated';
+export type MediaSorting = 'title' | 'popularity' | 'updated';
 
 export { Modify };
 

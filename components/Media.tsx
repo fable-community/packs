@@ -15,6 +15,7 @@ import Dialog from './Dialog.tsx';
 import Select from './Select.tsx';
 import TextInput from './TextInput.tsx';
 import ImageInput from './ImageInput.tsx';
+import Sort from './Sort.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/plus.tsx';
@@ -82,12 +83,18 @@ export default (
         class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
         <div
-          class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-2'}
+          class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-3'}
         >
           <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
-          <i class={'basis-full'}>{i18n('title')}</i>
-          <i class={'basis-full'}>{i18n('popularity')}</i>
-          <i class={'basis-full'}>{i18n('updated')}</i>
+          <Sort name={'title'} order={order} sorting={sorting}>
+            {i18n('title')}
+          </Sort>
+          <Sort name={'popularity'} order={order} sorting={sorting}>
+            {i18n('popularity')}
+          </Sort>
+          <Sort name={'updated'} order={order} sorting={sorting}>
+            {i18n('updated')}
+          </Sort>
         </div>
 
         {Object.values(media.value)
@@ -101,7 +108,7 @@ export default (
             return (
               <div
                 key={media.value[i].id}
-                class={'flex flex-row items-center p-2 gap-2 cursor-pointer hover:bg-highlight'}
+                class={'flex flex-row items-center p-2 gap-3 cursor-pointer hover:bg-highlight'}
                 onClick={() => {
                   signal.value = media.value[i];
                   requestAnimationFrame(() => showDialog('media'));

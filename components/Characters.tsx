@@ -19,6 +19,7 @@ import Star from './Star.tsx';
 import Select from './Select.tsx';
 import TextInput from './TextInput.tsx';
 import ImageInput from './ImageInput.tsx';
+import Sort from './Sort.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/plus.tsx';
@@ -78,14 +79,24 @@ export default (
         class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
         <div
-          class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-2'}
+          class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-3'}
         >
           <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
-          <i class={'basis-full'}>{i18n('name')}</i>
-          <i class={'basis-full'}>{i18n('primaryMedia')}</i>
-          <i class={'basis-full'}>{i18n('role')}</i>
-          <i class={'basis-full'}>{i18n('rating')}</i>
-          <i class={'basis-full'}>{i18n('updated')}</i>
+          <Sort name={'name'} order={order} sorting={sorting}>
+            {i18n('name')}
+          </Sort>
+          <Sort name={'media'} order={order} sorting={sorting}>
+            {i18n('primaryMedia')}
+          </Sort>
+          <Sort name={'role'} order={order} sorting={sorting}>
+            {i18n('role')}
+          </Sort>
+          <Sort name={'rating'} order={order} sorting={sorting}>
+            {i18n('rating')}
+          </Sort>
+          <Sort name={'updated'} order={order} sorting={sorting}>
+            {i18n('updated')}
+          </Sort>
         </div>
 
         {Object.values(characters.value)
@@ -111,7 +122,7 @@ export default (
 
             return (
               <div
-                class={'flex flex-row items-center p-2 gap-2 cursor-pointer hover:bg-highlight'}
+                class={'flex flex-row items-center p-2 gap-3 cursor-pointer hover:bg-highlight'}
                 key={characters.value[i].id}
                 onClick={() => {
                   signal.value = characters.value[i];
