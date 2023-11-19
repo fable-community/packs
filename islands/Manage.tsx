@@ -86,11 +86,21 @@ export default (props: {
     id: '',
   });
 
-  const mediaSorting = useSignal<MediaSorting>('updated');
-  const mediaSortingOrder = useSignal<SortingOrder>('asc');
+  const mediaSorting = useSignal<MediaSorting>(
+    localStorage.getItem('_mediaSorting') as MediaSorting ?? 'updated',
+  );
 
-  const charactersSorting = useSignal<CharacterSorting>('updated');
-  const charactersSortingOrder = useSignal<SortingOrder>('asc');
+  const mediaSortingOrder = useSignal<SortingOrder>(
+    localStorage.getItem('_mediaSortingOrder') as SortingOrder ?? 'asc',
+  );
+
+  const charactersSorting = useSignal<CharacterSorting>(
+    localStorage.getItem('_charactersSorting') as CharacterSorting ?? 'updated',
+  );
+
+  const charactersSortingOrder = useSignal<SortingOrder>(
+    localStorage.getItem('_charactersSortingOrder') as SortingOrder ?? 'asc',
+  );
 
   const sortCharacters = useCallback(() => {
     characters.value = _sortCharacters(characters.value);
@@ -102,10 +112,28 @@ export default (props: {
 
   useEffect(() => {
     sortCharacters();
+
+    localStorage.setItem(
+      '_charactersSorting',
+      charactersSorting.value,
+    );
+    localStorage.setItem(
+      '_charactersSortingOrder',
+      charactersSortingOrder.value,
+    );
   }, [charactersSorting.value, charactersSortingOrder.value]);
 
   useEffect(() => {
     sortMedia();
+
+    localStorage.setItem(
+      '_mediaSorting',
+      mediaSorting.value,
+    );
+    localStorage.setItem(
+      '_mediaSortingOrder',
+      mediaSortingOrder.value,
+    );
   }, [mediaSorting.value, mediaSortingOrder.value]);
 
   const getData = (): Data => ({
