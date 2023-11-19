@@ -9,6 +9,8 @@ export const locale = signal('en-US');
 
 const regex = /((([a-zA-Z]+(-[a-zA-Z0-9]+){0,2})|\*)(;q=[0-1](\.[0-9]+)?)?)*/g;
 
+export type I18nKey = keyof typeof enUS;
+
 export const availableLocales = [
   'en',
   'en-US',
@@ -40,10 +42,7 @@ export function i18nSSR(acceptHeader: string) {
   }
 }
 
-export function i18n(
-  key: keyof typeof enUS,
-  ...args: (string | number)[]
-): string {
+export function i18n(key: I18nKey, ...args: (string | number)[]): string {
   let value: string | string[];
 
   // on browser the signal would not have been updated from i18nSSR()

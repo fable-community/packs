@@ -18,6 +18,7 @@ export default {
   format: 'Formato',
   none: 'Ninguno',
   popularity: 'Popularidad',
+  updated: 'Updated',
   imageUrl: 'Image Url',
   age: 'Edad',
   gender: 'Género',
@@ -65,8 +66,6 @@ export default {
     ' para instalar packs. Si no lo tienes puedes pedirle a alguien que lo tenga que instale el pack por tí.',
   //
 
-  basedOnMedia: 'Basado en la serie',
-  basedOnIndividual: 'Individual',
   userId: 'ID de usuario de Discord',
   addNew: 'Añadir',
   addNewCharacter: 'Nuevo Personaje',

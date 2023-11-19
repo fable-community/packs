@@ -1,5 +1,7 @@
 import { useSignal } from '@preact/signals';
 
+import { useCallback, useEffect } from 'preact/hooks';
+
 import { serialize } from 'bson';
 
 import ImageInput, { type IImageInput } from '../components/ImageInput.tsx';
@@ -24,16 +26,24 @@ import IconClipboard from 'icons/clipboard-text.tsx';
 import nanoid from '../utils/nanoid.ts';
 import compact from '../utils/compact.ts';
 
+import {
+  sortCharacters as _sortCharacters,
+  sortMedia as _sortMedia,
+} from '../utils/sorting.ts';
+
 import { i18n } from '../utils/i18n.ts';
 
 import type { Data } from '../routes/api/publish.ts';
 
 import {
-  Character,
-  Media as TMedia,
+  type Character,
+  type CharacterSorting,
+  type Media as TMedia,
+  type MediaSorting,
   MediaType,
-  Pack,
-  User,
+  type Pack,
+  type SortingOrder,
+  type User,
 } from '../utils/types.ts';
 
 export default (props: {
@@ -59,9 +69,6 @@ export default (props: {
   const webhookUrl = useSignal<string | undefined>(pack.webhookUrl);
   const image = useSignal<IImageInput | undefined>(undefined);
 
-  const media = useSignal(pack.media?.new ?? []);
-  const characters = useSignal(pack.characters?.new ?? []);
-
   const maintainers = useSignal(pack.maintainers ?? []);
   const conflicts = useSignal(pack.conflicts ?? []);
 
@@ -75,6 +82,54 @@ export default (props: {
     title: { english: '' },
     id: '',
   });
+
+  const mediaSorting = useSignal<MediaSorting>('updated');
+  const mediaSortingOrder = useSignal<SortingOrder>('desc');
+
+  const charactersSorting = useSignal<CharacterSorting>('updated');
+  const charactersSortingOrder = useSignal<SortingOrder>('desc');
+
+  const media = useSignal(
+    _sortMedia(
+      pack.media?.new ?? [],
+      mediaSorting.value,
+      mediaSortingOrder.value,
+    ),
+  );
+
+  const characters = useSignal(
+    _sortCharacters(
+      pack.characters?.new ?? [],
+      media.value,
+      charactersSorting.value,
+      charactersSortingOrder.value,
+    ),
+  );
+
+  const sortMedia = useCallback(() => {
+    media.value = _sortMedia(
+      media.value,
+      mediaSorting.value,
+      mediaSortingOrder.value,
+    );
+  }, []);
+
+  const sortCharacters = useCallback(() => {
+    characters.value = _sortCharacters(
+      characters.value,
+      media.value,
+      charactersSorting.value,
+      charactersSortingOrder.value,
+    );
+  }, []);
+
+  useEffect(() => {
+    sortMedia();
+  }, [mediaSorting.value, mediaSortingOrder.value]);
+
+  useEffect(() => {
+    sortCharacters();
+  }, [charactersSorting.value, charactersSortingOrder.value]);
 
   const getData = (): Data => ({
     old: props.pack?.manifest ?? pack,
@@ -155,8 +210,6 @@ export default (props: {
               setTimeout(() => {
                 child?.setAttribute('shake', 'true');
                 child?.setAttribute('invalid', 'true');
-                document.querySelector('.manage-wrapper')
-                  ?.setAttribute('shake', 'true');
               }, 100);
             }
           }
@@ -182,14 +235,14 @@ export default (props: {
       <Dialog
         visible={true}
         name={'manage'}
-        class={'top-0 left-0 w-full h-full'}
+        class={'top-0 left-0 w-full h-full bg-embed'}
         action={'back'}
       >
         {/* this component require client-side javascript enabled */}
         <noscript>{i18n('noScript')}</noscript>
 
-        <div class={'bg-embed m-4 w-full h-full'}>
-          <div class={'manage-header flex items-center gap-4 w-full'}>
+        <div class={'m-4 w-full h-full'}>
+          <div class={'flex items-center gap-4 w-full'}>
             <ImageInput
               default={pack.image}
               class={'w-[44px] aspect-square rounded-full'}
@@ -221,6 +274,7 @@ export default (props: {
                   const item: Character = {
                     id: `${nanoid(4)}`,
                     name: { english: '' },
+                    added: new Date().toISOString(),
                   };
 
                   characters.value = [item, ...characters.value];
@@ -236,9 +290,10 @@ export default (props: {
                 style={{ display: active.value === 1 ? '' : 'none' }}
                 onClick={() => {
                   const item: TMedia = {
-                    type: MediaType.Anime,
                     id: `${nanoid(4)}`,
                     title: { english: '' },
+                    type: MediaType.Anime,
+                    added: new Date().toISOString(),
                   };
 
                   media.value = [item, ...media.value];
@@ -279,6 +334,9 @@ export default (props: {
           <Characters
             signal={characterSignal}
             visible={active.value === 0}
+            order={charactersSortingOrder}
+            sorting={charactersSorting}
+            sortCharacters={sortCharacters}
             characters={characters}
             media={media}
           />
@@ -286,6 +344,9 @@ export default (props: {
           <Media
             signal={mediaSignal}
             visible={active.value === 1}
+            order={mediaSortingOrder}
+            sorting={mediaSorting}
+            sortMedia={sortMedia}
             characters={characters}
             media={media}
           />

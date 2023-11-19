@@ -19,24 +19,33 @@ import Star from './Star.tsx';
 import Select from './Select.tsx';
 import TextInput from './TextInput.tsx';
 import ImageInput from './ImageInput.tsx';
+import Sort from './Sort.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
-import IconAdd from 'icons/circle-plus.tsx';
-import IconRemove from 'icons/circle-minus.tsx';
-import IconReset from 'icons/circle-x.tsx';
 
 import { i18n } from '../utils/i18n.ts';
 
-import { type Character, CharacterRole, type Media } from '../utils/types.ts';
+import { getRelativeTimeString } from '../utils/timeString.ts';
+
+import {
+  type Character,
+  CharacterRole,
+  type CharacterSorting,
+  type Media,
+  type SortingOrder,
+} from '../utils/types.ts';
 
 export default (
-  { signal, media, characters, visible }: {
+  { signal, media, characters, visible, sorting, order, sortCharacters }: {
     signal: Signal<Character>;
     characters: Signal<Character[]>;
     media: Signal<Media[]>;
     visible: boolean;
+    sorting: Signal<CharacterSorting>;
+    order: Signal<SortingOrder>;
+    sortCharacters: () => void;
   },
 ) => {
   const [, updateState] = useState({});
@@ -59,19 +68,35 @@ export default (
       : undefined,
   });
 
+  const onCharacterUpdate = useCallback(() => {
+    signal.value.updated = new Date().toISOString();
+    sortCharacters();
+  }, []);
+
   return (
     <div class={visible ? '' : 'hidden'}>
       <div
         class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
         <div
-          class={'flex flex-row items-center border-grey border-b-2 p-2 gap-2'}
+          class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-3'}
         >
           <div class={'w-auto h-[90px] aspect-[90/127] mr-4'} />
-          <i class={'basis-full'}>{i18n('name')}</i>
-          <i class={'basis-full'}>{i18n('primaryMedia')}</i>
-          <i class={'basis-full'}>{i18n('role')}</i>
-          <i class={'basis-full'}>{i18n('rating')}</i>
+          <Sort name={'name'} order={order} sorting={sorting}>
+            {i18n('name')}
+          </Sort>
+          <Sort name={'media'} order={order} sorting={sorting}>
+            {i18n('primaryMedia')}
+          </Sort>
+          <Sort name={'role'} order={order} sorting={sorting}>
+            {i18n('role')}
+          </Sort>
+          <Sort name={'rating'} order={order} sorting={sorting}>
+            {i18n('rating')}
+          </Sort>
+          <Sort name={'updated'} order={order} sorting={sorting}>
+            {i18n('updated')}
+          </Sort>
         </div>
 
         {Object.values(characters.value)
@@ -89,9 +114,15 @@ export default (
                 role: primaryMediaRef ? primaryMedia?.role : undefined,
               });
 
+            const date = char.updated ?? char.added;
+
+            const timeString = date
+              ? getRelativeTimeString(new Date(date))
+              : '';
+
             return (
               <div
-                class={'flex flex-row items-center p-2 gap-2'}
+                class={'flex flex-row items-center p-2 gap-3 cursor-pointer hover:bg-highlight'}
                 key={characters.value[i].id}
                 onClick={() => {
                   signal.value = characters.value[i];
@@ -117,6 +148,9 @@ export default (
                 </i>
                 <i class={'basis-full'}>
                   {rating}
+                </i>
+                <i class={'basis-full'}>
+                  {timeString}
                 </i>
               </div>
             );
@@ -162,6 +196,7 @@ export default (
             accept={['image/png', 'image/jpeg', 'image/webp']}
             onChange={(image) => {
               signal.value.images = [image];
+              onCharacterUpdate();
               forceUpdate();
             }}
           />
@@ -171,7 +206,10 @@ export default (
             pattern='.{1,128}'
             label={i18n('name')}
             value={signal.value.name.english ?? ''}
-            onInput={(value) => signal.value.name.english = value}
+            onInput={(value) => {
+              signal.value.name.english = value;
+              onCharacterUpdate();
+            }}
             key={`${signal.value.id}-title`}
           />
 
@@ -190,6 +228,7 @@ export default (
                 signal.value.media = mediaId
                   ? [{ mediaId, role: CharacterRole.Main }]
                   : undefined;
+                onCharacterUpdate();
                 forceUpdate();
               }}
             />
@@ -204,6 +243,7 @@ export default (
                   onChange={(role: CharacterRole) => {
                     // deno-lint-ignore no-non-null-assertion
                     signal.value.media![0].role = role;
+                    onCharacterUpdate();
                     forceUpdate();
                   }}
                 />
@@ -222,72 +262,61 @@ export default (
           <div class={'flex flex-col gap-2'}>
             <label class={'uppercase text-disabled text-[0.8rem]'}>
               {i18n('rating')}
-              {': '}
-              {typeof signal.value.popularity === 'number'
-                ? i18n('basedOnIndividual')
-                : i18n('basedOnMedia')}
             </label>
             <div class={'flex'}>
               <div class={'flex grow'}>
                 <Star
-                  class={'w-[28px] h-auto transition-all duration-250 fill-fable'}
+                  class={'w-[28px] h-auto cursor-pointer transition-all duration-250 fill-fable'}
+                  onClick={() => {
+                    signal.value.popularity = getPopularity(1);
+                    onCharacterUpdate();
+                    forceUpdate();
+                  }}
                 />
                 <Star
                   class={[
                     rating >= 2 ? 'fill-fable' : 'fill-disabled',
-                    'w-[28px] h-auto transition-all duration-250',
+                    'w-[28px] h-auto cursor-pointer transition-all duration-250',
                   ].join(' ')}
+                  onClick={() => {
+                    signal.value.popularity = getPopularity(2);
+                    onCharacterUpdate();
+                    forceUpdate();
+                  }}
                 />
                 <Star
                   class={[
                     rating >= 3 ? 'fill-fable' : 'fill-disabled',
-                    'w-[28px] h-auto transition-all duration-250',
+                    'w-[28px] h-auto cursor-pointer transition-all duration-250',
                   ].join(' ')}
+                  onClick={() => {
+                    signal.value.popularity = getPopularity(3);
+                    onCharacterUpdate();
+                    forceUpdate();
+                  }}
                 />
                 <Star
                   class={[
                     rating >= 4 ? 'fill-fable' : 'fill-disabled',
-                    'w-[28px] h-auto transition-all duration-250',
+                    'w-[28px] h-auto cursor-pointer transition-all duration-250',
                   ].join(' ')}
+                  onClick={() => {
+                    signal.value.popularity = getPopularity(4);
+                    onCharacterUpdate();
+                    forceUpdate();
+                  }}
                 />
                 <Star
                   class={[
                     rating >= 5 ? 'fill-fable' : 'fill-disabled',
-                    'w-[28px] h-auto transition-all duration-250',
+                    'w-[28px] h-auto cursor-pointer transition-all duration-250',
                   ].join(' ')}
+                  onClick={() => {
+                    signal.value.popularity = getPopularity(5);
+                    onCharacterUpdate();
+                    forceUpdate();
+                  }}
                 />
-              </div>
-              <div class={'flex'}>
-                {typeof signal.value.popularity === 'number'
-                  ? (
-                    <div
-                      onClick={() => {
-                        delete signal.value.popularity;
-                        forceUpdate();
-                      }}
-                    >
-                      <IconReset class={'w-[28px] h-auto cursor-pointer'} />
-                    </div>
-                  )
-                  : undefined}
-                <div
-                  onClick={() => {
-                    const target = Math.min(5, rating + 1);
-                    signal.value.popularity = getPopularity(target);
-                    forceUpdate();
-                  }}
-                >
-                  <IconAdd class={'w-[28px] h-auto cursor-pointer'} />
-                </div>
-                <div
-                  onClick={() => {
-                    const target = Math.max(1, rating - 1);
-                    signal.value.popularity = getPopularity(target);
-                    forceUpdate();
-                  }}
-                >
-                  <IconRemove class={'w-[28px] h-auto cursor-pointer'} />
-                </div>
               </div>
             </div>
           </div>
@@ -298,7 +327,10 @@ export default (
               label={i18n('age')}
               placeholder={i18n('placeholderAge')}
               value={signal.value.age ?? ''}
-              onInput={(value) => signal.value.age = value || undefined}
+              onInput={(value) => {
+                signal.value.age = value || undefined;
+                onCharacterUpdate();
+              }}
               key={`${signal.value.id}-age`}
             />
 
@@ -307,7 +339,10 @@ export default (
               label={i18n('gender')}
               placeholder={i18n('placeholderGender')}
               value={signal.value.gender ?? ''}
-              onInput={(value) => signal.value.gender = value || undefined}
+              onInput={(value) => {
+                signal.value.gender = value || undefined;
+                onCharacterUpdate();
+              }}
               key={`${signal.value.id}-gender`}
             />
           </div>
@@ -318,7 +353,10 @@ export default (
             label={i18n('description')}
             placeholder={i18n('placeholderCharDescription')}
             value={signal.value.description}
-            onInput={(value) => signal.value.description = value || undefined}
+            onInput={(value) => {
+              signal.value.description = value || undefined;
+              onCharacterUpdate();
+            }}
             key={`${signal.value.id}-description`}
           />
 
@@ -329,6 +367,7 @@ export default (
               signal.value.images?.[0]?.url}
             onInput={(value) => {
               signal.value.images = [{ url: value }];
+              onCharacterUpdate();
               forceUpdate();
             }}
             key={`${signal.value.id}-imageurl`}
@@ -356,6 +395,7 @@ export default (
                     onClick={() => {
                       // deno-lint-ignore no-non-null-assertion
                       signal.value.name.alternative!.splice(i, 1);
+                      onCharacterUpdate();
                       forceUpdate();
                     }}
                   />
@@ -396,6 +436,8 @@ export default (
 
                           newAliasValue.value = '';
 
+                          onCharacterUpdate();
+
                           forceUpdate();
                         }
                       }}
@@ -418,9 +460,11 @@ export default (
                     required
                     value={link.site}
                     placeholder={'YouTube'}
-                    onInput={(site) =>
+                    onInput={(site) => {
                       // deno-lint-ignore no-non-null-assertion
-                      signal.value.externalLinks![i].site = site}
+                      signal.value.externalLinks![i].site = site;
+                      onCharacterUpdate();
+                    }}
                     key={`${signal.value.id}-link-${i}-site`}
                   />
                   <TextInput
@@ -428,9 +472,11 @@ export default (
                     value={link.url}
                     pattern={'^(https:\\/\\/)?(www\\.)?(youtube\\.com|twitch\\.tv|netflix\\.com|crunchyroll\\.com|tapas\\.io|webtoons\\.com|amazon\\.com)[\\S]*$'}
                     placeholder={'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
-                    onInput={(url) =>
+                    onInput={(url) => {
                       // deno-lint-ignore no-non-null-assertion
-                      signal.value.externalLinks![i].url = url}
+                      signal.value.externalLinks![i].url = url;
+                      onCharacterUpdate();
+                    }}
                     key={`${signal.value.id}-link-${i}-url`}
                   />
                   <IconTrash
@@ -438,6 +484,7 @@ export default (
                     onClick={() => {
                       // deno-lint-ignore no-non-null-assertion
                       signal.value.externalLinks!.splice(i, 1);
+                      onCharacterUpdate();
                       forceUpdate();
                     }}
                   />

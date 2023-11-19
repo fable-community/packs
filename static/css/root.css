@@ -1,15 +1,30 @@
 :root {
-  color-scheme: dark;
-  --grey: #4f4f4f;
-  --foreground: #ffffff;
-  --background: #313338;
-  --embed: #2b2d31;
-  --embedHighlight: #232428;
-  --highlight: #1c1c1c;
+  --grey: #b0b0b0;
+  --foreground: #000000;
+  --background: #ffffff;
+  --embed: #ffffff;
+  --embedHighlight: #dcdbd7;
+  --highlight: #e3e3e3;
   --red: #b52424;
   --discord: #5865f2;
-  --fable: #feb500;
-  --disabled: #b1b0ad;
+  --fable: #cb9715;
+  --disabled: #4e4f52;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --grey: #4f4f4f;
+    --foreground: #ffffff;
+    --background: #313338;
+    --embed: #2b2d31;
+    --embedHighlight: #232428;
+    --highlight: #1c1c1c;
+    --red: #b52424;
+    --discord: #5865f2;
+    --fable: #feb500;
+    --disabled: #b1b0ad;
+  }
 }
 
 noscript {
