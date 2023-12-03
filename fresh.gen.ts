@@ -2,29 +2,30 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from './routes/[id].tsx';
-import * as $1 from './routes/_404.tsx';
-import * as $2 from './routes/_500.tsx';
-import * as $3 from './routes/_503.tsx';
-import * as $4 from './routes/_app.tsx';
-import * as $5 from './routes/api/publish.ts';
-import * as $6 from './routes/index.tsx';
-import * as $$0 from './islands/Manage.tsx';
+import * as $_id_ from './routes/[id].tsx';
+import * as $_404 from './routes/_404.tsx';
+import * as $_500 from './routes/_500.tsx';
+import * as $_503 from './routes/_503.tsx';
+import * as $_app from './routes/_app.tsx';
+import * as $api_publish from './routes/api/publish.ts';
+import * as $index from './routes/index.tsx';
+import * as $Manage from './islands/Manage.tsx';
+import { type Manifest } from '$fresh/server.ts';
 
 const manifest = {
   routes: {
-    './routes/[id].tsx': $0,
-    './routes/_404.tsx': $1,
-    './routes/_500.tsx': $2,
-    './routes/_503.tsx': $3,
-    './routes/_app.tsx': $4,
-    './routes/api/publish.ts': $5,
-    './routes/index.tsx': $6,
+    './routes/[id].tsx': $_id_,
+    './routes/_404.tsx': $_404,
+    './routes/_500.tsx': $_500,
+    './routes/_503.tsx': $_503,
+    './routes/_app.tsx': $_app,
+    './routes/api/publish.ts': $api_publish,
+    './routes/index.tsx': $index,
   },
   islands: {
-    './islands/Manage.tsx': $$0,
+    './islands/Manage.tsx': $Manage,
   },
   baseUrl: import.meta.url,
-};
+} satisfies Manifest;
 
 export default manifest;

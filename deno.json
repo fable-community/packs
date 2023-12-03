@@ -1,5 +1,9 @@
 {
+  "nodeModulesDir": true,
   "lint": {
+    "exclude": [
+      "fresh.gen.ts"
+    ],
     "rules": {
       "tags": ["fresh", "recommended"],
       "include": [
@@ -27,14 +31,17 @@
   "exclude": ["**/_fresh/*"],
   "imports": {
     "#filter-boolean": "https://esm.sh/@total-typescript/ts-reset@0.4.2/filter-boolean",
-    "$fresh/": "https://deno.land/x/fresh@1.5.4/",
+    "$fresh/": "https://deno.land/x/fresh@1.6.0/",
     "$std/": "https://deno.land/std@0.202.0/",
-    "preact": "https://esm.sh/preact@10.18.1",
-    "preact/": "https://esm.sh/preact@10.18.1/",
+    "preact": "https://esm.sh/preact@10.19.2",
+    "preact/": "https://esm.sh/preact@10.19.2/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.2",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.2.1",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.0",
     "bson": "https://raw.githubusercontent.com/lucsoft/web_bson/v0.3.0/mod.js",
-    "icons/": "https://deno.land/x/tabler_icons_tsx@0.0.4/tsx/"
+    "icons/": "https://deno.land/x/tabler_icons_tsx@0.0.4/tsx/",
+    "tailwindcss": "npm:tailwindcss@3.3.5",
+    "tailwindcss/": "npm:/tailwindcss@3.3.5/",
+    "tailwindcss/plugin": "npm:/tailwindcss@3.3.5/plugin.js"
   }
 }

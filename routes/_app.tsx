@@ -24,10 +24,10 @@ export default ({ Component }: AppProps) => {
           href='https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap'
         />
 
-        <link rel='stylesheet' href={'css/root.css'} />
+        <link rel='stylesheet' href={'root.css'} />
 
-        <script async src='/js/dialogs.js' type={'module'} />
-        <script async src='/js/clipboards.js' type={'module'} />
+        <script async src='/dialogs.js' type={'module'} />
+        <script async src='/clipboards.js' type={'module'} />
 
         {/* error tracking */}
         <script
