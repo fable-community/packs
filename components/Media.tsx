@@ -164,17 +164,39 @@ export default (
             />
           </div>
 
-          <ImageInput
-            key={`${signal.value.id}-image`}
-            class={'w-auto h-[192px] object-cover object-center aspect-[90/127] mx-auto flex-shrink-0'}
-            default={signal.value.images?.[0]?.url ?? ''}
-            accept={['image/png', 'image/jpeg', 'image/webp']}
-            onChange={(image) => {
-              signal.value.images = [image];
-              onMediaUpdate();
-              forceUpdate();
-            }}
-          />
+          <div class={'flex gap-8 flex-wrap'}>
+            <ImageInput
+              name={signal.value.id}
+              key={`${signal.value.id}-image`}
+              class={'w-auto h-[192px] object-cover object-center aspect-[90/127] mx-auto flex-shrink-0'}
+              default={signal.value.images?.[0]?.url ?? ''}
+              accept={['image/png', 'image/jpeg', 'image/webp']}
+              onChange={(image) => {
+                signal.value.images = [image];
+                onMediaUpdate();
+                forceUpdate();
+              }}
+            />
+            <div class={'flex flex-col grow gap-4 h-min my-auto'}>
+              <button>
+                <label class={'w-full cursor-pointer'} for={signal.value.id}>
+                  {i18n('uploadFromPC')}
+                </label>
+              </button>{' '}
+              <TextInput
+                class={'text-disabled'}
+                label={i18n('imageUrl')}
+                value={signal.value.images?.[0]?.file?.name ??
+                  signal.value.images?.[0]?.url}
+                onInput={(value) => {
+                  signal.value.images = [{ url: value }];
+                  onMediaUpdate();
+                  forceUpdate();
+                }}
+                key={`${signal.value.id}-imageurl`}
+              />
+            </div>
+          </div>
 
           <Select
             required
@@ -235,19 +257,6 @@ export default (
               onMediaUpdate();
             }}
             key={`${signal.value.id}-description`}
-          />
-
-          <TextInput
-            class={'text-disabled'}
-            label={i18n('imageUrl')}
-            value={signal.value.images?.[0]?.file?.name ??
-              signal.value.images?.[0]?.url}
-            onInput={(value) => {
-              signal.value.images = [{ url: value }];
-              onMediaUpdate();
-              forceUpdate();
-            }}
-            key={`${signal.value.id}-imageurl`}
           />
 
           <div class={'flex flex-col gap-2'}>

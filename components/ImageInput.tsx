@@ -22,6 +22,7 @@ export const TEN_MB = 10000000;
 
 export default (
   props: {
+    name: string;
     accept: string[];
     default?: string;
     class?: string;
@@ -31,8 +32,6 @@ export default (
 ) => {
   const ref = useRef<HTMLImageElement>(null);
   const placeholderRef = useRef<HTMLDivElement>(null);
-
-  const name = nanoid();
 
   return (
     <div
@@ -54,10 +53,10 @@ export default (
         class={'absolute object-cover object-center indent-[-100vh] w-full h-full'}
         src={props.default ?? ''}
       />
-      <label class={'absolute w-full h-full cursor-pointer'} for={name} />
+      <label class={'absolute w-full h-full cursor-pointer'} for={props.name} />
       <input
-        id={name}
-        name={name}
+        id={props.name}
+        name={props.name}
         type={'file'}
         accept={props.accept.join(',')}
         style={{ visibility: 'hidden' }}

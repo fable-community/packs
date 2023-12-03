@@ -20,6 +20,7 @@ export default {
   popularity: 'Popularidad',
   updated: 'Updated',
   imageUrl: 'Image Url',
+  uploadFromPC: 'Upload from your PC',
   age: 'Edad',
   gender: 'Género',
   packAuthor: 'Autor/a del pack',

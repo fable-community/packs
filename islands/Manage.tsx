@@ -244,6 +244,7 @@ export default (props: {
         <div class={'m-4 w-full h-full'}>
           <div class={'flex items-center gap-4 w-full'}>
             <ImageInput
+              name={'pack-image'}
               default={pack.image}
               class={'w-[44px] aspect-square rounded-full'}
               accept={['image/png', 'image/jpeg', 'image/webp']}
