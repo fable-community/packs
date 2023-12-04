@@ -22,29 +22,32 @@ export default (
         {hint ? <label class={'text-[0.75rem]'}>{hint}</label> : undefined}
       </div>
 
-      {multiline
-        ? (
-          <textarea
-            {...props as JSX.HTMLAttributes<HTMLTextAreaElement>}
-            type={'text'}
-            value={value}
-            class={`text-[1em] resize-y ${props.class}`}
-            onInput={(ev) => {
-              onInput?.((ev.target as HTMLInputElement).value);
-            }}
-          />
-        )
-        : (
-          <input
-            type={'text'}
-            {...props}
-            value={value}
-            class={`text-[1em] ${props.class}`}
-            onInput={(ev) => {
-              onInput?.((ev.target as HTMLInputElement).value);
-            }}
-          />
-        )}
+      <div class={'flex gap-4'}>
+        {multiline
+          ? (
+            <textarea
+              {...props as JSX.HTMLAttributes<HTMLTextAreaElement>}
+              type={'text'}
+              value={value}
+              class={`grow text-[1em] resize-y ${props.class}`}
+              onInput={(ev) => {
+                onInput?.((ev.target as HTMLInputElement).value);
+              }}
+            />
+          )
+          : (
+            <input
+              type={'text'}
+              {...props}
+              value={value}
+              class={`grow text-[1em] ${props.class}`}
+              onInput={(ev) => {
+                onInput?.((ev.target as HTMLInputElement).value);
+              }}
+            />
+          )}
+        {props.children}
+      </div>
     </div>
   );
 };

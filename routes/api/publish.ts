@@ -18,10 +18,6 @@ import { Character, CharacterRole, Media, Pack } from '../../utils/types.ts';
 
 import type { Handlers } from '$fresh/server.ts';
 
-interface Cookies {
-  accessToken?: string;
-}
-
 interface Credentials {
   apiUrl: string;
   authorizationToken: string;

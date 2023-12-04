@@ -8,6 +8,7 @@ import * as $_500 from './routes/_500.tsx';
 import * as $_503 from './routes/_503.tsx';
 import * as $_app from './routes/_app.tsx';
 import * as $api_publish from './routes/api/publish.ts';
+import * as $api_zerochan from './routes/api/zerochan.ts';
 import * as $index from './routes/index.tsx';
 import * as $Manage from './islands/Manage.tsx';
 import { type Manifest } from '$fresh/server.ts';
@@ -20,6 +21,7 @@ const manifest = {
     './routes/_503.tsx': $_503,
     './routes/_app.tsx': $_app,
     './routes/api/publish.ts': $api_publish,
+    './routes/api/zerochan.ts': $api_zerochan,
     './routes/index.tsx': $index,
   },
   islands: {
