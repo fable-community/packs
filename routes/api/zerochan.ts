@@ -37,7 +37,7 @@ export const handler: Handlers = {
       },
     );
 
-    const images: Image[] = await res.json();
+    const { items: images }: { items: Image[] } = await res.json();
 
     return new Response(JSON.stringify(images));
   },
