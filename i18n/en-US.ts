@@ -32,6 +32,9 @@ export default {
     'Only you and other collaborators are allowed to install this pack',
   publicPackNotice: 'Anyone using Fable can install this pack',
 
+  searchCharactersPlaceholder: 'Search Characters',
+  searchMediaPlaceholder: 'Search Series',
+
   //
   placeholderGender: 'Classified',
   placeholderAge: 'Ancient',

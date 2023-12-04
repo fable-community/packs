@@ -58,6 +58,8 @@ export default (
 
   const newAliasValue = useSignal('');
 
+  const substringQuery = useSignal('');
+
   const MediaFormat = {
     [i18n('anime')]: 'TV',
     [i18n('manga')]: 'MANGA',
@@ -82,6 +84,12 @@ export default (
       <div
         class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
+        <TextInput
+          placeholder={i18n('searchMediaPlaceholder')}
+          class={'border-b-2 border-grey border-solid rounded-[0px]'}
+          onInput={(value) => substringQuery.value = value}
+          value={substringQuery.value}
+        />
         <div
           class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-3'}
         >
@@ -99,11 +107,33 @@ export default (
 
         {Object.values(media.value)
           .map((_media, i) => {
+            const title = _media.title.english ?? '';
+
+            const substringIndex = title.toLocaleLowerCase().indexOf(
+              substringQuery.value.toLocaleLowerCase(),
+            );
+
+            if (
+              substringQuery.value.length > 0 &&
+              substringIndex <= -1
+            ) {
+              return undefined;
+            }
+
             const date = _media.updated ?? _media.added;
 
             const timeString = date
               ? getRelativeTimeString(new Date(date))
               : '';
+
+            const titleBeforeSubstring = title.slice(0, substringIndex);
+            const titleSubstring = title.slice(
+              substringIndex,
+              substringIndex + substringQuery.value.length,
+            );
+            const titleAfterSubstring = title.slice(
+              substringIndex + substringQuery.value.length,
+            );
 
             return (
               <div
@@ -119,7 +149,11 @@ export default (
                   src={_media.images?.[0]?.url ?? defaultImage}
                 />
                 <i class={'basis-full'}>
-                  {_media.title.english}
+                  {titleBeforeSubstring}
+                  <span class={'bg-yellow-300 text-embed'}>
+                    {titleSubstring}
+                  </span>
+                  {titleAfterSubstring}
                 </i>
                 <i class={'basis-full'}>
                   {comma(_media.popularity ?? 0)}

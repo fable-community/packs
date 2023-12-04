@@ -80,6 +80,8 @@ export default (
     sortCharacters();
   }, []);
 
+  const substringQuery = useSignal('');
+
   const onZeroChan = useCallback(async () => {
     zeroChanModal.value = true;
 
@@ -113,6 +115,12 @@ export default (
       <div
         class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
+        <TextInput
+          placeholder={i18n('searchCharactersPlaceholder')}
+          class={'border-b-2 border-grey border-solid rounded-[0px]'}
+          onInput={(value) => substringQuery.value = value}
+          value={substringQuery.value}
+        />
         <div
           class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-3'}
         >
@@ -136,6 +144,19 @@ export default (
 
         {Object.values(characters.value)
           .map((char, i) => {
+            const name = char.name.english ?? '';
+
+            const substringIndex = name.toLocaleLowerCase().indexOf(
+              substringQuery.value.toLocaleLowerCase(),
+            );
+
+            if (
+              substringQuery.value.length > 0 &&
+              substringIndex <= -1
+            ) {
+              return undefined;
+            }
+
             const primaryMedia = char.media?.[0];
 
             const primaryMediaRef = primaryMedia
@@ -155,6 +176,15 @@ export default (
               ? getRelativeTimeString(new Date(date))
               : '';
 
+            const nameBeforeSubstring = name.slice(0, substringIndex);
+            const nameSubstring = name.slice(
+              substringIndex,
+              substringIndex + substringQuery.value.length,
+            );
+            const nameAfterSubstring = name.slice(
+              substringIndex + substringQuery.value.length,
+            );
+
             return (
               <div
                 class={'flex flex-row items-center p-2 gap-3 cursor-pointer hover:bg-highlight'}
@@ -169,7 +199,11 @@ export default (
                   src={char.images?.[0]?.url ?? defaultImage}
                 />
                 <i class={'basis-full'}>
-                  {char.name.english}
+                  {nameBeforeSubstring}
+                  <span class={'bg-yellow-300 text-embed'}>
+                    {nameSubstring}
+                  </span>
+                  {nameAfterSubstring}
                 </i>
                 <i class={'basis-full'}>
                   {primaryMediaRef?.title.english ?? ''}
