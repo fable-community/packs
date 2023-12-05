@@ -1,30 +1,88 @@
-import IconClose from 'icons/x.tsx';
+import { useEffect, useMemo } from 'preact/hooks';
 
-import { Signal } from '@preact/signals';
+import { type Signal, useSignal } from '@preact/signals';
 
-import type { Image } from '../routes/api/zerochan.ts';
+import TextInput from './TextInput.tsx';
+
+import IconLeft from 'icons/arrow-left.tsx';
+
+import { i18n } from '../utils/i18n.ts';
+
+import type { Data, Image } from '../routes/api/zerochan.ts';
+import { useDebounce } from '../utils/useDebounce.tsx';
 
 export const ZeroChanModal = (
-  { visible, images, callback }: {
+  { character, media, visible, callback }: {
+    media?: string;
+    character?: string;
     visible: Signal<boolean>;
-    images: Signal<Image[]>;
     callback: (imageUrl: string) => void;
   },
 ) => {
+  const error = useSignal('');
+  const images = useSignal<Image[]>([]);
+
+  const [debouncedQuery, query, setQuery] = useDebounce('', 300);
+
+  useEffect(
+    () =>
+      setQuery([
+        media,
+        character,
+        // character?.replaceAll(':', '') + ` (${media?.replaceAll(':', '')})`,
+      ].join(',')),
+    [media, character],
+  );
+
+  useEffect(() => {
+    if (!debouncedQuery) return;
+
+    error.value = '', images.value = [];
+
+    fetch('/api/zerochan', {
+      method: 'POST',
+      body: JSON.stringify({ query: debouncedQuery } satisfies Data),
+    })
+      .then((res) => {
+        if (res.status !== 200) {
+          error.value = res.statusText;
+          return;
+        }
+
+        return res.json();
+      })
+      .then((data: Image[]) => {
+        images.value = data ?? [];
+      });
+  }, [debouncedQuery]);
+
   return (
     <>
       <div
-        class={'basis-full cursor-pointer'}
+        class={'w-full cursor-pointer'}
         onClick={() => visible.value = false}
       >
-        <IconClose class={'ml-auto w-[24px] h-[24px]'} />
+        <IconLeft class={'w-[24px] h-[24px]'} />
       </div>
 
-      <div class={'flex flex-wrap justify-center gap-4'}>
+      <TextInput
+        placeholder={i18n('search')}
+        class={'border-b-2 border-grey border-solid rounded-[0px]'}
+        onInput={(value) => setQuery(value)}
+        value={query}
+      />
+
+      <div class={'flex flex-wrap grow justify-center gap-4'}>
+        {error.value ? <span>{error}</span> : undefined}
+
+        {!error.value && images.value.length <= 0
+          ? <span>{i18n('loading')}</span>
+          : undefined}
+
         {images.value.map((image) => (
           <img
             key={image.id}
-            class={'w-auto h-[192px] object-cover object-center aspect-[90/127] cursor-pointer'}
+            class={'w-auto h-[192px] object-cover object-center aspect-[90/127] cursor-pointer hover:scale-95 hover:border-[3px] border-white border-solid'}
             src={image.thumbnail}
             onClick={() => {
               callback(image.thumbnail);

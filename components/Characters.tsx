@@ -54,7 +54,8 @@ export default (
 ) => {
   const [, updateState] = useState({});
 
-  const zeroChanImages = useSignal<Image[]>([]);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
   const zeroChanModal = useSignal(false);
 
   // used to force the entire component to redrew
@@ -82,33 +83,18 @@ export default (
 
   const substringQuery = useSignal('');
 
-  const onZeroChan = useCallback(async () => {
-    zeroChanModal.value = true;
+  const onZeroChan = () => zeroChanModal.value = true;
 
-    const data = await fetch('/api/zerochan', {
-      method: 'POST',
-      body: JSON.stringify(
-        {
-          query: [
-            primaryMediaRef?.title.english,
-            signal.value.name.english,
-          ]
-            .filter(Boolean),
-        } satisfies Data,
-      ),
-    });
+  // reset zerochan
+  useEffect(() => {
+    zeroChanModal.value = false;
+  }, [signal.value]);
 
-    const images: Image[] = await data.json();
-
-    zeroChanImages.value = images;
-  }, [primaryMediaRef, signal]);
-
-  const dialogRef = useRef<HTMLDivElement>(null);
-
+  // reset dialog scroll y
   useEffect(() => {
     // deno-lint-ignore no-non-null-assertion
     requestAnimationFrame(() => dialogRef.current!.scrollTop = 0);
-  }, [zeroChanModal.value]);
+  }, [signal.value, zeroChanModal.value]);
 
   return (
     <div class={visible ? '' : 'hidden'}>
@@ -238,7 +224,8 @@ export default (
             ? (
               <ZeroChanModal
                 visible={zeroChanModal}
-                images={zeroChanImages}
+                character={signal.value.name.english}
+                media={primaryMediaRef?.title.english}
                 callback={(imageUrl) => {
                   signal.value.images = [{ url: imageUrl }];
                   onCharacterUpdate();

@@ -22,6 +22,8 @@ import IconApply from 'icons/check.tsx';
 import IconAdjustments from 'icons/adjustments-horizontal.tsx';
 import IconCheckmark from 'icons/check.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
+import IconWorld from 'icons/world.tsx';
+import IconLock from 'icons/lock.tsx';
 
 import nanoid from '../utils/nanoid.ts';
 import compact from '../utils/compact.ts';
@@ -413,7 +415,8 @@ export default (props: {
                       ' ',
                     )}
                   />
-                  <span>{i18n('publicPackNotice')}</span>
+                  <span class={'grow'}>{i18n('publicPackNotice')}</span>
+                  <IconWorld class={'w-6 h-6'} />
                 </button>
                 <button
                   onClick={() => privacy.value = true}
@@ -424,7 +427,8 @@ export default (props: {
                       ' ',
                     )}
                   />
-                  <span>{i18n('privatePackNotice')}</span>
+                  <span class={'grow'}>{i18n('privatePackNotice')}</span>
+                  <IconLock class={'w-6 h-6'} />
                 </button>
               </div>
             </div>

@@ -2,11 +2,11 @@ import nanoid from '../../utils/nanoid.ts';
 
 import type { Handlers } from '$fresh/server.ts';
 
-const endpoint = 'https://www.zerochan.net/api';
+const endpoint = 'https://www.zerochan.net';
 
 export interface Data {
-  query: string[];
-  after?: number;
+  query: string;
+  // after?: number;
 }
 
 export interface Image {
@@ -24,21 +24,29 @@ export const handler: Handlers = {
     const data: Data = await req.json();
 
     const limit = 10;
-    const after = data.after || 0;
+    const after = 0;
 
-    const res = await fetch(
-      `${endpoint}/${
-        data.query.join(',')
-      }?l=${limit}&p=${after}&d=portrait&json`,
-      {
-        headers: {
-          'User-Agent': `Fable Discord Bot Packs Integration - user${nanoid()}`,
-        },
+    const url = `${endpoint}/${
+      encodeURIComponent(data.query)
+    }?l=${limit}&p=${after}&d=portrait&json`;
+
+    console.log(url);
+
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': `Fable Discord Bot Packs Integration - user${nanoid()}`,
       },
-    );
+    });
 
-    const { items: images }: { items: Image[] } = await res.json();
+    if (res.status === 200) {
+      const { items: images }: { items: Image[] } = await res.json();
 
-    return new Response(JSON.stringify(images));
+      return new Response(JSON.stringify(images));
+    }
+
+    return new Response(undefined, {
+      status: res.status,
+      statusText: res.statusText,
+    });
   },
 };

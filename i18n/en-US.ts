@@ -35,6 +35,8 @@ export default {
   searchCharactersPlaceholder: 'Search Characters',
   searchMediaPlaceholder: 'Search Series',
 
+  loading: 'Loading...',
+
   //
   placeholderGender: 'Classified',
   placeholderAge: 'Ancient',
