@@ -60,7 +60,7 @@ export default {
   rating: 'Rating',
   role: 'Role',
   primaryMedia: 'Series',
-  primaryMediaNotice: 'Character won\'t appear in Gacha',
+  primaryMediaNotice: "Character won't appear in Gacha",
 
   //
   successTitle:
@@ -68,7 +68,7 @@ export default {
   successYouNeed: 'You need a ',
   successManageServer: 'Manage Server',
   successPermissionToInstall:
-    ' permission to install packs, If you don\'t have it you can always ask someone who does to install the pack for you.',
+    " permission to install packs, If you don't have it you can always ask someone who does to install the pack for you.",
   //
 
   userId: 'Discord User ID',
