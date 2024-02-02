@@ -1,5 +1,3 @@
-import '#filter-boolean';
-
 import { useCallback, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
@@ -189,7 +187,7 @@ export default (
                   signal.value.id === id
                 );
 
-                if (i > -1 && window.confirm(i18n('deleteMedia'))) {
+                if (i > -1 && globalThis.confirm(i18n('deleteMedia'))) {
                   media.value.splice(i, 1);
                   forceUpdate();
                   requestAnimationFrame(() => hideDialog('media'));

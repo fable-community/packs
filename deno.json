@@ -28,9 +28,8 @@
   "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
   "exclude": ["**/_fresh/*"],
   "imports": {
-    "#filter-boolean": "https://esm.sh/@total-typescript/ts-reset@0.5.1/filter-boolean",
-    "$fresh/": "https://deno.land/x/fresh@1.6.1/",
-    "$std/": "https://deno.land/std@0.209.0/",
+    "$fresh/": "https://deno.land/x/fresh@1.6.3/",
+    "$std/": "https://deno.land/std@0.214.0/",
     "preact": "https://esm.sh/preact@10.19.2",
     "preact/": "https://esm.sh/preact@10.19.2/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.2",

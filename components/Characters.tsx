@@ -1,5 +1,3 @@
-import '#filter-boolean';
-
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
@@ -251,7 +249,9 @@ export default (
                         signal.value.id === id
                       );
 
-                      if (i > -1 && window.confirm(i18n('deleteCharacter'))) {
+                      if (
+                        i > -1 && globalThis.confirm(i18n('deleteCharacter'))
+                      ) {
                         characters.value.splice(i, 1);
                         forceUpdate();
                         requestAnimationFrame(() => hideDialog('characters'));
