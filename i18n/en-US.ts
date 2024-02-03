@@ -65,12 +65,12 @@ export default {
   primaryMediaNotice: "Character won't appear in Gacha",
 
   //
-  successTitle:
-    'You successfully published a new pack. Now you can install it using:',
+  successTitle: 'Congrats',
+  successSubtitle: 'You successfully published a new pack.',
   successYouNeed: 'You need a ',
   successManageServer: 'Manage Server',
   successPermissionToInstall:
-    " permission to install packs, If you don't have it you can always ask someone who does to install the pack for you.",
+    " permission to install packs, If you don't have it you can always ask the server's admin nicely to install packs for you.",
   //
 
   userId: 'Discord User ID',

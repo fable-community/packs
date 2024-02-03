@@ -29,6 +29,7 @@ import IconCheckmark from 'icons/check.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
 import IconWorld from 'icons/world.tsx';
 import IconLock from 'icons/lock.tsx';
+import IconDownload from 'icons/download.tsx';
 
 import compact from '~/utils/compact.ts';
 
@@ -265,11 +266,8 @@ export default (props: {
         )
         : undefined}
 
-      <Dialog
-        visible={true}
-        name={'manage'}
-        class={'top-0 left-0 w-full h-full bg-embed'}
-        action={'back'}
+      <div
+        class={'flex fixed top-0 left-0 w-full h-full bg-embed overflow-x-hidden overflow-y-auto'}
       >
         {/* this component require client-side javascript enabled */}
         <noscript>{i18n('noScript')}</noscript>
@@ -371,11 +369,12 @@ export default (props: {
         </div>
 
         <Dialog
+          visible={true}
           name={'extra'}
           class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
         >
           <div
-            class={'flex flex-col gap-6 bg-embed2 overflow-x-hidden overflow-y-auto rounded-xl m-4 p-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
+            class={'flex flex-col gap-6 bg-embed2 overflow-x-hidden overflow-y-auto rounded-xl m-4 p-6 h-[80vh] w-[70vw]  pointer-events-auto'}
           >
             <IconApply
               data-dialog-cancel={'extra'}
@@ -385,15 +384,16 @@ export default (props: {
             {!newPack.value
               ? (
                 <>
-                  <label class={'uppercase '}>
+                  <div class={'flex gap-3 text-white opacity-90 uppercase'}>
+                    <IconDownload class={'w-4 h-4'} />
                     {i18n('packServers', servers)}
-                  </label>
+                  </div>
 
                   <div
                     class={'bg-highlight flex items-center p-4 rounded-xl'}
                     data-clipboard={`/packs install id: ${packId.value}`}
                   >
-                    <i class={'italic grow select-text'}>
+                    <i class={'italic grow select-all'}>
                       {`/packs install id: ${packId.value}`}
                     </i>
                     <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
@@ -462,7 +462,7 @@ export default (props: {
             />
           </div>
         </Dialog>
-      </Dialog>
+      </div>
     </>
   );
 };

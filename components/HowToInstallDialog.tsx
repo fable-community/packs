@@ -15,14 +15,14 @@ export default ({ packId, visible }: { packId?: string; visible: boolean }) => {
       <div
         class={'bg-embed2 flex flex-col overflow-x-hidden overflow-y-auto rounded-xl m-4 p-8 gap-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
       >
-        <p>
-          {i18n('successTitle')}
-        </p>
+        <label class={'text-base font-bold'}>{i18n('successTitle')}</label>
+        <label>{i18n('successSubtitle')}</label>
+
         <div
           class={'bg-highlight flex items-center p-4 rounded-xl'}
           data-clipboard={`/packs install id: ${packId}`}
         >
-          <i class={'italic grow select-text'}>
+          <i class={'italic grow select-all'}>
             {`/packs install id: ${packId}`}
           </i>
           <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />

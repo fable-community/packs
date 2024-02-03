@@ -55,7 +55,13 @@ export const handler: Handlers = {
         headers: { 'authorization': `Bearer ${accessToken}` },
       });
 
-      const packs = (await response.json() as { data: Pack[] }).data;
+      // TODO impl loading all packs from the response pagination
+      const { packs } = (await response.json()) as {
+        packs: Pack[];
+        length: number;
+        offset: number;
+        limit: number;
+      };
 
       data.packs = packs;
     }
