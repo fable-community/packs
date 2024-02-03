@@ -152,6 +152,11 @@ export default (props: {
     description.value,
     webhookUrl.value,
     image.value,
+    //
+    media.value.length,
+    characters.value.length,
+    maintainers.value.length,
+    conflicts.value.length,
   ]);
 
   const getData = (): Data => ({
