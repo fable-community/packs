@@ -79,10 +79,10 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
               </p>
               <div
                 class={'bg-highlight flex items-center p-4 rounded-xl'}
-                data-clipboard={`/community install id: ${hasSuccess}`}
+                data-clipboard={`/packs install id: ${hasSuccess}`}
               >
                 <i class={'italic grow select-text'}>
-                  {`/community install id: ${hasSuccess}`}
+                  {`/packs install id: ${hasSuccess}`}
                 </i>
                 <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
               </div>

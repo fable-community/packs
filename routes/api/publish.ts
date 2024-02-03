@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-non-null-assertion
 
-import { encode } from '$std/encoding/base64.ts';
+import { encodeBase64 } from '$std/encoding/base64.ts';
 
 import { deserialize } from 'bson';
 
@@ -61,7 +61,9 @@ const setUpImages = async () => {
 
   const _credentials = await fetch(
     'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
-    { headers: { Authorization: `Basic ${encode(`${b2.id}:${b2.key}`)}` } },
+    {
+      headers: { Authorization: `Basic ${encodeBase64(`${b2.id}:${b2.key}`)}` },
+    },
   );
 
   if (_credentials.status !== 200) {

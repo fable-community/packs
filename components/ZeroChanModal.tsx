@@ -67,7 +67,6 @@ export const ZeroChanModal = (
 
       <TextInput
         placeholder={i18n('search')}
-        class={'border-b-2 border-grey border-solid rounded-[0px]'}
         onInput={(value) => setQuery(value)}
         value={query}
       />
