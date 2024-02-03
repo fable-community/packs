@@ -4,8 +4,6 @@ import { type Signal, useSignal } from '@preact/signals';
 
 import { hideDialog, showDialog } from '~/static/dialogs.js';
 
-import { defaultImage } from '~/components/Dashboard.tsx';
-
 import Notice from '~/components/Notice.tsx';
 
 import Dialog from '~/components/Dialog.tsx';
@@ -33,6 +31,9 @@ import {
 } from '~/utils/types.ts';
 
 import nanoid from '~/utils/nanoid.ts';
+
+const defaultImage =
+  'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
 
 export default (
   { dirty, signal, media, visible, sorting, order, sortMedia }: {

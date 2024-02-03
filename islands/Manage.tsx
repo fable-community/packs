@@ -281,10 +281,11 @@ export default (props: {
 
         <div class={'m-4 w-full h-full'}>
           <div class={'flex items-center gap-4 w-full'}>
-            <IconHome
-              class={'w-[28px] h-[28px] cursor-pointer'}
-              data-dialog-cancel={'manage'}
-            />
+            <a href={'/dashboard'}>
+              <IconHome
+                class={'w-[28px] h-[28px] cursor-pointer'}
+              />
+            </a>
 
             <ImageInput
               name={'pack-image'}
