@@ -1,9 +1,9 @@
-import Notice from './Notice.tsx';
-import Dialog from './Dialog.tsx';
+import Notice from '~/components/Notice.tsx';
+import Dialog from '~/components/Dialog.tsx';
 
 import IconClipboard from 'icons/clipboard-text.tsx';
 
-import { i18n } from '../utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
 export default ({ packId, visible }: { packId?: string; visible: boolean }) => {
   return (

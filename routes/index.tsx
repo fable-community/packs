@@ -1,5 +1,5 @@
-import * as index from './[id].tsx';
+import * as index from '~/routes/[id].tsx';
 
-export { handler } from './[id].tsx';
+export { handler } from '~/routes/[id].tsx';
 
 export default index.default;

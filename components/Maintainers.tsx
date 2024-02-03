@@ -2,14 +2,14 @@ import { useCallback, useEffect, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
-import Notice from './Notice.tsx';
+import Notice from '~/components/Notice.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconCrown from 'icons/crown.tsx';
 
-import { i18n } from '../utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
-import type { User } from '../utils/types.ts';
+import type { User } from '~/utils/types.ts';
 
 const Profile = ({ id, user, removable, onClick }: {
   id: string;

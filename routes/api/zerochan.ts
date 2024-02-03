@@ -1,4 +1,4 @@
-import nanoid from '../../utils/nanoid.ts';
+import nanoid from '~/utils/nanoid.ts';
 
 import type { Handlers } from '$fresh/server.ts';
 

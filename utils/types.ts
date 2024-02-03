@@ -6,7 +6,7 @@ import type {
   Modify,
 } from 'https://raw.githubusercontent.com/ker0olos/fable/main/src/types.ts';
 
-import type { IImageInput } from '../components/ImageInput.tsx';
+import type { IImageInput } from '~/components/ImageInput.tsx';
 
 export type User = {
   id: string;

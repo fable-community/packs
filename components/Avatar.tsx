@@ -1,8 +1,8 @@
-import Dialog from './Dialog.tsx';
+import Dialog from '~/components/Dialog.tsx';
 
 import IconLogout from 'icons/logout.tsx';
 
-import { i18n } from '../utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
 export default ({ id, avatar }: { id: string; avatar?: string }) => {
   return (

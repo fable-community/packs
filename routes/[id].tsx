@@ -1,16 +1,16 @@
 import { Handlers, type PageProps } from '$fresh/server.ts';
 
-import { getAccessToken } from '../utils/oauth.ts';
+import { getAccessToken } from '~/utils/oauth.ts';
 
-import Login from '../components/Login.tsx';
+import Login from '~/components/Login.tsx';
 
-import Maintenance from './_503.tsx';
+import Maintenance from '~/routes/_503.tsx';
 
-import Dashboard, { type DashboardData } from '../components/Dashboard.tsx';
+import Dashboard, { type DashboardData } from '~/components/Dashboard.tsx';
 
-import { i18nSSR } from '../utils/i18n.ts';
+import { i18nSSR } from '~/utils/i18n.ts';
 
-import type { Pack, User } from '../utils/types.ts';
+import type { Pack, User } from '~/utils/types.ts';
 
 export const production = !!Deno.env.get('DENO_DEPLOYMENT_ID');
 

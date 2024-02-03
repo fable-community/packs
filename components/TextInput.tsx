@@ -1,6 +1,6 @@
 import type { JSX } from 'preact';
 
-import type { Modify } from '../utils/types.ts';
+import type { Modify } from '~/utils/types.ts';
 
 export default (
   { label, hint, multiline, value, onInput, ...props }: Modify<

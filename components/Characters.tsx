@@ -2,32 +2,32 @@ import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
-import { hideDialog, showDialog } from '../static/dialogs.js';
+import { hideDialog, showDialog } from '~/static/dialogs.js';
 
-import { getPopularity, getRating } from '../utils/rating.ts';
+import { getPopularity, getRating } from '~/utils/rating.ts';
 
-import { defaultImage } from './Dashboard.tsx';
+import { defaultImage } from '~/components/Dashboard.tsx';
 
-import Notice from './Notice.tsx';
+import Notice from '~/components/Notice.tsx';
 
-import Dialog from './Dialog.tsx';
+import Dialog from '~/components/Dialog.tsx';
 
-import Star from './Star.tsx';
+import Star from '~/components/Star.tsx';
 
-import Select from './Select.tsx';
-import TextInput from './TextInput.tsx';
-import ImageInput from './ImageInput.tsx';
-import Sort from './Sort.tsx';
+import Select from '~/components/Select.tsx';
+import TextInput from '~/components/TextInput.tsx';
+import ImageInput from '~/components/ImageInput.tsx';
+import Sort from '~/components/Sort.tsx';
 
-import { ZeroChanModal } from './ZeroChanModal.tsx';
+import { ZeroChanModal } from '~/components/ZeroChanModal.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
 
-import { i18n } from '../utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
-import { getRelativeTimeString } from '../utils/timeString.ts';
+import { getRelativeTimeString } from '~/utils/timeString.ts';
 
 import {
   type Character,
@@ -35,9 +35,9 @@ import {
   type CharacterSorting,
   type Media,
   type SortingOrder,
-} from '../utils/types.ts';
+} from '~/utils/types.ts';
 
-import nanoid from '../utils/nanoid.ts';
+import nanoid from '~/utils/nanoid.ts';
 
 export default (
   { dirty, signal, media, characters, visible, sorting, order, sortCharacters }:

@@ -1,7 +1,7 @@
 import { signal } from '@preact/signals';
 
-import enUS from '../i18n/en-US.ts';
-import esES from '../i18n/es-ES.ts';
+import enUS from '~/i18n/en-US.ts';
+import esES from '~/i18n/es-ES.ts';
 
 const IS_BROWSER = typeof document !== 'undefined';
 

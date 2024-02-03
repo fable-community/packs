@@ -1,4 +1,4 @@
-import type { Pack } from '../utils/types.ts';
+import type { Pack } from '~/utils/types.ts';
 
 export default ({ pack }: { pack: Pack }) => {
   return (

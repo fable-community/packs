@@ -1,6 +1,6 @@
 import DiscordIcon from 'icons/brand-discord-filled.tsx';
 
-import { i18n } from '../utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
 export default () => {
   return (

@@ -1,11 +1,11 @@
-import Card from './Card.tsx';
-import Avatar from './Avatar.tsx';
+import Card from '~/components/Card.tsx';
+import Avatar from '~/components/Avatar.tsx';
 
-import Manage from '../islands/Manage.tsx';
+import Manage from '~/islands/Manage.tsx';
 
 import IconPlus from 'icons/plus.tsx';
 
-import type { Pack, User } from '../utils/types.ts';
+import type { Pack, User } from '~/utils/types.ts';
 
 import type { PageProps } from '$fresh/server.ts';
 

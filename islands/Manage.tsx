@@ -4,23 +4,23 @@ import { useCallback, useEffect } from 'preact/hooks';
 
 import { serialize } from 'bson';
 
-import ImageInput, { type IImageInput } from '../components/ImageInput.tsx';
+import ImageInput, { type IImageInput } from '~/components/ImageInput.tsx';
 
-import Dialog from '../components/Dialog.tsx';
+import Dialog from '~/components/Dialog.tsx';
 
-import { Dismissible } from '../components/Notice.tsx';
+import { Dismissible } from '~/components/Notice.tsx';
 
-import Media from '../components/Media.tsx';
-import Characters from '../components/Characters.tsx';
-import Maintainers from '../components/Maintainers.tsx';
-import Conflicts from '../components/Conflicts.tsx';
+import Media from '~/components/Media.tsx';
+import Characters from '~/components/Characters.tsx';
+import Maintainers from '~/components/Maintainers.tsx';
+import Conflicts from '~/components/Conflicts.tsx';
 
-import TextInput from '../components/TextInput.tsx';
-import PublishPopup from '../components/PublishPopup.tsx';
+import TextInput from '~/components/TextInput.tsx';
+import PublishPopup from '~/components/PublishPopup.tsx';
 
-import HowToInstallDialog from '../components/HowToInstallDialog.tsx';
+import HowToInstallDialog from '~/components/HowToInstallDialog.tsx';
 
-import { useEffectIgnoreMount } from '../components/useEffectIgnoreMount.tsx';
+import { useEffectIgnoreMount } from '~/components/useEffectIgnoreMount.tsx';
 
 import IconHome from 'icons/arrow-left.tsx';
 import IconApply from 'icons/check.tsx';
@@ -30,16 +30,16 @@ import IconClipboard from 'icons/clipboard-text.tsx';
 import IconWorld from 'icons/world.tsx';
 import IconLock from 'icons/lock.tsx';
 
-import compact from '../utils/compact.ts';
+import compact from '~/utils/compact.ts';
 
 import {
   sortCharacters as _sortCharacters,
   sortMedia as _sortMedia,
-} from '../utils/sorting.ts';
+} from '~/utils/sorting.ts';
 
-import { i18n } from '../utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
-import type { Data } from '../routes/api/publish.ts';
+import type { Data } from '~/routes/api/publish.ts';
 
 import {
   type Character,
@@ -50,7 +50,7 @@ import {
   type Pack,
   type SortingOrder,
   type User,
-} from '../utils/types.ts';
+} from '~/utils/types.ts';
 
 export default (props: {
   user: User;

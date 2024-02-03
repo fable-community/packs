@@ -1,8 +1,8 @@
 import { Head } from '$fresh/runtime.ts';
 
-import type { AppProps } from '$fresh/src/server/types.ts';
+import type { PageProps } from '$fresh/src/server/types.ts';
 
-export default ({ Component }: AppProps) => {
+export default ({ Component }: PageProps) => {
   return (
     <>
       <Head>

@@ -1,4 +1,4 @@
-import { CharacterRole } from './types.ts';
+import { CharacterRole } from '~/utils/types.ts';
 
 // https://raw.githubusercontent.com/ker0olos/fable/main/src/rating.ts
 
