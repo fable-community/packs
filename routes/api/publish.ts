@@ -375,7 +375,7 @@ export const handler: Handlers = {
           ),
         });
 
-        if (response.status !== 200) {
+        if (response.status !== 201) {
           const { errors } = await response.json();
 
           return new Response(
