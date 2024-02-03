@@ -1,15 +1,9 @@
 import Card from './Card.tsx';
 import Avatar from './Avatar.tsx';
 
-import Notice from './Notice.tsx';
-import Dialog from './Dialog.tsx';
-
 import Manage from '../islands/Manage.tsx';
 
 import IconPlus from 'icons/plus.tsx';
-import IconClipboard from 'icons/clipboard-text.tsx';
-
-import { i18n } from '../utils/i18n.ts';
 
 import type { Pack, User } from '../utils/types.ts';
 
@@ -33,7 +27,6 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
   const user = data.user!;
 
   const hasNew = searchParams.has('new');
-  const hasSuccess = searchParams.get('success');
 
   if (packId || hasNew) {
     return (
@@ -63,41 +56,6 @@ export default ({ data, url, params }: PageProps<DashboardData>) => {
           <IconPlus class={'w-[32px] h-auto text-grey'} />
         </a>
       </div>
-
-      {hasSuccess
-        ? (
-          <Dialog
-            name={'success'}
-            class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
-            visible={true}
-          >
-            <div
-              class={'bg-embed2 flex flex-col overflow-x-hidden overflow-y-auto rounded-xl m-4 p-8 gap-4 h-[60vh] w-[60vw] max-w-[500px] pointer-events-auto'}
-            >
-              <p>
-                {i18n('successTitle')}
-              </p>
-              <div
-                class={'bg-highlight flex items-center p-4 rounded-xl'}
-                data-clipboard={`/packs install id: ${hasSuccess}`}
-              >
-                <i class={'italic grow select-text'}>
-                  {`/packs install id: ${hasSuccess}`}
-                </i>
-                <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
-              </div>
-              <Notice type={'info'}>
-                {i18n('successYouNeed')}
-                <strong>{i18n('successManageServer')}</strong>
-                {i18n('successPermissionToInstall')}
-              </Notice>
-              <button data-dialog-cancel={'success'}>
-                {i18n('okay')}
-              </button>
-            </div>
-          </Dialog>
-        )
-        : undefined}
     </>
   );
 };

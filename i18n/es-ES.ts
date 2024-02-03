@@ -38,6 +38,8 @@ export default {
 
   loading: 'Loading...',
 
+  unsavedChanges: 'You have unsaved changes!',
+
   //
   placeholderGender: 'Clasificado',
   placeholderAge: 'Ancestral',

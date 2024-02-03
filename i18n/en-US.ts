@@ -37,6 +37,8 @@ export default {
 
   loading: 'Loading...',
 
+  unsavedChanges: 'You have unsaved changes!',
+
   //
   placeholderGender: 'Classified',
   placeholderAge: 'Ancient',

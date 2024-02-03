@@ -37,18 +37,20 @@ import {
   type SortingOrder,
 } from '../utils/types.ts';
 
-import type { Data, Image } from '../routes/api/zerochan.ts';
+import nanoid from '../utils/nanoid.ts';
 
 export default (
-  { signal, media, characters, visible, sorting, order, sortCharacters }: {
-    signal: Signal<Character>;
-    characters: Signal<Character[]>;
-    media: Signal<Media[]>;
-    visible: boolean;
-    sorting: Signal<CharacterSorting>;
-    order: Signal<SortingOrder>;
-    sortCharacters: () => void;
-  },
+  { dirty, signal, media, characters, visible, sorting, order, sortCharacters }:
+    {
+      dirty: Signal<boolean>;
+      signal: Signal<Character>;
+      characters: Signal<Character[]>;
+      media: Signal<Media[]>;
+      visible: boolean;
+      sorting: Signal<CharacterSorting>;
+      order: Signal<SortingOrder>;
+      sortCharacters: () => void;
+    },
 ) => {
   const [, updateState] = useState({});
 
@@ -75,6 +77,7 @@ export default (
   });
 
   const onCharacterUpdate = useCallback(() => {
+    dirty.value = true;
     signal.value.updated = new Date().toISOString();
     sortCharacters();
   }, []);
@@ -105,6 +108,22 @@ export default (
           onInput={(value) => substringQuery.value = value}
           value={substringQuery.value}
         />
+        <button
+          data-dialog={'characters'}
+          onClick={() => {
+            const item: Character = {
+              id: `${nanoid(4)}`,
+              name: { english: '' },
+              added: new Date().toISOString(),
+            };
+
+            characters.value = [item, ...characters.value];
+
+            signal.value = item;
+          }}
+        >
+          {i18n('addNewCharacter')}
+        </button>
         <div
           class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-3'}
         >
@@ -249,9 +268,7 @@ export default (
                         signal.value.id === id
                       );
 
-                      if (
-                        i > -1 && globalThis.confirm(i18n('deleteCharacter'))
-                      ) {
+                      if (i > -1 && confirm(i18n('deleteCharacter'))) {
                         characters.value.splice(i, 1);
                         forceUpdate();
                         requestAnimationFrame(() => hideDialog('characters'));

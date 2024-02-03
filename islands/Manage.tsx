@@ -16,8 +16,13 @@ import Maintainers from '../components/Maintainers.tsx';
 import Conflicts from '../components/Conflicts.tsx';
 
 import TextInput from '../components/TextInput.tsx';
+import PublishPopup from '../components/PublishPopup.tsx';
 
-import IconClose from 'icons/x.tsx';
+import HowToInstallDialog from '../components/HowToInstallDialog.tsx';
+
+import { useEffectIgnoreMount } from '../components/useEffectIgnoreMount.tsx';
+
+import IconHome from 'icons/arrow-left.tsx';
 import IconApply from 'icons/check.tsx';
 import IconAdjustments from 'icons/adjustments-horizontal.tsx';
 import IconCheckmark from 'icons/check.tsx';
@@ -25,7 +30,6 @@ import IconClipboard from 'icons/clipboard-text.tsx';
 import IconWorld from 'icons/world.tsx';
 import IconLock from 'icons/lock.tsx';
 
-import nanoid from '../utils/nanoid.ts';
 import compact from '../utils/compact.ts';
 
 import {
@@ -59,11 +63,17 @@ export default (props: {
     ? JSON.parse(JSON.stringify(props.pack?.manifest))
     : { id: '' };
 
-  const active = useSignal<number>(0);
+  const active = useSignal(0);
 
-  const loading = useSignal<boolean>(false);
+  const dirty = useSignal(false);
+  const loading = useSignal(false);
   const error = useSignal<string | undefined>(undefined);
 
+  const newPack = useSignal(props.new || false);
+
+  const howToInstallVisible = useSignal(false);
+
+  const packId = useSignal<string>(pack.id);
   const title = useSignal<string | undefined>(pack.title);
   const privacy = useSignal<boolean | undefined>(pack.private);
   const author = useSignal<string | undefined>(pack.author);
@@ -133,6 +143,17 @@ export default (props: {
     sortCharacters();
   }, [charactersSorting.value, charactersSortingOrder.value]);
 
+  useEffectIgnoreMount(() => {
+    dirty.value = true;
+  }, [
+    title.value,
+    privacy.value,
+    author.value,
+    description.value,
+    webhookUrl.value,
+    image.value,
+  ]);
+
   const getData = (): Data => ({
     old: props.pack?.manifest ?? pack,
     title: title.value,
@@ -150,7 +171,7 @@ export default (props: {
   const onPublish = async () => {
     const body = {
       ...getData(),
-      new: props.new,
+      new: newPack.value,
       username: props.user.display_name ??
         props.user.username ?? 'undefined',
     };
@@ -164,7 +185,12 @@ export default (props: {
       });
 
       if (response.status === 200) {
-        open(props.new ? `/?success=${await response.text()}` : '/', '_self');
+        packId.value = await response.text();
+
+        dirty.value = false;
+        loading.value = false;
+        howToInstallVisible.value = newPack.value;
+        newPack.value = false;
       } else {
         const { errors, pack } = await response.json() as {
           pack: {
@@ -243,8 +269,18 @@ export default (props: {
         {/* this component require client-side javascript enabled */}
         <noscript>{i18n('noScript')}</noscript>
 
+        <HowToInstallDialog
+          packId={packId.value}
+          visible={howToInstallVisible.value}
+        />
+
         <div class={'m-4 w-full h-full'}>
           <div class={'flex items-center gap-4 w-full'}>
+            <IconHome
+              class={'w-[28px] h-[28px] cursor-pointer'}
+              data-dialog-cancel={'manage'}
+            />
+
             <ImageInput
               name={'pack-image'}
               default={pack.image}
@@ -265,66 +301,26 @@ export default (props: {
               ) => (title.value = (ev.target as HTMLInputElement).value)}
             />
 
-            <div class={'flex fixed mx-2 my-4 bottom-0 right-4 gap-1 z-1'}>
-              <button disabled={loading} onClick={onPublish}>
-                {props.new ? i18n('publish') : i18n('save')}
-              </button>
-
-              <button
-                data-dialog={'characters'}
-                style={{ display: active.value === 0 ? '' : 'none' }}
-                onClick={() => {
-                  const item: Character = {
-                    id: `${nanoid(4)}`,
-                    name: { english: '' },
-                    added: new Date().toISOString(),
-                  };
-
-                  characters.value = [item, ...characters.value];
-
-                  characterSignal.value = item;
-                }}
-              >
-                {i18n('addNewCharacter')}
-              </button>
-
-              <button
-                data-dialog={'media'}
-                style={{ display: active.value === 1 ? '' : 'none' }}
-                onClick={() => {
-                  const item: TMedia = {
-                    id: `${nanoid(4)}`,
-                    title: { english: '' },
-                    type: MediaType.Anime,
-                    added: new Date().toISOString(),
-                  };
-
-                  media.value = [item, ...media.value];
-
-                  mediaSignal.value = item;
-                }}
-              >
-                {i18n('addNewMedia')}
-              </button>
-            </div>
+            <PublishPopup
+              new={newPack.value}
+              loading={loading.value}
+              dirty={dirty.value}
+              onPublish={onPublish}
+            />
 
             <IconAdjustments
               class={'w-[28px] h-[28px] cursor-pointer'}
               data-dialog={'extra'}
             />
-            <IconClose
-              class={'w-[28px] h-[28px] cursor-pointer'}
-              data-dialog-cancel={'manage'}
-            />
           </div>
 
-          <div class={'grid grid-flow-col overflow-auto'}>
+          <div class={'grid grid-flow-col overflow-auto mt-2'}>
             {(i18n('tabs') as unknown as string[])
               .map((s, i) => (
                 <div
                   key={i}
                   class={[
-                    'text-center px-1 py-2 font-[600] uppercase cursor-pointer border-b-2 hover:border-white',
+                    'text-center px-1 py-4 font-[600] uppercase cursor-pointer border-b-2 hover:border-white',
                     active.value === i ? 'border-white' : 'border-grey',
                   ].join(' ')}
                   onClick={() => active.value = i}
@@ -335,6 +331,7 @@ export default (props: {
           </div>
 
           <Characters
+            dirty={dirty}
             signal={characterSignal}
             visible={active.value === 0}
             order={charactersSortingOrder}
@@ -345,12 +342,13 @@ export default (props: {
           />
 
           <Media
+            dirty={dirty}
             signal={mediaSignal}
             visible={active.value === 1}
             order={mediaSortingOrder}
             sorting={mediaSorting}
             sortMedia={sortMedia}
-            characters={characters}
+            // characters={characters}
             media={media}
           />
 
@@ -378,7 +376,7 @@ export default (props: {
               class={'cursor-pointer w-[28px] h-[28px] ml-auto shrink-0	'}
             />
 
-            {!props.new
+            {!newPack.value
               ? (
                 <>
                   <label class={'uppercase '}>
@@ -387,10 +385,10 @@ export default (props: {
 
                   <div
                     class={'bg-highlight flex items-center p-4 rounded-xl'}
-                    data-clipboard={`/community install id: ${pack.id}`}
+                    data-clipboard={`/packs install id: ${packId.value}`}
                   >
                     <i class={'italic grow select-text'}>
-                      {`/community install id: ${pack.id}`}
+                      {`/packs install id: ${packId.value}`}
                     </i>
                     <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
                   </div>

@@ -33,10 +33,13 @@ import {
   type SortingOrder,
 } from '../utils/types.ts';
 
+import nanoid from '../utils/nanoid.ts';
+
 export default (
-  { signal, media, visible, sorting, order, sortMedia }: {
+  { dirty, signal, media, visible, sorting, order, sortMedia }: {
+    dirty: Signal<boolean>;
     signal: Signal<Media>;
-    characters: Signal<Character[]>;
+    // characters: Signal<Character[]>;
     media: Signal<Media[]>;
     visible: boolean;
     sorting: Signal<MediaSorting>;
@@ -50,6 +53,7 @@ export default (
   const forceUpdate = useCallback(() => updateState({}), []);
 
   const onMediaUpdate = useCallback(() => {
+    dirty.value = true;
     signal.value.updated = new Date().toISOString();
     sortMedia();
   }, []);
@@ -88,6 +92,23 @@ export default (
           onInput={(value) => substringQuery.value = value}
           value={substringQuery.value}
         />
+        <button
+          data-dialog={'media'}
+          onClick={() => {
+            const item: Media = {
+              id: `${nanoid(4)}`,
+              title: { english: '' },
+              type: MediaType.Anime,
+              added: new Date().toISOString(),
+            };
+
+            media.value = [item, ...media.value];
+
+            signal.value = item;
+          }}
+        >
+          {i18n('addNewMedia')}
+        </button>
         <div
           class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-3'}
         >
@@ -187,7 +208,7 @@ export default (
                   signal.value.id === id
                 );
 
-                if (i > -1 && globalThis.confirm(i18n('deleteMedia'))) {
+                if (i > -1 && confirm(i18n('deleteMedia'))) {
                   media.value.splice(i, 1);
                   forceUpdate();
                   requestAnimationFrame(() => hideDialog('media'));
