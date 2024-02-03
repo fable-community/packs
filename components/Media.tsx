@@ -86,14 +86,9 @@ export default (
       <div
         class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
-        <TextInput
-          placeholder={i18n('searchMediaPlaceholder')}
-          class={'border-b-2 border-grey border-solid rounded-[0px]'}
-          onInput={(value) => substringQuery.value = value}
-          value={substringQuery.value}
-        />
         <button
           data-dialog={'media'}
+          class={'flex justify-start gap-2 bg-transparent'}
           onClick={() => {
             const item: Media = {
               id: `${nanoid(4)}`,
@@ -107,8 +102,15 @@ export default (
             signal.value = item;
           }}
         >
+          <IconPlus class={'w-4 h-4'} />
           {i18n('addNewMedia')}
         </button>
+        <TextInput
+          placeholder={i18n('searchMediaPlaceholder')}
+          class={'border-b-2 border-grey border-solid rounded-[0px]'}
+          onInput={(value) => substringQuery.value = value}
+          value={substringQuery.value}
+        />
         <div
           class={'flex flex-row max-h-[30px] items-center border-grey border-b-2 py-8 gap-3'}
         >

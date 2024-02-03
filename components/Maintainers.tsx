@@ -97,21 +97,17 @@ export default ({ owner, maintainers, visible }: {
         visible ? '' : 'hidden',
       ].join(' ')}
     >
-      <label class={'text-[0.8rem] text-disabled uppercase'}>
-        {i18n('userId')}
-      </label>
-
       <input
         type={'text'}
         pattern={'[0-9]{18,19}'}
-        placeholder={'185033133521895424'}
-        class={'w-full text-[1rem] p-2 rounded-0 border-b-2 border-embed'}
+        placeholder={`${i18n('userId')} (e.g. 185033133521895424)`}
+        class={'w-full text-[0.95rem] p-2 rounded-0 border-b-2 border-embed'}
         onInput={(event) =>
           userId.value = (event.target as HTMLInputElement).value}
       />
 
       <button
-        class={'h-[46px]'}
+        class={'flex gap-2 py-3'}
         disabled={!(/^[0-9]{18,19}$/.test(userId.value ?? ''))}
         onClick={() => {
           if (!maintainers.value.includes(userId.value)) {
