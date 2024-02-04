@@ -8,7 +8,7 @@ import type {
   CharacterSorting,
   MediaSorting,
   SortingOrder,
-} from '../utils/types.ts';
+} from '~/utils/types.ts';
 
 const Sort = (
   { name, order, sorting, children, ...props }: {

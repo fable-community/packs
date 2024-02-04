@@ -2,14 +2,14 @@ import { useEffect } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
-import TextInput from './TextInput.tsx';
+import TextInput from '~/components/TextInput.tsx';
 
 import IconLeft from 'icons/arrow-left.tsx';
 
-import { i18n } from '../utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
-import type { Data, Image } from '../routes/api/zerochan.ts';
-import { useDebounce } from '../utils/useDebounce.tsx';
+import type { Data, Image } from '~/routes/api/zerochan.ts';
+import { useDebounce } from '~/utils/useDebounce.tsx';
 
 export const ZeroChanModal = (
   { character, media, visible, callback }: {
@@ -67,7 +67,6 @@ export const ZeroChanModal = (
 
       <TextInput
         placeholder={i18n('search')}
-        class={'border-b-2 border-grey border-solid rounded-[0px]'}
         onInput={(value) => setQuery(value)}
         value={query}
       />

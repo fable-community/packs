@@ -4,8 +4,6 @@ import { Binary } from 'bson';
 
 import IconImage from 'icons/photo-plus.tsx';
 
-import nanoid from '../utils/nanoid.ts';
-
 import type { JSX } from 'preact/jsx-runtime';
 
 export interface IImageInput {

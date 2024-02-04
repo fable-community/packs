@@ -1,4 +1,4 @@
-import { getRating } from './rating.ts';
+import { getRating } from '~/utils/rating.ts';
 
 import type {
   CharacterSorting,
@@ -7,7 +7,7 @@ import type {
   Media,
   MediaSorting,
   SortingOrder,
-} from './types.ts';
+} from '~/utils/types.ts';
 
 const sortByUpdateTimestamp = (
   a: DisaggregatedCharacter | DisaggregatedMedia,

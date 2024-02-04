@@ -1,44 +1,45 @@
-import '#filter-boolean';
-
 import { useCallback, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
-import { hideDialog, showDialog } from '../static/dialogs.js';
+import { hideDialog, showDialog } from '~/static/dialogs.js';
 
-import { defaultImage } from './Dashboard.tsx';
+import Notice from '~/components/Notice.tsx';
 
-import Notice from './Notice.tsx';
+import Dialog from '~/components/Dialog.tsx';
 
-import Dialog from './Dialog.tsx';
-
-import Select from './Select.tsx';
-import TextInput from './TextInput.tsx';
-import ImageInput from './ImageInput.tsx';
-import Sort from './Sort.tsx';
+import Select from '~/components/Select.tsx';
+import TextInput from '~/components/TextInput.tsx';
+import ImageInput from '~/components/ImageInput.tsx';
+import Sort from '~/components/Sort.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
 
-import comma from '../utils/comma.ts';
+import comma from '~/utils/comma.ts';
 
-import { i18n } from '../utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
-import { getRelativeTimeString } from '../utils/timeString.ts';
+import { getRelativeTimeString } from '~/utils/timeString.ts';
 
 import {
-  Character,
   type Media,
   type MediaSorting,
   MediaType,
   type SortingOrder,
-} from '../utils/types.ts';
+} from '~/utils/types.ts';
+
+import nanoid from '~/utils/nanoid.ts';
+
+const defaultImage =
+  'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
 
 export default (
-  { signal, media, visible, sorting, order, sortMedia }: {
+  { dirty, signal, media, visible, sorting, order, sortMedia }: {
+    dirty: Signal<boolean>;
     signal: Signal<Media>;
-    characters: Signal<Character[]>;
+    // characters: Signal<Character[]>;
     media: Signal<Media[]>;
     visible: boolean;
     sorting: Signal<MediaSorting>;
@@ -52,6 +53,7 @@ export default (
   const forceUpdate = useCallback(() => updateState({}), []);
 
   const onMediaUpdate = useCallback(() => {
+    dirty.value = true;
     signal.value.updated = new Date().toISOString();
     sortMedia();
   }, []);
@@ -84,6 +86,25 @@ export default (
       <div
         class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
+        <button
+          data-dialog={'media'}
+          class={'flex justify-start gap-2 bg-transparent'}
+          onClick={() => {
+            const item: Media = {
+              id: `${nanoid(4)}`,
+              title: { english: '' },
+              type: MediaType.Anime,
+              added: new Date().toISOString(),
+            };
+
+            media.value = [item, ...media.value];
+
+            signal.value = item;
+          }}
+        >
+          <IconPlus class={'w-4 h-4'} />
+          {i18n('addNewMedia')}
+        </button>
         <TextInput
           placeholder={i18n('searchMediaPlaceholder')}
           class={'border-b-2 border-grey border-solid rounded-[0px]'}
@@ -189,7 +210,7 @@ export default (
                   signal.value.id === id
                 );
 
-                if (i > -1 && window.confirm(i18n('deleteMedia'))) {
+                if (i > -1 && confirm(i18n('deleteMedia'))) {
                   media.value.splice(i, 1);
                   forceUpdate();
                   requestAnimationFrame(() => hideDialog('media'));

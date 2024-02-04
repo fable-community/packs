@@ -1,18 +1,22 @@
 import { Handlers, type PageProps } from '$fresh/server.ts';
 
-import { getAccessToken } from '../utils/oauth.ts';
+import { getAccessToken } from '~/utils/oauth.ts';
 
-import Login from '../components/Login.tsx';
+import Maintenance from '~/routes/_503.tsx';
 
-import Maintenance from './_503.tsx';
+import { i18nSSR } from '~/utils/i18n.ts';
 
-import Dashboard, { type DashboardData } from '../components/Dashboard.tsx';
+import Login from '~/components/Login.tsx';
 
-import { i18nSSR } from '../utils/i18n.ts';
+import Manage from '~/islands/Manage.tsx';
 
-import type { Pack, User } from '../utils/types.ts';
+import type { Pack, User } from '~/utils/types.ts';
 
-export const production = !!Deno.env.get('DENO_DEPLOYMENT_ID');
+export interface EditData {
+  user?: User;
+  maintenance: boolean;
+  pack: Pack;
+}
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -24,7 +28,7 @@ export const handler: Handlers = {
 
     const packId = ctx.params.id;
 
-    const data = { packs: {} } as DashboardData;
+    const data = {} as EditData;
 
     const endpoint = Deno.env.get('API_ENDPOINT');
 
@@ -45,21 +49,16 @@ export const handler: Handlers = {
       }
     }
 
-    if (data.user && endpoint) {
-      const response = await fetch(`${endpoint}/user`, {
+    if (data.user && endpoint && packId) {
+      const response = await fetch(`${endpoint}/pack/${packId}`, {
         method: 'GET',
         headers: { 'authorization': `Bearer ${accessToken}` },
       });
 
-      const packs = (await response.json() as { data: Pack[] }).data;
-
-      data.packs = packs.reduce((acc, pack) => {
-        return { ...acc, [pack.manifest.id]: pack };
-      }, {});
+      data.pack = await response.json() as Pack;
     }
 
-    // if the selected pack is not found in the user's packs
-    if (packId && !(packId in data.packs)) {
+    if (data.user && !data.pack) {
       return ctx.renderNotFound();
     }
 
@@ -69,9 +68,14 @@ export const handler: Handlers = {
   },
 };
 
-export default (props: PageProps<DashboardData>) => {
-  if (props.data.maintenance) {
+export default ({ data }: PageProps<EditData>) => {
+  if (data.maintenance) {
     return <Maintenance />;
+  } else if (!data.user) {
+    return <Login />;
   }
-  return props.data.user ? <Dashboard {...props} /> : <Login />;
+
+  const user = data.user;
+
+  return <Manage user={user} new={false} pack={data.pack} />;
 };

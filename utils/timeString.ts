@@ -1,4 +1,4 @@
-import { locale } from './i18n.ts';
+import { locale } from '~/utils/i18n.ts';
 
 export function getRelativeTimeString(date: Date): string {
   const timeMs = typeof date === 'number' ? date : date.getTime();

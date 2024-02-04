@@ -1,6 +1,6 @@
 // deno-lint-ignore-file camelcase
 
-import type { Manifest } from './types.ts';
+import type { Manifest } from '~/utils/types.ts';
 
 interface Webhook {
   username?: string;

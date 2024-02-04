@@ -1,8 +1,8 @@
 import { Head } from '$fresh/runtime.ts';
 
-import type { AppProps } from '$fresh/src/server/types.ts';
+import type { PageProps } from '$fresh/server.ts';
 
-export default ({ Component }: AppProps) => {
+export default ({ Component }: PageProps) => {
   return (
     <>
       <Head>
@@ -24,7 +24,7 @@ export default ({ Component }: AppProps) => {
           href='https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&display=swap'
         />
 
-        <link rel='stylesheet' href={'root.css'} />
+        <link rel='stylesheet' href={'/root.css'} />
 
         <script async src='/dialogs.js' type={'module'} />
         <script async src='/clipboards.js' type={'module'} />

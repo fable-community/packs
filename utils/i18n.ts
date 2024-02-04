@@ -1,7 +1,7 @@
 import { signal } from '@preact/signals';
 
-import enUS from '../i18n/en-US.ts';
-import esES from '../i18n/es-ES.ts';
+import enUS from '~/i18n/en-US.ts';
+import esES from '~/i18n/es-ES.ts';
 
 const IS_BROWSER = typeof document !== 'undefined';
 
@@ -19,9 +19,11 @@ export const availableLocales = [
 ];
 
 export function i18nSSR(acceptHeader: string) {
+  type T = { locale: string; quality: number }[];
+
   const langs = acceptHeader.match(regex) ?? [];
 
-  const options = langs.map((lang) => {
+  const options: T = (langs.map((lang) => {
     if (!lang) {
       return;
     }
@@ -33,7 +35,7 @@ export function i18nSSR(acceptHeader: string) {
       quality: l[1] ? parseFloat(l[1].split('=')[1]) : 1.0,
     };
   })
-    .filter(Boolean)
+    .filter(Boolean) as T)
     .filter((l) => availableLocales.includes(l.locale))
     .sort((a, b) => b.quality - a.quality);
 

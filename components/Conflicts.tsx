@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
-import Notice from './Notice.tsx';
+import Notice from '~/components/Notice.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 
-import { gql, request } from '../utils/graphql.ts';
+import { gql, request } from '~/utils/graphql.ts';
 
-import { i18n } from '../utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
 const getAnilistIds = (ids: string[]) => {
   const anilistIds: number[] = [];

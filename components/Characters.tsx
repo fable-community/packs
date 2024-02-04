@@ -1,35 +1,31 @@
-import '#filter-boolean';
-
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 
 import { type Signal, useSignal } from '@preact/signals';
 
-import { hideDialog, showDialog } from '../static/dialogs.js';
+import { hideDialog, showDialog } from '~/static/dialogs.js';
 
-import { getPopularity, getRating } from '../utils/rating.ts';
+import { getPopularity, getRating } from '~/utils/rating.ts';
 
-import { defaultImage } from './Dashboard.tsx';
+import Notice from '~/components/Notice.tsx';
 
-import Notice from './Notice.tsx';
+import Dialog from '~/components/Dialog.tsx';
 
-import Dialog from './Dialog.tsx';
+import Star from '~/components/Star.tsx';
 
-import Star from './Star.tsx';
+import Select from '~/components/Select.tsx';
+import TextInput from '~/components/TextInput.tsx';
+import ImageInput from '~/components/ImageInput.tsx';
+import Sort from '~/components/Sort.tsx';
 
-import Select from './Select.tsx';
-import TextInput from './TextInput.tsx';
-import ImageInput from './ImageInput.tsx';
-import Sort from './Sort.tsx';
-
-import { ZeroChanModal } from './ZeroChanModal.tsx';
+import { ZeroChanModal } from '~/components/ZeroChanModal.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/plus.tsx';
 import IconApply from 'icons/check.tsx';
 
-import { i18n } from '../utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
-import { getRelativeTimeString } from '../utils/timeString.ts';
+import { getRelativeTimeString } from '~/utils/timeString.ts';
 
 import {
   type Character,
@@ -37,20 +33,25 @@ import {
   type CharacterSorting,
   type Media,
   type SortingOrder,
-} from '../utils/types.ts';
+} from '~/utils/types.ts';
 
-import type { Data, Image } from '../routes/api/zerochan.ts';
+import nanoid from '~/utils/nanoid.ts';
+
+const defaultImage =
+  'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
 
 export default (
-  { signal, media, characters, visible, sorting, order, sortCharacters }: {
-    signal: Signal<Character>;
-    characters: Signal<Character[]>;
-    media: Signal<Media[]>;
-    visible: boolean;
-    sorting: Signal<CharacterSorting>;
-    order: Signal<SortingOrder>;
-    sortCharacters: () => void;
-  },
+  { dirty, signal, media, characters, visible, sorting, order, sortCharacters }:
+    {
+      dirty: Signal<boolean>;
+      signal: Signal<Character>;
+      characters: Signal<Character[]>;
+      media: Signal<Media[]>;
+      visible: boolean;
+      sorting: Signal<CharacterSorting>;
+      order: Signal<SortingOrder>;
+      sortCharacters: () => void;
+    },
 ) => {
   const [, updateState] = useState({});
 
@@ -77,6 +78,7 @@ export default (
   });
 
   const onCharacterUpdate = useCallback(() => {
+    dirty.value = true;
     signal.value.updated = new Date().toISOString();
     sortCharacters();
   }, []);
@@ -101,6 +103,24 @@ export default (
       <div
         class={'flex flex-col gap-8 max-w-[980px] mx-auto pb-[15vh] pt-[2.5vh]'}
       >
+        <button
+          data-dialog={'characters'}
+          class={'flex justify-start gap-2 bg-transparent'}
+          onClick={() => {
+            const item: Character = {
+              id: `${nanoid(4)}`,
+              name: { english: '' },
+              added: new Date().toISOString(),
+            };
+
+            characters.value = [item, ...characters.value];
+
+            signal.value = item;
+          }}
+        >
+          <IconPlus class={'w-4 h-4'} />
+          {i18n('addNewCharacter')}
+        </button>
         <TextInput
           placeholder={i18n('searchCharactersPlaceholder')}
           class={'border-b-2 border-grey border-solid rounded-[0px]'}
@@ -251,7 +271,7 @@ export default (
                         signal.value.id === id
                       );
 
-                      if (i > -1 && window.confirm(i18n('deleteCharacter'))) {
+                      if (i > -1 && confirm(i18n('deleteCharacter'))) {
                         characters.value.splice(i, 1);
                         forceUpdate();
                         requestAnimationFrame(() => hideDialog('characters'));

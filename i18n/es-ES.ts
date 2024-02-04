@@ -38,6 +38,8 @@ export default {
 
   loading: 'Loading...',
 
+  unsavedChanges: 'You have unsaved changes!',
+
   //
   placeholderGender: 'Clasificado',
   placeholderAge: 'Ancestral',
@@ -64,7 +66,8 @@ export default {
   primaryMediaNotice: 'El personaje no aparecerá en el gacha',
 
   //
-  successTitle:
+  successTitle: 'Congrats',
+  successSubtitle:
     'Has publicado un nuevo pack exitosamente. Ahora puedes instalarlo usando:',
   successYouNeed: 'Necesitas el permiso ',
   successManageServer: 'Administrar Servidor',

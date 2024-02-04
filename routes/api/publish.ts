@@ -1,20 +1,20 @@
 // deno-lint-ignore-file no-non-null-assertion
 
-import { encode } from '$std/encoding/base64.ts';
+import { encodeBase64 } from '$std/encoding/base64.ts';
 
 import { deserialize } from 'bson';
 
-import { getAccessToken } from '../../utils/oauth.ts';
+import { getAccessToken } from '~/utils/oauth.ts';
 
-import nanoid from '../../utils/nanoid.ts';
+import nanoid from '~/utils/nanoid.ts';
 
-import { getRating } from '../../utils/rating.ts';
+import { getRating } from '~/utils/rating.ts';
 
-import { getWebhook } from '../../utils/embeds.ts';
+import { getWebhook } from '~/utils/embeds.ts';
 
-import { IImageInput, TEN_MB } from '../../components/ImageInput.tsx';
+import { IImageInput, TEN_MB } from '~/components/ImageInput.tsx';
 
-import { Character, CharacterRole, Media, Pack } from '../../utils/types.ts';
+import { Character, CharacterRole, Media, Pack } from '~/utils/types.ts';
 
 import type { Handlers } from '$fresh/server.ts';
 
@@ -61,7 +61,9 @@ const setUpImages = async () => {
 
   const _credentials = await fetch(
     'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
-    { headers: { Authorization: `Basic ${encode(`${b2.id}:${b2.key}`)}` } },
+    {
+      headers: { Authorization: `Basic ${encodeBase64(`${b2.id}:${b2.key}`)}` },
+    },
   );
 
   if (_credentials.status !== 200) {
