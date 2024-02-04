@@ -11,12 +11,17 @@ export const handler: Handlers = {
           Location: '/dashboard',
         },
       });
-    } else {
-      return ctx.render();
     }
+
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: '/browse',
+      },
+    });
   },
 };
 
 export default () => {
-  return <div>not logged in</div>;
+  return <></>;
 };

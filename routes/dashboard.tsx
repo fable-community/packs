@@ -4,6 +4,7 @@ import { getAccessToken } from '~/utils/oauth.ts';
 
 import Card from '~/components/Card.tsx';
 import Avatar from '~/components/Avatar.tsx';
+import NavBar from '~/components/NavBar.tsx';
 import Login from '~/components/Login.tsx';
 
 import Maintenance from '~/routes/_503.tsx';
@@ -82,21 +83,31 @@ export default ({ data }: PageProps<DashboardData>) => {
   const user = data.user;
 
   return (
-    <>
-      <Avatar id={user.id} avatar={user.avatar} />
-
-      <div
-        class={'flex flex-wrap justify-center w-full px-[10vw] my-[5vh] gap-8'}
-      >
-        {data.packs.map((pack) => <Card key={pack.manifest.id} pack={pack} />)}
-
-        <a
-          href={`/new`}
-          class={'flex items-center justify-center w-[128px] min-h-[32px] rounded-xl border-2 px-[16px] py-[24px] border-dashed border-grey hover:translate-y-[-8px] transition-all duration-150'}
-        >
-          <IconPlus class={'w-[32px] h-auto text-grey'} />
-        </a>
+    <div className='flex flex-col w-full grow my-[2rem] gap-[5vh]'>
+      <div class={'flex mx-[2rem]'}>
+        <NavBar active='create' />
+        <Avatar id={user.id} avatar={user.avatar} />
       </div>
-    </>
+
+      <div class={'flex grow justify-center items-center mx-[2rem]'}>
+        <div
+          class={'flex flex-wrap justify-center w-full gap-8 '}
+        >
+          {data.packs.map((pack) => (
+            <Card
+              key={pack.manifest.id}
+              pack={pack}
+            />
+          ))}
+
+          <a
+            href={`/new`}
+            class={'flex items-center justify-center w-[128px] min-h-[32px] rounded-xl border-2 px-[16px] py-[24px] border-dashed border-grey hover:translate-y-[-8px] transition-all duration-150'}
+          >
+            <IconPlus class={'w-[32px] h-auto text-grey'} />
+          </a>
+        </div>
+      </div>
+    </div>
   );
 };

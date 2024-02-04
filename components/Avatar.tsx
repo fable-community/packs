@@ -9,7 +9,7 @@ export default ({ id, avatar }: { id: string; avatar?: string }) => {
     <>
       <img
         data-dialog={'logout'}
-        class={'fixed w-[32px] h-[32px] top-[2rem] right-[2rem] rounded-full cursor-pointer'}
+        class={'justify-self-end w-[32px] h-[32px] rounded-full cursor-pointer'}
         src={`https://cdn.discordapp.com/${
           id && avatar ? `avatars/${id}/${avatar}.png` : 'embed/avatars/0.png'
         }`}

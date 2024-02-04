@@ -43,6 +43,7 @@ noscript {
 body {
   margin: 0;
   display: flex;
+  flex-direction: column;
   min-width: 100vw;
   min-height: 100vh;
 

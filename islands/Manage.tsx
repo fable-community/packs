@@ -369,7 +369,6 @@ export default (props: {
         </div>
 
         <Dialog
-          visible={true}
           name={'extra'}
           class={'flex items-center justify-center w-full h-full left-0 top-0 pointer-events-none'}
         >
