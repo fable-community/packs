@@ -9,6 +9,8 @@ import {
   setCookie,
 } from '$std/http/cookie.ts';
 
+import type { User } from '~/utils/types.ts';
+
 export const COOKIE_BASE = {
   secure: true,
   path: '/',
@@ -33,7 +35,84 @@ interface Cookies {
 
 export const getAccessToken = (req: Request) => {
   const cookies = getCookies(req.headers) as Cookies;
+
   return cookies.accessToken;
+};
+
+export async function fetchUser(
+  req: Request,
+): Promise<{
+  user?: User;
+  accessToken?: string;
+  headers: Headers;
+}> {
+  let user: User | undefined = undefined;
+
+  const headers = new Headers(req.headers);
+
+  let { accessToken, refreshToken } = getCookies(req.headers) as Cookies;
+
+  const clientId = Deno.env.get('DISCORD_CLIENT_ID');
+  const clientSecret = Deno.env.get('DISCORD_CLIENT_SECRET');
+
+  if (!accessToken && refreshToken && clientId && clientSecret) {
+    accessToken = await getAndStoreNewToken(
+      headers,
+      new URLSearchParams({
+        client_id: clientId,
+        client_secret: clientSecret,
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+      }),
+    );
+  }
+
+  if (accessToken) {
+    const response = await fetch('https://discord.com/api/users/@me', {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `Bearer ${accessToken}`,
+      },
+    }).catch(console.error);
+
+    if (response?.ok && response?.status === 200) {
+      user = await response.json() as User;
+    }
+  }
+
+  return { user, accessToken, headers };
+}
+
+const getAndStoreNewToken = async (
+  headers: Headers,
+  params: URLSearchParams,
+) => {
+  const response = await fetch('https://discord.com/api/oauth2/token', {
+    body: params,
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    method: 'POST',
+  });
+
+  const token = await response.json() as DiscordToken;
+
+  if (response.status === 200 && 'access_token' in token) {
+    setCookie(headers, {
+      ...COOKIE_BASE,
+      name: 'accessToken',
+      value: token.access_token,
+      maxAge: token.expires_in,
+    });
+
+    setCookie(headers, {
+      ...COOKIE_BASE,
+      name: 'refreshToken',
+      value: token.refresh_token,
+      maxAge: 31_536_000, // one year
+    });
+  }
+
+  return token.access_token;
 };
 
 export const plugin: Plugin = {
@@ -100,42 +179,21 @@ export const plugin: Plugin = {
         const code = url.searchParams.get('code');
 
         if (code && state === cookies.state) {
-          const body = new URLSearchParams({
-            client_id: clientId,
-            client_secret: clientSecret,
-            grant_type: 'authorization_code',
-            redirect_uri: `${url.origin}/callback`,
-            code,
-          });
+          await getAndStoreNewToken(
+            headers,
+            new URLSearchParams({
+              client_id: clientId,
+              client_secret: clientSecret,
+              grant_type: 'authorization_code',
+              redirect_uri: `${url.origin}/callback`,
+              code,
+            }),
+          );
 
-          const response = await fetch('https://discord.com/api/oauth2/token', {
-            body,
-            headers: { 'content-type': 'application/x-www-form-urlencoded' },
-            method: 'POST',
-          });
-
-          const token = await response.json() as DiscordToken;
-
-          if (response.status === 200 && 'access_token' in token) {
-            setCookie(headers, {
-              ...COOKIE_BASE,
-              name: 'accessToken',
-              value: token.access_token,
-              maxAge: token.expires_in,
-            });
-
-            // setCookie(headers, {
-            //   ...COOKIE_BASE,
-            //   name: 'refreshToken',
-            //   value: token.refresh_token,
-            //   maxAge: 31_536_000, // one year
-            // });
-
-            deleteCookie(headers, 'state');
-          }
+          deleteCookie(headers, 'state');
         }
 
-        headers.set('location', '/');
+        headers.set('location', '/dashboard');
 
         return new Response(null, {
           status: 303, // see other redirect

@@ -1,6 +1,6 @@
 import { Handlers, type PageProps } from '$fresh/server.ts';
 
-import { getAccessToken } from '~/utils/oauth.ts';
+import { fetchUser } from '~/utils/oauth.ts';
 
 import Card from '~/components/Card.tsx';
 import Avatar from '~/components/Avatar.tsx';
@@ -33,22 +33,9 @@ export const handler: Handlers = {
 
     const endpoint = Deno.env.get('API_ENDPOINT');
 
-    const accessToken = getAccessToken(req);
+    const { user, accessToken, headers } = await fetchUser(req);
 
-    if (accessToken) {
-      const response = await fetch('https://discord.com/api/users/@me', {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'authorization': `Bearer ${accessToken}`,
-        },
-      })
-        .catch(console.error);
-
-      if (response?.ok && response?.status === 200) {
-        data.user = await response.json() as User;
-      }
-    }
+    data.user = user;
 
     if (data.user && endpoint) {
       const response = await fetch(`${endpoint}/user`, {
@@ -69,7 +56,7 @@ export const handler: Handlers = {
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
 
-    return ctx.render(data);
+    return ctx.render(data, { headers });
   },
 };
 
@@ -80,11 +67,11 @@ export default ({ data }: PageProps<DashboardData>) => {
     return <Login />;
   }
 
-  const user = data.user;
+  const { user } = data;
 
   return (
     <div className='flex flex-col w-full grow my-[2rem] gap-[5vh]'>
-      <div class={'flex mx-[2rem]'}>
+      <div class={'flex mx-[2rem] items-center'}>
         <NavBar active='create' />
         <Avatar id={user.id} avatar={user.avatar} />
       </div>

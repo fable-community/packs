@@ -1,6 +1,6 @@
 import { Handlers, type PageProps } from '$fresh/server.ts';
 
-import { getAccessToken } from '~/utils/oauth.ts';
+import { fetchUser } from '~/utils/oauth.ts';
 
 import Maintenance from '~/routes/_503.tsx';
 
@@ -27,26 +27,13 @@ export const handler: Handlers = {
 
     const data = {} as NewData;
 
-    const accessToken = getAccessToken(req);
+    const { user, headers } = await fetchUser(req);
 
-    if (accessToken) {
-      const response = await fetch('https://discord.com/api/users/@me', {
-        method: 'GET',
-        headers: {
-          'content-type': 'application/json',
-          'authorization': `Bearer ${accessToken}`,
-        },
-      })
-        .catch(console.error);
-
-      if (response?.ok && response?.status === 200) {
-        data.user = await response.json() as User;
-      }
-    }
+    data.user = user;
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
 
-    return ctx.render(data);
+    return ctx.render(data, { headers });
   },
 };
 

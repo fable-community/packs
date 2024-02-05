@@ -1,22 +1,50 @@
 import { Handlers, type PageProps } from '$fresh/server.ts';
 
 import NavBar from '~/components/NavBar.tsx';
+import Avatar from '~/components/Avatar.tsx';
 
 import Maintenance from '~/routes/_503.tsx';
+
+import { fetchUser } from '~/utils/oauth.ts';
 
 import { i18n, i18nSSR } from '~/utils/i18n.ts';
 
 import IconDownload from 'icons/download.tsx';
 
-import type { Pack } from '~/utils/types.ts';
+import type { Pack, User } from '~/utils/types.ts';
 
 interface BrowseData {
+  user?: User;
   maintenance: boolean;
   packs: Pack[];
 }
 
 const defaultImage =
   'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
+
+async function fetchPopularPacks() {
+  let packs: Pack[] = [];
+
+  const endpoint = Deno.env.get('API_ENDPOINT');
+
+  if (endpoint) {
+    const response = await fetch(`${endpoint}/popular`, {
+      method: 'GET',
+    });
+
+    // TODO impl loading all packs from the response pagination
+    const { packs: fetchedPacks } = (await response.json()) as {
+      packs: Pack[];
+      length: number;
+      offset: number;
+      limit: number;
+    };
+
+    packs = fetchedPacks;
+  }
+
+  return packs;
+}
 
 export const handler: Handlers = {
   async GET(req, ctx) {
@@ -28,27 +56,17 @@ export const handler: Handlers = {
 
     const data = { packs: {} } as BrowseData;
 
-    const endpoint = Deno.env.get('API_ENDPOINT');
+    const [{ user, headers }, packs] = await Promise.all([
+      fetchUser(req),
+      fetchPopularPacks(),
+    ]);
 
-    if (endpoint) {
-      const response = await fetch(`${endpoint}/popular`, {
-        method: 'GET',
-      });
-
-      // TODO impl loading all packs from the response pagination
-      const { packs } = (await response.json()) as {
-        packs: Pack[];
-        length: number;
-        offset: number;
-        limit: number;
-      };
-
-      data.packs = packs;
-    }
+    data.user = user;
+    data.packs = packs;
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
 
-    return ctx.render(data);
+    return ctx.render(data, { headers });
   },
 };
 
@@ -57,10 +75,14 @@ export default ({ data }: PageProps<BrowseData>) => {
     return <Maintenance />;
   }
 
+  const { user } = data;
+
   return (
     <div className='flex flex-col grow w-full my-[2rem] gap-[5vh]'>
-      <div class={'flex w-full mx-[2rem]'}>
+      <div class={'flex mx-[2rem] items-center'}>
         <NavBar active='browse' />
+
+        {user ? <Avatar id={user.id} avatar={user.avatar} /> : undefined}
       </div>
 
       <div class={'flex grow justify-center items-center mx-[2rem]'}>
@@ -83,7 +105,9 @@ export default ({ data }: PageProps<BrowseData>) => {
                   {pack.manifest.title ?? pack.manifest.id}
                 </i>
 
-                <p class={'text-[0.85rem] opacity-80'}>
+                <p
+                  class={'text-[0.85rem] opacity-80 line-clamp-2 overflow-hidden overflow-ellipsis'}
+                >
                   {pack.manifest.description}
                 </p>
 
