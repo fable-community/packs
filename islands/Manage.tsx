@@ -185,7 +185,7 @@ export default (props: {
     loading.value = true;
 
     try {
-      const response = await fetch(`api/publish`, {
+      const response = await fetch(`/api/publish`, {
         method: 'POST',
         body: serialize(body),
       });
