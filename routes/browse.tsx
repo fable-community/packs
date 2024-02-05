@@ -4,7 +4,9 @@ import NavBar from '~/components/NavBar.tsx';
 
 import Maintenance from '~/routes/_503.tsx';
 
-import { i18nSSR } from '~/utils/i18n.ts';
+import { i18n, i18nSSR } from '~/utils/i18n.ts';
+
+import IconDownload from 'icons/download.tsx';
 
 import type { Pack } from '~/utils/types.ts';
 
@@ -67,7 +69,7 @@ export default ({ data }: PageProps<BrowseData>) => {
         >
           {data.packs.map((pack, index) => (
             <div
-              class={'flex w-full gap-3 p-8 hover:bg-embed2 rounded-lg cursor-pointer'}
+              class={'flex w-full gap-8 p-8 hover:bg-embed2 rounded-lg cursor-pointer'}
             >
               <i class={'text-[4rem] font-bold'}>{index + 1}</i>
 
@@ -76,11 +78,19 @@ export default ({ data }: PageProps<BrowseData>) => {
                 class={'w-[92px] min-w-[92px] h-[92px] object-cover object-center rounded-[14px]'}
               />
 
-              <div class={'flex flex-col justify-center m-4'}>
+              <div class={'flex flex-col justify-center'}>
                 <i class={'font-bold text-[0.95rem]'}>
                   {pack.manifest.title ?? pack.manifest.id}
                 </i>
-                <p class={'text-[0.85rem]'}>{pack.manifest.description}</p>
+
+                <p class={'text-[0.85rem] opacity-80'}>
+                  {pack.manifest.description}
+                </p>
+
+                <div class={'flex gap-3 text-white opacity-80 mt-3 uppercase'}>
+                  <IconDownload class={'w-4 h-4'} />
+                  {i18n('packServers', pack.servers ?? 0)}
+                </div>
               </div>
             </div>
           ))}

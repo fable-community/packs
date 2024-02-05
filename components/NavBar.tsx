@@ -1,21 +1,17 @@
 export default ({ active }: { active: 'browse' | 'create' }) => {
   return (
     <div
-      class={'w-full flex gap-3 uppercase text-[1.05rem] cursor-pointer font-bold'}
+      class={'w-full flex gap-3 uppercase text-[1.05rem] text-white cursor-pointer font-bold'}
     >
       <a
         href={'/browse'}
-        class={active === 'browse'
-          ? 'text-white'
-          : 'text-grey hover:text-white'}
+        class={active === 'browse' ? '' : 'opacity-40 hover:opacity-100'}
       >
         Popular
       </a>
       <a
         href={'/dashboard'}
-        class={active === 'create'
-          ? 'text-white'
-          : 'text-grey hover:text-white'}
+        class={active === 'create' ? '' : 'opacity-40 hover:opacity-100'}
       >
         Create
       </a>
