@@ -1,6 +1,8 @@
 export default () => {
   return (
-    <h1 class={'mx-auto tracking-[1em] uppercase'}>
+    <h1
+      class={'flex grow items-center justify-center font-bold tracking-[1em] uppercase'}
+    >
       Unavailable
     </h1>
   );

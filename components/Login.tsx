@@ -4,7 +4,11 @@ import { i18n } from '~/utils/i18n.ts';
 
 export default () => {
   return (
-    <form class={'mx-auto'} method={'post'} action={'/login'}>
+    <form
+      class={'flex grow items-center justify-center'}
+      method={'post'}
+      action={'/login'}
+    >
       <div
         class={'bg-embed flex relative items-center justify-center rounded-[10px] px-[3.5rem] h-[60vh]'}
       >
