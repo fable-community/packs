@@ -1,18 +1,7 @@
-import { Handlers, type PageProps } from '$fresh/server.ts';
-
-import { getAccessToken } from '~/utils/oauth.ts';
+import { Handlers } from '$fresh/server.ts';
 
 export const handler: Handlers = {
   GET(req, ctx) {
-    if (getAccessToken(req)) {
-      return new Response(null, {
-        status: 302,
-        headers: {
-          Location: '/dashboard',
-        },
-      });
-    }
-
     return new Response(null, {
       status: 302,
       headers: {
@@ -20,8 +9,4 @@ export const handler: Handlers = {
       },
     });
   },
-};
-
-export default () => {
-  return <></>;
 };
