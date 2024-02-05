@@ -32,7 +32,6 @@ async function fetchPopularPacks() {
       method: 'GET',
     });
 
-    // TODO impl loading all packs from the response pagination
     const { packs: fetchedPacks } = (await response.json()) as {
       packs: Pack[];
       length: number;
@@ -56,7 +55,7 @@ export const handler: Handlers = {
 
     const data = { packs: {} } as BrowseData;
 
-    const [{ user, headers }, packs] = await Promise.all([
+    const [{ user, setCookie }, packs] = await Promise.all([
       fetchUser(req),
       fetchPopularPacks(),
     ]);
@@ -66,7 +65,13 @@ export const handler: Handlers = {
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
 
-    return ctx.render(data, { headers });
+    const resp = await ctx.render(data);
+
+    if (setCookie) {
+      resp.headers.set('set-cookie', setCookie);
+    }
+
+    return resp;
   },
 };
 
@@ -87,17 +92,18 @@ export default ({ data }: PageProps<BrowseData>) => {
 
       <div class={'flex grow justify-center items-center mx-[2rem]'}>
         <div
-          class={'flex flex-col items-center w-full gap-8 max-w-[800px]'}
+          class={'flex flex-col items-center w-full max-w-[800px] gap-8'}
         >
           {data.packs.map((pack, index) => (
-            <div
+            <a
+              href={`/${pack.manifest.id}`}
               class={'flex w-full gap-8 p-8 hover:bg-embed2 rounded-lg cursor-pointer'}
             >
-              <i class={'text-[4rem] font-bold'}>{index + 1}</i>
+              <i class={'text-[4rem] w-[4rem] font-bold'}>{index + 1}</i>
 
               <img
                 src={pack.manifest.image ?? defaultImage}
-                class={'w-[92px] min-w-[92px] h-[92px] object-cover object-center rounded-[14px]'}
+                class={'bg-grey w-[92px] min-w-[92px] h-[92px] object-cover object-center rounded-[14px]'}
               />
 
               <div class={'flex flex-col justify-center'}>
@@ -116,7 +122,7 @@ export default ({ data }: PageProps<BrowseData>) => {
                   {i18n('packServers', pack.servers ?? 0)}
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>

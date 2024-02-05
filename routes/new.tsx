@@ -27,13 +27,19 @@ export const handler: Handlers = {
 
     const data = {} as NewData;
 
-    const { user, headers } = await fetchUser(req);
+    const { user, setCookie } = await fetchUser(req);
 
     data.user = user;
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
 
-    return ctx.render(data, { headers });
+    const resp = await ctx.render(data);
+
+    if (setCookie) {
+      resp.headers.set('set-cookie', setCookie);
+    }
+
+    return resp;
   },
 };
 

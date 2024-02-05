@@ -32,7 +32,7 @@ export const handler: Handlers = {
 
     const endpoint = Deno.env.get('API_ENDPOINT');
 
-    const { user, accessToken, headers } = await fetchUser(req);
+    const { user, accessToken, setCookie } = await fetchUser(req);
 
     data.user = user;
 
@@ -56,7 +56,13 @@ export const handler: Handlers = {
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
 
-    return ctx.render(data, { headers });
+    const resp = await ctx.render(data);
+
+    if (setCookie) {
+      resp.headers.set('set-cookie', setCookie);
+    }
+
+    return resp;
   },
 };
 

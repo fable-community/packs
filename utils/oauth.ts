@@ -44,7 +44,7 @@ export async function fetchUser(
 ): Promise<{
   user?: User;
   accessToken?: string;
-  headers: Headers;
+  setCookie?: string;
 }> {
   let user: User | undefined = undefined;
 
@@ -81,7 +81,11 @@ export async function fetchUser(
     }
   }
 
-  return { user, accessToken, headers };
+  return {
+    user,
+    accessToken,
+    setCookie: headers.get('set-cookie') || undefined,
+  };
 }
 
 const getAndStoreNewToken = async (

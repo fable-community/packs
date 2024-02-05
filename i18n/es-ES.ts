@@ -2,7 +2,7 @@
 
 export default {
   noScript: 'javascript es necesario para utilizar esta app!',
-  'browse': 'browse',
+  'browse': 'Browse',
   'create': 'Create',
   packTitle: 'Título del pack',
   loginWithDiscord: 'Ingresar con Discord',

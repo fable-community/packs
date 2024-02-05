@@ -33,7 +33,7 @@ export const handler: Handlers = {
 
     const endpoint = Deno.env.get('API_ENDPOINT');
 
-    const { user, accessToken, headers } = await fetchUser(req);
+    const { user, accessToken, setCookie } = await fetchUser(req);
 
     data.user = user;
 
@@ -43,7 +43,7 @@ export const handler: Handlers = {
         headers: { 'authorization': `Bearer ${accessToken}` },
       });
 
-      // TODO impl loading all packs from the response pagination
+      // TODO #63 impl loading all packs from the response pagination
       const { packs } = (await response.json()) as {
         packs: Pack[];
         length: number;
@@ -56,7 +56,13 @@ export const handler: Handlers = {
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
 
-    return ctx.render(data, { headers });
+    const resp = await ctx.render(data);
+
+    if (setCookie) {
+      resp.headers.set('set-cookie', setCookie);
+    }
+
+    return resp;
   },
 };
 
@@ -78,7 +84,7 @@ export default ({ data }: PageProps<DashboardData>) => {
 
       <div class={'flex grow justify-center items-center mx-[2rem]'}>
         <div
-          class={'flex flex-wrap justify-center w-full gap-8 '}
+          class={'flex flex-wrap justify-center w-full max-w-[800px] gap-8 '}
         >
           {data.packs.map((pack) => (
             <Card
