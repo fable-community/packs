@@ -58,8 +58,13 @@ export const handler: Handlers = {
       data.pack = await response.json() as Pack;
     }
 
-    if (data.user && !data.pack) {
+    // deno-lint-ignore no-explicit-any
+    const err = (data.pack as any)?.error;
+
+    if (data.user && err === 'Not Found') {
       return ctx.renderNotFound();
+    } else if (err) {
+      throw new Error(err);
     }
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
