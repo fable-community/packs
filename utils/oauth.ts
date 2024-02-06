@@ -78,6 +78,9 @@ export async function fetchUser(
 
     if (response?.ok && response?.status === 200) {
       user = await response.json() as User;
+    } else {
+      // clean up invalid access tokens
+      deleteCookie(headers, 'accessToken');
     }
   }
 

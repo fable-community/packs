@@ -41,8 +41,6 @@ export const handler: Handlers = {
           : undefined,
       });
 
-      console.log(response.status, response.statusText);
-
       data.pack = await response.json() as Pack;
     }
 
