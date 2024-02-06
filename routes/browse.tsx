@@ -132,7 +132,12 @@ export default ({ data }: PageProps<BrowseData>) => {
                     <p>{i18n('packServers', pack.servers ?? 0)}</p>
                   </div>
 
-                  <p>•</p>
+                  <p>
+                    {
+                      // deno-lint-ignore prefer-ascii
+                      `•`
+                    }
+                  </p>
 
                   <div class={'flex gap-1'}>
                     <IconCharacter class={'w-4 h-4'} />
