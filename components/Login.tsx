@@ -2,7 +2,7 @@ import DiscordIcon from 'icons/brand-discord-filled.tsx';
 
 import { i18n } from '~/utils/i18n.ts';
 
-const DiscordButton = ({ className }: { className?: string }) => {
+export const DiscordButton = ({ className }: { className?: string }) => {
   return (
     <form
       method={'post'}

@@ -42,6 +42,8 @@ export default {
 
   unsavedChanges: 'You have unsaved changes!',
 
+  'empty': 'Empty',
+
   //
   placeholderGender: 'Clasificado',
   placeholderAge: 'Ancestral',

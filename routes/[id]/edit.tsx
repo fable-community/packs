@@ -51,6 +51,7 @@ export const handler: Handlers = {
     if (data.user && err === 'Not Found') {
       return ctx.renderNotFound();
     } else if (err) {
+      console.error(err);
       throw new Error(err);
     }
 

@@ -3,6 +3,7 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $_id_edit from './routes/[id]/edit.tsx';
+import * as $_id_index from './routes/[id]/index.tsx';
 import * as $_404 from './routes/_404.tsx';
 import * as $_500 from './routes/_500.tsx';
 import * as $_503 from './routes/_503.tsx';
@@ -19,6 +20,7 @@ import { type Manifest } from '$fresh/server.ts';
 const manifest = {
   routes: {
     './routes/[id]/edit.tsx': $_id_edit,
+    './routes/[id]/index.tsx': $_id_index,
     './routes/_404.tsx': $_404,
     './routes/_500.tsx': $_500,
     './routes/_503.tsx': $_503,

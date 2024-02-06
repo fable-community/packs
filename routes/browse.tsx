@@ -2,6 +2,7 @@ import { Handlers, type PageProps } from '$fresh/server.ts';
 
 import NavBar from '~/components/NavBar.tsx';
 import Avatar from '~/components/Avatar.tsx';
+import { DiscordButton } from '~/components/Login.tsx';
 
 import Maintenance from '~/routes/_503.tsx';
 
@@ -86,8 +87,9 @@ export default ({ data }: PageProps<BrowseData>) => {
     <div className='flex flex-col grow w-full my-[2rem] gap-[5vh]'>
       <div class={'flex mx-[2rem] items-center'}>
         <NavBar active='browse' />
-
-        {user ? <Avatar id={user.id} avatar={user.avatar} /> : undefined}
+        {user
+          ? <Avatar id={user.id} avatar={user.avatar} />
+          : <DiscordButton className='h-[32px]' />}
       </div>
 
       <div class={'flex grow justify-center items-center mx-[2rem]'}>
@@ -111,11 +113,15 @@ export default ({ data }: PageProps<BrowseData>) => {
                   {pack.manifest.title ?? pack.manifest.id}
                 </i>
 
-                <p
-                  class={'text-[0.85rem] opacity-80 line-clamp-2 overflow-hidden overflow-ellipsis'}
-                >
-                  {pack.manifest.description}
-                </p>
+                {pack.manifest.description
+                  ? (
+                    <p
+                      class={'text-[0.85rem] opacity-80 line-clamp-2 overflow-hidden overflow-ellipsis'}
+                    >
+                      {pack.manifest.description}
+                    </p>
+                  )
+                  : undefined}
 
                 <div class={'flex gap-3 text-white opacity-80 mt-3 uppercase'}>
                   <IconDownload class={'w-4 h-4'} />

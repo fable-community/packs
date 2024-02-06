@@ -41,6 +41,7 @@ export type MediaSorting = 'title' | 'popularity' | 'updated';
 export { Modify };
 
 export {
+  type Alias,
   CharacterRole,
   type DisaggregatedCharacter,
   type DisaggregatedMedia,

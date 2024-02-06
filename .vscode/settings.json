@@ -34,5 +34,8 @@
   //
   "[plaintext]": {
     "editor.wordWrap": "wordWrapColumn"
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///home/ke0olos/Projects/fable-pack-editor/.github/workflows/deploy.yml"
   }
 }
