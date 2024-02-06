@@ -18,14 +18,16 @@ export default ({ pack }: { pack: Pack }) => {
 
       <div class={'flex flex-col gap-8 mx-4 my-8'}>
         <p class={'uppercase font-bold text-base opacity-60'}>
-          {`${i18n('tabs')[1]} (${pack.manifest.media?.new?.length ?? 0})`}
+          {`${i18n('media')} (${pack.manifest.media?.new?.length ?? 0})`}
         </p>
         <Collection collection={pack.manifest.media} />
       </div>
 
       <div class={'flex flex-col gap-8 mx-4 my-8'}>
         <p class={'uppercase font-bold text-base opacity-60'}>
-          {`${i18n('tabs')[0]} (${pack.manifest.characters?.new?.length ?? 0})`}
+          {`${i18n('characters')} (${
+            pack.manifest.characters?.new?.length ?? 0
+          })`}
         </p>
         <Collection collection={pack.manifest.characters} />
       </div>

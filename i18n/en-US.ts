@@ -11,6 +11,8 @@ export default {
   import: 'Import',
   search: 'Search',
   tabs: ['Characters', 'Series', 'Collaborators', 'Disable'],
+  characters: 'Characters',
+  media: 'Series',
   okay: 'Okay',
   name: 'Name',
   title: 'Title',

@@ -2,6 +2,7 @@ import { Handlers, type PageProps } from '$fresh/server.ts';
 
 import NavBar from '~/components/NavBar.tsx';
 import Avatar from '~/components/Avatar.tsx';
+
 import { DiscordButton } from '~/components/Login.tsx';
 
 import Maintenance from '~/routes/_503.tsx';
@@ -11,6 +12,8 @@ import { fetchUser } from '~/utils/oauth.ts';
 import { i18n, i18nSSR } from '~/utils/i18n.ts';
 
 import IconDownload from 'icons/download.tsx';
+import IconCharacter from 'icons/user.tsx';
+import IconMedia from 'icons/photo.tsx';
 
 import type { Pack, User } from '~/utils/types.ts';
 
@@ -99,7 +102,7 @@ export default ({ data }: PageProps<BrowseData>) => {
           {data.packs.map((pack, index) => (
             <a
               href={`/${pack.manifest.id}`}
-              class={'flex w-full gap-8 p-8 hover:bg-embed2 rounded-lg cursor-pointer'}
+              class={'grid grid-cols-[auto_auto_1fr] w-full gap-8 p-8 hover:bg-embed2 rounded-lg cursor-pointer'}
             >
               <i class={'text-[4rem] w-[4rem] font-bold'}>{index + 1}</i>
 
@@ -124,8 +127,19 @@ export default ({ data }: PageProps<BrowseData>) => {
                   : undefined}
 
                 <div class={'flex gap-3 text-white opacity-80 mt-3 uppercase'}>
-                  <IconDownload class={'w-4 h-4'} />
-                  {i18n('packServers', pack.servers ?? 0)}
+                  <div class={'flex gap-1'}>
+                    <IconDownload class={'w-4 h-4'} />
+                    <p>{i18n('packServers', pack.servers ?? 0)}</p>
+                  </div>
+
+                  <p>•</p>
+
+                  <div class={'flex gap-1'}>
+                    <IconCharacter class={'w-4 h-4'} />
+                    <p>
+                      {`${pack.manifest.characters ?? 0} ${i18n('characters')}`}
+                    </p>
+                  </div>
                 </div>
               </div>
             </a>

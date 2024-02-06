@@ -13,6 +13,8 @@ export default {
   import: 'Importar',
   search: 'Buscar',
   tabs: ['Personajes', 'Series', 'Colaboradores', 'Desactivar'],
+  characters: 'Personajes',
+  media: 'Series',
   okay: 'Okay',
   name: 'Nombre',
   title: 'Título',
