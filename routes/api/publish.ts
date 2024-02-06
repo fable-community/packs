@@ -33,6 +33,7 @@ export interface Data {
   old: Pack['manifest'];
   title?: string;
   private?: boolean;
+  nsfw?: boolean;
   author?: string;
   description?: string;
   webhookUrl?: string;
@@ -161,6 +162,10 @@ export const handler: Handlers = {
 
       if (typeof data.private === 'boolean') {
         pack.private = data.private;
+      }
+
+      if (typeof data.nsfw === 'boolean') {
+        pack.nsfw = data.nsfw;
       }
 
       if (typeof data.title === 'string') {

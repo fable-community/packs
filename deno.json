@@ -23,6 +23,7 @@
     "start": "deno run -A --env --watch=static/,routes/,islands/,components/,utils/,i18n/ dev.ts",
     "build": "deno run -A dev.ts build",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
+    "reload-types": "deno cache --reload utils/types.ts",
     "preview": "deno run -A main.ts"
   },
   "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },

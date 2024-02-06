@@ -30,6 +30,7 @@ import IconClipboard from 'icons/clipboard-text.tsx';
 import IconWorld from 'icons/world.tsx';
 import IconLock from 'icons/lock.tsx';
 import IconDownload from 'icons/download.tsx';
+import IconAlert from 'icons/alert-triangle.tsx';
 
 import compact from '~/utils/compact.ts';
 
@@ -77,6 +78,7 @@ export default (props: {
   const packId = useSignal<string>(pack.id);
   const title = useSignal<string | undefined>(pack.title);
   const privacy = useSignal<boolean | undefined>(pack.private);
+  const nsfw = useSignal<boolean | undefined>(pack.nsfw);
   const author = useSignal<string | undefined>(pack.author);
   const description = useSignal<string | undefined>(pack.description);
   const webhookUrl = useSignal<string | undefined>(pack.webhookUrl);
@@ -148,6 +150,7 @@ export default (props: {
     dirty.value = true;
   }, [
     title.value,
+    nsfw.value,
     privacy.value,
     author.value,
     description.value,
@@ -164,6 +167,7 @@ export default (props: {
     old: props.pack?.manifest ?? pack,
     title: title.value,
     private: privacy.value,
+    nsfw: nsfw.value,
     author: author.value,
     description: description.value,
     webhookUrl: webhookUrl.value,
@@ -430,6 +434,29 @@ export default (props: {
                   />
                   <span class={'grow'}>{i18n('privatePackNotice')}</span>
                   <IconLock class={'w-6 h-6'} />
+                </button>
+              </div>
+            </div>
+
+            <div class={'flex flex-col grow gap-2'}>
+              <label class={'uppercase text-[0.8rem] text-disabled'}>
+                {i18n('packNSFW')}
+              </label>
+
+              <div
+                class={'flex flex-col rounded-xl overflow-hidden'}
+              >
+                <button
+                  onClick={() => nsfw.value = !nsfw.value}
+                  class={'py-4 justify-start text-left flex gap-4 bg-embed hover:shadow-none'}
+                >
+                  <IconCheckmark
+                    class={['w-[24px]', !nsfw.value ? 'opacity-0' : ''].join(
+                      ' ',
+                    )}
+                  />
+                  <span class={'grow'}>{i18n('packNSFWHint')}</span>
+                  <IconAlert class={'w-6 h-6'} />
                 </button>
               </div>
             </div>

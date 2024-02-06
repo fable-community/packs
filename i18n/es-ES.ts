@@ -29,6 +29,10 @@ export default {
   gender: 'Género',
   packAuthor: 'Autor/a del pack',
   packVisibility: 'Pack Visibility',
+
+  packNSFW: 'Pack NSFW',
+  packNSFWHint: 'Pack contains raunchy, ecchi, or hentai content',
+
   packDescription: 'Descripción del pack',
   packServers: 'Instalado en {0} servidores',
   packWebhookUrl: 'Discord Webhook URL',
