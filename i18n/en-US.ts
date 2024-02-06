@@ -44,6 +44,7 @@ export default {
   unsavedChanges: 'You have unsaved changes!',
 
   'empty': 'Empty',
+  'by-author': 'By {0}',
 
   //
   placeholderGender: 'Classified',

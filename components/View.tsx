@@ -72,6 +72,10 @@ const Header = ({ pack }: { pack: Pack }) => {
           </i>
           <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
         </div>
+
+        {pack.manifest.author
+          ? <>{i18n('by-author', pack.manifest.author)}</>
+          : undefined}
       </div>
     </div>
   );
