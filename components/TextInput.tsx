@@ -3,10 +3,11 @@ import type { JSX } from 'preact';
 import type { Modify } from '~/utils/types.ts';
 
 export default (
-  { label, hint, multiline, value, onInput, ...props }: Modify<
+  { label, placeholder, hint, multiline, value, onInput, ...props }: Modify<
     JSX.HTMLAttributes<HTMLInputElement>,
     {
       label?: string;
+      placeholder?: string;
       hint?: string;
       multiline?: boolean;
       onInput?: (value: string) => void;
@@ -22,32 +23,33 @@ export default (
         {hint ? <label class={'text-[0.75rem]'}>{hint}</label> : undefined}
       </div>
 
-      <div class={'flex gap-4'}>
-        {multiline
-          ? (
-            <textarea
-              {...props as JSX.HTMLAttributes<HTMLTextAreaElement>}
-              type={'text'}
-              value={value}
-              class={`grow text-[1em] resize-y ${props.class}`}
-              onInput={(ev) => {
-                onInput?.((ev.target as HTMLInputElement).value);
-              }}
-            />
-          )
-          : (
-            <input
-              type={'text'}
-              {...props}
-              value={value}
-              class={`grow text-[1em] ${props.class}`}
-              onInput={(ev) => {
-                onInput?.((ev.target as HTMLInputElement).value);
-              }}
-            />
-          )}
-        {props.children}
-      </div>
+      {multiline
+        ? (
+          <textarea
+            {...props as JSX.HTMLAttributes<HTMLTextAreaElement>}
+            placeholder={placeholder}
+            type={'text'}
+            value={value}
+            class={`grow text-[1em] resize-y ${props.class}`}
+            onInput={(ev) => {
+              onInput?.((ev.target as HTMLInputElement).value);
+            }}
+          />
+        )
+        : (
+          <input
+            type={'text'}
+            {...props}
+            placeholder={placeholder}
+            value={value}
+            class={`grow text-[1em] ${props.class}`}
+            onInput={(ev) => {
+              onInput?.((ev.target as HTMLInputElement).value);
+            }}
+          />
+        )}
+
+      {/* {props.children} */}
     </div>
   );
 };

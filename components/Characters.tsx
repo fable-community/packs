@@ -294,17 +294,9 @@ export default (
                     }}
                   />
                   <div class={'flex flex-col grow gap-4 h-min my-auto'}>
-                    <button>
-                      <label
-                        for={signal.value.id}
-                        class={'w-full cursor-pointer'}
-                      >
-                        {i18n('uploadFromPC')}
-                      </label>
-                    </button>
                     <TextInput
                       class={'w-full text-disabled'}
-                      label={i18n('imageUrl')}
+                      placeholder={i18n('imageUrl').toUpperCase()}
                       value={signal.value.images?.[0]?.file?.name ??
                         signal.value.images?.[0]?.url}
                       onInput={(value) => {
@@ -313,7 +305,19 @@ export default (
                         forceUpdate();
                       }}
                       key={`${signal.value.id}-imageurl`}
-                    >
+                    />
+
+                    <div class={'flex flex-row w-full gap-2'}>
+                      <button
+                        class={'flex-row w-full grow'}
+                      >
+                        <label
+                          class={'grow cursor-pointer'}
+                          for={signal.value.id}
+                        >
+                          {i18n('uploadFromPC')}
+                        </label>
+                      </button>
                       <button class={'min-w-[0]'} onClick={onZeroChan}>
                         <svg
                           viewBox='0 0 512 512'
@@ -322,7 +326,7 @@ export default (
                           <use href='/zerochan.svg#layer1' />
                         </svg>
                       </button>
-                    </TextInput>
+                    </div>
                   </div>
                 </div>
 
@@ -387,6 +391,9 @@ export default (
                 <div class={'flex flex-col gap-2'}>
                   <label class={'uppercase text-disabled text-[0.8rem]'}>
                     {i18n('rating')}
+                  </label>
+                  <label class={'text-disabled text-[0.75rem]'}>
+                    {i18n('ratingHint')}
                   </label>
                   <div class={'flex'}>
                     <div class={'flex grow'}>

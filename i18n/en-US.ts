@@ -59,6 +59,7 @@ export default {
   placeholderPackDescription: 'A Pack Containing Various Mushrooms',
   //
 
+  ratingHint: "Click on the stars to edit the character's rating",
   popularityHint:
     'Should be the number of followers / game sales or any other number that indicates how popular the series is',
   aliases: 'Also Known As',

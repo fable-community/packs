@@ -233,14 +233,9 @@ export default (
               }}
             />
             <div class={'flex flex-col grow gap-4 h-min my-auto'}>
-              <button>
-                <label class={'w-full cursor-pointer'} for={signal.value.id}>
-                  {i18n('uploadFromPC')}
-                </label>
-              </button>{' '}
               <TextInput
                 class={'text-disabled'}
-                label={i18n('imageUrl')}
+                placeholder={i18n('imageUrl').toUpperCase()}
                 value={signal.value.images?.[0]?.file?.name ??
                   signal.value.images?.[0]?.url}
                 onInput={(value) => {
@@ -250,6 +245,11 @@ export default (
                 }}
                 key={`${signal.value.id}-imageurl`}
               />
+              <button class={'flex-row w-full grow'}>
+                <label class={'grow cursor-pointer'} for={signal.value.id}>
+                  {i18n('uploadFromPC')}
+                </label>
+              </button>
             </div>
           </div>
 

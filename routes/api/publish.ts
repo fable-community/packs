@@ -288,12 +288,9 @@ export const handler: Handlers = {
 
       pack.media!.new = await Promise.all(
         data.media?.map(async (media) => {
-          const url = media.images?.length && media.images[0].file
-            ? await uploadImage({
-              file: media.images[0].file,
-              credentials,
-            })
-            : media.images?.length && media.images[0].url
+          const url = media.images?.[0]?.file?.size
+            ? await uploadImage({ file: media.images[0].file, credentials })
+            : media.images?.[0]?.url
             ? media.images[0].url
             : undefined;
 
@@ -335,12 +332,9 @@ export const handler: Handlers = {
 
       pack.characters!.new = await Promise.all(
         data.characters?.map(async (char) => {
-          const url = char.images?.length && char.images[0].file
-            ? await uploadImage({
-              file: char.images[0].file,
-              credentials,
-            })
-            : char.images?.length && char.images[0].url
+          const url = char.images?.[0].file?.size
+            ? await uploadImage({ file: char.images[0].file, credentials })
+            : char.images?.[0]?.url
             ? char.images[0].url
             : undefined;
 
