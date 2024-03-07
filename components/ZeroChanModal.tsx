@@ -27,9 +27,9 @@ export const ZeroChanModal = (
   useEffect(
     () =>
       setQuery([
-        media,
-        character,
-        // character?.replaceAll(':', '') + ` (${media?.replaceAll(':', '')})`,
+        media?.replaceAll(':', ''),
+        character?.replaceAll(':', ''),
+        character?.replaceAll(':', '') + ` (${media?.replaceAll(':', '')})`,
       ].join(',')),
     [media, character],
   );
