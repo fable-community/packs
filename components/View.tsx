@@ -44,10 +44,13 @@ const Header = ({ pack }: { pack: Pack }) => {
       />
 
       <div class={'flex flex-col grow gap-4 justify-center'}>
-        <div class={'flex gap-3 text-white opacity-80 uppercase'}>
+        {
+          {/* TODO not currently available */}
+          /* <div class={'flex gap-3 text-white opacity-80 uppercase'}>
           <IconDownload class={'w-4 h-4'} />
           {i18n('packServers', pack.servers ?? 0)}
-        </div>
+        </div> */
+        }
 
         <i class={'font-bold text-[0.95rem] select-text'}>
           {pack.manifest.title ?? pack.manifest.id}

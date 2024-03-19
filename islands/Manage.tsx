@@ -59,8 +59,6 @@ export default (props: {
   pack?: Pack;
   new?: boolean;
 }) => {
-  const servers = compact(props.pack?.servers ?? 0);
-
   const pack: Readonly<Pack['manifest']> = props.pack?.manifest
     ? JSON.parse(JSON.stringify(props.pack?.manifest))
     : { id: '' };
@@ -385,10 +383,13 @@ export default (props: {
             {!newPack.value
               ? (
                 <>
-                  <div class={'flex gap-3 text-white opacity-90 uppercase'}>
+                  {/* TODO not currently available */}
+                  {
+                    /* <div class={'flex gap-3 text-white opacity-90 uppercase'}>
                     <IconDownload class={'w-4 h-4'} />
-                    {i18n('packServers', servers)}
-                  </div>
+                    {i18n('packServers', props.pack?.servers)}
+                  </div> */
+                  }
 
                   <div
                     class={'bg-highlight flex items-center p-4 rounded-xl'}

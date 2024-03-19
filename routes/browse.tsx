@@ -8,26 +8,29 @@ import { DiscordButton } from '~/components/Login.tsx';
 import Maintenance from '~/routes/_503.tsx';
 
 import { fetchUser } from '~/utils/oauth.ts';
-
 import { i18n, i18nSSR } from '~/utils/i18n.ts';
+
+import compact from '~/utils/compact.ts';
 
 import IconDownload from 'icons/download.tsx';
 import IconCharacter from 'icons/user.tsx';
-import IconMedia from 'icons/photo.tsx';
+// import IconMedia from 'icons/photo.tsx';
 
 import type { Pack, User } from '~/utils/types.ts';
+
+type PackWithCount = Pack & { servers: number };
 
 interface BrowseData {
   user?: User;
   maintenance: boolean;
-  packs: Pack[];
+  packs: PackWithCount[];
 }
 
 const defaultImage =
   'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
 
 async function fetchPopularPacks() {
-  let packs: Pack[] = [];
+  let packs: PackWithCount[] = [];
 
   const endpoint = Deno.env.get('API_ENDPOINT');
 
@@ -37,7 +40,7 @@ async function fetchPopularPacks() {
     });
 
     const { packs: fetchedPacks } = (await response.json()) as {
-      packs: Pack[];
+      packs: PackWithCount[];
       length: number;
       offset: number;
       limit: number;
@@ -129,7 +132,7 @@ export default ({ data }: PageProps<BrowseData>) => {
                 <div class={'flex gap-3 text-white opacity-80 mt-3 uppercase'}>
                   <div class={'flex gap-1'}>
                     <IconDownload class={'w-4 h-4'} />
-                    <p>{i18n('packServers', pack.servers ?? 0)}</p>
+                    <p>{i18n('packServers', compact(pack.servers))}</p>
                   </div>
 
                   <p>
