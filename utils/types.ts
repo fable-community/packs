@@ -1,10 +1,9 @@
-// deno-lint-ignore-file no-external-import
-
 import type {
   DisaggregatedCharacter,
   DisaggregatedMedia,
+  Manifest,
   Modify,
-} from 'https://raw.githubusercontent.com/ker0olos/fable/main/src/types.ts';
+} from '~/utils/fable-types.ts';
 
 import type { IImageInput } from '~/components/ImageInput.tsx';
 
@@ -47,6 +46,13 @@ export {
   type DisaggregatedMedia,
   type Manifest,
   MediaType,
-} from 'https://raw.githubusercontent.com/ker0olos/fable/main/src/types.ts';
+} from '~/utils/fable-types.ts';
 
-export { type Pack } from 'https://raw.githubusercontent.com/ker0olos/fable/main/db/schema.ts';
+export interface Pack {
+  owner: string;
+  createdAt: Date;
+  updatedAt: Date;
+  manifest: Manifest;
+  approved: boolean;
+  hidden: boolean;
+}

@@ -1,6 +1,7 @@
 import { useRef } from 'preact/hooks';
 
 import IconInfo from 'icons/info-circle.tsx';
+import IconClose from 'icons/circle-x.tsx';
 
 import type { JSX } from 'preact';
 
@@ -24,7 +25,7 @@ const Notice = (
 };
 
 export const Dismissible = (
-  { type, ...props }: Parameters<typeof Notice>['0'],
+  props: JSX.HTMLAttributes<HTMLDivElement>,
 ) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -32,13 +33,22 @@ export const Dismissible = (
     <div
       {...props}
       ref={ref}
-      class={'text-white bg-embed z-[99] bottom-0 right-0 margin-1 max-w-[50vw] min-w-[20vw] fixed curser-pointer flex justify-center items-center rounded-[5px] my-1 p-1 gap-2'}
-      data-type={type}
-      onClick={(e) => ref.current?.remove()}
+      class={'text-white bg-red fixed flex justify-center items-center z-[99] select-text bottom-0 left-0 m-3 p-3 max-w-[50vw] min-w-[20vw] rounded-[5px] gap-2'}
+      data-type={'error'}
     >
-      <IconInfo class={`min-w-[18px] min-h-[18px] text-${type}`} />
+      <IconInfo class={`min-w-[18px] min-h-[18px] text-white`} />
+
       <div class={'mr-auto'}>
         {props.children}
+      </div>
+
+      <div
+        class={'cursor-pointer'}
+        onClick={(e) => ref.current?.remove()}
+      >
+        <IconClose
+          class={`min-w-[18px] min-h-[18px] text-white`}
+        />
       </div>
     </div>
   );
