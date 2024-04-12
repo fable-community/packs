@@ -16,6 +16,8 @@ import { IImageInput, TEN_MB } from '~/components/ImageInput.tsx';
 
 import { Character, CharacterRole, Media, Pack } from '~/utils/types.ts';
 
+import { captureException } from '~/utils/sentry.ts';
+
 import type { Handlers } from '$fresh/server.ts';
 
 interface Credentials {
@@ -419,10 +421,9 @@ export const handler: Handlers = {
       }
     } catch (err) {
       console.error(err);
+      captureException(err);
 
-      return new Response(err?.message, {
-        status: 500,
-      });
+      return new Response(err?.message, { status: 500 });
     }
   },
 };
