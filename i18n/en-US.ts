@@ -113,5 +113,7 @@ export default {
   spinoff: 'is a Spin Off',
   //
 
-  maxConflicts: 'The maximum number of series you can disable is 10',
+  maxConflicts: 'The maximum number of series you can disable is {0}',
+
+  autoGen: 'Auto-generate',
 };

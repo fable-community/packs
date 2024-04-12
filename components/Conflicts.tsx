@@ -10,6 +10,8 @@ import { gql, request } from '~/utils/graphql.ts';
 
 import { i18n } from '~/utils/i18n.ts';
 
+const MAX_LIMIT = 20;
+
 const getAnilistIds = (ids: string[]) => {
   const anilistIds: number[] = [];
 
@@ -143,7 +145,7 @@ export default ({ conflicts, visible }: {
         visible ? '' : 'hidden',
       ].join(' ')}
     >
-      {conflicts.value.length >= 10 ? <></> : (
+      {conflicts.value.length >= MAX_LIMIT ? <></> : (
         <>
           <div class={'z-[3] w-full relative'}>
             <input
@@ -220,8 +222,8 @@ export default ({ conflicts, visible }: {
         onClick={() => focused.value = false}
       />
 
-      {conflicts.value.length >= 10
-        ? <Notice type={'warn'}>{i18n('maxConflicts')}</Notice>
+      {conflicts.value.length >= MAX_LIMIT
+        ? <Notice type={'warn'}>{i18n('maxConflicts', MAX_LIMIT)}</Notice>
         : <Notice type={'info'}>{i18n('conflictsNotice')}</Notice>}
 
       <div class='flex flex-wrap mb-[15vh] gap-2'>
