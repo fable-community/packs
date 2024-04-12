@@ -26,29 +26,32 @@ export default <T,>(
           </label>
         )
         : undefined}
-      <select
-        {...props}
-        class={`text-[1em] ${props.class}`}
-        onChange={(ev) => {
-          const t = (ev.target as HTMLSelectElement).value as T;
+      <div class={`relative w-full select-triangle`}>
+        <select
+          {...props}
+          class={`w-full text-[1em] ${props.class}`}
+          onChange={(ev) => {
+            const t = (ev.target as HTMLSelectElement).value as T;
 
-          onChange?.(t);
-        }}
-      >
-        {!required
-          ? (
-            <option selected={!defaultValue} value={''}>
-              {nullLabel ?? ''}
-            </option>
-          )
-          : undefined}
+            onChange?.(t);
+          }}
+        >
+          {!required
+            ? (
+              <option selected={!defaultValue} value={''}>
+                {nullLabel ?? ''}
+              </option>
+            )
+            : undefined}
 
-        {Object.entries(list)
-          .map(([k, v]) => (
-            <option key={k} value={v} selected={defaultValue === v}>{k}</option>
-          ))}
-      </select>
-      {/* {hint ? <label class={'hint'}>{hint}</label> : undefined} */}
+          {Object.entries(list)
+            .map(([k, v]) => (
+              <option key={k} value={v} selected={defaultValue === v}>
+                {k}
+              </option>
+            ))}
+        </select>
+      </div>
     </div>
   );
 };
