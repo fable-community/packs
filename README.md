@@ -29,5 +29,7 @@ deno task start
 - B2_KEY: [B2 Cloud Storage][b2] app key
 - B2_BUCKET_ID: [B2 Cloud Storage][b2] bucket id
 - B2_BUCKET_NAME: [B2 Cloud Storage][b2] bucket name
+- CF_ACCOUNT_ID: A cloudflare account id
+- CF_AI_TOKEN: A cloudflare workers AI access token
 
 [b2]: https://www.backblaze.com/b2/cloud-storage.html

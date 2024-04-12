@@ -23,33 +23,34 @@ export default (
         {hint ? <label class={'text-[0.75rem]'}>{hint}</label> : undefined}
       </div>
 
-      {multiline
-        ? (
-          <textarea
-            {...props as JSX.HTMLAttributes<HTMLTextAreaElement>}
-            placeholder={placeholder}
-            type={'text'}
-            value={value}
-            class={`grow text-[1em] resize-y ${props.class}`}
-            onInput={(ev) => {
-              onInput?.((ev.target as HTMLInputElement).value);
-            }}
-          />
-        )
-        : (
-          <input
-            type={'text'}
-            {...props}
-            placeholder={placeholder}
-            value={value}
-            class={`grow text-[1em] ${props.class}`}
-            onInput={(ev) => {
-              onInput?.((ev.target as HTMLInputElement).value);
-            }}
-          />
-        )}
-
-      {/* {props.children} */}
+      <div class={`grow relative flex text-[1em] ${props.class}`}>
+        {multiline
+          ? (
+            <textarea
+              {...props as JSX.HTMLAttributes<HTMLTextAreaElement>}
+              placeholder={placeholder}
+              type={'text'}
+              value={value}
+              class={`grow text-[1em] resize-y ${props.class}`}
+              onInput={(ev) => {
+                onInput?.((ev.target as HTMLInputElement).value);
+              }}
+            />
+          )
+          : (
+            <input
+              type={'text'}
+              {...props}
+              placeholder={placeholder}
+              value={value}
+              class={`grow text-[1em] ${props.class}`}
+              onInput={(ev) => {
+                onInput?.((ev.target as HTMLInputElement).value);
+              }}
+            />
+          )}
+        {props.children}
+      </div>
     </div>
   );
 };

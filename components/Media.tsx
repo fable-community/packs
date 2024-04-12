@@ -12,6 +12,7 @@ import Select from '~/components/Select.tsx';
 import TextInput from '~/components/TextInput.tsx';
 import ImageInput from '~/components/ImageInput.tsx';
 import Sort from '~/components/Sort.tsx';
+import Loading from '~/components/Loading.tsx';
 
 import IconTrash from 'icons/trash.tsx';
 import IconPlus from 'icons/plus.tsx';
@@ -32,6 +33,8 @@ import {
 
 import nanoid from '~/utils/nanoid.ts';
 
+import type { Data } from '~/routes/api/autogen.ts';
+
 const defaultImage =
   'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
 
@@ -48,6 +51,8 @@ export default (
   },
 ) => {
   const [, updateState] = useState({});
+
+  const descriptionLoading = useSignal(false);
 
   // used to force the entire component to redrew
   const forceUpdate = useCallback(() => updateState({}), []);
@@ -80,6 +85,26 @@ export default (
     [i18n('sideStory')]: 'SIDE_STORY',
     [i18n('spinoff')]: 'SPIN_OFF',
   };
+
+  const onAutogenerate = useCallback(() => {
+    descriptionLoading.value = true;
+
+    const mediaTitle = signal.value.title.english;
+
+    fetch('/api/autogen', {
+      method: 'POST',
+      body: JSON.stringify({ mediaTitle } satisfies Data),
+    })
+      .then(async (res) => {
+        const value = await res.text();
+        descriptionLoading.value = false;
+        signal.value.description = value || undefined;
+        onMediaUpdate();
+      })
+      .catch(() => {
+        descriptionLoading.value = false;
+      });
+  }, [signal.value]);
 
   return (
     <div class={visible ? '' : 'hidden'}>
@@ -303,16 +328,30 @@ export default (
 
           <TextInput
             multiline
+            disabled={descriptionLoading}
             pattern='.{1,2048}'
             label={i18n('description')}
             placeholder={i18n('placeholderMediaDescription')}
             value={signal.value.description}
+            class={'min-h-[20vh]'}
             onInput={(value) => {
               signal.value.description = value;
               onMediaUpdate();
             }}
             key={`${signal.value.id}-description`}
-          />
+          >
+            {!signal.value.description && !descriptionLoading.value
+              ? (
+                <button
+                  onClick={onAutogenerate}
+                  class={'absolute bottom-3 left-[50%] translate-x-[-50%] bg-highlight'}
+                >
+                  {i18n('autoGen')}
+                </button>
+              )
+              : undefined}
+            {descriptionLoading.value ? <Loading /> : undefined}
+          </TextInput>
 
           <div class={'flex flex-col gap-2'}>
             <label class={'uppercase text-disabled text-[0.8rem]'}>
