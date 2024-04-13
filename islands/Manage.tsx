@@ -403,7 +403,7 @@ export default (props: {
                       class={privacy.value ? 'w-5 h-5 opacity-0' : 'w-5 h-5'}
                     />
                   </div>
-                  <span>{i18n('privatePackNotice')}</span>
+                  <span>{i18n('publicPackNotice')}</span>
                 </button>
               </div>
             </div>

@@ -38,7 +38,6 @@ export default {
   packWebhookUrl: 'Discord Webhook URL',
   packWebhookUrlHint:
     'Cada vez que el pack se actualice, se enviarán los cambios a este webhook',
-  privatePackNotice: 'Solo tú y otros colaboradores podrán instalar este pack',
   publicPackNotice: 'Anyone using Fable can install this pack',
 
   searchCharactersPlaceholder: 'Search Characters',

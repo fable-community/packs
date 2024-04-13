@@ -35,7 +35,6 @@ export default {
   packWebhookUrl: 'Discord Webhook URL',
   packWebhookUrlHint:
     'Every time this pack is updated the changes will be sent to this webhook',
-  privatePackNotice: 'Only you and other collaborators can install this pack',
   publicPackNotice: 'Anyone can install this pack',
 
   searchCharactersPlaceholder: 'Search Characters',
