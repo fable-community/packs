@@ -106,10 +106,10 @@ select {
   border-radius: 5px;
   font-weight: 600;
   font-family: inherit;
-  font-size: 1.2em;
+  font-size: 0.95rem;
   line-height: inherit;
   min-width: 0;
-  padding: 1em;
+  padding: 1rem;
 }
 
 select {

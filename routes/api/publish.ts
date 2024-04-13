@@ -48,8 +48,6 @@ export interface Data {
   username?: string;
 }
 
-const idRegex = /[^-_a-z0-9]+/g;
-
 const b2 = {
   id: Deno.env.get('B2_KEY_ID'),
   bucketId: Deno.env.get('B2_BUCKET_ID'),
@@ -184,21 +182,6 @@ export const handler: Handlers = {
 
       if (typeof data.webhookUrl === 'string') {
         pack.webhookUrl = data.webhookUrl;
-      }
-
-      if (!pack.id) {
-        const candidate = pack.title?.toLowerCase()?.replace(
-          idRegex,
-          '',
-        );
-
-        if (!candidate || candidate.length < 3) {
-          return new Response('cannot create pack id from pack title', {
-            status: 400,
-          });
-        }
-
-        pack.id = candidate;
       }
 
       const credentials = await setUpImages();

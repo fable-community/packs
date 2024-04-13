@@ -8,7 +8,7 @@ import { i18nSSR } from '~/utils/i18n.ts';
 
 import Login from '~/components/Login.tsx';
 
-import Manage from '~/islands/Manage.tsx';
+import New from '~/islands/New.tsx';
 
 import type { User } from '~/utils/types.ts';
 
@@ -50,7 +50,5 @@ export default ({ data }: PageProps<NewData>) => {
     return <Login />;
   }
 
-  const user = data.user;
-
-  return <Manage user={user} new={true} />;
+  return <New user={data.user} />;
 };

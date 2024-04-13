@@ -27,12 +27,6 @@ import IconApply from 'icons/check.tsx';
 import IconAdjustments from 'icons/adjustments-horizontal.tsx';
 import IconCheckmark from 'icons/check.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
-import IconWorld from 'icons/world.tsx';
-import IconLock from 'icons/lock.tsx';
-import IconDownload from 'icons/download.tsx';
-import IconAlert from 'icons/alert-triangle.tsx';
-
-import compact from '~/utils/compact.ts';
 
 import {
   sortCharacters as _sortCharacters,
@@ -56,12 +50,13 @@ import {
 
 export default (props: {
   user: User;
-  pack?: Pack;
-  new?: boolean;
+  pack: Pack;
 }) => {
-  const pack: Readonly<Pack['manifest']> = props.pack?.manifest
-    ? JSON.parse(JSON.stringify(props.pack?.manifest))
-    : { id: '' };
+  const url = new URLSearchParams(location?.search);
+
+  const pack: Readonly<Pack['manifest']> = JSON.parse(
+    JSON.stringify(props.pack.manifest),
+  );
 
   const active = useSignal(0);
 
@@ -69,9 +64,7 @@ export default (props: {
   const loading = useSignal(false);
   const error = useSignal<string | undefined>(undefined);
 
-  const newPack = useSignal(props.new || false);
-
-  const howToInstallVisible = useSignal(false);
+  const howToInstallVisible = useSignal(url.has('new'));
 
   const packId = useSignal<string>(pack.id);
   const title = useSignal<string | undefined>(pack.title);
@@ -178,8 +171,8 @@ export default (props: {
 
   const onPublish = async () => {
     const body = {
+      new: false,
       ...getData(),
-      new: newPack.value,
       username: props.user.display_name ??
         props.user.username ?? 'undefined',
     };
@@ -193,12 +186,8 @@ export default (props: {
       });
 
       if (response.status === 200) {
-        packId.value = await response.text();
-
         dirty.value = false;
         loading.value = false;
-        howToInstallVisible.value = newPack.value;
-        newPack.value = false;
       } else {
         const { errors, pack } = await response.json() as {
           pack: {
@@ -306,7 +295,6 @@ export default (props: {
             />
 
             <PublishPopup
-              new={newPack.value}
               loading={loading.value}
               dirty={dirty.value}
               onPublish={onPublish}
@@ -380,29 +368,23 @@ export default (props: {
               class={'cursor-pointer w-[28px] h-[28px] ml-auto shrink-0	'}
             />
 
-            {!newPack.value
-              ? (
-                <>
-                  {/* TODO not currently available */}
-                  {
-                    /* <div class={'flex gap-3 text-white opacity-90 uppercase'}>
+            {/* TODO not currently available */}
+            {
+              /* <div class={'flex gap-3 text-white opacity-90 uppercase'}>
                     <IconDownload class={'w-4 h-4'} />
                     {i18n('packServers', props.pack?.servers)}
                   </div> */
-                  }
+            }
 
-                  <div
-                    class={'bg-highlight flex items-center p-4 rounded-xl'}
-                    data-clipboard={`/packs install id: ${packId.value}`}
-                  >
-                    <i class={'italic grow select-all'}>
-                      {`/packs install id: ${packId.value}`}
-                    </i>
-                    <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
-                  </div>
-                </>
-              )
-              : undefined}
+            <div
+              class={'bg-highlight flex items-center p-4 rounded-xl'}
+              data-clipboard={`/packs install id: ${packId.value}`}
+            >
+              <i class={'italic grow select-all'}>
+                {`/packs install id: ${packId.value}`}
+              </i>
+              <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
+            </div>
 
             <div class={'flex flex-col grow gap-2'}>
               <label class={'uppercase text-[0.8rem] text-disabled'}>
@@ -413,28 +395,15 @@ export default (props: {
                 class={'flex flex-col rounded-xl overflow-hidden'}
               >
                 <button
-                  onClick={() => privacy.value = false}
+                  onClick={() => privacy.value = !privacy.value}
                   class={'py-4 justify-start text-left flex gap-4 bg-embed hover:shadow-none'}
                 >
-                  <IconCheckmark
-                    class={['w-[24px]', privacy.value ? 'opacity-0' : ''].join(
-                      ' ',
-                    )}
-                  />
-                  <span class={'grow'}>{i18n('publicPackNotice')}</span>
-                  <IconWorld class={'w-6 h-6'} />
-                </button>
-                <button
-                  onClick={() => privacy.value = true}
-                  class={'py-4 justify-start text-left flex gap-4 bg-embed hover:shadow-none'}
-                >
-                  <IconCheckmark
-                    class={['w-[24px]', privacy.value ? '' : 'opacity-0'].join(
-                      ' ',
-                    )}
-                  />
-                  <span class={'grow'}>{i18n('privatePackNotice')}</span>
-                  <IconLock class={'w-6 h-6'} />
+                  <div class={'p-2 border-2 border-grey rounded-lg'}>
+                    <IconCheckmark
+                      class={privacy.value ? 'w-5 h-5 opacity-0' : 'w-5 h-5'}
+                    />
+                  </div>
+                  <span>{i18n('privatePackNotice')}</span>
                 </button>
               </div>
             </div>
@@ -451,13 +420,12 @@ export default (props: {
                   onClick={() => nsfw.value = !nsfw.value}
                   class={'py-4 justify-start text-left flex gap-4 bg-embed hover:shadow-none'}
                 >
-                  <IconCheckmark
-                    class={['w-[24px]', !nsfw.value ? 'opacity-0' : ''].join(
-                      ' ',
-                    )}
-                  />
-                  <span class={'grow'}>{i18n('packNSFWHint')}</span>
-                  <IconAlert class={'w-6 h-6'} />
+                  <div class={'p-2 border-2 border-grey rounded-lg'}>
+                    <IconCheckmark
+                      class={!nsfw.value ? 'w-5 h-5 opacity-0' : 'w-5 h-5'}
+                    />
+                  </div>
+                  <span>{i18n('packNSFWHint')}</span>
                 </button>
               </div>
             </div>

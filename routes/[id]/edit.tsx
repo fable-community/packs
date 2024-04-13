@@ -74,7 +74,5 @@ export default ({ data }: PageProps<EditData>) => {
     return <Login />;
   }
 
-  const user = data.user;
-
-  return <Manage user={user} new={false} pack={data.pack} />;
+  return <Manage user={data.user} pack={data.pack} />;
 };

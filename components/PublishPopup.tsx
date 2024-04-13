@@ -3,7 +3,6 @@ import IconCheckmark from 'icons/check.tsx';
 import { i18n } from '~/utils/i18n.ts';
 
 export default ({ dirty, loading, onPublish, ...props }: {
-  new?: boolean;
   loading: boolean;
   dirty: boolean;
   onPublish: () => void;
@@ -42,7 +41,7 @@ export default ({ dirty, loading, onPublish, ...props }: {
             ? 'opacity-0 pointer-events-none'
             : 'py-3 bg-discord'}
         >
-          {props.new ? i18n('publish') : i18n('save')}
+          {i18n('save')}
         </button>
       </div>
     </div>
