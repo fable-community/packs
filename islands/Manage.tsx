@@ -48,11 +48,15 @@ import {
   type User,
 } from '~/utils/types.ts';
 
+const IS_BROWSER = typeof document !== 'undefined';
+
 export default (props: {
   user: User;
   pack: Pack;
 }) => {
-  const url = new URLSearchParams(location?.search);
+  const url = new URLSearchParams(
+    IS_BROWSER ? location.search : '',
+  );
 
   const pack: Readonly<Pack['manifest']> = JSON.parse(
     JSON.stringify(props.pack.manifest),
