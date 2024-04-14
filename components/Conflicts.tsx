@@ -200,6 +200,8 @@ export default ({ conflicts, visible }: {
 
                     focused.value = false;
 
+                    conflicts.value = [...conflicts.value];
+
                     forceUpdate();
                   }}
                 >
@@ -235,6 +237,7 @@ export default ({ conflicts, visible }: {
               media={data[id]}
               onClick={() => {
                 conflicts.value.splice(i, 1);
+                conflicts.value = [...conflicts.value];
                 forceUpdate();
               }}
             />

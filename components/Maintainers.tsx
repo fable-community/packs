@@ -114,6 +114,8 @@ export default ({ owner, maintainers, visible }: {
             maintainers.value.push(userId.value);
           }
 
+          maintainers.value = [...maintainers.value];
+
           forceUpdate();
         }}
       >
@@ -136,6 +138,7 @@ export default ({ owner, maintainers, visible }: {
               removable={true}
               onClick={() => {
                 maintainers.value.splice(i, 1);
+                maintainers.value = [...maintainers.value];
                 forceUpdate();
               }}
             />
