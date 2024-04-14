@@ -198,7 +198,7 @@ export default (props: {
         if (!text.startsWith('{')) {
           console.error(error.value = text);
         } else {
-          const { errors, pack } = await response.json() as {
+          const { errors, pack } = JSON.parse(text) as {
             pack: {
               media?: { id: string }[];
               characters?: { id: string }[];

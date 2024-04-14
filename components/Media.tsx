@@ -78,7 +78,7 @@ export default (
     [i18n('videoGame')]: 'VIDEO_GAME',
   };
 
-  const MediaRelation: Partial<Record<I18nKey, string>> = {
+  const MediaRelation: Partial<Record<I18nKey, MediaRelation>> = {
     [i18n('prequel')]: 'PREQUEL',
     [i18n('sequel')]: 'SEQUEL',
     [i18n('adaptation')]: 'ADAPTATION',
