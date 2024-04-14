@@ -113,6 +113,8 @@ export default {
   adaptation: 'is an Adaptation',
   sideStory: 'is a Side Story',
   spinoff: 'is a Spin Off',
+  child: 'is a Child',
+  parent: 'is a Parent',
   //
 
   maxConflicts: 'The maximum number of series you can disable is {0}',

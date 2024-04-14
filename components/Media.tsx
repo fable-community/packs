@@ -19,7 +19,7 @@ import IconApply from 'icons/check.tsx';
 
 import comma from '~/utils/comma.ts';
 
-import { i18n } from '~/utils/i18n.ts';
+import { i18n, type I18nKey } from '~/utils/i18n.ts';
 
 import { getRelativeTimeString } from '~/utils/timeString.ts';
 
@@ -33,6 +33,7 @@ import {
 import nanoid from '~/utils/nanoid.ts';
 
 import type { Data } from '~/routes/api/autogen.ts';
+import { MediaRelation } from '~/utils/fable-types.ts';
 
 const defaultImage =
   'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
@@ -77,12 +78,13 @@ export default (
     [i18n('videoGame')]: 'VIDEO_GAME',
   };
 
-  const MediaRelation = {
+  const MediaRelation: Partial<Record<I18nKey, string>> = {
     [i18n('prequel')]: 'PREQUEL',
     [i18n('sequel')]: 'SEQUEL',
     [i18n('adaptation')]: 'ADAPTATION',
     [i18n('sideStory')]: 'SIDE_STORY',
-    [i18n('spinoff')]: 'SPIN_OFF',
+    [i18n('child')]: 'CONTAINS',
+    [i18n('parent')]: 'PARENT',
   };
 
   const onAutogenerate = useCallback(() => {
