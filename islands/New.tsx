@@ -88,47 +88,54 @@ export default (props: {
       if (response.status === 200) {
         location.replace(`${packId.value}/edit?new`);
       } else {
-        // error.value = 'Failed! Try Again!';
-        const { errors, pack } = await response.json() as {
-          pack: {
-            media?: { id: string }[];
-            characters?: { id: string }[];
+        const text = await response.text();
+
+        if (!text.startsWith('{')) {
+          console.error(error.value = text);
+        } else {
+          // error.value = 'Failed! Try Again!';
+          const { errors, pack } = await response.json() as {
+            pack: {
+              media?: { id: string }[];
+              characters?: { id: string }[];
+            };
+            errors: {
+              instancePath: string;
+              keyword: string;
+              message: string;
+              params: { limit?: number };
+              schemaPath: string;
+            }[];
           };
-          errors: {
-            instancePath: string;
-            keyword: string;
-            message: string;
-            params: { limit?: number };
-            schemaPath: string;
-          }[];
-        };
 
-        document.querySelectorAll(`[invalid]`).forEach((ele) =>
-          ele.removeAttribute(`invalid`)
-        );
+          document.querySelectorAll(`[invalid]`).forEach((ele) =>
+            ele.removeAttribute(`invalid`)
+          );
 
-        document.querySelectorAll(`[shake]`).forEach((ele) =>
-          ele.removeAttribute(`shake`)
-        );
-        console.error(errors);
+          document.querySelectorAll(`[shake]`).forEach((ele) =>
+            ele.removeAttribute(`shake`)
+          );
 
-        errors.forEach((err) => {
-          const path = err.instancePath
-            .substring(1)
-            .split('/');
+          console.error(errors);
 
-          console.error(path);
+          errors.forEach((err) => {
+            const path = err.instancePath
+              .substring(1)
+              .split('/');
 
-          setTimeout(() => {
-            if (path[0] === 'id' && packIdManual.value) {
-              packIdInputRef.current?.setAttribute('shake', 'true');
-              packIdInputRef.current?.setAttribute('invalid', 'true');
-            } else if (path[0] === 'id') {
-              packTitleInputRef.current?.setAttribute('shake', 'true');
-              packTitleInputRef.current?.setAttribute('invalid', 'true');
-            }
-          }, 100);
-        });
+            console.error(path);
+
+            setTimeout(() => {
+              if (path[0] === 'id' && packIdManual.value) {
+                packIdInputRef.current?.setAttribute('shake', 'true');
+                packIdInputRef.current?.setAttribute('invalid', 'true');
+              } else if (path[0] === 'id') {
+                packTitleInputRef.current?.setAttribute('shake', 'true');
+                packTitleInputRef.current?.setAttribute('invalid', 'true');
+              }
+            }, 100);
+          });
+        }
       }
     } catch (err) {
       console.error(error.value = err?.message);
