@@ -130,7 +130,8 @@ select:focus {
 input:invalid,
 textarea:invalid,
 [invalid="true"] {
-  border-bottom: 2px solid var(--red);
+  border: 2px solid;
+  border-color: var(--red);
 }
 
 /* input:invalid ~ button {

@@ -283,7 +283,6 @@ export default (props: {
             />
 
             <input
-              required
               type={'text'}
               value={title}
               pattern='.{3,128}'

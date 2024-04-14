@@ -7,6 +7,7 @@ export default {
   loginWithDiscord: 'Login with Discord',
   logout: 'Log Out',
   publish: 'Publish',
+  next: 'Next',
   save: 'Save',
   export: 'Export',
   import: 'Import',
@@ -50,6 +51,8 @@ export default {
   //
   placeholderGender: 'Classified',
   placeholderAge: 'Ancient',
+  placeholderPackId: 'super-mario',
+  placeholderPackTitle: 'Super Mario Bros',
   placeholderPackAuthor: 'The Mario Bros',
   placeholderCharDescription:
     'A young girl with pink hair and blood red eyes, her goal in life is to become a demon queen...',

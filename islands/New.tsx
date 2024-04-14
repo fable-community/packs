@@ -44,6 +44,7 @@ export default (props: {
   const description = useSignal<string | undefined>('');
   const image = useSignal<IImageInput | undefined>(undefined);
 
+  const packTitleInputRef = useRef<HTMLInputElement>(null);
   const packIdInputRef = useRef<HTMLInputElement>(null);
 
   const getData = (): Data => ({
@@ -87,7 +88,47 @@ export default (props: {
       if (response.status === 200) {
         location.replace(`${packId.value}/edit?new`);
       } else {
-        error.value = 'Failed! Try Again!';
+        // error.value = 'Failed! Try Again!';
+        const { errors, pack } = await response.json() as {
+          pack: {
+            media?: { id: string }[];
+            characters?: { id: string }[];
+          };
+          errors: {
+            instancePath: string;
+            keyword: string;
+            message: string;
+            params: { limit?: number };
+            schemaPath: string;
+          }[];
+        };
+
+        document.querySelectorAll(`[invalid]`).forEach((ele) =>
+          ele.removeAttribute(`invalid`)
+        );
+
+        document.querySelectorAll(`[shake]`).forEach((ele) =>
+          ele.removeAttribute(`shake`)
+        );
+        console.error(errors);
+
+        errors.forEach((err) => {
+          const path = err.instancePath
+            .substring(1)
+            .split('/');
+
+          console.error(path);
+
+          setTimeout(() => {
+            if (path[0] === 'id' && packIdManual.value) {
+              packIdInputRef.current?.setAttribute('shake', 'true');
+              packIdInputRef.current?.setAttribute('invalid', 'true');
+            } else if (path[0] === 'id') {
+              packTitleInputRef.current?.setAttribute('shake', 'true');
+              packTitleInputRef.current?.setAttribute('invalid', 'true');
+            }
+          }, 100);
+        });
       }
     } catch (err) {
       console.error(error.value = err?.message);
@@ -130,7 +171,7 @@ export default (props: {
                 ? (
                   <LoadingSpinner class='inline w-5 h-5 animate-spin text-grey fill-white' />
                 )
-                : i18n('publish')}
+                : i18n('next')}
             </button>
           </div>
 
@@ -143,43 +184,43 @@ export default (props: {
             />
 
             <div class={'flex flex-col grow gap-4'}>
-              <input
-                required
-                type={'text'}
+              <TextInput
+                ref={packTitleInputRef}
                 value={title}
+                class={'border-2 border-grey rounded-xl bg-embed2'}
+                label={i18n('packTitle')}
                 pattern='.{3,128}'
-                class={'h-14'}
-                placeholder={i18n('packTitle')}
-                onInput={(
-                  ev,
-                ) => {
-                  title.value = (ev.target as HTMLInputElement).value;
-                  if (!packIdManual.value) packId.value = autoId(title.value);
+                placeholder={i18n('placeholderPackTitle')}
+                onInput={(value) => {
+                  title.value = value;
+                  if (!packIdManual.value) packId.value = autoId(value);
                 }}
               />
 
               <div
-                class={'flex items-center border-2 border-grey py-2 px-6 gap-2 rounded-lg'}
+                class={[
+                  'flex items-center border-2 border-grey py-2 px-6 gap-2 rounded-lg',
+                  packIdManual.value ? 'bg-embed2' : '',
+                ].join(' ')}
               >
                 <p class={'text-white text-[0.95rem]'}>
                   {'/packs install id: '}
                 </p>
                 <input
-                  required
                   type={'text'}
                   value={packId}
                   ref={packIdInputRef}
                   pattern='[\-a-z0-9]{1,20}'
+                  placeholder={i18n('placeholderPackId')}
                   class={packIdManual.value
-                    ? 'h-[48px] text-white grow font-medium'
+                    ? 'h-[48px] text-white grow font-medium bg-embed2'
                     : 'h-[48px] text-white grow font-medium disabled pointer-events-none !border-0'}
-                  placeholder={i18n('packId')}
                   onInput={(
                     ev,
                   ) => (packId.value = (ev.target as HTMLInputElement).value)}
                 />
                 <div
-                  class={'p-2 cursor-pointer hover:bg-embed2 rounded-xl'}
+                  class={'p-2 cursor-pointer hover:bg-highlight rounded-xl'}
                   onClick={onLockUnlockId}
                 >
                   {packIdManual.value ? <IconOpened /> : <IconLocked />}
@@ -189,17 +230,25 @@ export default (props: {
           </div>
 
           <div class={'flex flex-col gap-4 my-4'}>
+            <label class={'uppercase text-[0.8rem] text-disabled'}>
+              {i18n('packAuthor')}
+            </label>
+
             <TextInput
               value={author}
-              label={i18n('packAuthor')}
+              class={'border-2 border-grey rounded-xl bg-embed2'}
               placeholder={i18n('placeholderPackAuthor')}
               onInput={(value) => author.value = value}
             />
 
+            <label class={'uppercase text-[0.8rem] text-disabled'}>
+              {i18n('packDescription')}
+            </label>
+
             <TextInput
               multiline
               value={description}
-              label={i18n('packDescription')}
+              class={'border-2 border-grey rounded-xl bg-embed2'}
               placeholder={i18n('placeholderPackDescription')}
               onInput={(value) => description.value = value}
             />
@@ -213,7 +262,7 @@ export default (props: {
             >
               <button
                 onClick={() => privacy.value = !privacy.value}
-                class={'justify-start text-left flex gap-4 bg-embed hover:shadow-none px-1'}
+                class={'justify-start text-left flex gap-4 bg-embed hover:shadow-none px-1 py-0'}
               >
                 <div class={'p-2 border-2 border-grey rounded-lg'}>
                   <IconCheckmark
@@ -234,7 +283,7 @@ export default (props: {
             >
               <button
                 onClick={() => nsfw.value = !nsfw.value}
-                class={'justify-start text-left flex gap-4 bg-embed hover:shadow-none px-1'}
+                class={'justify-start text-left flex gap-4 bg-embed hover:shadow-none px-1 py-0'}
               >
                 <div class={'p-2 border-2 border-grey rounded-lg'}>
                   <IconCheckmark
