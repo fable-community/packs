@@ -46,6 +46,7 @@
     "bson": "https://raw.githubusercontent.com/lucsoft/web_bson/v0.3.0/mod.js",
     "icons/": "https://deno.land/x/tabler_icons_tsx@0.0.6/tsx/",
     "sentry": "npm:@sentry/node",
+    "aws-sdk-s3": "npm:@aws-sdk/client-s3",
     "tailwindcss": "npm:tailwindcss@3.3.5",
     "tailwindcss/": "npm:tailwindcss@3.3.5/",
     "tailwindcss/plugin": "npm:tailwindcss@3.3.5/plugin.js"

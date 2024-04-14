@@ -25,10 +25,14 @@ deno task start
 - API_ENDPOINT: an endpoint for a self-hosted instance of
   [Fable](https://github.com/ker0olos/fable)
 - PUBLIC_DISCORD_WEBHOOK_URL: a discord webhook url
-- B2_KEY_ID: [B2 Cloud Storage][b2] app key id
-- B2_KEY: [B2 Cloud Storage][b2] app key
-- B2_BUCKET_ID: [B2 Cloud Storage][b2] bucket id
-- B2_BUCKET_NAME: [B2 Cloud Storage][b2] bucket name
+
+- S3_KEY_ID: A S3-compatible key id
+- S3_ACCESS_KEY: A S3-compatible key access key
+- S3_BUCKET_NAME: A S3-compatible bucket name
+- S3_ENDPOINT: A S3-compatible endpoint (for uploading)
+- S3_PUBLIC_ENDPOINT: the public url for the bucket (the image file name will be
+  added to the end e.g.: `S3_PUBLIC_ENDPOINT/filename.png`)
+
 - CF_ACCOUNT_ID: A cloudflare account id
 - CF_AI_TOKEN: A cloudflare workers AI access token
 

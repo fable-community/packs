@@ -1,7 +1,5 @@
 // deno-lint-ignore-file no-non-null-assertion
 
-import { encodeBase64 } from '$std/encoding/base64.ts';
-
 import { deserialize } from 'bson';
 
 import { getAccessToken } from '~/utils/oauth.ts';
@@ -15,6 +13,8 @@ import { getWebhook } from '~/utils/embeds.ts';
 import { IImageInput, TEN_MB } from '~/components/ImageInput.tsx';
 
 import { Character, CharacterRole, Media, Pack } from '~/utils/types.ts';
+
+import { PutObjectCommand, S3Client } from 'aws-sdk-s3';
 
 import { captureException } from '~/utils/sentry.ts';
 
@@ -48,97 +48,59 @@ export interface Data {
   username?: string;
 }
 
-const b2 = {
-  id: Deno.env.get('B2_KEY_ID'),
-  bucketId: Deno.env.get('B2_BUCKET_ID'),
-  bucketName: Deno.env.get('B2_BUCKET_NAME'),
-  key: Deno.env.get('B2_KEY'),
-};
+const S3 = new S3Client({
+  region: 'auto',
+  endpoint: Deno.env.get('S3_ENDPOINT')!,
+  credentials: {
+    accessKeyId: Deno.env.get('S3_KEY_ID')!,
+    secretAccessKey: Deno.env.get('S3_ACCESS_KEY')!,
+  },
+});
 
-const setUpImages = async () => {
-  if (!b2.id || !b2.key || !b2.bucketId || !b2.bucketName) {
-    return;
-  }
-
-  const _credentials = await fetch(
-    'https://api.backblazeb2.com/b2api/v2/b2_authorize_account',
-    {
-      headers: { Authorization: `Basic ${encodeBase64(`${b2.id}:${b2.key}`)}` },
-    },
-  );
-
-  if (_credentials.status !== 200) {
-    console.error('failed to authorize b2');
-    return;
-  }
-
-  const credentials = await _credentials.json() as Credentials;
-
-  return credentials;
-};
-
-const uploadImage = async ({ file, credentials }: {
+const uploadImage = async ({ file }: {
   file: NonNullable<IImageInput['file']>;
-  credentials?: Credentials;
-}) => {
-  if (!credentials) {
-    return '';
-  }
-
+}): Promise<string | undefined> => {
   if (file.size > TEN_MB) {
     console.error('image is over 10 mb');
     return '';
   }
 
-  const _upload = await fetch(
-    `${credentials.apiUrl}/b2api/v2/b2_get_upload_url`,
-    {
-      method: 'POST',
-      body: JSON.stringify({ bucketId: b2.bucketId }),
-      headers: { Authorization: credentials.authorizationToken },
-    },
-  );
+  const fileName = `${nanoid(8)}-${file.name}`;
 
-  if (_upload.status !== 200) {
-    console.error('failed to generate b2 upload url');
-    return '';
+  const bucketName = Deno.env.get('S3_BUCKET_NAME');
+
+  // const hash = await crypto.subtle.digest('SHA-1', file.data.buffer);
+
+  // const hashArray = Array.from(new Uint8Array(hash));
+
+  // const sha1HashHex = hashArray
+  //   .map((b) => b.toString(16).padStart(2, '0'))
+  //   .join(''); // convert bytes to hex string
+
+  try {
+    const command = new PutObjectCommand({
+      Key: fileName,
+      Bucket: bucketName,
+      Body: file.data.buffer,
+      CacheControl: 'max-age=259200', // 3 days
+      ContentLength: file.size,
+      ContentType: file.type,
+      // ChecksumSHA1: sha1HashHex,
+      ACL: 'public-read',
+    });
+
+    const _ = await S3.send(command);
+
+    const url = `${Deno.env.get('S3_PUBLIC_ENDPOINT')}/${fileName}`;
+
+    // console.log('File uploaded successfully:', _);
+    console.log('uploaded image', url);
+
+    return url;
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    throw error;
   }
-
-  const upload = await _upload.json() as Upload;
-
-  const hash = await crypto.subtle.digest('SHA-1', file.data.buffer);
-
-  const hashArray = Array.from(new Uint8Array(hash));
-
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join(''); // convert bytes to hex string
-
-  const fileName = nanoid(8);
-
-  const _file = await fetch(
-    upload.uploadUrl,
-    {
-      method: 'POST',
-      body: file.data.buffer,
-      headers: {
-        'Authorization': upload.authorizationToken,
-        'Content-Type': file.type,
-        'Content-Length': `${file.size}`,
-        'X-Bz-File-Name': fileName,
-        'X-Bz-Content-Sha1': hashHex,
-      },
-    },
-  );
-
-  if (_file.status !== 200) {
-    console.error('failed to generate b2 upload url');
-    return '';
-  }
-
-  const url = `${credentials.downloadUrl}/file/${b2.bucketName}/${fileName}`;
-
-  return url;
 };
 
 export const handler: Handlers = {
@@ -184,11 +146,8 @@ export const handler: Handlers = {
         pack.webhookUrl = data.webhookUrl;
       }
 
-      const credentials = await setUpImages();
-
       if (data.image?.file) {
         pack.image = await uploadImage({
-          credentials,
           file: data.image.file,
         });
       } else if (data.image?.url) {
@@ -274,7 +233,7 @@ export const handler: Handlers = {
       pack.media!.new = await Promise.all(
         data.media?.map(async (media) => {
           const url = media.images?.[0]?.file?.size
-            ? await uploadImage({ file: media.images[0].file, credentials })
+            ? await uploadImage({ file: media.images[0].file })
             : media.images?.[0]?.url
             ? media.images[0].url
             : undefined;
@@ -318,7 +277,7 @@ export const handler: Handlers = {
       pack.characters!.new = await Promise.all(
         data.characters?.map(async (char) => {
           const url = char.images?.[0].file?.size
-            ? await uploadImage({ file: char.images[0].file, credentials })
+            ? await uploadImage({ file: char.images[0].file })
             : char.images?.[0]?.url
             ? char.images[0].url
             : undefined;
