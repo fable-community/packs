@@ -86,7 +86,8 @@ export default (props: {
       });
 
       if (response.status === 200) {
-        location.replace(`${packId.value}/edit?new`);
+        // deno-lint-ignore no-non-null-assertion
+        location.replace(`${encodeURIComponent(packId.value!)}/edit?new`);
       } else {
         const text = await response.text();
 
