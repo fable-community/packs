@@ -1,4 +1,4 @@
-### Fable ![deno](https://github.com/fable-community/packs/actions/workflows/deno.yml/badge.svg)
+### Fable ![deno](https://github.com/fable-community/packs/actions/workflows/deploy.yml/badge.svg)
 
 A portal app to create, manage and publish community packs
 
