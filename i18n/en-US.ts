@@ -108,13 +108,14 @@ export default {
   //
 
   // relations
-  prequel: 'is a Prequel',
-  sequel: 'is a Sequel',
-  adaptation: 'is an Adaptation',
-  sideStory: 'is a Side Story',
-  spinoff: 'is a Spin Off',
-  child: 'is a Child',
-  parent: 'is a Parent',
+  'no-relation': 'has no relation to this',
+  prequel: 'is a the prequel to this',
+  sequel: 'is the sequel of this',
+  adaptation: 'is an adaptation of this',
+  sideStory: 'is a side-story to this',
+  spinoff: 'is a spin-off from this',
+  child: 'is a child of this',
+  parent: 'is the parent of this',
   //
 
   maxConflicts: 'The maximum number of series you can disable is {0}',

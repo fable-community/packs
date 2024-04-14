@@ -107,13 +107,5 @@ export default {
   videoGame: 'Videojuego',
   //
 
-  // relations
-  prequel: 'es una Precuela',
-  sequel: 'es una Secuela',
-  adaptation: 'es una Adaptación',
-  sideStory: 'es una Historia Paralela',
-  spinoff: 'es un Spin Off',
-  //
-
   maxConflicts: 'The maximum number of series you can disable is {0}',
 };

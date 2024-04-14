@@ -33,7 +33,26 @@ import {
 import nanoid from '~/utils/nanoid.ts';
 
 import type { Data } from '~/routes/api/autogen.ts';
-import { MediaRelation } from '~/utils/fable-types.ts';
+
+const MediaRelation = {
+  [i18n('prequel')]: 'PREQUEL',
+  [i18n('sequel')]: 'SEQUEL',
+  [i18n('adaptation')]: 'ADAPTATION',
+  [i18n('sideStory')]: 'SIDE_STORY',
+  [i18n('child')]: 'CONTAINS',
+  [i18n('parent')]: 'PARENT',
+};
+
+const MediaFormat = {
+  [i18n('anime')]: 'TV',
+  [i18n('manga')]: 'MANGA',
+  [i18n('movie')]: 'MOVIE',
+  [i18n('OVA')]: 'OVA',
+  [i18n('ONA')]: 'ONA',
+  [i18n('oneShot')]: 'ONE_SHOT',
+  [i18n('novel')]: 'NOVEL',
+  [i18n('videoGame')]: 'VIDEO_GAME',
+};
 
 const defaultImage =
   'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
@@ -66,26 +85,6 @@ export default (
   const newAliasValue = useSignal('');
 
   const substringQuery = useSignal('');
-
-  const MediaFormat = {
-    [i18n('anime')]: 'TV',
-    [i18n('manga')]: 'MANGA',
-    [i18n('movie')]: 'MOVIE',
-    [i18n('OVA')]: 'OVA',
-    [i18n('ONA')]: 'ONA',
-    [i18n('oneShot')]: 'ONE_SHOT',
-    [i18n('novel')]: 'NOVEL',
-    [i18n('videoGame')]: 'VIDEO_GAME',
-  };
-
-  const MediaRelation: Partial<Record<I18nKey, MediaRelation>> = {
-    [i18n('prequel')]: 'PREQUEL',
-    [i18n('sequel')]: 'SEQUEL',
-    [i18n('adaptation')]: 'ADAPTATION',
-    [i18n('sideStory')]: 'SIDE_STORY',
-    [i18n('child')]: 'CONTAINS',
-    [i18n('parent')]: 'PARENT',
-  };
 
   const onAutogenerate = useCallback(() => {
     descriptionLoading.value = true;
@@ -460,12 +459,15 @@ export default (
                   );
 
                   return (
-                    <div class={'grid grid-flow-col gap-2'} key={i}>
-                      <i class={'flex items-center font-[700]'}>
+                    <div class={'flex items-center gap-4'}>
+                      <i
+                        class={'inline h-min basis-1/2 font-[700] overflow-hidden overflow-ellipsis'}
+                      >
                         {media.title.english}
                       </i>
                       <Select
-                        nullLabel={i18n('none')}
+                        class={'basis-1/2'}
+                        nullLabel={i18n('no-relation')}
                         list={MediaRelation}
                         defaultValue={defaultValue > -1
                           // deno-lint-ignore no-non-null-assertion

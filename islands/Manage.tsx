@@ -223,28 +223,32 @@ export default (props: {
           console.error(errors);
 
           errors.forEach((err) => {
-            const path = err.instancePath
-              .substring(1)
-              .split('/');
+            if (typeof err === 'string') {
+              console.error(error.value = err);
+            } else {
+              const path = err.instancePath
+                .substring(1)
+                .split('/');
 
-            console.error(path);
+              console.error(path);
 
-            if (path[0] === 'media' || path[0] === 'characters') {
-              if (path[1] === 'new') {
-                const i = parseInt(path[2]);
+              if (path[0] === 'media' || path[0] === 'characters') {
+                if (path[1] === 'new') {
+                  const i = parseInt(path[2]);
 
-                const item = path[0] === 'characters'
-                  // deno-lint-ignore no-non-null-assertion
-                  ? pack.characters![i]
-                  // deno-lint-ignore no-non-null-assertion
-                  : pack.media![i];
+                  const item = path[0] === 'characters'
+                    // deno-lint-ignore no-non-null-assertion
+                    ? pack.characters![i]
+                    // deno-lint-ignore no-non-null-assertion
+                    : pack.media![i];
 
-                const child = document.querySelector(`._${item.id}`);
+                  const child = document.querySelector(`._${item.id}`);
 
-                setTimeout(() => {
-                  child?.setAttribute('shake', 'true');
-                  child?.setAttribute('invalid', 'true');
-                }, 100);
+                  setTimeout(() => {
+                    child?.setAttribute('shake', 'true');
+                    child?.setAttribute('invalid', 'true');
+                  }, 100);
+                }
               }
             }
           });
