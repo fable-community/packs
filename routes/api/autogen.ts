@@ -10,7 +10,7 @@ export interface Data {
   mediaTitle?: string;
 }
 
-const MODEL_ID = '@hf/google/gemma-7b-it';
+const MODEL_ID = '@cf/mistral/mistral-7b-instruct-v0.1';
 
 export const handler: Handlers = {
   async POST(req): Promise<Response> {
@@ -33,14 +33,14 @@ export const handler: Handlers = {
       });
     }
 
+    prompt = `[INST]${prompt}[/INST]`;
+
     const response = await fetch(
       `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/run/${MODEL_ID}`,
       {
         method: 'POST',
         headers: { 'authorization': `Bearer ${API_TOKEN}` },
-        body: JSON.stringify({
-          prompt,
-        }),
+        body: JSON.stringify({ prompt }),
       },
     );
 
