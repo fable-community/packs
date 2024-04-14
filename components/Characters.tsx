@@ -124,6 +124,7 @@ export default (
           const chunk = result.value;
 
           signal.value.description += new TextDecoder().decode(chunk);
+          signal.value.description = signal.value.description?.trim();
           forceUpdate();
 
           result = await reader.read();
