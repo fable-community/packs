@@ -37,6 +37,7 @@ export default {
   packWebhookUrlHint:
     'Every time this pack is updated the changes will be sent to this webhook',
   publicPackNotice: 'Anyone can install this pack',
+  recentlyUpdated: 'Recently Updated',
 
   searchCharactersPlaceholder: 'Search Characters',
   searchMediaPlaceholder: 'Search Series',

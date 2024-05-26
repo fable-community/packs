@@ -14,7 +14,7 @@ export default ({ pack }: { pack: Pack }) => {
           />
         )
         : undefined}
-      <div class={'truncate'}>
+      <div class={'truncate mt-0.5'}>
         {pack.manifest.title ?? pack.manifest.id}
       </div>
     </a>

@@ -18,11 +18,13 @@ import IconCharacter from 'icons/user.tsx';
 // import IconMedia from 'icons/photo.tsx';
 
 import type { Pack, PackWithCount, User } from '~/utils/types.ts';
+import Card from '~/components/Card.tsx';
 
 interface BrowseData {
   user?: User;
-  maintenance: boolean;
-  packs: PackWithCount[];
+  maintenance?: boolean;
+  popularPacks: PackWithCount[];
+  updatedPacks: PackWithCount[];
 }
 
 const defaultImage =
@@ -51,6 +53,29 @@ async function fetchPopularPacks() {
   return packs;
 }
 
+async function fetchLastUpdatedPacks() {
+  let packs: PackWithCount[] = [];
+
+  const endpoint = Deno.env.get('API_ENDPOINT');
+
+  if (endpoint) {
+    const response = await fetch(`${endpoint}/updated`, {
+      method: 'GET',
+    });
+
+    const { packs: fetchedPacks } = (await response.json()) as {
+      packs: PackWithCount[];
+      length: number;
+      offset: number;
+      limit: number;
+    };
+
+    packs = fetchedPacks;
+  }
+
+  return packs;
+}
+
 export const handler: Handlers = {
   async GET(req, ctx) {
     const maintenance = Deno.env.get('MAINTENANCE') === '1';
@@ -59,15 +84,19 @@ export const handler: Handlers = {
       return ctx.render({ maintenance: true });
     }
 
-    const data = { packs: {} } as BrowseData;
+    const data = { popularPacks: [], updatedPacks: [] } as BrowseData;
 
-    const [{ user, setCookie }, packs] = await Promise.all([
-      fetchUser(req),
-      fetchPopularPacks(),
-    ]);
+    const [{ user, setCookie }, popularPacks, updatedPacks] = await Promise.all(
+      [
+        fetchUser(req),
+        fetchPopularPacks(),
+        fetchLastUpdatedPacks(),
+      ],
+    );
 
     data.user = user;
-    data.packs = packs;
+    data.popularPacks = popularPacks;
+    data.updatedPacks = updatedPacks;
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
 
@@ -79,6 +108,27 @@ export const handler: Handlers = {
 
     return resp;
   },
+};
+
+const PackCard = ({ pack }: { pack: PackWithCount }) => {
+  return (
+    <a
+      class={'min-w-[128px] min-h-[32px]  p-4 hover:translate-y-[-8px] transition-all duration-150'}
+      href={`/${pack.manifest.id}`}
+    >
+      {pack.manifest.image
+        ? (
+          <img
+            class={'bg-grey w-[128px] h-auto aspect-square rounded-xl object-cover'}
+            src={pack.manifest.image}
+          />
+        )
+        : undefined}
+      <div class={'truncate mt-0.5'}>
+        {pack.manifest.title ?? pack.manifest.id}
+      </div>
+    </a>
+  );
 };
 
 const PackTile = ({ pack, index }: { pack: PackWithCount; index: number }) => {
@@ -155,8 +205,29 @@ export default ({ data }: PageProps<BrowseData>) => {
         <div
           class={'flex flex-col items-center w-full max-w-[800px] gap-8'}
         >
-          {data.packs.map((pack, index) => (
+          {data.popularPacks.slice(0, 3).map((pack, index) => (
             <PackTile pack={pack} index={index} />
+          ))}
+
+          {data.updatedPacks?.length
+            ? (
+              <div class='w-full h-auto flex flex-col overflow-x-auto overflow-y-hidden bg-embed rounded-xl'>
+                <p
+                  class={'mx-6 mt-6 mb-2 text-white font-bold text-[1rem] uppercase'}
+                >
+                  {i18n('recentlyUpdated')}
+                </p>
+                <div class='w-full h-auto flex flex-row gap-2'>
+                  {data.updatedPacks.slice(0, 10).map((pack, index) => (
+                    <PackCard pack={pack} key={index} />
+                  ))}
+                </div>
+              </div>
+            )
+            : undefined}
+
+          {data.popularPacks.slice(3).map((pack, index) => (
+            <PackTile pack={pack} index={index + 3} />
           ))}
         </div>
       </div>

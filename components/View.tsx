@@ -1,10 +1,11 @@
-import IconDownload from 'icons/download.tsx';
+import { Approved } from '~/components/Approved.tsx';
+
+// import IconDownload from 'icons/download.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
 
 import { i18n } from '~/utils/i18n.ts';
 
 import type { Alias, Pack } from '~/utils/types.ts';
-import { Approved } from '~/components/Approved.tsx';
 
 const defaultImage =
   'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
