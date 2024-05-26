@@ -35,20 +35,20 @@
     "jsxImportSource": "preact"
   },
   "imports": {
-    "~/": "./",
     "$fresh/": "https://deno.land/x/fresh@1.6.8/",
-    "$std/": "https://deno.land/std@0.214.0/",
-    "preact": "https://esm.sh/preact@10.19.6",
-    "preact/": "https://esm.sh/preact@10.19.6/",
-    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.2",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+    "@std/http": "jsr:@std/http@^0.224.1",
+    "aws-sdk-s3": "npm:@aws-sdk/client-s3",
     "bson": "https://raw.githubusercontent.com/lucsoft/web_bson/v0.3.0/mod.js",
     "icons/": "https://deno.land/x/tabler_icons_tsx@0.0.6/tsx/",
+    "preact": "https://esm.sh/preact@10.19.6",
+    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.2",
+    "preact/": "https://esm.sh/preact@10.19.6/",
     "sentry": "npm:@sentry/node",
-    "aws-sdk-s3": "npm:@aws-sdk/client-s3",
     "tailwindcss": "npm:tailwindcss@3.3.5",
     "tailwindcss/": "npm:tailwindcss@3.3.5/",
-    "tailwindcss/plugin": "npm:tailwindcss@3.3.5/plugin.js"
+    "tailwindcss/plugin": "npm:tailwindcss@3.3.5/plugin.js",
+    "~/": "./"
   }
 }

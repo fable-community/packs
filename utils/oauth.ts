@@ -7,7 +7,7 @@ import {
   deleteCookie,
   getCookies,
   setCookie,
-} from '$std/http/cookie.ts';
+} from '@std/http/cookie';
 
 import type { User } from '~/utils/types.ts';
 

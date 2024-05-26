@@ -56,3 +56,18 @@ export interface Pack {
   approved: boolean;
   hidden: boolean;
 }
+
+export interface PackWithCount {
+  servers: number;
+  manifest: {
+    id: string;
+    title?: string;
+    description?: string;
+    image?: string;
+    media: number;
+    characters: number;
+    createdAt: Date;
+    updatedAt: Date;
+    approved: boolean;
+  };
+}

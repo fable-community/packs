@@ -4,6 +4,7 @@ import IconClipboard from 'icons/clipboard-text.tsx';
 import { i18n } from '~/utils/i18n.ts';
 
 import type { Alias, Pack } from '~/utils/types.ts';
+import { Approved } from '~/components/Approved.tsx';
 
 const defaultImage =
   'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
@@ -45,15 +46,18 @@ const Header = ({ pack }: { pack: Pack }) => {
 
       <div class={'flex flex-col grow gap-4 justify-center'}>
         {
-          {/* TODO not currently available */}
+          /* TODO not currently available */
           /* <div class={'flex gap-3 text-white opacity-80 uppercase'}>
           <IconDownload class={'w-4 h-4'} />
           {i18n('packServers', pack.servers ?? 0)}
         </div> */
         }
 
-        <i class={'font-bold text-[0.95rem] select-text'}>
+        <i
+          class={'flex flex-row items-center font-bold text-[0.95rem] select-text'}
+        >
           {pack.manifest.title ?? pack.manifest.id}
+          {pack.approved ? <Approved /> : undefined}
         </i>
 
         {pack.manifest.description
@@ -102,8 +106,9 @@ const Collection = (
 
   return (
     <div class={'flex flex-wrap gap-4'}>
-      {slice.map((item) => (
+      {slice.map((item, i) => (
         <img
+          key={i}
           title={getAlias('name' in item ? item.name : item.title)}
           src={item.images?.[0]?.url ?? defaultImage}
           class={'w-auto h-[192px] object-cover object-center aspect-[90/127] bg-grey'}
