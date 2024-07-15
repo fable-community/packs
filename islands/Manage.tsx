@@ -47,6 +47,7 @@ import {
   type SortingOrder,
   type User,
 } from '~/utils/types.ts';
+import IconDownload from 'icons/download.tsx';
 
 const IS_BROWSER = typeof document !== 'undefined';
 
@@ -398,6 +399,28 @@ export default (props: {
               </i>
               <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
             </div>
+
+            <button
+              class={'bg-grey text-white py-2 cursor-pointer'}
+              onClick={() => {
+                const blob = new Blob([JSON.stringify(props.pack)], {
+                  type: 'application/json',
+                });
+                const url = URL.createObjectURL(blob);
+
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${props.pack.manifest.id}.json`;
+                document.body.appendChild(link);
+                link.click();
+
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+              }}
+            >
+              <IconDownload class={'w-[18px] h-[18px]'} />
+              Export
+            </button>
 
             <div class={'flex flex-col grow gap-2'}>
               <label class={'uppercase text-[0.8rem] text-disabled'}>
