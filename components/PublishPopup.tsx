@@ -2,7 +2,7 @@ import IconCheckmark from 'icons/check.tsx';
 
 import { i18n } from '~/utils/i18n.ts';
 
-export default ({ dirty, loading, onPublish, ...props }: {
+export default ({ dirty, loading, onPublish, ..._props }: {
   loading: boolean;
   dirty: boolean;
   onPublish: () => void;

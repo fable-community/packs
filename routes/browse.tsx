@@ -17,8 +17,7 @@ import IconDownload from 'icons/download.tsx';
 import IconCharacter from 'icons/user.tsx';
 // import IconMedia from 'icons/photo.tsx';
 
-import type { Pack, PackWithCount, User } from '~/utils/types.ts';
-import Card from '~/components/Card.tsx';
+import type { PackWithCount, User } from '~/utils/types.ts';
 
 interface BrowseData {
   user?: User;

@@ -19,7 +19,7 @@ import IconApply from 'icons/check.tsx';
 
 import comma from '~/utils/comma.ts';
 
-import { i18n, type I18nKey } from '~/utils/i18n.ts';
+import { i18n } from '~/utils/i18n.ts';
 
 import { getRelativeTimeString } from '~/utils/timeString.ts';
 
@@ -451,7 +451,7 @@ export default (
             <div class={'flex flex-col gap-2'}>
               {media.value
                 .filter(({ id }) => id !== signal.value.id)
-                .map((media, i) => {
+                .map((media, _i) => {
                   const defaultValue = Number(
                     signal.value.relations?.findIndex((r) =>
                       r.mediaId === media.id

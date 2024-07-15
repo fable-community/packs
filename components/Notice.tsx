@@ -44,7 +44,7 @@ export const Dismissible = (
 
       <div
         class={'cursor-pointer'}
-        onClick={(e) => ref.current?.remove()}
+        onClick={() => ref.current?.remove()}
       >
         <IconClose
           class={`min-w-[18px] min-h-[18px] text-white`}
