@@ -115,14 +115,10 @@ const PackCard = ({ pack }: { pack: PackWithCount }) => {
       class={'min-w-[128px] min-h-[32px]  p-4 hover:translate-y-[-8px] transition-all duration-150'}
       href={`/${pack.manifest.id}`}
     >
-      {pack.manifest.image
-        ? (
-          <img
-            class={'bg-grey w-[128px] h-auto aspect-square rounded-xl object-cover'}
-            src={pack.manifest.image}
-          />
-        )
-        : undefined}
+      <img
+        class={'bg-grey w-[128px] h-auto aspect-square rounded-xl object-cover'}
+        src={pack.manifest.image ?? defaultImage}
+      />
       <div class={'truncate mt-0.5'}>
         {pack.manifest.title ?? pack.manifest.id}
       </div>
