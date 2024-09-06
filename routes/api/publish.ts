@@ -276,7 +276,7 @@ export const handler: Handlers = {
 
       pack.characters!.new = await Promise.all(
         data.characters?.map(async (char) => {
-          const url = char.images?.[0].file?.size
+          const url = char.images?.[0]?.file?.size
             ? await uploadImage({ file: char.images[0].file })
             : char.images?.[0]?.url
             ? char.images[0].url
