@@ -1,4 +1,4 @@
-import { Approved } from '~/components/Approved.tsx';
+import { Approved } from '~/islands/Approved.tsx';
 
 // import IconDownload from 'icons/download.tsx';
 import IconClipboard from 'icons/clipboard-text.tsx';
@@ -58,7 +58,6 @@ const Header = ({ pack }: { pack: Pack }) => {
           class={'flex flex-row items-center font-bold text-[0.95rem] select-text'}
         >
           {pack.manifest.title ?? pack.manifest.id}
-          {pack.approved ? <Approved /> : undefined}
         </i>
 
         {pack.manifest.description
@@ -78,11 +77,16 @@ const Header = ({ pack }: { pack: Pack }) => {
           <i class={'italic grow select-all'}>
             {`/packs install id: ${pack.manifest.id}`}
           </i>
-          <IconClipboard class={'w-[18px] h-[18px] cursor-pointer'} />
+          <IconClipboard class='w-[18px] h-[18px] cursor-pointer' />
         </div>
 
         {pack.manifest.author
-          ? <>{i18n('by-author', pack.manifest.author)}</>
+          ? (
+            <div class='flex items-center'>
+              {i18n('by-author', pack.manifest.author)}
+              {pack.approved ? <Approved /> : undefined}
+            </div>
+          )
           : undefined}
       </div>
     </div>

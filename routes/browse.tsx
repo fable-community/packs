@@ -4,7 +4,7 @@ import NavBar from '~/components/NavBar.tsx';
 import Avatar from '~/components/Avatar.tsx';
 
 import { DiscordButton } from '~/components/Login.tsx';
-import { Approved } from '~/components/Approved.tsx';
+import { Approved } from '~/islands/Approved.tsx';
 
 import Maintenance from '~/routes/_503.tsx';
 
