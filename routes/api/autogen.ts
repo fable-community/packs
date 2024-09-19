@@ -34,14 +34,23 @@ export const handler: Handlers = {
       prompt = `Create a short description for ${data.mediaTitle}`;
     }
 
-    prompt = `[INST]${prompt}[/INST]`;
-
     const response = await fetch(
       `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/ai/run/${MODEL_ID}`,
       {
         method: 'POST',
         headers: { 'authorization': `Bearer ${API_TOKEN}` },
-        body: JSON.stringify({ prompt, stream: true, raw: true }),
+        body: JSON.stringify({
+          stream: true,
+          prompt: `[INST]${prompt}[/INST]`,
+          // messages: [{
+          //   role: 'system',
+          //   content:
+          //     "You are a multimedia encyclopedia",
+          // }, {
+          //   role: 'user',
+          //   content: prompt,
+          // }],
+        }),
       },
     );
 

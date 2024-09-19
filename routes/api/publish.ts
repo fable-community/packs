@@ -65,7 +65,9 @@ const uploadImage = async ({ file }: {
     return '';
   }
 
-  const fileName = `${nanoid(8)}-${file.name}`;
+  const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9]/g, '-');
+
+  const fileName = `${nanoid(8)}-${sanitizedFileName}`;
 
   const bucketName = Deno.env.get('S3_BUCKET_NAME');
 
