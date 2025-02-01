@@ -107,10 +107,15 @@ export default (
       body: JSON.stringify({ mediaTitle, characterName } satisfies Data),
     })
       .then(async (response) => {
+        if (!response.ok) {
+          signal.value.description = 'Internal Server Error';
+          return;
+        }
+
         const data: { content: string } = await response.json();
 
         if (!data?.content) {
-          signal.value.description = 'internal Server Error';
+          signal.value.description = 'Internal Server Error';
           return;
         }
 

@@ -49,9 +49,7 @@
     "tailwindcss": "npm:tailwindcss@3.3.5",
     "tailwindcss/": "npm:tailwindcss@3.3.5/",
     "tailwindcss/plugin": "npm:tailwindcss@3.3.5/plugin.js",
-    "@azure-rest/ai-inference": "npm:@azure-rest/ai-inference@latest",
-    "@azure/core-auth": "npm:@azure/core-auth@latest",
-    "@azure/core-sse": "npm:@azure/core-sse@latest",
+    "@google/generative-ai": "npm:@google/generative-ai@latest",
     "~/": "./"
   }
 }

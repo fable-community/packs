@@ -33,6 +33,6 @@ deno task start
 - S3_PUBLIC_ENDPOINT: the public url for the bucket (the image file name will be
   added to the end e.g.: `S3_PUBLIC_ENDPOINT/filename.png`)
 
-- GITHUB_TOKEN: A github personal access toke (PAT) with no permissions
+- GEMINI_API_KEY: A [Gemini API Key](https://aistudio.google.com/app/apikey)
 
 [b2]: https://www.backblaze.com/b2/cloud-storage.html
