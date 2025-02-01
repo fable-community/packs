@@ -51,7 +51,7 @@ body {
   background-color: var(--background);
 
   font-weight: 400;
-  font-family: "Noto Sans", sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   font-size: calc(12px + 0.1vw);
   line-height: 1.5;
 
@@ -129,7 +129,7 @@ select:focus {
 
 input:invalid,
 textarea:invalid,
-[invalid="true"] {
+[invalid='true'] {
   border: 2px solid;
   border-color: var(--red);
 }
@@ -140,7 +140,7 @@ textarea:invalid,
   background-color: var(--red);
 } */
 
-[invalid="true"] {
+[invalid='true'] {
   box-sizing: border-box;
 }
 
@@ -162,7 +162,7 @@ textarea:invalid,
   }
 }
 
-[shake="true"] {
+[shake='true'] {
   animation-name: shake;
   animation-duration: 0.35s;
   animation-iteration-count: 2;
@@ -175,7 +175,7 @@ textarea:invalid,
 }
 
 .select-triangle::after {
-  content: "";
+  content: '';
   position: absolute;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;

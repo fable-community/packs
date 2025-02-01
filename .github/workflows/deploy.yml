@@ -42,5 +42,5 @@ jobs:
 
       - uses: denoland/deployctl@v1
         with:
-          project: "packs"
+          project: 'packs'
           entrypoint: main.ts
