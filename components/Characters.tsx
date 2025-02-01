@@ -107,28 +107,14 @@ export default (
       body: JSON.stringify({ mediaTitle, characterName } satisfies Data),
     })
       .then(async (response) => {
-        const stream = response.body;
+        const data: { content: string } = await response.json();
 
-        if (!stream) {
+        if (!data?.content) {
           signal.value.description = 'internal Server Error';
           return;
         }
 
-        signal.value.description = '';
-
-        const reader = response.body.getReader();
-
-        let result = await reader.read();
-
-        while (!result.done) {
-          const chunk = result.value;
-
-          signal.value.description += new TextDecoder().decode(chunk);
-          signal.value.description = signal.value.description?.trim();
-          forceUpdate();
-
-          result = await reader.read();
-        }
+        signal.value.description = data.content;
       })
       .finally(() => {
         descriptionLoading.value = false;

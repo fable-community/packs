@@ -1,6 +1,6 @@
 {
   "lock": false,
-  "nodeModulesDir": true,
+  "nodeModulesDir": "auto",
   "lint": {
     "rules": {
       "tags": ["fresh", "recommended"],
@@ -49,6 +49,9 @@
     "tailwindcss": "npm:tailwindcss@3.3.5",
     "tailwindcss/": "npm:tailwindcss@3.3.5/",
     "tailwindcss/plugin": "npm:tailwindcss@3.3.5/plugin.js",
+    "@azure-rest/ai-inference": "npm:@azure-rest/ai-inference@latest",
+    "@azure/core-auth": "npm:@azure/core-auth@latest",
+    "@azure/core-sse": "npm:@azure/core-sse@latest",
     "~/": "./"
   }
 }

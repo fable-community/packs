@@ -33,7 +33,6 @@ deno task start
 - S3_PUBLIC_ENDPOINT: the public url for the bucket (the image file name will be
   added to the end e.g.: `S3_PUBLIC_ENDPOINT/filename.png`)
 
-- CF_ACCOUNT_ID: A cloudflare account id
-- CF_AI_TOKEN: A cloudflare workers AI access token
+- GITHUB_TOKEN: A github personal access toke (PAT) with no permissions
 
 [b2]: https://www.backblaze.com/b2/cloud-storage.html
