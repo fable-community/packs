@@ -69,14 +69,16 @@ export default ({ data }: PageProps<ViewData>) => {
     <div
       class={'flex fixed top-0 left-0 w-full h-full bg-embed overflow-x-hidden overflow-y-auto'}
     >
-      <div class={'flex flex-col m-4 gap-8 w-full h-full'}>
-        <div class={'flex items-center gap-4 w-full'}>
-          <a href={'/browse'}>
-            <IconHome class={'w-[28px] h-[28px] cursor-pointer'} />
-          </a>
-        </div>
+      <div class='max-w-[1200px] mx-auto'>
+        <div class={'flex flex-col m-4 gap-8 w-full h-full'}>
+          <div class={'flex items-center gap-4 w-full'}>
+            <a href={'/browse'}>
+              <IconHome class={'w-[28px] h-[28px] cursor-pointer'} />
+            </a>
+          </div>
 
-        <View pack={data.pack} />
+          <View pack={data.pack} />
+        </div>
       </div>
     </div>
   );
