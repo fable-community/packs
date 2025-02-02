@@ -11,59 +11,11 @@ import Maintenance from '~/routes/_503.tsx';
 import { fetchUser } from '~/utils/oauth.ts';
 import { i18nSSR } from '~/utils/i18n.ts';
 
-import type { PackWithCount, User } from '~/utils/types.ts';
+import type { User } from '~/utils/types.ts';
 
 interface BrowseData {
   user?: User;
   maintenance?: boolean;
-  popularPacks: PackWithCount[];
-  updatedPacks: PackWithCount[];
-}
-
-async function fetchPopularPacks() {
-  let packs: PackWithCount[] = [];
-
-  const endpoint = Deno.env.get('API_ENDPOINT');
-
-  if (endpoint) {
-    const response = await fetch(`${endpoint}/popular?limit=10`, {
-      method: 'GET',
-    });
-
-    const { packs: fetchedPacks } = (await response.json()) as {
-      packs: PackWithCount[];
-      length: number;
-      offset: number;
-      limit: number;
-    };
-
-    packs = fetchedPacks.filter(({ servers }) => (servers ?? 0) >= 3);
-  }
-
-  return packs;
-}
-
-async function fetchLastUpdatedPacks() {
-  let packs: PackWithCount[] = [];
-
-  const endpoint = Deno.env.get('API_ENDPOINT');
-
-  if (endpoint) {
-    const response = await fetch(`${endpoint}/updated?limit=10`, {
-      method: 'GET',
-    });
-
-    const { packs: fetchedPacks } = (await response.json()) as {
-      packs: PackWithCount[];
-      length: number;
-      offset: number;
-      limit: number;
-    };
-
-    packs = fetchedPacks;
-  }
-
-  return packs;
 }
 
 export const handler: Handlers = {
@@ -78,19 +30,13 @@ export const handler: Handlers = {
 
     const [
       { user, setCookie },
-      popularPacks,
-      updatedPacks,
     ] = await Promise.all(
       [
         fetchUser(req),
-        fetchPopularPacks(),
-        fetchLastUpdatedPacks(),
       ],
     );
 
     data.user = user;
-    data.popularPacks = popularPacks;
-    data.updatedPacks = updatedPacks;
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
 
@@ -120,10 +66,7 @@ export default ({ data }: PageProps<BrowseData>) => {
           : <DiscordButton className='h-[32px]' />}
       </div>
 
-      <Browse
-        popularPacks={data.popularPacks}
-        updatedPacks={data.updatedPacks}
-      />
+      <Browse />
     </div>
   );
 };

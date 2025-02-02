@@ -9,7 +9,9 @@ import * as $_500 from './routes/_500.tsx';
 import * as $_503 from './routes/_503.tsx';
 import * as $_app from './routes/_app.tsx';
 import * as $api_autogen from './routes/api/autogen.ts';
+import * as $api_popular from './routes/api/popular.ts';
 import * as $api_publish from './routes/api/publish.ts';
+import * as $api_updated from './routes/api/updated.ts';
 import * as $api_zerochan from './routes/api/zerochan.ts';
 import * as $browse from './routes/browse.tsx';
 import * as $dashboard from './routes/dashboard.tsx';
@@ -30,7 +32,9 @@ const manifest = {
     './routes/_503.tsx': $_503,
     './routes/_app.tsx': $_app,
     './routes/api/autogen.ts': $api_autogen,
+    './routes/api/popular.ts': $api_popular,
     './routes/api/publish.ts': $api_publish,
+    './routes/api/updated.ts': $api_updated,
     './routes/api/zerochan.ts': $api_zerochan,
     './routes/browse.tsx': $browse,
     './routes/dashboard.tsx': $dashboard,
