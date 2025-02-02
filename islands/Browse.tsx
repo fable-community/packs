@@ -8,6 +8,7 @@ import compact from '~/utils/compact.ts';
 
 import IconDownload from 'icons/download.tsx';
 import IconCharacter from 'icons/user.tsx';
+import IconCalendarEvent from 'icons/calendar-event.tsx';
 
 import type { PackWithCount } from '~/utils/types.ts';
 
@@ -18,6 +19,31 @@ interface Props {
 
 const defaultImage =
   'https://raw.githubusercontent.com/fable-community/images-proxy/main/default/default.svg';
+
+const PackDate = ({ updatedAt }: { updatedAt: Date }) => {
+  const daysAgo = Math.ceil(
+    (new Date(updatedAt).getTime() -
+      Date.now()) /
+      (1000 * 60 * 60 * 24),
+  );
+
+  if (daysAgo === 0) {
+    return <p>{i18n('justNow')}</p>;
+  } else if (daysAgo < -30) {
+    return (
+      <p>
+        +
+        {new Intl.RelativeTimeFormat().format(-30, 'day')}
+      </p>
+    );
+  } else {
+    return (
+      <p>
+        {new Intl.RelativeTimeFormat().format(daysAgo, 'day')}
+      </p>
+    );
+  }
+};
 
 const PackTile = ({ pack, index }: { pack: PackWithCount; index: number }) => {
   return (
@@ -58,22 +84,8 @@ const PackTile = ({ pack, index }: { pack: PackWithCount; index: number }) => {
             )
             : (
               <div class={'flex gap-1'}>
-                <p>
-                  {Math.ceil(
-                      (new Date(pack.manifest.updatedAt).getTime() -
-                        Date.now()) /
-                        (1000 * 60 * 60 * 24),
-                    ) === 0
-                    ? i18n('justNow')
-                    : new Intl.RelativeTimeFormat('en').format(
-                      Math.ceil(
-                        (new Date(pack.manifest.updatedAt).getTime() -
-                          Date.now()) /
-                          (1000 * 60 * 60 * 24),
-                      ),
-                      'day',
-                    )}
-                </p>
+                <IconCalendarEvent class={'w-4 h-4 mt-0.5'} />
+                {PackDate({ updatedAt: pack.manifest.updatedAt })}
               </div>
             )}
 
