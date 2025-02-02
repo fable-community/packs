@@ -122,4 +122,6 @@ export default {
   maxConflicts: 'The maximum number of series you can disable is {0}',
 
   autoGen: 'Auto Generate',
+
+  justNow: 'Just Now',
 };

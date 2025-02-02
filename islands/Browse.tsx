@@ -51,20 +51,38 @@ const PackTile = ({ pack, index }: { pack: PackWithCount; index: number }) => {
         <div class={'flex gap-3 text-white opacity-80 mt-3 uppercase'}>
           {pack.servers
             ? (
-              <>
-                <div class={'flex gap-1'}>
-                  <IconDownload class={'w-4 h-4 mt-0.5'} />
-                  <p>{i18n('packServers', compact(pack.servers))}</p>
-                </div>
-                <p>
-                  {
-                    // deno-lint-ignore prefer-ascii
-                    `•`
-                  }
-                </p>
-              </>
+              <div class={'flex gap-1'}>
+                <IconDownload class={'w-4 h-4 mt-0.5'} />
+                <p>{i18n('packServers', compact(pack.servers))}</p>
+              </div>
             )
-            : undefined}
+            : (
+              <div class={'flex gap-1'}>
+                <p>
+                  {Math.ceil(
+                      (new Date(pack.manifest.updatedAt).getTime() -
+                        Date.now()) /
+                        (1000 * 60 * 60 * 24),
+                    ) === 0
+                    ? i18n('justNow')
+                    : new Intl.RelativeTimeFormat('en').format(
+                      Math.ceil(
+                        (new Date(pack.manifest.updatedAt).getTime() -
+                          Date.now()) /
+                          (1000 * 60 * 60 * 24),
+                      ),
+                      'day',
+                    )}
+                </p>
+              </div>
+            )}
+
+          <p>
+            {
+              // deno-lint-ignore prefer-ascii
+              `•`
+            }
+          </p>
 
           <div class={'flex gap-1'}>
             <IconCharacter class={'w-4 h-4 mt-0.5'} />

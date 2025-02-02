@@ -58,7 +58,7 @@ export interface Pack {
 }
 
 export interface PackWithCount {
-  servers: number;
+  servers?: number;
   manifest: {
     id: string;
     title?: string;
