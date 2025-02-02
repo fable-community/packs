@@ -48,6 +48,8 @@ export interface Data {
   username?: string;
 }
 
+const publicWebhookUrl = Deno.env.get('PUBLIC_DISCORD_WEBHOOK_URL');
+
 const S3 = new S3Client({
   region: 'auto',
   endpoint: Deno.env.get('S3_ENDPOINT')!,
@@ -335,15 +337,13 @@ export const handler: Handlers = {
           );
         }
 
-        const publicWebhookUrl = Deno.env.get('PUBLIC_DISCORD_WEBHOOK_URL');
-
         const body = getWebhook({
           pack,
           username: data.username!,
           old: !data.new ? JSON.parse(old) : undefined,
         });
 
-        if (publicWebhookUrl && !pack.private) {
+        if (publicWebhookUrl && !pack.private && !pack.nsfw) {
           fetch(publicWebhookUrl, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
@@ -363,7 +363,8 @@ export const handler: Handlers = {
       } else {
         throw new Error('Fable endpoint not defined');
       }
-    } catch (err) {
+      // deno-lint-ignore no-explicit-any
+    } catch (err: Error | any) {
       console.error(err);
       captureException(err);
 
