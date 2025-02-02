@@ -6,17 +6,17 @@ import PackTile from '~/components/PackTile.tsx';
 
 import type { PackWithCount } from '~/utils/types.ts';
 
-async function fetchPopularPacks() {
-  const response = await fetch(`/api/popular`, {
-    method: 'GET',
-  });
+// async function fetchPopularPacks() {
+//   const response = await fetch(`/api/popular`, {
+//     method: 'GET',
+//   });
 
-  const { packs } = (await response.json()) as {
-    packs: PackWithCount[];
-  };
+//   const { packs } = (await response.json()) as {
+//     packs: PackWithCount[];
+//   };
 
-  return packs;
-}
+//   return packs;
+// }
 
 async function fetchLastUpdatedPacks() {
   const response = await fetch(`/api/updated`, {
@@ -30,21 +30,21 @@ async function fetchLastUpdatedPacks() {
   return packs;
 }
 
-export default () => {
+export default ({ popularPacks }: { popularPacks: PackWithCount[] }) => {
   const currTab = useSignal<'popular' | 'updated'>('popular');
 
-  const popularPacks = useSignal<PackWithCount[]>([]);
   const updatedPacks = useSignal<PackWithCount[]>([]);
-  const loading = useSignal(true);
+  const loading = useSignal(false);
 
   useEffect(() => {
-    if (currTab.value === 'popular') {
-      loading.value = true;
-      fetchPopularPacks().then((packs) => {
-        popularPacks.value = packs;
-        loading.value = false;
-      });
-    } else if (currTab.value === 'updated') {
+    // if (currTab.value === 'popular') {
+    //   loading.value = true;
+    //   fetchPopularPacks().then((packs) => {
+    //     popularPacks.value = packs;
+    //     loading.value = false;
+    //   });
+    // }
+    if (currTab.value === 'updated' && updatedPacks.value.length === 0) {
       loading.value = true;
       fetchLastUpdatedPacks().then((packs) => {
         updatedPacks.value = packs;
@@ -86,7 +86,7 @@ export default () => {
             <LoadingSpinner class='inline w-8 h-8 animate-spin text-grey fill-white' />
           )
           : currTab.value === 'popular'
-          ? popularPacks.value.map((pack, index) => (
+          ? popularPacks.map((pack, index) => (
             <PackTile pack={pack} index={index} />
           ))
           : updatedPacks.value.map((pack, index) => (

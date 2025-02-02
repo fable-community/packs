@@ -11,11 +11,25 @@ import Maintenance from '~/routes/_503.tsx';
 import { fetchUser } from '~/utils/oauth.ts';
 import { i18nSSR } from '~/utils/i18n.ts';
 
-import type { User } from '~/utils/types.ts';
+import type { PackWithCount, User } from '~/utils/types.ts';
 
 interface BrowseData {
   user?: User;
   maintenance?: boolean;
+  popularPacks: PackWithCount[];
+}
+
+async function fetchPopularPacks(req: Request) {
+  const url = new URL(req.url);
+  const response = await fetch(`${url.origin}/api/popular`, {
+    method: 'GET',
+  });
+
+  const { packs } = (await response.json()) as {
+    packs: PackWithCount[];
+  };
+
+  return packs;
 }
 
 export const handler: Handlers = {
@@ -30,13 +44,16 @@ export const handler: Handlers = {
 
     const [
       { user, setCookie },
+      popularPacks,
     ] = await Promise.all(
       [
         fetchUser(req),
+        fetchPopularPacks(req),
       ],
     );
 
     data.user = user;
+    data.popularPacks = popularPacks;
 
     i18nSSR(req.headers.get('Accept-Language') ?? '');
 
@@ -66,7 +83,7 @@ export default ({ data }: PageProps<BrowseData>) => {
           : <DiscordButton className='h-[32px]' />}
       </div>
 
-      <Browse />
+      <Browse popularPacks={data.popularPacks} />
     </div>
   );
 };
