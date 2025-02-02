@@ -130,6 +130,14 @@ export default ({ popularPacks }: { popularPacks: PackWithCount[] }) => {
           </div>
         </div>
 
+        {!loading.value && debouncedQuery
+          ? (
+            <span class='font-bold uppercase'>
+              {updatedPacks.value.length} Results Found
+            </span>
+          )
+          : undefined}
+
         {loading.value
           ? (
             <LoadingSpinner class='inline w-8 h-8 animate-spin text-grey fill-white' />
