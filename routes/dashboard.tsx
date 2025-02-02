@@ -38,7 +38,7 @@ export const handler: Handlers = {
     data.user = user;
 
     if (data.user && endpoint) {
-      const response = await fetch(`${endpoint}/user`, {
+      const response = await fetch(`${endpoint}/user?limit=100`, {
         method: 'GET',
         headers: { 'authorization': `Bearer ${accessToken}` },
       });
