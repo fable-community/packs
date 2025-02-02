@@ -76,7 +76,7 @@ export default ({ data }: PageProps<DashboardData>) => {
   const { user } = data;
 
   return (
-    <div className='flex flex-col w-full grow my-[2rem] gap-[5vh]'>
+    <div className='flex flex-col w-full bg-background grow my-[2rem] gap-[5vh]'>
       <div class={'flex mx-[2rem] items-center'}>
         <NavBar active='create' />
         <Avatar id={user.id} avatar={user.avatar} />
