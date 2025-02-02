@@ -16,6 +16,7 @@ import * as $dashboard from './routes/dashboard.tsx';
 import * as $index from './routes/index.tsx';
 import * as $new from './routes/new.tsx';
 import * as $Approved from './islands/Approved.tsx';
+import * as $Browse from './islands/Browse.tsx';
 import * as $Manage from './islands/Manage.tsx';
 import * as $New from './islands/New.tsx';
 import { type Manifest } from '$fresh/server.ts';
@@ -38,6 +39,7 @@ const manifest = {
   },
   islands: {
     './islands/Approved.tsx': $Approved,
+    './islands/Browse.tsx': $Browse,
     './islands/Manage.tsx': $Manage,
     './islands/New.tsx': $New,
   },
