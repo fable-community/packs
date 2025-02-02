@@ -2,6 +2,9 @@ import { useEffect } from 'preact/hooks';
 
 import { useSignal } from '@preact/signals';
 
+import IconArrowUp from 'icons/arrow-up.tsx';
+import IconCalendarTime from 'icons/calendar-time.tsx';
+
 import PackTile from '~/components/PackTile.tsx';
 
 import type { PackWithCount } from '~/utils/types.ts';
@@ -61,23 +64,25 @@ export default ({ popularPacks }: { popularPacks: PackWithCount[] }) => {
         <div class='flex w-full mb-4 rounded-lg overflow-hidden'>
           <div
             onClick={() => currTab.value = 'popular'}
-            class={`flex-1 py-2 text-center font-bold cursor-pointer hover:bg-highlight transition-colors ${
+            class={`flex grow justify-center items-center gap-2 py-2 text-center font-bold cursor-pointer hover:bg-highlight transition-colors ${
               currTab.value === 'popular'
                 ? 'bg-embed pointer-events-none'
                 : 'bg-embed2'
             }`}
           >
+            <IconArrowUp class='w-5 h-5' />
             Popular
           </div>
           <div
             onClick={() => currTab.value = 'updated'}
-            class={`flex-1 py-2 text-center font-bold cursor-pointer hover:bg-highlight transition-colors ${
+            class={`flex grow justify-center items-center gap-2 py-2 text-center font-bold cursor-pointer hover:bg-highlight transition-colors ${
               currTab.value === 'updated'
                 ? 'bg-embed pointer-events-none'
                 : 'bg-embed2'
             }`}
           >
-            Recently Updated
+            <IconCalendarTime class='w-5 h-5' />
+            Recent
           </div>
         </div>
 
