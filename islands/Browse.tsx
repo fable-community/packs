@@ -4,8 +4,11 @@ import { useSignal } from '@preact/signals';
 
 import IconArrowUp from 'icons/arrow-up.tsx';
 import IconCalendarTime from 'icons/calendar-time.tsx';
+import IconSearch from 'icons/search.tsx';
 
 import PackTile from '~/components/PackTile.tsx';
+
+import { useDebounce } from '~/utils/useDebounce.tsx';
 
 import type { PackWithCount } from '~/utils/types.ts';
 
@@ -33,13 +36,29 @@ async function fetchLastUpdatedPacks() {
   return packs;
 }
 
+async function searchPacks(q: string) {
+  const response = await fetch(`/api/search?q=${q}`, {
+    method: 'GET',
+  });
+
+  const { packs } = (await response.json()) as {
+    packs: PackWithCount[];
+  };
+
+  return packs;
+}
+
 export default ({ popularPacks }: { popularPacks: PackWithCount[] }) => {
   const currTab = useSignal<'popular' | 'updated'>('popular');
 
   const updatedPacks = useSignal<PackWithCount[]>([]);
   const loading = useSignal(false);
 
+  const [debouncedQuery, query, setQuery] = useDebounce('', 300);
+
   useEffect(() => {
+    if (debouncedQuery) return;
+
     // if (currTab.value === 'popular') {
     //   loading.value = true;
     //   fetchPopularPacks().then((packs) => {
@@ -47,42 +66,67 @@ export default ({ popularPacks }: { popularPacks: PackWithCount[] }) => {
     //     loading.value = false;
     //   });
     // }
-    if (currTab.value === 'updated' && updatedPacks.value.length === 0) {
+
+    if (currTab.value === 'updated') {
       loading.value = true;
       fetchLastUpdatedPacks().then((packs) => {
         updatedPacks.value = packs;
         loading.value = false;
       });
     }
-  }, [currTab.value]);
+  }, [currTab.value, debouncedQuery]);
+
+  useEffect(() => {
+    if (!debouncedQuery) return;
+
+    loading.value = true;
+    currTab.value = 'updated';
+    searchPacks(debouncedQuery).then((packs) => {
+      updatedPacks.value = packs;
+      loading.value = false;
+    });
+  }, [debouncedQuery]);
 
   return (
     <div class={'flex grow justify-center bg-background mx-[2rem]'}>
       <div
         class={'flex flex-col items-center w-full max-w-[800px] gap-8'}
       >
-        <div class='flex w-full mb-4 rounded-lg overflow-hidden'>
-          <div
-            onClick={() => currTab.value = 'popular'}
-            class={`flex grow justify-center items-center gap-2 py-2 text-center font-bold cursor-pointer hover:bg-highlight transition-colors ${
-              currTab.value === 'popular'
-                ? 'bg-embed pointer-events-none'
-                : 'bg-embed2'
-            }`}
-          >
-            <IconArrowUp class='w-5 h-5' />
-            Popular
+        <div class='flex flex-col gap-4 w-full'>
+          <div class='flex w-full h-12 rounded-lg overflow-hidden'>
+            <div
+              onClick={() => currTab.value = 'popular'}
+              class={`flex grow justify-center items-center gap-2 py-2 text-center font-bold cursor-pointer hover:bg-white hover:text-embed transition-colors ${
+                currTab.value === 'popular'
+                  ? 'bg-white text-embed pointer-events-none'
+                  : 'bg-embed'
+              }`}
+            >
+              <IconArrowUp class='w-5 h-5' />
+              Popular
+            </div>
+            <div
+              onClick={() => currTab.value = 'updated'}
+              class={`flex grow justify-center items-center gap-2 py-2 text-center font-bold cursor-pointer hover:bg-white hover:text-embed transition-colors ${
+                currTab.value === 'updated'
+                  ? 'bg-white text-embed pointer-events-none'
+                  : 'bg-embed'
+              }`}
+            >
+              <IconCalendarTime class='w-5 h-5' />
+              Recent
+            </div>
           </div>
-          <div
-            onClick={() => currTab.value = 'updated'}
-            class={`flex grow justify-center items-center gap-2 py-2 text-center font-bold cursor-pointer hover:bg-highlight transition-colors ${
-              currTab.value === 'updated'
-                ? 'bg-embed pointer-events-none'
-                : 'bg-embed2'
-            }`}
-          >
-            <IconCalendarTime class='w-5 h-5' />
-            Recent
+
+          <div class='flex w-full h-12 p-4 gap-4 rounded-lg bg-embed justify-center items-center overflow-hidden'>
+            <IconSearch class='w-5 mx-4 h-5' />
+            <input
+              class='w-full'
+              placeholder={'Search'}
+              onInput={(ev) => setQuery((ev.target as HTMLInputElement).value)}
+              value={query}
+            >
+            </input>
           </div>
         </div>
 

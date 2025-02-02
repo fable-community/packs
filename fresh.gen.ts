@@ -11,6 +11,7 @@ import * as $_app from './routes/_app.tsx';
 import * as $api_autogen from './routes/api/autogen.ts';
 import * as $api_popular from './routes/api/popular.ts';
 import * as $api_publish from './routes/api/publish.ts';
+import * as $api_search from './routes/api/search.ts';
 import * as $api_updated from './routes/api/updated.ts';
 import * as $api_zerochan from './routes/api/zerochan.ts';
 import * as $browse from './routes/browse.tsx';
@@ -34,6 +35,7 @@ const manifest = {
     './routes/api/autogen.ts': $api_autogen,
     './routes/api/popular.ts': $api_popular,
     './routes/api/publish.ts': $api_publish,
+    './routes/api/search.ts': $api_search,
     './routes/api/updated.ts': $api_updated,
     './routes/api/zerochan.ts': $api_zerochan,
     './routes/browse.tsx': $browse,
