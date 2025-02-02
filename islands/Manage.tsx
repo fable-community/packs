@@ -255,7 +255,8 @@ export default (props: {
           });
         }
       }
-    } catch (err) {
+      // deno-lint-ignore no-explicit-any
+    } catch (err: Error | any) {
       console.error(error.value = err?.message);
     } finally {
       loading.value = false;

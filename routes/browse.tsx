@@ -37,7 +37,7 @@ async function fetchPopularPacks() {
       limit: number;
     };
 
-    packs = fetchedPacks.filter(({ servers }) => servers >= 3);
+    packs = fetchedPacks.filter(({ servers }) => (servers ?? 0) >= 3);
   }
 
   return packs;
