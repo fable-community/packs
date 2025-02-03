@@ -6,8 +6,6 @@ A portal app to create, manage and publish community packs
 
 ### Contribute
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/fable-community/packs)
-<a href="https://fresh.deno.dev">
 <img width="175" height="33" src="https://fresh.deno.dev/fresh-badge-dark.svg" alt="Made with Fresh" />
 </a>
 
@@ -15,16 +13,23 @@ A portal app to create, manage and publish community packs
 deno task start
 ```
 
-###### Required Environment Variables:
+#### Required Environment Variables
 
 - DISCORD_CLIENT_ID: a discord oauth client id
 - DISCORD_CLIENT_SECRET: a discord oauth client secret
 
-###### Optional Environment Variables:
+#### Optional Variables
+
+###### Use a self-hosted instance of Fable
 
 - API_ENDPOINT: an endpoint for a self-hosted instance of
   [Fable](https://github.com/ker0olos/fable)
+
+###### Send public packs update messages to a discord channel
+
 - PUBLIC_DISCORD_WEBHOOK_URL: a discord webhook url
+
+###### Allow users to upload their own images
 
 - S3_KEY_ID: A S3-compatible key id
 - S3_ACCESS_KEY: A S3-compatible key access key
@@ -33,6 +38,6 @@ deno task start
 - S3_PUBLIC_ENDPOINT: the public url for the bucket (the image file name will be
   added to the end e.g.: `S3_PUBLIC_ENDPOINT/filename.png`)
 
-- GEMINI_API_KEY: A [Gemini API Key](https://aistudio.google.com/app/apikey)
+###### Allow users to auto generate descriptions
 
-[b2]: https://www.backblaze.com/b2/cloud-storage.html
+- GEMINI_API_KEY: A [Gemini API Key](https://aistudio.google.com/app/apikey)
