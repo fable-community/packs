@@ -12,7 +12,6 @@ import { fetchUser } from '~/utils/oauth.ts';
 import { i18nSSR } from '~/utils/i18n.ts';
 
 import type { PackWithCount, User } from '~/utils/types.ts';
-import { captureException } from '~/utils/sentry.ts';
 
 interface BrowseData {
   user?: User;
@@ -20,30 +19,26 @@ interface BrowseData {
   popularPacks: PackWithCount[];
 }
 
-async function fetchPopularPacks(req: Request) {
-  const url = new URL(req.url);
-  const response = await fetch(`${url.origin}/api/popular`, {
-    method: 'GET',
-  });
+async function fetchPopularPacks() {
+  const endpoint = Deno.env.get('API_ENDPOINT');
 
-  if (!response.ok) {
-    const text = await response.text();
-    console.error(
-      'Failed to fetch popular packs',
-      response.status,
-      response.statusText,
-      text,
+  let packs: PackWithCount[] = [];
+
+  if (endpoint) {
+    const response = await fetch(
+      `${endpoint}/popular?limit=10`,
+      { method: 'GET' },
     );
-    captureException({
-      message: 'Failed to fetch popular packs',
-      body: text,
-    });
-    return [];
-  }
 
-  const { packs } = (await response.json()) as {
-    packs: PackWithCount[];
-  };
+    const { packs: fetchedPacks } = (await response.json()) as {
+      packs: PackWithCount[];
+      length: number;
+      offset: number;
+      limit: number;
+    };
+
+    packs = fetchedPacks.filter(({ servers }) => (servers ?? 0) >= 3);
+  }
 
   return packs;
 }
@@ -64,7 +59,7 @@ export const handler: Handlers = {
     ] = await Promise.all(
       [
         fetchUser(req),
-        fetchPopularPacks(req),
+        fetchPopularPacks(),
       ],
     );
 
