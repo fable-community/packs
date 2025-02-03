@@ -4,6 +4,11 @@ A portal app to create, manage and publish community packs
 
 <https://packs.deno.dev>
 
+<p>
+  <img width="320" alt="Screenshot of Browse page" src="https://github.com/user-attachments/assets/6459b712-6ec3-45f7-ae4a-ba4674f65a46">
+  <img width="320" alt="Screenshot of Edit Pack page" src="https://github.com/user-attachments/assets/d0cc8981-d491-4734-82f9-05ee0b62ad18">
+</p>
+
 ### Contribute
 
 <img width="175" height="33" src="https://fresh.deno.dev/fresh-badge-dark.svg" alt="Made with Fresh" />
