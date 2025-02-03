@@ -12,6 +12,7 @@ import { fetchUser } from '~/utils/oauth.ts';
 import { i18nSSR } from '~/utils/i18n.ts';
 
 import type { PackWithCount, User } from '~/utils/types.ts';
+import { captureException } from '~/utils/sentry.ts';
 
 interface BrowseData {
   user?: User;
@@ -24,6 +25,21 @@ async function fetchPopularPacks(req: Request) {
   const response = await fetch(`${url.origin}/api/popular`, {
     method: 'GET',
   });
+
+  if (!response.ok) {
+    const text = await response.text();
+    console.error(
+      'Failed to fetch popular packs',
+      response.status,
+      response.statusText,
+      text,
+    );
+    captureException({
+      message: 'Failed to fetch popular packs',
+      body: text,
+    });
+    return [];
+  }
 
   const { packs } = (await response.json()) as {
     packs: PackWithCount[];
