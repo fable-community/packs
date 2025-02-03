@@ -22,13 +22,10 @@ deno task start
 
 - DISCORD_CLIENT_ID: a discord oauth client id
 - DISCORD_CLIENT_SECRET: a discord oauth client secret
-
-#### Optional Variables
-
-###### Use a self-hosted instance of Fable
-
 - API_ENDPOINT: an endpoint for a self-hosted instance of
   [Fable](https://github.com/ker0olos/fable)
+
+#### Optional Variables
 
 ###### Send public packs update messages to a discord channel
 
