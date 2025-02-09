@@ -22,7 +22,7 @@ import * as $Approved from './islands/Approved.tsx';
 import * as $Browse from './islands/Browse.tsx';
 import * as $Manage from './islands/Manage.tsx';
 import * as $New from './islands/New.tsx';
-import { type Manifest } from '$fresh/server.ts';
+import type { Manifest } from '$fresh/server.ts';
 
 const manifest = {
   routes: {
