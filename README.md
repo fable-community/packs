@@ -2,7 +2,7 @@
 
 A portal app to create, manage and publish community packs
 
-<https://packs.deno.dev>
+<https://packs.fable.ing/browse>
 
 <p>
   <img width="320" alt="Screenshot of Browse page" src="https://github.com/user-attachments/assets/6459b712-6ec3-45f7-ae4a-ba4674f65a46">
