@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+@config '../tailwind.config.ts';
+
+:root {
+  --grey: #b0b0b0;
+  --foreground: #000000;
+  --background: #ffffff;
+  --embed: #ffffff;
+  --embedHighlight: #dcdbd7;
+  --highlight: #e3e3e3;
+  --red: #b52424;
+  --discord: #5865f2;
+  --fable: #cb9715;
+  --disabled: #4e4f52;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --grey: #4f4f4f;
+    --foreground: #ffffff;
+    --background: #313338;
+    --embed: #2b2d31;
+    --embedHighlight: #232428;
+    --highlight: #1c1c1c;
+    --red: #b52424;
+    --discord: #5865f2;
+    --fable: #feb500;
+    --disabled: #b1b0ad;
+  }
+}
+
+noscript {
+  width: 100%;
+  color: black;
+  background: yellow;
+  position: absolute;
+  padding: 2em;
+  z-index: 3;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 100vw;
+  min-height: 100vh;
+
+  color: var(--foreground);
+  background-color: var(--background);
+
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+  font-size: calc(12px + 0.1vw);
+  line-height: 1.5;
+
+  align-items: center;
+  overflow: hidden auto;
+  user-select: none;
+}
+
+button {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+
+  background-color: var(--grey);
+
+  border: 0;
+  font-weight: 600;
+  min-width: 160px;
+  font-style: normal;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.75em 1em;
+  cursor: pointer;
+}
+
+button:hover {
+  border-radius: 2px;
+  box-shadow: inset 0px 0px 0px 2px var(--foreground);
+}
+
+i {
+  font-style: normal;
+}
+
+a {
+  cursor: pointer;
+  font-style: normal;
+  text-decoration: none;
+}
+
+label {
+  font-style: normal;
+}
+
+input,
+textarea,
+select {
+  font-style: normal;
+  color: var(--foreground);
+  background-color: var(--embed);
+  border: 0;
+  border-radius: 5px;
+  font-weight: 600;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: inherit;
+  min-width: 0;
+  padding: 1rem;
+}
+
+select {
+  appearance: none;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--grey);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 0;
+}
+
+input:invalid,
+textarea:invalid,
+[invalid="true"] {
+  border: 2px solid;
+  border-color: var(--red);
+}
+
+/* input:invalid ~ button {
+  opacity: 0.3;
+  pointer-events: none;
+  background-color: var(--red);
+} */
+
+[invalid="true"] {
+  box-sizing: border-box;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+[shake="true"] {
+  animation-name: shake;
+  animation-duration: 0.35s;
+  animation-iteration-count: 2;
+  animation-fill-mode: both;
+}
+
+[disabled] {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.select-triangle::after {
+  content: "";
+  position: absolute;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--foreground);
+  opacity: 30%;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
