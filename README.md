@@ -16,6 +16,10 @@ A portal app to create, manage and publish community packs
 npm run dev
 ```
 
+### Self-host
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fker0olos%2Fpacks%2Ftree%2Fnext&env=DISCORD_CLIENT_ID,DISCORD_CLIENT_SECRET,API_ENDPOINT&project-name=fable-packs)
+
 #### Required Environment Variables
 
 - DISCORD_CLIENT_ID: a discord oauth client id
