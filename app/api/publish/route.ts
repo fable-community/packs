@@ -4,7 +4,7 @@ import { deserialize } from "bson";
 
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-// import { captureException } from "@sentry/nextjs";
+import { captureException } from "@sentry/nextjs";
 
 import nanoid from "~/utils/nanoid";
 
@@ -93,6 +93,7 @@ const uploadImage = async ({
     return url;
   } catch (error) {
     console.error("Error uploading file:", error);
+    captureException(error);
     throw error;
   }
 };
@@ -350,7 +351,7 @@ export async function POST(request: Request) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     console.error(err);
-    // captureException(err);
+    captureException(err);
     return new Response(JSON.stringify({ error: err?.message }), {
       status: 500,
       headers: { "content-type": "application/json" },

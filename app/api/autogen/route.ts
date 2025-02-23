@@ -3,7 +3,7 @@ import {
   DynamicRetrievalMode,
 } from "@google/generative-ai";
 
-// import { captureException } from "@sentry/nextjs";
+import { captureException } from "@sentry/nextjs";
 
 export interface RequestData {
   characterName?: string;
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
       }
     );
   } catch (err) {
-    // captureException(err);
+    captureException(err);
     console.error(err);
     return new Response(JSON.stringify({ error: "Internal Server Error" }), {
       status: 500,
