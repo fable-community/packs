@@ -32,8 +32,8 @@ export const ZeroChanModal = ({
     () =>
       setQuery(
         [
-          media?.replaceAll(":", ""),
-          character?.replaceAll(":", ""),
+          // media?.replaceAll(":", ""),
+          // character?.replaceAll(":", ""),
           character?.replaceAll(":", "") + ` (${media?.replaceAll(":", "")})`,
         ].join(",")
       ),
@@ -59,9 +59,10 @@ export const ZeroChanModal = ({
         return res.json();
       })
       .then((data: { images: Image[] }) => {
-        if (data?.images) setImages(images ?? []);
+        console.log(data);
+
+        setImages(data?.images ?? []);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedQuery]);
 
   return (
@@ -74,6 +75,7 @@ export const ZeroChanModal = ({
       </div>
 
       <TextInput
+        className="max-h-[48px]"
         placeholder={i18n("search")}
         onInput={(value) => setQuery(value)}
         value={query}
